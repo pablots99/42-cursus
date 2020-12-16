@@ -1,5 +1,7 @@
 # 42-cursus
 
+All my 42cursus work
+
 LIBFT         -> 115
 
 GET_NEXT_LINE -> 100
