@@ -23,9 +23,8 @@ RUN ln -s /etc/nginx/sites-available/server /etc/nginx/sites-enabled/
 
 COPY ./SRCS/setup.sql	./
 
-CMD bash startserv.sh
+CMD bash startserv.sh 
 
-CMD mysql -u root -p 
 
 
 
