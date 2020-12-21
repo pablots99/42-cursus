@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/13 21:52:50 by pablo             #+#    #+#             */
-/*   Updated: 2020/12/16 22:02:37 by ptorres          ###   ########.fr       */
+/*   Updated: 2020/12/17 10:15:40 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,25 @@ int ft_putchar(char a)
 	write(1, &a, 1);
 	return 1;
 }
+void len_basenbr(long long int num, char *base, int *len)
+{
+	int b;
 
+	b = ft_strlen(base);
+	if (num >= b)
+		len_basenbr(num / b, base, len);
+	*len = *len + 1;
+}
+
+void put_basenbr(long long int num, char *base)
+{
+	int b;
+
+	b = ft_strlen(base);
+	if (num >= b)
+		put_basenbr(num / b, base);
+	ft_putchar(base[num % b]);
+}
 int ft_strchr(char *str, char a)
 {
 	int i;
@@ -78,24 +96,7 @@ int pritnstr(char *str, int precision, int width)
 	return len + f;
 }
 
-void len_basenbr(long long int num, char *base, int *len)
-{
-	int b;
 
-	b = ft_strlen(base);
-	if (num >= b)
-		len_basenbr(num / b, base, len);
-	*len = *len + 1;
-}
-void put_basenbr(long long int num, char *base)
-{
-	int b;
-
-	b = ft_strlen(base);
-	if (num >= b)
-		put_basenbr(num / b, base);
-	ft_putchar(base[num % b]);
-}
 
 int printint(long int num, int precision, int width)
 {
