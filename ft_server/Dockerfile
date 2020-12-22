@@ -16,8 +16,6 @@ RUN apt-get install -y wget
 
 RUN apt-get install -y openssl ca-certificates
 
-RUN apt-get install -y openssl
-
 
 # mysql
 
@@ -33,7 +31,6 @@ RUN mkdir /var/www/php
 RUN touch index.php && echo "<?php	phpinfo(); ?>" > /var/www/php/index.php
 
 COPY ./srcs/nginx_auto_on ./
-
 
 COPY ./srcs/autoindex.sh ./
 
