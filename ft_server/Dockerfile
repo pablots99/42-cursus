@@ -28,9 +28,18 @@ RUN service mysql start && mysql -u root  mysql < setup.sql
 
 # nginx
 
-COPY ./srcs/index.html /var/www/index.html
+RUN mkdir /var/www/php
 
-COPY ./srcs/nginx_config /etc/nginx/sites-available/nginx_config
+RUN touch index.php && echo "<?php	phpinfo(); ?>" > /var/www/php/index.php
+
+COPY ./srcs/nginx_auto_on ./
+
+
+COPY ./srcs/autoindex.sh ./
+
+COPY ./srcs/nginx_auto_off ./
+
+RUN touch /etc/nginx/sites-available/nginx_config && cat nginx_auto_on > /etc/nginx/sites-available/nginx_config
 
 RUN ln -s /etc/nginx/sites-available/nginx_config /etc/nginx/sites-enabled/
 
