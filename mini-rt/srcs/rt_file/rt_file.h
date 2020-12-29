@@ -1,28 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mini_rt.h                                          :+:      :+:    :+:   */
+/*   rt_file.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/21 19:15:09 by pablo             #+#    #+#             */
-/*   Updated: 2020/12/22 10:42:17 by pablo            ###   ########.fr       */
+/*   Created: 2020/12/27 20:13:39 by pablo             #+#    #+#             */
+/*   Updated: 2020/12/28 19:34:49 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "./libft/libft.h"
-# include <mlx.h>
-# include <stdio.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <math.h>
+int save_res(char **splited,t_file *configFile);
 
-typedef struct	s_conifg
-{
-    void *mlx;
-    void *mlx_win;
-    
-}               t_config;
+int save_new_ligth(char **splited, t_file *configFile);
 
+int save_ambient_ligth(char **splited, t_file *configFile);
 
+int save_new_camera(char **splited, t_file *configFile);
 

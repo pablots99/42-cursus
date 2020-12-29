@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/30 17:27:09 by pablo             #+#    #+#             */
-/*   Updated: 2020/08/19 15:10:54 by pablo            ###   ########.fr       */
+/*   Updated: 2020/12/27 19:41:35 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,11 @@ typedef struct	s_list
 	void			*content;
 	struct s_list	*next;
 }				t_list;
+
+int		ft_printf(const char *input, ...);
+
+int		get_next_line(int fd, char **line);
+
 
 size_t			ft_strlen(char *str);
 
