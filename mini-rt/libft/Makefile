@@ -65,9 +65,15 @@ bonus:
 
 clean:
 	/bin/rm -f $(OBJS) $(OBJS_BONUS)
+	$(MAKE) clean -C ./ft_printf
+
 
 fclean: clean
 	/bin/rm -f $(NAME)
+	$(MAKE) fclean -C ./ft_printf
+
+
+	
 
 re: fclean all
 

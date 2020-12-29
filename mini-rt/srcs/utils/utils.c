@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 20:18:03 by pablo             #+#    #+#             */
-/*   Updated: 2020/12/28 23:47:38 by pablo            ###   ########.fr       */
+/*   Updated: 2020/12/29 16:09:52 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,3 @@ int parse_error( char *err)
     return (1);
 }
 
-void free_struct(t_file config)
-{
-    
-}

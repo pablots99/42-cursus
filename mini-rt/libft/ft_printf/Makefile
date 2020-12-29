@@ -28,10 +28,8 @@ $(NAME): $(OBJS)
 clean:
 	rm -f *.o
 	/bin/rm -f $(OBJS)
-	$(MAKE) clean -C ./libft
 
 fclean: clean
-	$(MAKE) fclean -C ./libft
 	/bin/rm -f $(NAME)
 
 re : fclean all
