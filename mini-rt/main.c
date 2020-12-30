@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 19:14:12 by pablo             #+#    #+#             */
-/*   Updated: 2020/12/29 18:52:02 by ptorres          ###   ########.fr       */
+/*   Updated: 2020/12/30 22:06:52 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 void init_window(t_file *c)
 {
-    //printf("fov%d",((t_camera*)ft_lstlast(c->camera)->content)->fov);
+    //printf("fov%f",((t_triangle*)ft_lstlast(c->triangle)->content)->cord_3.z);
     c->mlx_ptr = mlx_init();
     c->win_ptr = mlx_new_window(c->mlx_ptr,c->win_width,c->win_heigth,"MiniRt");
     mlx_loop(c->mlx_ptr);
@@ -27,14 +27,18 @@ int main(int argc, char **argv)
     
     if (argc == 2)
     {
+	printf("aaaaa");
+
        if(read_rt_file(argv[1],&config))
             init_window(&config);
-        //else libero structura
+	else
+		ft_printf("hay que liberar\n");
     }
     else
     {
         ft_printf("Error: incorrect number of parameters");
         return 0;
     }
+    
     return 0;
 }
