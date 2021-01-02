@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 19:15:09 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/02 18:39:08 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/02 19:42:56 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,10 @@ int is_norm_vec(t_cord *cord);
 char* ft_clean_spaces(char *str);
 
 void free_config(t_file *c);
+
+int exit_win(int keycode, t_file *c);
+
+int exit_win2(t_file *c);
 
 
 

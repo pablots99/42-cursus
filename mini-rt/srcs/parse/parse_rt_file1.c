@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 20:15:34 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/02 16:55:48 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/02 20:10:51 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,10 @@ int save_res(char **splited, t_file *configFile)
 	int err;
 
 	err = 0;
+	if (configFile->win_heigth)
+		return (parse_error("Resolution  Error: Only 1 Resolution  can be defined \n"));
 	if (ft_bistrlen(splited) != 3)
-		err += parse_error("Resolution Error: Bad number of arguments \n");
+		return parse_error("Resolution Error: Bad number of arguments \n");
 	else if (!ft_str_isnum(splited[1]) || !ft_str_isnum(splited[2]))
 		err += parse_error("Resolution Error: bad formated");
 	configFile->win_width = atoi(splited[1]);
@@ -32,6 +34,8 @@ int save_ambient_ligth(char **splited, t_file *configFile)
 	int err;
 
 	err = 0;
+	if (configFile->ambient_ligth.ratio)
+		return (parse_error("Ambient Ligth Error: Only 1 Ambient ligth can be defined \n"));
 	if (ft_bistrlen(splited) != 3)
 		return (parse_error("Ambient Ligth Error: Bad number of arguments \n"));
 	if (!ft_isfloat(splited[1]))
@@ -48,18 +52,21 @@ int save_new_ligth(char **splited, t_file *configFile)
 	int err;
 
 	err = 0;
-	if (!(ligth = malloc(1 * sizeof(t_ligth))))
-		return (parse_error("Ligth Error: Malloc error on t_ligth\n"));
 	if (ft_bistrlen(splited) != 4)
 		return (parse_error("Ligth Error: Bad number of arguments \n"));
 	if (!ft_isfloat(splited[2]))
 		return (parse_error("Ligth Error: Bad value for brigthness \n"));
+	if (!(ligth = malloc(1 * sizeof(t_ligth))))
+		return (parse_error("Ligth Error: Malloc error on t_ligth\n"));
 	err += save_cord(&ligth->cord, splited[1], "Light");
 	ligth->brigthness = ft_atof(splited[2]);
 	err += save_rgb(&ligth->rgb, splited[3], "Ligth");
 	ft_lstadd_back(&configFile->ligth, ft_lstnew(ligth));
 	if (err)
+	{
+		free(ligth);
 		return (1);
+	}
 	return (0);
 }
 int save_new_camera(char **splited, t_file *configFile)
@@ -68,12 +75,12 @@ int save_new_camera(char **splited, t_file *configFile)
 	int err;
 
 	err = 0;
-	if (!(camera = malloc(1 * sizeof(t_camera))))
-		return (parse_error("Camera Error: Malloc error on t_camera\n"));
 	if (ft_bistrlen(splited) != 4)
 		return (parse_error("Camera Error: Bad number of arguments \n"));
 	if (!(ft_str_isnum(splited[3]) && (atoi(splited[3]) >= 0 && atoi(splited[3]) <= 180)))
 		return (parse_error("Camera Error: Bad value for FOV \n"));
+	if (!(camera = malloc(1 * sizeof(t_camera))))
+		return (parse_error("Camera Error: Malloc error on t_camera\n"));
 	err += save_cord(&camera->cord, splited[1], "Camera");
 	err += save_cord(&camera->norm_v, splited[2], "Camera");
 	if (!is_norm_vec(&camera->norm_v))
@@ -81,6 +88,9 @@ int save_new_camera(char **splited, t_file *configFile)
 	camera->fov = atoi(splited[3]);
 	ft_lstadd_back(&configFile->camera, ft_lstnew(camera));
 	if (err)
+	{
+		free(camera);
 		return (1);
+	}
 	return (0);
 }

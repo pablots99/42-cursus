@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 17:05:59 by ptorres           #+#    #+#             */
-/*   Updated: 2020/12/30 20:30:40 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/01/02 20:02:26 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int len_coma_spaces(char *str)
 				len++;
 				i++;
 			}
-			continue ;
+			continue;
 		}
 		i++;
 	}
@@ -61,11 +61,34 @@ char *ft_clean_spaces(char *str)
 			i++;
 			while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
 				i++;
-			continue ;
+			continue;
 		}
 		i++;
 	}
 	free(str);
 	res[i] = 0;
 	return res;
+}
+int exit_win(int keycode, t_file *c)
+{
+	if (keycode == 53)
+	{
+		mlx_destroy_window(c->mlx_ptr, c->win_ptr);
+		free_config(c);
+		ft_printf("\n\n\n\n------------------LEAKS---------------------------------------\n");
+		system("leaks minirt");
+		ft_printf("--------------------------------------------------------\n");
+		exit(0);
+	}
+	return (0);
+}
+int exit_win2(t_file *c)
+{
+	mlx_destroy_window(c->mlx_ptr, c->win_ptr);
+	free_config(c);
+	ft_printf("\n\n\n\n------------------LEAKS---------------------------------------\n");
+	system("leaks minirt");
+	ft_printf("--------------------------------------------------------\n");
+	exit(0);
+	return (0);
 }

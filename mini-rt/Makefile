@@ -3,9 +3,9 @@ NAME = minirt
 LIBFT = libft/libft.a
 
 SRCS =  main.c 						\
-		srcs/rt_file/get_rt_file.c 		\
-		srcs/rt_file/parse_rt_file1.c 	\
-		srcs/rt_file/parse_rt_file2.c 	\
+		srcs/parse/get_rt_file.c 		\
+		srcs/parse/parse_rt_file1.c 	\
+		srcs/parse/parse_rt_file2.c 	\
 		srcs/utils/utils.c			\
 		srcs/utils/utils2.c			\
 		srcs/utils/utils3.c			\
@@ -27,7 +27,8 @@ LFAGS = -L libft -lft  -L minilibx -lmlx -framework OpenGL -framework AppKit
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(LFAGS) $(OBJS) -o $(NAME)
+	$(CC) $(CFLAGS) -g $(LFAGS) $(OBJS) -o $(NAME)
+	make clean
 
 re_libft:
 	$(MAKE) fclean -C ./libft
