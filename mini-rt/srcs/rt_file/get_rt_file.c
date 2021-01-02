@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_rt_file.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 14:39:35 by pablo             #+#    #+#             */
-/*   Updated: 2020/12/30 22:06:40 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/01/02 18:30:55 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,50 +24,43 @@ int save_rt_file_aux1(char **splited, t_file *configFile)
 		err = save_new_square(splited, configFile);
 	else if (ft_strlen(*splited) == 2 && ft_strncmp(*splited, "cy", 2) == 0)
 		err = save_new_cylinder(splited, configFile);
+	else if (ft_strlen(*splited) == 2 && ft_strncmp(*splited, "tr", 2) == 0)
+		err = save_new_triangle(splited, configFile);
+	else
+		err = ft_printf("Error: '%s' is a bad identifer\n", *splited);
 	if (!err)
 		return (0);
 	else
 		return (1);
 }
 
-int save_rt_file_aux(char **splited, t_file *configFile)
-{
-
-	int err;
-
-	err = 0;
-	if (*splited[0] == 'R' && ft_strlen(*splited) == 1)
-		err = save_res(splited, configFile);
-	else if (*splited[0] == 'l' && ft_strlen(*splited) == 1)
-		err = save_new_ligth(splited, configFile);
-	else if (*splited[0] == 'A' && ft_strlen(*splited) == 1)
-		err = save_ambient_ligth(splited, configFile);
-	else if (*splited[0] == 'c' && ft_strlen(*splited) == 1)
-		err = save_new_camera(splited, configFile);
-	else if (ft_strlen(*splited) == 2 && ft_strncmp(*splited, "sp", 2) == 0)
-		err = save_new_sphere(splited, configFile);
-	else
-		return (-1);
-	if (!err)
-		return (0);
-	else
-		return (1);
-}
 int save_rt_file(char **splited, t_file *configFile)
 {
+
 	int err;
 
 	err = 0;
-	if (splited[0])
+	if (*splited)
 	{
-		err = save_rt_file_aux(splited, configFile);
-		if (err == -1)
-			err = save_rt_file_aux1(splited, configFile);
-		if (err)
-			return ft_printf("Error: '%s' is a bad identifer\n", *splited);
+		if ( ft_strlen(*splited) == 1 && *splited[0] == 'R')
+			err = save_res(splited, configFile);
+		else if (ft_strlen(*splited) == 1 && *splited[0] == 'l')
+			err = save_new_ligth(splited, configFile);
+		else if (ft_strlen(*splited) == 1 && *splited[0] == 'A' )
+			err = save_ambient_ligth(splited, configFile);
+		else if (ft_strlen(*splited) == 1 && *splited[0] == 'c' )
+			err = save_new_camera(splited, configFile);
+		else if (ft_strlen(*splited) == 2 && ft_strncmp(*splited, "sp", 2) == 0)
+			err = save_new_sphere(splited, configFile);
+		else
+			return save_rt_file_aux1(splited, configFile);
 	}
-	return (0);
+	if (!err)
+		return (0);
+	else
+		return (1);
 }
+
 int read_file(int fd, t_file *configFile)
 {
 	char *line;
@@ -77,16 +70,15 @@ int read_file(int fd, t_file *configFile)
 	err = 0;
 	while (get_next_line(fd, &line) > 0)
 	{
-		//line = ft_clean_spaces(line);
 		line_splited = ft_split(line, ' ');
 		err += save_rt_file(line_splited, configFile);
 		ft_bidimensional_free(line_splited);
 		free(line);
 	}
-	//line = ft_clean_spaces(line);
-	// line_splited = ft_split(ft_clean_spaces(line), ' ');
-	// err += save_rt_file(line_splited, configFile);
-	// ft_bidimensional_free(line_splited);
+	line_splited = ft_split(line, ' ');
+	err += save_rt_file(line_splited, configFile);
+	free(line);
+	ft_bidimensional_free(line_splited);
 	close(fd);
 	if (err)
 		return (1);

@@ -37,7 +37,6 @@ re_libft:
 re_minilibx:
 	$(MAKE) clean -C ./minilibx	
 	$(MAKE)  -C ./minilibx
-	$(MAKE) clean -C ./minilibx	
 	
 clean:
 	rm -f *.o

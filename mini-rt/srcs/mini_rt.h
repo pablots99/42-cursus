@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_rt.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 19:15:09 by pablo             #+#    #+#             */
-/*   Updated: 2020/12/30 21:46:04 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/01/02 18:39:08 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,14 +95,14 @@ typedef struct s_file
     int win_heigth;
     int win_width;
     t_ambient_ligth ambient_ligth;
-    t_list *ligth;
     t_list *camera;
+    t_list *ligth;
     t_list *sphere;
     t_list *plane;
     t_list *square;
     t_list *cylinder;
     t_list *triangle;
-} t_file;
+}               t_file;
 
 int read_rt_file(char *file, t_file *configFile);
 
@@ -117,6 +117,9 @@ int ft_isfloat(char *num);
 int is_norm_vec(t_cord *cord);
 
 char* ft_clean_spaces(char *str);
+
+void free_config(t_file *c);
+
 
 
 

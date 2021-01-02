@@ -6,23 +6,29 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/18 13:44:33 by pablo             #+#    #+#             */
-/*   Updated: 2020/09/08 11:22:54 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/02 17:27:45 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "../srcs/mini_rt.h"
 
 void	ft_lstadd_back(t_list **lst, t_list *new)
 {
 	t_list *curr;
-
-	if (!lst || !new)
-		return ;
-	if (*lst == NULL)
-		*lst = new;
-	else
+	
+	if (!lst || !new )
 	{
-		curr = ft_lstlast(*lst);
+		return ;
+	}
+
+	if(*lst)
+	{
+		curr = *lst;
+		while (curr->next)
+			curr = curr->next;
 		curr->next = new;
 	}
-}
+	else
+		*lst = new;
+	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 20:18:03 by pablo             #+#    #+#             */
-/*   Updated: 2020/12/29 16:09:52 by ptorres          ###   ########.fr       */
+/*   Updated: 2020/12/31 00:44:19 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ int ft_str_isnum(char *num)
 int ft_bistrlen(char **str)
 {
     int i;
-
+    if(!*str)
+        return (0);
     i = 0;
     while(str[i])
         i++;
