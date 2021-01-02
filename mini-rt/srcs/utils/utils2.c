@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/28 16:34:52 by pablo             #+#    #+#             */
-/*   Updated: 2020/12/29 18:42:56 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/01/02 21:02:44 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../mini_rt.h"
+#include <math.h>
 
 int save_cord(t_cord *cord, char *vec, char *msg)
 {
@@ -85,9 +86,10 @@ int ft_isfloat(char *num)
 }
 int is_norm_vec(t_cord *cord)
 {
-    if(!(cord->x >= -1 && cord->x <= 1) ||
-        !(cord->y >= -1 && cord->y <= 1) ||
-         !(cord->z >= -1 && cord->z <= 1))
-        return (0);
-    return (1);
+    float len;
+
+    len = sqrt(pow(cord->x,2) + pow(cord->y,2) + pow(cord->z,2));
+    if(len != 1)
+        return (1);
+    return (0);
 }

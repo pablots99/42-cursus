@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 20:15:34 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/02 20:10:51 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/02 21:01:16 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int save_new_ligth(char **splited, t_file *configFile)
 	ft_lstadd_back(&configFile->ligth, ft_lstnew(ligth));
 	if (err)
 	{
-		free(ligth);
+		//free(ligth);
 		return (1);
 	}
 	return (0);
@@ -84,12 +84,12 @@ int save_new_camera(char **splited, t_file *configFile)
 	err += save_cord(&camera->cord, splited[1], "Camera");
 	err += save_cord(&camera->norm_v, splited[2], "Camera");
 	if (!is_norm_vec(&camera->norm_v))
-		return (parse_error("Camera Error: vector not normalized \n"));
+		err += (parse_error("Camera Error: vector not normalized \n"));
 	camera->fov = atoi(splited[3]);
 	ft_lstadd_back(&configFile->camera, ft_lstnew(camera));
 	if (err)
 	{
-		free(camera);
+		//free(camera);
 		return (1);
 	}
 	return (0);

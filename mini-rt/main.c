@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 19:14:12 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/02 20:06:47 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/02 20:58:49 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int init_window(t_file *c)
         return parse_error("Minilibx Error: CAN NOT OPEN A WINDOW");
     mlx_hook(c->win_ptr, 2, 1L << 0, exit_win, c);
     mlx_hook(c->win_ptr, 17, 1L << 2, exit_win2, c);
+    
     mlx_loop(c->mlx_ptr);
     return 0;
 }
@@ -42,7 +43,7 @@ int main(int argc, char **argv)
         ft_printf("Error: incorrect number of parameters");
         return 0;
     }
-    free_config(&config);
+    free_config(&config);//esta bien pero si hay error hace free cuando no deberia
     ft_printf("\n\n\n\n------------------LEAKS---------------------------------------\n");
     system("leaks minirt");
     ft_printf("--------------------------------------------------------\n");

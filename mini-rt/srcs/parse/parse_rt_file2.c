@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 16:08:44 by ptorres           #+#    #+#             */
-/*   Updated: 2021/01/02 20:10:22 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/02 21:01:32 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int save_new_sphere(char **splited, t_file *configFile)
 	ft_lstadd_back(&configFile->sphere, ft_lstnew(sphere));
 	if (err)
 	{
-		free(sphere);
+		//free(sphere);
 		return (1);
 	}
 	return (0);
@@ -50,11 +50,11 @@ int save_new_plane(char **splited, t_file *configFile)
 	err += save_cord(&plane->norm_v, splited[2], "Plane");
 	err += save_rgb(&plane->rgb, splited[3], "Plane");
 	if (!is_norm_vec(&plane->norm_v))
-		return (parse_error("Plane Error: vector not normalized \n"));
+		err += (parse_error("Plane Error: vector not normalized \n"));
 	ft_lstadd_back(&configFile->plane, ft_lstnew(plane));
 	if (err)
 	{
-		free(plane);
+		//free(plane);
 		return (1);
 	}
 	return (0);
@@ -76,11 +76,11 @@ int save_new_square(char **splited, t_file *configFile)
 	square->side = ft_atof(splited[3]);
 	err += save_rgb(&square->rgb, splited[4], "Square");
 	if (!is_norm_vec(&square->norm_v))
-		return (parse_error("Square Error: vector not normalized \n"));
+		err += (parse_error("Square Error: vector not normalized \n"));
 	ft_lstadd_back(&configFile->square, ft_lstnew(square));
 	if (err)
 	{
-		free(square);
+		//free(square);
 		return (1);
 	}
 	return (0);
@@ -105,11 +105,11 @@ int save_new_cylinder(char **splited, t_file *configFile)
 	cylinder->height= ft_atof(splited[4]);
 	err += save_rgb(&cylinder->rgb, splited[5], "Cylinder");
 	if (!is_norm_vec(&cylinder->norm_v))
-		return (parse_error("Cylinder Error: vector not normalized \n"));
+		err += (parse_error("Cylinder Error: vector not normalized \n"));
 	ft_lstadd_back(&configFile->cylinder, ft_lstnew(cylinder));
 	if (err)
 	{
-		free(cylinder);
+		//free(cylinder);
 		return (1);
 	}
 	return (0);
@@ -131,7 +131,7 @@ int save_new_triangle(char **splited, t_file *configFile)
 	ft_lstadd_back(&configFile->triangle, ft_lstnew(triangle));
 	if (err)
 	{
-		free(triangle);
+		//free(triangle);
 		return (1);
 	}
 	return (0);
