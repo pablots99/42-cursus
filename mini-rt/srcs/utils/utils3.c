@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 17:05:59 by ptorres           #+#    #+#             */
-/*   Updated: 2021/01/02 20:02:26 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/02 21:21:01 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ char *ft_clean_spaces(char *str)
 	i = 0;
 	if (!(res = malloc(sizeof(char) * (ft_strlen(str) - len_coma_spaces(str) + 1))))
 		return (NULL);
-	//printf("len:%d,spaces:%d\n", (int)ft_strlen(str), len_coma_spaces(str));
 	while (str[i])
 	{
 		if (!(str[i] >= 9 && str[i] <= 13))

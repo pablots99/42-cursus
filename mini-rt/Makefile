@@ -11,6 +11,9 @@ SRCS =  main.c 						\
 		srcs/utils/utils3.c			\
 		srcs/utils/ft_atof.c			\
 		srcs/utils/utils_free.c			\
+		srcs/math/vectors.c				\
+		srcs/math/matrix.c				\
+		srcs/raytracing/cast_rays.c
 		
 
 
@@ -38,6 +41,7 @@ re_libft:
 re_minilibx:
 	$(MAKE) clean -C ./minilibx	
 	$(MAKE)  -C ./minilibx
+	rm -f ./minilibx/*.o
 	
 clean:
 	rm -f *.o

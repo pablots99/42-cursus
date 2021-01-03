@@ -1,23 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.h                                            :+:      :+:    :+:   */
+/*   cast_rays.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/27 20:19:56 by pablo             #+#    #+#             */
-/*   Updated: 2020/12/28 16:11:35 by pablo            ###   ########.fr       */
+/*   Created: 2021/01/03 12:16:02 by pablo             #+#    #+#             */
+/*   Updated: 2021/01/03 22:11:16 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
-void ft_bidimensional_free(char **arr);
+#include "../mini_rt.h"
 
-int ft_str_isnum(char *num);
+t_ray generate_ray(int x, int y, t_file c)
+{
+    t_ray ray;
+    t_camera camera;
 
-int ft_bistrlen(char **str);
-
-float ft_atof(char *num);
-
-
-
+    camera = *((t_camera *)c.camera->content);
+    ray.origin = camera.cord;
+    ray.direction.x = x;//nooo vale es para callar el error
+    ray.direction.y = y;//nooo vale es para callar el error
+    return (ray);
+}

@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/28 16:34:52 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/02 21:02:44 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/02 21:07:16 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,6 @@ int is_norm_vec(t_cord *cord)
 
     len = sqrt(pow(cord->x,2) + pow(cord->y,2) + pow(cord->z,2));
     if(len != 1)
-        return (1);
-    return (0);
+        return (0);
+    return (1);
 }

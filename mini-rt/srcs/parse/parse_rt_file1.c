@@ -6,11 +6,21 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 20:15:34 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/02 21:01:16 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/03 21:06:32 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../mini_rt.h"
+
+
+t_canvas save_canvas(float fov,t_file c)
+{
+	t_canvas canvas;
+
+	canvas.canvas_w = 2*atan((fov/2));
+	canvas.canvas_h = canvas.canvas_w / c.aspect_ratio;
+	return (canvas);
+}
 
 int save_res(char **splited, t_file *configFile)
 {
@@ -25,6 +35,7 @@ int save_res(char **splited, t_file *configFile)
 		err += parse_error("Resolution Error: bad formated");
 	configFile->win_width = atoi(splited[1]);
 	configFile->win_heigth = atoi(splited[2]);
+	configFile->aspect_ratio = (float)configFile->win_width / (float)configFile->win_heigth;
 	if (err)
 		return (1);
 	return (0);
@@ -86,6 +97,7 @@ int save_new_camera(char **splited, t_file *configFile)
 	if (!is_norm_vec(&camera->norm_v))
 		err += (parse_error("Camera Error: vector not normalized \n"));
 	camera->fov = atoi(splited[3]);
+	camera->canvas = save_canvas(camera->fov,*configFile);
 	ft_lstadd_back(&configFile->camera, ft_lstnew(camera));
 	if (err)
 	{
