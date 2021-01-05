@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_rt_file1.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 20:15:34 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/03 21:06:32 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/05 18:25:47 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@ t_canvas save_canvas(float fov,t_file c)
 {
 	t_canvas canvas;
 
-	canvas.canvas_w = 2*atan((fov/2));
+	canvas.canvas_w = 2*tan((fov/2) *( M_PI / 180));
 	canvas.canvas_h = canvas.canvas_w / c.aspect_ratio;
+	canvas.matrix.v3 = ((t_camera *)c.camera->content)->norm_v);
 	return (canvas);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 19:14:12 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/03 22:09:18 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/05 15:49:24 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,18 @@ void paint_scene(t_file *c)
     
     color = 0;
     y = 0;
-    while ( y <= c->win_heigth)
+    while ( y < c->win_heigth)
     {
         x = 0;
-        while (x <= c->win_width)
+        while (x < c->win_width)
         {
             ray = generate_ray(x,y,*c);
+		printf("rayx: %f, rayy: %f, rayz: %f\n",ray.direction.x, ray.direction.y, ray.direction.z);
             //color = get_intersection(ray,*c); 
             //mlx_pixel_put(c->mlx_ptr,c->win_ptr,x,y,color)
             x++;
         }
+	  printf("---------------------------------------------\n");
         y++;
     }
     
