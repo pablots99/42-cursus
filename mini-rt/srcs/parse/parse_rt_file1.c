@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_rt_file1.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 20:15:34 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/05 18:25:47 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/01/06 11:05:47 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,16 @@
 t_canvas save_canvas(float fov,t_file c)
 {
 	t_canvas canvas;
+	t_cord 	  temp;
 
+	temp.x = 0;
+	temp.y = 1;
+	temp.z = 0;
 	canvas.canvas_w = 2*tan((fov/2) *( M_PI / 180));
 	canvas.canvas_h = canvas.canvas_w / c.aspect_ratio;
-	canvas.matrix.v3 = ((t_camera *)c.camera->content)->norm_v);
+	canvas.matrix.v3 = norm_vec(esc_dot_vec(-1,((t_camera*)c.camera->content)->norm_v));
+	canvas.matrix.v2 = prod_vec(temp,canvas.matrix.v3);
+	canvas.matrix.v1 = prod_vec(canvas.matrix.v3,canvas.matrix.v2);
 	return (canvas);
 }
 
@@ -98,12 +104,14 @@ int save_new_camera(char **splited, t_file *configFile)
 	if (!is_norm_vec(&camera->norm_v))
 		err += (parse_error("Camera Error: vector not normalized \n"));
 	camera->fov = atoi(splited[3]);
-	camera->canvas = save_canvas(camera->fov,*configFile);
 	ft_lstadd_back(&configFile->camera, ft_lstnew(camera));
+
 	if (err)
 	{
 		//free(camera);
 		return (1);
 	}
+			camera->canvas = save_canvas(camera->fov,*configFile);
+
 	return (0);
 }

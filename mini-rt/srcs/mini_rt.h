@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_rt.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 19:15:09 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/05 18:23:51 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/01/06 20:47:28 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,6 @@
 #include <math.h>
 #include <fcntl.h>
 
-typedef struct s_canvas
-{
-	float canvas_w;
-	float canvas_h;
-	t_matrix matrix;
-} t_canvas;
 
 typedef struct s_cord
 {
@@ -31,18 +25,28 @@ typedef struct s_cord
 	float y;
 	float z;
 } t_cord;
-typedef struct s_rgb
-{
-	int r;
-	int g;
-	int b;
-} t_rgb;
+
 typedef struct s_matrix
 {
 	t_cord v1;
 	t_cord v2;
 	t_cord v3;
 } t_matrix;
+typedef struct s_canvas
+{
+	float canvas_w;
+	float canvas_h;
+	t_matrix matrix;
+} t_canvas;
+
+
+typedef struct s_rgb
+{
+	int r;
+	int g;
+	int b;
+} t_rgb;
+
 typedef struct s_ambient_ligth
 {
 	float ratio;
@@ -157,3 +161,26 @@ float ft_atof(char *num);
 t_ray generate_ray(int x, int y, t_file c);
 
 float mod_vec(t_cord v);
+
+t_cord prod_vec(t_cord v1, t_cord v2);
+
+t_cord vector_dot_matrix(t_cord v,t_matrix matrix);
+
+t_cord	esc_dot_vec(float num, t_cord c);
+
+int get_intersections(t_ray ray,t_file c);
+
+int spheres_intersection(t_ray ray,t_list *t_camera);
+
+int		create_int_color(int t, int r, int g, int b);
+
+
+t_cord points_vec(t_cord p1, t_cord p2);
+
+float prod_esc(t_cord v1, t_cord v2);
+
+float rad_ang_vec(t_cord v1, t_cord v2);
+
+float proy_vect(t_cord v1, t_cord v2);//V2 SOBRE V1
+
+

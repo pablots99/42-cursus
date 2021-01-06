@@ -12,8 +12,8 @@ SRCS =  main.c 						\
 		srcs/utils/ft_atof.c			\
 		srcs/utils/utils_free.c			\
 		srcs/math/vectors.c				\
-		srcs/math/matrix.c				\
-		srcs/raytracing/cast_rays.c
+		srcs/raytracing/cast_rays.c		\
+		srcs/raytracing/intersections.c
 		
 
 
