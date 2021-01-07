@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 19:15:09 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/06 20:47:28 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/07 17:05:36 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,9 +168,9 @@ t_cord vector_dot_matrix(t_cord v,t_matrix matrix);
 
 t_cord	esc_dot_vec(float num, t_cord c);
 
-int get_intersections(t_ray ray,t_file c);
+int get_intersections(t_ray *ray,t_file c);
 
-int spheres_intersection(t_ray ray,t_list *t_camera);
+int spheres_intersection(t_ray *ray,t_list *t_camera);
 
 int		create_int_color(int t, int r, int g, int b);
 
@@ -182,5 +182,7 @@ float prod_esc(t_cord v1, t_cord v2);
 float rad_ang_vec(t_cord v1, t_cord v2);
 
 float proy_vect(t_cord v1, t_cord v2);//V2 SOBRE V1
+
+int plane_intersection(t_ray *ray, t_list *plane);
 
 

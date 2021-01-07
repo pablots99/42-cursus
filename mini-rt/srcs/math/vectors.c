@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/02 21:45:28 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/06 21:07:33 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/07 14:27:03 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,16 +72,13 @@ t_cord vector_dot_matrix(t_cord v, t_matrix matrix)
 {
 	t_cord vec;
 
-	vec.x = v.x * matrix.v1.x + v.y * matrix.v2.x + v.z * matrix.v3.x;
-	vec.y = v.x * matrix.v1.y + v.y * matrix.v2.y + v.z * matrix.v3.y;
-	vec.z = v.x * matrix.v1.z + v.y * matrix.v2.z + v.z * matrix.v3.z;
+	vec.x = (v.x * matrix.v1.x) + (v.y * matrix.v2.x) + (v.z * matrix.v3.x);
+	vec.y = (v.x * matrix.v1.y) + (v.y * matrix.v2.y) + (v.z * matrix.v3.y);
+	vec.z = (v.x * matrix.v1.z) + (v.y * matrix.v2.z) + (v.z * matrix.v3.z);
 	return (vec);
 }
 
 float mod_vec(t_cord vec)
 {
-	float l;
-
-	l = sqrt(pow(vec.x, 2) + pow(vec.y, 2) + pow(vec.z, 2));
-	return (l);
+	return (sqrt(pow(vec.x, 2) + pow(vec.y, 2) + pow(vec.z, 2)));
 }

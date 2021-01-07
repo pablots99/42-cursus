@@ -13,7 +13,9 @@ SRCS =  main.c 						\
 		srcs/utils/utils_free.c			\
 		srcs/math/vectors.c				\
 		srcs/raytracing/cast_rays.c		\
-		srcs/raytracing/intersections.c
+		srcs/raytracing/spheres.c		\
+		srcs/raytracing/planes.c		
+
 		
 
 
@@ -24,7 +26,7 @@ CC = gcc
 
 CFLAGS = -Wall -Wextra -Werror #-fsanitize=address
 
-LFAGS = -L libft -lft  -L minilibx -lmlx -framework OpenGL -framework AppKit
+LFAGS = -L libft -lft   libmlx.dylib -framework Metal -framework AppKit
 
 
 all: $(NAME)
@@ -42,6 +44,8 @@ re_minilibx:
 	$(MAKE) clean -C ./minilibx	
 	$(MAKE)  -C ./minilibx
 	rm -f ./minilibx/*.o
+	mv minilibx/libmlx.dylib .
+
 	
 clean:
 	rm -f *.o
