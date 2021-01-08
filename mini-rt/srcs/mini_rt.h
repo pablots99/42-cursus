@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 19:15:09 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/07 21:00:21 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/08 12:37:34 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,9 +174,6 @@ int spheres_intersection(t_ray *ray,t_list *t_camera);
 
 int		create_int_color(int t, int r, int g, int b);
 
-
-t_cord points_vec(t_cord p1, t_cord p2);
-
 float prod_esc(t_cord v1, t_cord v2);
 
 float rad_ang_vec(t_cord v1, t_cord v2);
@@ -186,5 +183,7 @@ float proy_vect(t_cord v1, t_cord v2);//V2 SOBRE V1
 int plane_intersection(t_ray *ray, t_list *plane);
 
 t_cord sum_vec(t_cord v1, t_cord v2);
+
+t_cord rest_vec(t_cord v1, t_cord v2);
 
 

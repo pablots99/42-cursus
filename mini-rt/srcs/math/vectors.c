@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/02 21:45:28 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/07 22:26:20 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/08 12:37:30 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,14 @@ t_cord sum_vec(t_cord v1, t_cord v2)
 	vec.z = v1.z + v2.z;
 	return (vec);
 }
+t_cord rest_vec(t_cord v1, t_cord v2)
+{
+	t_cord vec;
+	vec.x = v1.x - v2.x;
+	vec.y = v1.y - v2.y;
+	vec.z = v1.z - v2.z;
+	return (vec);
+}
 
 float prod_esc(t_cord v1, t_cord v2)
 {
@@ -65,16 +73,6 @@ float proy_vect(t_cord v1, t_cord v2)
 float rad_ang_vec(t_cord v1, t_cord v2)
 {
 	return (acos(prod_esc(v1, v2) / (mod_vec(v1) * mod_vec(v2))) * M_PI / 180);
-}
-
-t_cord points_vec(t_cord p1, t_cord p2)
-{
-	t_cord vec;
-
-	vec.x = p2.x - p1.x;
-	vec.y = p2.y - p1.y;
-	vec.z = p2.z - p1.z;
-	return (vec);
 }
 
 t_cord vector_dot_matrix(t_cord v, t_matrix matrix)

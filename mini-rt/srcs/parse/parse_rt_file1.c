@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 20:15:34 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/07 22:29:12 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/08 12:14:23 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,13 @@ t_canvas save_canvas(float fov,t_file c)
 	temp.x = 0;
 	temp.y = 1;
 	temp.z = 0;
-	//si la camara mira arriba o abajo va mal
+	
+
 	canvas.canvas_w = 2*tan((fov/2) * ( M_PI / 180)) * c.aspect_ratio;
 	canvas.canvas_h =  2*tan((fov/2) * ( M_PI / 180));
 	canvas.matrix.v3 = (esc_dot_vec(-1,cam.norm_v));
-	canvas.matrix.v2 = prod_vec(norm_vec(temp),canvas.matrix.v3);
-	canvas.matrix.v1 = prod_vec(canvas.matrix.v3,canvas.matrix.v2);
+	canvas.matrix.v1 = prod_vec(temp,canvas.matrix.v3);
+	canvas.matrix.v2 = prod_vec(canvas.matrix.v3,canvas.matrix.v1);
 	return (canvas);
 }
 

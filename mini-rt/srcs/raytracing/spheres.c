@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 10:51:00 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/07 21:50:21 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/08 12:37:54 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int get_sp_inter(t_ray *ray, t_sphere sp)
     float d;
     float l_p1;
 
-    l = points_vec(ray->origin, sp.cord);
+    l = rest_vec(sp.cord,ray->origin);
     tca = proy_vect(ray->direction, l);
     if (tca < 0)
         return -1;
@@ -27,7 +27,6 @@ int get_sp_inter(t_ray *ray, t_sphere sp)
     if (d < 0 || d > sp.diameter / 2)
         return -1;
     l_p1 = tca - sqrt(pow(sp.diameter / 2, 2) - pow(d, 2));
-    
     if (l_p1 < ray->len)
         ray->len = l_p1;
     return create_int_color(1, sp.rgb.r, sp.rgb.g, sp.rgb.b);

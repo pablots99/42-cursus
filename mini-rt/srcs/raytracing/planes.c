@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 16:57:32 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/07 19:05:37 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/08 12:32:36 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int get_pl_inter(t_ray *ray, t_plane pl)
 {
     float len;
 
-    len = prod_esc(points_vec(pl.cord, ray->origin), pl.norm_v) /
+    len = prod_esc(rest_vec(pl.cord, ray->origin), pl.norm_v) /
           prod_esc(ray->direction, pl.norm_v);
     if (len < 0)
         return (-1);
