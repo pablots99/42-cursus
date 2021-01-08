@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 19:15:09 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/07 17:05:36 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/07 21:00:21 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,5 +184,7 @@ float rad_ang_vec(t_cord v1, t_cord v2);
 float proy_vect(t_cord v1, t_cord v2);//V2 SOBRE V1
 
 int plane_intersection(t_ray *ray, t_list *plane);
+
+t_cord sum_vec(t_cord v1, t_cord v2);
 
 
