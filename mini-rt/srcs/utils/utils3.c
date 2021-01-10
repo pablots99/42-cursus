@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 17:05:59 by ptorres           #+#    #+#             */
-/*   Updated: 2021/01/06 23:12:27 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/08 20:02:46 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,10 +87,4 @@ int exit_win2(t_file *c)
 	free_config(c);
 	exit(0);
 	return (0);
-}
-
-int		create_int_color(int t, int r, int g, int b)
-{
-	
-	return(t << 24 | r << 16 | g << 8 | b);
 }

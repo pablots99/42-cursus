@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 19:14:12 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/07 21:52:31 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/10 14:39:45 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void paint_scene(t_file *c)
 
     color = 0;
     y = 0;
+    printf("ambient:%f\n",c->ambient_ligth.ratio);
     while (y < c->win_heigth)
     {
         x = 0;
@@ -28,6 +29,8 @@ void paint_scene(t_file *c)
         {
             ray = generate_ray(x, y, *c);
             color = get_intersections(&ray,*c);
+            if(c->ligth && color != 0)
+                 color = shading(&ray,color,*c);
             mlx_pixel_put(c->mlx_ptr,c->win_ptr,x,y,color);
             x++;
         }

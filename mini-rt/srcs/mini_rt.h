@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 19:15:09 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/08 12:37:34 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/10 16:48:20 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ typedef struct s_ray
 {
 	t_cord origin;
 	t_cord direction;
+	t_cord normal;
 	float len;
 } t_ray;
 
@@ -170,9 +171,9 @@ t_cord	esc_dot_vec(float num, t_cord c);
 
 int get_intersections(t_ray *ray,t_file c);
 
-int spheres_intersection(t_ray *ray,t_list *t_camera);
+int spheres_intersection(t_ray *ray, t_list *list, t_file c);
 
-int		create_int_color(int t, int r, int g, int b);
+int		create_int_color(t_rgb color, t_ambient_ligth ambient);
 
 float prod_esc(t_cord v1, t_cord v2);
 
@@ -180,10 +181,19 @@ float rad_ang_vec(t_cord v1, t_cord v2);
 
 float proy_vect(t_cord v1, t_cord v2);//V2 SOBRE V1
 
-int plane_intersection(t_ray *ray, t_list *plane);
+int plane_intersection(t_ray *ray, t_list *plane,t_file c);
 
 t_cord sum_vec(t_cord v1, t_cord v2);
 
 t_cord rest_vec(t_cord v1, t_cord v2);
 
+int shading(t_ray *ray,int color, t_file c);
+
+t_cord vector(float x, float y, float z);
+
+int create_int_color_shade(t_rgb color, t_ligth ligth,float brigth);
+
+t_rgb rgb_from_int(int color);
+
+t_cord ray_cut_point(t_ray ray);
 

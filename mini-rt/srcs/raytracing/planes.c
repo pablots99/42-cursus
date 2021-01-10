@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 16:57:32 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/08 12:32:36 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/10 16:52:36 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,18 @@ int get_pl_inter(t_ray *ray, t_plane pl)
     if (len < 0)
         return (-1);
     if (len < ray->len)
-        ray->len = len;
-    return create_int_color(1, pl.rgb.r, pl.rgb.g, pl.rgb.b);
+    {
+        ray->len = len -1;
+        ray->normal = norm_vec(sum_vec(sum_vec(esc_dot_vec(ray->len,ray->direction),ray->origin),pl.norm_v));
+    }
+    return 1;
 }
 
-int plane_intersection(t_ray *ray, t_list *plane)
+int plane_intersection(t_ray *ray, t_list *plane,t_file c)
 {
     t_plane pl;
     t_list *aux;
     int color;
-    int color_aux;
     float len_aux;
 
     color = 0;
@@ -40,14 +42,14 @@ int plane_intersection(t_ray *ray, t_list *plane)
     {
         len_aux = ray->len;
         pl = *(t_plane *)aux->content;
-        if ((color_aux = get_pl_inter(ray, pl)) >= 0 && ray->len < len_aux)
-            color = color_aux;
+        if (get_pl_inter(ray, pl) && ray->len < len_aux)
+            color = create_int_color(pl.rgb,c.ambient_ligth);
         aux = aux->next;
     }
     len_aux = ray->len;
     pl = *(t_plane *)aux->content;
-    if ((color_aux = get_pl_inter(ray, pl)) >= 0 && ray->len < len_aux)
-        color = color_aux;
+   if (get_pl_inter(ray, pl) && ray->len < len_aux)
+            color = create_int_color(pl.rgb,c.ambient_ligth);
     aux = aux->next;
     return color;
 }

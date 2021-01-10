@@ -9,12 +9,14 @@ SRCS =  main.c 						\
 		srcs/utils/utils.c			\
 		srcs/utils/utils2.c			\
 		srcs/utils/utils3.c			\
+		srcs/utils/colors.c			\
 		srcs/utils/ft_atof.c			\
 		srcs/utils/utils_free.c			\
 		srcs/math/vectors.c				\
 		srcs/raytracing/cast_rays.c		\
 		srcs/raytracing/spheres.c		\
-		srcs/raytracing/planes.c		
+		srcs/raytracing/planes.c		\
+		srcs/raytracing/shading.c		
 
 		
 
@@ -46,6 +48,7 @@ re_minilibx:
 	rm -f ./minilibx/*.o
 	mv minilibx/libmlx.dylib .
 
+
 	
 clean:
 	rm -f *.o
@@ -55,3 +58,6 @@ fclean: clean
 	/bin/rm -f $(NAME)
 
 re : fclean all
+
+
+install : re_libft re_minilibx re

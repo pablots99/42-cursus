@@ -6,11 +6,21 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/02 21:45:28 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/08 12:37:30 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/10 13:56:05 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../mini_rt.h"
+
+t_cord vector(float x, float y, float z)
+{
+	t_cord vec;
+
+	vec.x = x;
+	vec.y = y;
+	vec.z = z;
+	return (vec);
+}
 
 t_cord norm_vec(t_cord vec)
 {
@@ -79,13 +89,18 @@ t_cord vector_dot_matrix(t_cord v, t_matrix matrix)
 {
 	t_cord vec;
 
-	vec.x = prod_esc(v,matrix.v1);
-	vec.y = prod_esc(v,matrix.v2);
-	vec.z = prod_esc(v,matrix.v3);
+	vec.x = prod_esc(v, matrix.v1);
+	vec.y = prod_esc(v, matrix.v2);
+	vec.z = prod_esc(v, matrix.v3);
 	return (vec);
 }
 
 float mod_vec(t_cord vec)
 {
 	return (sqrt(pow(vec.x, 2) + pow(vec.y, 2) + pow(vec.z, 2)));
+}
+
+t_cord ray_cut_point(t_ray ray)
+{
+	return(sum_vec(ray.origin,esc_dot_vec(ray.len, ray.direction)));
 }

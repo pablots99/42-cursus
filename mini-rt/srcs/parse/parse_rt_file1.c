@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 20:15:34 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/08 12:14:23 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/08 17:03:15 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int save_ambient_ligth(char **splited, t_file *configFile)
 		return (parse_error("Ambient Ligth Error: Bad number of arguments \n"));
 	if (!ft_isfloat(splited[1]))
 		return (parse_error("Ambient Ligth Error: Bad value for lighting ratio \n"));
-	configFile->ambient_ligth.ratio = ft_atof(splited[2]);
+	configFile->ambient_ligth.ratio = ft_atof(splited[1]);
 	err += save_rgb(&configFile->ambient_ligth.rgb, splited[2], "Ambient Light");
 	if (err)
 		return (1);

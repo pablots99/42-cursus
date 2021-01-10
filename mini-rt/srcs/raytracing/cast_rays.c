@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/03 12:16:02 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/08 12:08:05 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/08 19:56:29 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ t_ray generate_ray(int x, int y, t_file c)
     ray.direction.z = -1;
     ray.direction = norm_vec(vector_dot_matrix(norm_vec(ray.direction), camera.canvas.matrix));
     ray.len = INFINITY;
+    ray.normal = vector(0,0,0);
     return (ray);
 }
 
@@ -32,15 +33,17 @@ int get_intersections(t_ray *ray, t_file c)
     int color;
     int color_aux;
     float len;
+   
 
     color = 0;
     len = ray->len;
 
-    if (c.sphere && (color_aux = spheres_intersection(ray, c.sphere)) && ray->len < len)
+    if (c.sphere && (color_aux = spheres_intersection(ray, c.sphere,c)) && ray->len < len)
         color = color_aux;
     len = ray->len;
-    if (c.plane && (color_aux = plane_intersection(ray, c.plane)) && ray->len < len)
+    if (c.plane && (color_aux = plane_intersection(ray, c.plane,c)) && ray->len < len)
         color = color_aux;
-
+ 
     return (color);
 }
+
