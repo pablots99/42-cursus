@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 20:15:34 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/08 17:03:15 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/12 14:34:37 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ t_canvas save_canvas(float fov,t_file c)
 
 	canvas.canvas_w = 2*tan((fov/2) * ( M_PI / 180)) * c.aspect_ratio;
 	canvas.canvas_h =  2*tan((fov/2) * ( M_PI / 180));
-	canvas.matrix.v3 = (esc_dot_vec(-1,cam.norm_v));
-	canvas.matrix.v1 = prod_vec(temp,canvas.matrix.v3);
-	canvas.matrix.v2 = prod_vec(canvas.matrix.v3,canvas.matrix.v1);
+	canvas.matrix.v3 = esc_dot_vec(-1,cam.norm_v);
+	canvas.matrix.v1 = esc_dot_vec(-1, prod_vec(temp,cam.norm_v));
+	canvas.matrix.v2 = esc_dot_vec(-1, prod_vec(cam.norm_v,canvas.matrix.v1));
 	return (canvas);
 }
 

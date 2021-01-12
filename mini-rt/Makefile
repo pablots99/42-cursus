@@ -6,16 +6,19 @@ SRCS =  main.c 						\
 		srcs/parse/get_rt_file.c 		\
 		srcs/parse/parse_rt_file1.c 	\
 		srcs/parse/parse_rt_file2.c 	\
-		srcs/utils/utils.c			\
-		srcs/utils/utils2.c			\
-		srcs/utils/utils3.c			\
-		srcs/utils/colors.c			\
+		srcs/utils/utils.c				\
+		srcs/utils/utils2.c				\
+		srcs/utils/utils3.c				\
+		srcs/utils/colors.c				\
 		srcs/utils/ft_atof.c			\
 		srcs/utils/utils_free.c			\
 		srcs/math/vectors.c				\
 		srcs/raytracing/cast_rays.c		\
-		srcs/raytracing/spheres.c		\
-		srcs/raytracing/planes.c		\
+		srcs/raytracing/sphere.c		\
+		srcs/raytracing/plane.c			\
+		srcs/raytracing/cylinder.c		\
+		srcs/raytracing/square.c		\
+		srcs/raytracing/triangle.c		\
 		srcs/raytracing/shading.c		
 
 		

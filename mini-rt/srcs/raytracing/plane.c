@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   planes.c                                           :+:      :+:    :+:   */
+/*   plane.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 16:57:32 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/10 16:52:36 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/12 15:11:34 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int get_pl_inter(t_ray *ray, t_plane pl)
 
     len = prod_esc(rest_vec(pl.cord, ray->origin), pl.norm_v) /
           prod_esc(ray->direction, pl.norm_v);
-    if (len < 0)
+    if (len <= 0)
         return (-1);
     if (len < ray->len)
     {

@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 19:14:12 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/10 14:39:45 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/11 16:51:12 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,6 @@ int init_window(t_file *c)
         return parse_error("Minilibx Error: CAN NOT OPEN A WINDOW");
     mlx_hook(c->win_ptr, 2, 1L << 0, exit_win, c);
     mlx_hook(c->win_ptr, 17, 1L << 2, exit_win2, c);
-    printf("aspec_ratio:%f\n", c->aspect_ratio);
-    printf("canvas_wid: %f, canvas_he: %f \n", ((t_camera *)c->camera->content)->canvas.canvas_w, ((t_camera *)c->camera->content)->canvas.canvas_h);
     paint_scene(c);
     mlx_loop(c->mlx_ptr);
     return 0;

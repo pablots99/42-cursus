@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/02 21:45:28 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/10 13:56:05 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/12 23:45:08 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,10 @@ t_cord esc_dot_vec(float num, t_cord c)
 	vec.z = c.z * num;
 	return (vec);
 }
-
+t_cord ray_intersection(t_ray ray,float len)
+{
+	return sum_vec(esc_dot_vec(len,ray.direction),ray.origin);
+}
 t_cord sum_vec(t_cord v1, t_cord v2)
 {
 	t_cord vec;
@@ -94,13 +97,28 @@ t_cord vector_dot_matrix(t_cord v, t_matrix matrix)
 	vec.z = prod_esc(v, matrix.v3);
 	return (vec);
 }
-
 float mod_vec(t_cord vec)
 {
 	return (sqrt(pow(vec.x, 2) + pow(vec.y, 2) + pow(vec.z, 2)));
 }
-
 t_cord ray_cut_point(t_ray ray)
 {
 	return(sum_vec(ray.origin,esc_dot_vec(ray.len, ray.direction)));
+}
+t_cord barycentric_cords(t_triangle tr,t_cord point)
+{
+	t_cord v0;
+	t_cord v1;
+	t_cord v2;
+	t_cord res;
+	float den;
+
+	v0 = rest_vec(tr.cord_2,tr.cord_1);
+	v1 = rest_vec(tr.cord_3,tr.cord_1);
+	v2 = rest_vec(point,tr.cord_1);
+	den = v0.x * v1.y - v1.x * v0.y;
+    res.x = (v2.x * v1.y - v1.x * v2.y) / den;
+    res.y = (v0.x * v2.y - v2.x * v0.y) / den;
+    res.z = 1.0f - res.x - res.y;
+	return (res);
 }

@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 16:08:44 by ptorres           #+#    #+#             */
-/*   Updated: 2021/01/03 17:23:40 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/12 17:02:03 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int save_new_square(char **splited, t_file *configFile)
 	int err;
 
 	err = 0;
-	if (ft_bistrlen(splited) != 5)
+	if (ft_bistrlen(splited) != 6)
 		return (parse_error("Square Error: Bad number of arguments \n"));
 	if (!ft_isfloat(splited[3]))
 		return (parse_error("Square Ligth Error: Bad value for side size \n"));
@@ -77,6 +77,9 @@ int save_new_square(char **splited, t_file *configFile)
 	err += save_rgb(&square->rgb, splited[4], "Square");
 	if (!is_norm_vec(&square->norm_v))
 		err += (parse_error("Square Error: vector not normalized \n"));
+	if(!ft_isfloat(splited[5]))
+		return (parse_error("Square Ligth Error: Bad value for angle \n"));
+	square->angle = ft_atof(splited[5]);
 	ft_lstadd_back(&configFile->square, ft_lstnew(square));
 	if (err)
 	{

@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 20:02:19 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/10 16:48:22 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/12 15:38:31 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,9 @@
 int create_int_color_shade(t_rgb color, t_ligth ligth,float brigth)
 {
 	t_rgb c;
-	ligth.brigthness /= brigth;
-	c.r = (color.r  * ligth.rgb.r * ligth.brigthness ) / 255;
-	c.g = (color.g  * ligth.rgb.g * ligth.brigthness) / 255;
-	c.b = (color.b  * ligth.rgb.b * ligth.brigthness) / 255;
+	c.r = (color.r  * ligth.rgb.r * brigth ) / 255;
+	c.g = (color.g  * ligth.rgb.g * brigth) / 255;
+	c.b = (color.b  * ligth.rgb.b * brigth) / 255;
 	return ( c.r << 16 | c.g << 8 | c.b);
 }
 
@@ -32,6 +31,14 @@ int create_int_color(t_rgb color, t_ambient_ligth ambient)
 	c.b = (color.b  * ambient.rgb.b * ambient.ratio) / 255;
 	return (c.r << 16 | c.g << 8 | c.b);
 
+}
+t_rgb sum_colors(t_rgb c1,t_rgb c2)
+{
+	t_rgb res;
+	res.r = c1.r + c2.r;
+	res.g = c1.g + c2.g;
+	res.b = c1.b + c2.b;
+	return (res);
 }
 t_rgb rgb_from_int(int color)
 {

@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 19:15:09 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/10 16:48:20 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/12 20:29:14 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ typedef struct s_square
 	t_cord cord;
 	t_cord norm_v;
 	float side;
+	float angle;
 	t_rgb rgb;
 
 } t_square;
@@ -196,4 +197,16 @@ int create_int_color_shade(t_rgb color, t_ligth ligth,float brigth);
 t_rgb rgb_from_int(int color);
 
 t_cord ray_cut_point(t_ray ray);
+
+int cylinder_intersection(t_ray * ray, t_list *list, t_file c);
+
+int get_pl_inter(t_ray *ray, t_plane pl);
+
+int square_intersection(t_ray *ray, t_list *plane,t_file c);
+
+t_cord ray_intersection(t_ray ray,float len);
+
+int triangle_intersection(t_ray *ray, t_list *plane,t_file c);
+
+t_cord barycentric_cords(t_triangle tr,t_cord point);
 

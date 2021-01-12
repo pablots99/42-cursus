@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/03 12:16:02 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/08 19:56:29 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/12 18:09:56 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,32 @@ int get_intersections(t_ray *ray, t_file c)
 
     color = 0;
     len = ray->len;
-
     if (c.sphere && (color_aux = spheres_intersection(ray, c.sphere,c)) && ray->len < len)
+    {
         color = color_aux;
-    len = ray->len;
+        len = ray->len;
+    }
     if (c.plane && (color_aux = plane_intersection(ray, c.plane,c)) && ray->len < len)
+    {
         color = color_aux;
- 
+            len = ray->len;
+    }
+      if (c.cylinder && (color_aux = cylinder_intersection(ray, c.cylinder,c)) && ray->len < len)
+    {
+        color = color_aux;
+        len = ray->len;
+    }
+    if (c.square && (color_aux = square_intersection(ray, c.square,c)) && ray->len < len)
+    {
+        color = color_aux;
+        len = ray->len;
+    }
+       if (c.triangle && (color_aux = triangle_intersection(ray, c.triangle,c)) && ray->len < len)
+    {
+        color = color_aux;
+        len = ray->len;
+    }
+  
     return (color);
 }
 
