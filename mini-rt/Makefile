@@ -10,6 +10,8 @@ SRCS =  main.c 						\
 		srcs/utils/utils2.c				\
 		srcs/utils/utils3.c				\
 		srcs/utils/colors.c				\
+		srcs/utils/keys.c				\
+		srcs/utils/mlx_utils.c				\
 		srcs/utils/ft_atof.c			\
 		srcs/utils/utils_free.c			\
 		srcs/math/vectors.c				\

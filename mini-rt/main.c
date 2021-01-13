@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 19:14:12 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/11 16:51:12 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/13 23:34:25 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,16 @@ void paint_scene(t_file *c)
 
     color = 0;
     y = 0;
-    printf("ambient:%f\n",c->ambient_ligth.ratio);
     while (y < c->win_heigth)
     {
         x = 0;
         while (x < c->win_width)
         {
             ray = generate_ray(x, y, *c);
-            color = get_intersections(&ray,*c);
-            if(c->ligth && color != 0)
-                 color = shading(&ray,color,*c);
-            mlx_pixel_put(c->mlx_ptr,c->win_ptr,x,y,color);
+            color = get_intersections(&ray, *c);
+            if (c->ligth && color != 0)
+                color = shading(&ray, color, *c);
+            my_mlx_pixel_put(&c->img, x, y, color);
             x++;
         }
         y++;
@@ -40,14 +39,18 @@ void paint_scene(t_file *c)
 
 int init_window(t_file *c)
 {
-
     if (!(c->mlx_ptr = mlx_init()))
         return parse_error("Minilibx Error: CAN NOT INITIALIZE MINILIBX");
     if (!(c->win_ptr = mlx_new_window(c->mlx_ptr, c->win_width, c->win_heigth, "MiniRt")))
         return parse_error("Minilibx Error: CAN NOT OPEN A WINDOW");
     mlx_hook(c->win_ptr, 2, 1L << 0, exit_win, c);
     mlx_hook(c->win_ptr, 17, 1L << 2, exit_win2, c);
+    mlx_key_hook(c->win_ptr, detect_key, c);
+     c->img.mlx_img = mlx_new_image(c->mlx_ptr, c->win_width, c->win_heigth);
+    c->img.address = mlx_get_data_addr(c->img.mlx_img, &c->img.bits_per_pixel,
+                                       &c->img.line_length, &c->img.endian);
     paint_scene(c);
+    mlx_put_image_to_window(c->mlx_ptr, c->win_ptr, c->img.mlx_img, 0, 0);
     mlx_loop(c->mlx_ptr);
     return 0;
 }

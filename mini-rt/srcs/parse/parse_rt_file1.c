@@ -6,30 +6,32 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 20:15:34 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/12 14:34:37 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/13 23:41:24 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../mini_rt.h"
 
-
-t_canvas save_canvas(float fov,t_file c)
+t_canvas save_canvas(t_camera *cam, t_file c)
 {
 	t_canvas canvas;
-	t_camera cam;
-	t_cord 	  temp;
 
-	cam = *((t_camera*)c.camera->content);
-	temp.x = 0;
-	temp.y = 1;
-	temp.z = 0;
-	
-
-	canvas.canvas_w = 2*tan((fov/2) * ( M_PI / 180)) * c.aspect_ratio;
-	canvas.canvas_h =  2*tan((fov/2) * ( M_PI / 180));
-	canvas.matrix.v3 = esc_dot_vec(-1,cam.norm_v);
-	canvas.matrix.v1 = esc_dot_vec(-1, prod_vec(temp,cam.norm_v));
-	canvas.matrix.v2 = esc_dot_vec(-1, prod_vec(cam.norm_v,canvas.matrix.v1));
+	canvas.canvas_w = 2 * tan((cam->fov / 2) * (M_PI / 180)) * c.aspect_ratio;
+	canvas.canvas_h = 2 * tan((cam->fov / 2) * (M_PI / 180));
+	if (fabs(cam->norm_v.y) == 1)
+	{
+		
+		canvas.matrix.v3 = esc_dot_vec(-1, cam->norm_v);
+		canvas.matrix.v1 = esc_dot_vec(cam->norm_v.y*-1,vector(1,0,0));
+		canvas.matrix.v2 =  esc_dot_vec(cam->norm_v.y*-1,vector(0,0,1));
+	}
+	else
+	{
+		cam->norm_v.z *= -1;
+		canvas.matrix.v3 = esc_dot_vec(1, cam->norm_v);
+		canvas.matrix.v1 = prod_vec(vector(0,1,0), cam->norm_v);
+		canvas.matrix.v2 = prod_vec(cam->norm_v, canvas.matrix.v1);
+	}
 	return (canvas);
 }
 
@@ -105,17 +107,21 @@ int save_new_camera(char **splited, t_file *configFile)
 		return (parse_error("Camera Error: Malloc error on t_camera\n"));
 	err += save_cord(&camera->cord, splited[1], "Camera");
 	err += save_cord(&camera->norm_v, splited[2], "Camera");
-	if (!is_norm_vec(&camera->norm_v))
-		err += (parse_error("Camera Error: vector not normalized \n"));
+	// if (!is_norm_vec(&camera->norm_v))
+	// 	err += (parse_error("Camera Error: vector not normalized \n"));
+	camera->norm_v = norm_vec(camera->norm_v);
 	camera->fov = atoi(splited[3]);
 	ft_lstadd_back(&configFile->camera, ft_lstnew(camera));
-
 	if (err)
 	{
 		//free(camera);
 		return (1);
 	}
-			camera->canvas = save_canvas(camera->fov,*configFile);
+	camera->canvas = save_canvas(camera, *configFile);
+
+	if(!configFile->first_cam && configFile->camera)
+		configFile->first_cam = configFile->camera;
+	configFile->cam_count = 1;
 
 	return (0);
 }

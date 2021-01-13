@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/03 12:16:02 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/12 18:09:56 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/13 21:03:56 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int get_intersections(t_ray *ray, t_file c)
     int color;
     int color_aux;
     float len;
-   
 
     color = 0;
     len = ray->len;
@@ -57,12 +56,11 @@ int get_intersections(t_ray *ray, t_file c)
         color = color_aux;
         len = ray->len;
     }
-       if (c.triangle && (color_aux = triangle_intersection(ray, c.triangle,c)) && ray->len < len)
+    if (c.triangle && (color_aux = triangle_intersection(ray, c.triangle,c)) && ray->len < len)
     {
         color = color_aux;
         len = ray->len;
     }
-  
     return (color);
 }
 

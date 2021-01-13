@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 19:15:09 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/12 20:29:14 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/13 23:14:56 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 #include <stdlib.h>
 #include <math.h>
 #include <fcntl.h>
-
 
 typedef struct s_cord
 {
@@ -38,7 +37,6 @@ typedef struct s_canvas
 	float canvas_h;
 	t_matrix matrix;
 } t_canvas;
-
 
 typedef struct s_rgb
 {
@@ -112,6 +110,14 @@ typedef struct s_ray
 	t_cord normal;
 	float len;
 } t_ray;
+typedef struct s_img
+{
+	void *mlx_img;
+	char *address;
+	int bits_per_pixel;
+	int line_length;
+	int endian;
+} t_img;
 
 typedef struct s_file
 {
@@ -120,7 +126,10 @@ typedef struct s_file
 	int win_heigth;
 	int win_width;
 	float aspect_ratio;
+	int cam_count;
+	t_img img;
 	t_ambient_ligth ambient_ligth;
+	t_list *first_cam;
 	t_list *camera;
 	t_list *ligth;
 	t_list *sphere;
@@ -166,47 +175,55 @@ float mod_vec(t_cord v);
 
 t_cord prod_vec(t_cord v1, t_cord v2);
 
-t_cord vector_dot_matrix(t_cord v,t_matrix matrix);
+t_cord vector_dot_matrix(t_cord v, t_matrix matrix);
 
-t_cord	esc_dot_vec(float num, t_cord c);
+t_cord esc_dot_vec(float num, t_cord c);
 
-int get_intersections(t_ray *ray,t_file c);
+int get_intersections(t_ray *ray, t_file c);
 
 int spheres_intersection(t_ray *ray, t_list *list, t_file c);
 
-int		create_int_color(t_rgb color, t_ambient_ligth ambient);
+int create_int_color(t_rgb color, t_ambient_ligth ambient);
 
 float prod_esc(t_cord v1, t_cord v2);
 
 float rad_ang_vec(t_cord v1, t_cord v2);
 
-float proy_vect(t_cord v1, t_cord v2);//V2 SOBRE V1
+float proy_vect(t_cord v1, t_cord v2); //V2 SOBRE V1
 
-int plane_intersection(t_ray *ray, t_list *plane,t_file c);
+int plane_intersection(t_ray *ray, t_list *plane, t_file c);
 
 t_cord sum_vec(t_cord v1, t_cord v2);
 
 t_cord rest_vec(t_cord v1, t_cord v2);
 
-int shading(t_ray *ray,int color, t_file c);
+int shading(t_ray *ray, int color, t_file c);
 
 t_cord vector(float x, float y, float z);
 
-int create_int_color_shade(t_rgb color, t_ligth ligth,float brigth);
+int create_int_color_shade(t_rgb color, t_ligth ligth, float brigth);
 
 t_rgb rgb_from_int(int color);
 
 t_cord ray_cut_point(t_ray ray);
 
-int cylinder_intersection(t_ray * ray, t_list *list, t_file c);
+int cylinder_intersection(t_ray *ray, t_list *list, t_file c);
 
 int get_pl_inter(t_ray *ray, t_plane pl);
 
-int square_intersection(t_ray *ray, t_list *plane,t_file c);
+int square_intersection(t_ray *ray, t_list *plane, t_file c);
 
-t_cord ray_intersection(t_ray ray,float len);
+t_cord ray_intersection(t_ray ray, float len);
 
-int triangle_intersection(t_ray *ray, t_list *plane,t_file c);
+int triangle_intersection(t_ray *ray, t_list *plane, t_file c);
 
-t_cord barycentric_cords(t_triangle tr,t_cord point);
+t_cord barycentric_cords(t_triangle tr, t_cord point);
+
+int select_camera(t_file *c);
+
+int detect_key(int keycode, t_file *c);
+
+void paint_scene(t_file *c);
+
+void my_mlx_pixel_put(t_img *data, int x, int y, int color);
 
