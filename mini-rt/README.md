@@ -2,6 +2,7 @@
 
 
 Controls:
+
     - c to shwitch cams
     
     - o to select type of object 
