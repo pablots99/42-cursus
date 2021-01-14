@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 20:15:34 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/13 23:41:24 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/14 01:05:11 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,15 +113,10 @@ int save_new_camera(char **splited, t_file *configFile)
 	camera->fov = atoi(splited[3]);
 	ft_lstadd_back(&configFile->camera, ft_lstnew(camera));
 	if (err)
-	{
-		//free(camera);
 		return (1);
-	}
 	camera->canvas = save_canvas(camera, *configFile);
-
 	if(!configFile->first_cam && configFile->camera)
 		configFile->first_cam = configFile->camera;
 	configFile->cam_count = 1;
-
 	return (0);
 }

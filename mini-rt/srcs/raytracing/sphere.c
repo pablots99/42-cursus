@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   spheres.c                                          :+:      :+:    :+:   */
+/*   sphere.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 10:51:00 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/10 16:52:16 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/14 01:53:45 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int get_sp_inter(t_ray *ray, t_sphere sp)
     l = rest_vec(sp.cord, ray->origin);
     tca = proy_vect(ray->direction, l);
     if (tca < 0)
-        return( -1);
+        return (-1);
     d = sqrt(prod_esc(l, l) - (tca * tca));
     if (d < 0 || d > sp.diameter / 2)
         return (-1);
@@ -30,7 +30,7 @@ int get_sp_inter(t_ray *ray, t_sphere sp)
     if (l_p1 < ray->len)
     {
         ray->len = l_p1 - 1;
-        ray->normal = norm_vec(rest_vec(esc_dot_vec(l_p1,ray->direction),sp.cord));//puede haber error
+        ray->normal = norm_vec(rest_vec(esc_dot_vec(l_p1, ray->direction), sp.cord)); //puede haber error
     }
     return (1);
 }
@@ -50,12 +50,24 @@ int spheres_intersection(t_ray *ray, t_list *list, t_file c)
         len_aux = ray->len;
         sp = *(t_sphere *)aux->content;
         if (get_sp_inter(ray, sp) && ray->len < len_aux)
-            color = create_int_color(sp.rgb,c.ambient_ligth);
+            color = create_int_color(sp.rgb, c.ambient_ligth);
         aux = aux->next;
     }
     len_aux = ray->len;
     sp = *(t_sphere *)aux->content;
     if (get_sp_inter(ray, sp) && ray->len < len_aux)
-        color = create_int_color(sp.rgb,c.ambient_ligth);
+        color = create_int_color(sp.rgb, c.ambient_ligth);
     return (color);
+}
+
+void move_sphere(t_sphere *sp, int axis)
+{
+    if (axis == 123)
+        sp->cord.x -= 10;
+    if (axis == 124)
+        sp->cord.x += 10;
+    if (axis == 126)
+        sp->cord.y += 10;
+    if (axis == 125)
+        sp->cord.y -= 10;
 }

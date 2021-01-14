@@ -6,25 +6,12 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 20:18:03 by pablo             #+#    #+#             */
-/*   Updated: 2020/12/31 00:44:19 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/14 02:12:21 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "../mini_rt.h"
-
-void ft_bidimensional_free(char **arr)
-{
-    int i;
-
-    i = 0;
-    while (arr[i])
-    {
-        free(arr[i]);
-        i++;
-    }
-    free(arr);
-}
 
 int ft_str_isnum(char *num)
 {
@@ -51,8 +38,6 @@ int ft_bistrlen(char **str)
 }
 int parse_error( char *err)
 {
-    //liberar config;
-
     ft_printf("Error\n     %s\n",err);
     return (1);
 }

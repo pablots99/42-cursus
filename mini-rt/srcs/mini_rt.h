@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 19:15:09 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/13 23:14:56 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/14 02:07:15 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,11 +127,14 @@ typedef struct s_file
 	int win_width;
 	float aspect_ratio;
 	int cam_count;
+	int sp_count;
+	int obj_selected;
 	t_img img;
 	t_ambient_ligth ambient_ligth;
 	t_list *first_cam;
 	t_list *camera;
 	t_list *ligth;
+	t_list *curr_sp;
 	t_list *sphere;
 	t_list *plane;
 	t_list *square;
@@ -227,3 +230,8 @@ void paint_scene(t_file *c);
 
 void my_mlx_pixel_put(t_img *data, int x, int y, int color);
 
+void adjust_res(t_file *c);
+
+int int_from_rgb(int r, int g, int b);
+
+void move_sphere(t_sphere *sp, int axis);

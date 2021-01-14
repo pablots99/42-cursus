@@ -6,68 +6,12 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 17:05:59 by ptorres           #+#    #+#             */
-/*   Updated: 2021/01/08 20:02:46 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/14 02:12:51 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../mini_rt.h"
 
-int len_coma_spaces(char *str)
-{
-	int i;
-	int len;
-
-	i = 0;
-	len = 0;
-	while (str[i])
-	{
-		if ((str[i] >= 9 && str[i] <= 13))
-			len++;
-		if (str[i] == ',')
-		{
-			i++;
-			while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
-			{
-				len++;
-				i++;
-			}
-			continue;
-		}
-		i++;
-	}
-	return (len);
-}
-
-char *ft_clean_spaces(char *str)
-{
-	int i;
-	char *res;
-	int aux;
-
-	aux = 0;
-	i = 0;
-	if (!(res = malloc(sizeof(char) * (ft_strlen(str) - len_coma_spaces(str) + 1))))
-		return (NULL);
-	while (str[i])
-	{
-		if (!(str[i] >= 9 && str[i] <= 13))
-		{
-			res[aux] = str[i];
-			aux++;
-		}
-		if (str[i] == ',')
-		{
-			i++;
-			while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
-				i++;
-			continue;
-		}
-		i++;
-	}
-	free(str);
-	res[i] = 0;
-	return res;
-}
 int exit_win(int keycode, t_file *c)
 {
 	if (keycode == 53)
@@ -87,4 +31,16 @@ int exit_win2(t_file *c)
 	free_config(c);
 	exit(0);
 	return (0);
+}
+void adjust_res(t_file *c)
+{
+	int h;
+	int w;
+
+	mlx_get_screen_size(c->mlx_ptr, &w, &h);
+	if (c->win_width > w)
+		c->win_width = w;
+	if (c->win_heigth > h)
+		c->win_heigth = h;
+	c->aspect_ratio = c->win_width/ c->win_heigth;
 }

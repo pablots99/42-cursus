@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/03 12:16:02 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/13 21:03:56 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/14 00:51:35 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_ray generate_ray(int x, int y, t_file c)
 
     camera = *((t_camera *)c.camera->content);
     ray.origin = camera.cord;
-    ray.direction.x = (2 * (((float)x + 0.5) / (float)c.win_width) - 1) * tan((camera.fov/2) * ( M_PI / 180)) * c.aspect_ratio;
+    ray.direction.x = (2 * (((float)x + 0.5) / (float)c.win_width) - 1) * tan((camera.fov/2) * ( M_PI / 180))* c.aspect_ratio;
     ray.direction.y = (1 - 2 * ((float)y + 0.5) / ((float)c.win_heigth)) * tan((camera.fov/2) * ( M_PI / 180));
     ray.direction.z = -1;
     ray.direction = norm_vec(vector_dot_matrix(norm_vec(ray.direction), camera.canvas.matrix));

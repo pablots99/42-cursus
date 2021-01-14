@@ -73,7 +73,7 @@ void	*mlx_new_image(void *mlx_ptr,int width,int height);
 /*
 **  return void *0 if failed
 */
-char	*mlx_get_data_addr(void *img_ptr, int *bits_per_pixel,
+char	*mlx_get_data_addr(void *img_ptr, int *bpp,
 			   int *size_line, int *endian);
 /*
 **  endian : 0 = graphical sever is little endian, 1 = big endian
@@ -144,11 +144,14 @@ int	mlx_do_sync(void *mlx_ptr);
 #define MLX_SYNC_IMAGE_WRITABLE		1
 #define MLX_SYNC_WIN_FLUSH_CMD		2
 #define MLX_SYNC_WIN_CMD_COMPLETED	3
-int	mlx_sync(int what, void *param);
+int	mlx_sync(int cmd, void *param);
 /*
 ** image_writable can loop forever if no flush occurred. Flush is always done by mlx_loop.
 ** cmd_completed first flush then wait for completion.
 ** mlx_do_sync equals cmd_completed for all windows.
+** cmd is one of the define, param will be img_ptr or win_ptr accordingly
 */
+
+int	mlx_get_screen_size(void *mlx_ptr, int *sizex, int *sizey);
 
 #endif /* MLX_H */

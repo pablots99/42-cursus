@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 16:09:22 by ptorres           #+#    #+#             */
-/*   Updated: 2021/01/02 21:00:58 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/14 02:12:11 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,3 +29,17 @@ void free_config(t_file *c)
     if (c->triangle)
         ft_lstclear(&c->triangle, &free);
 }
+
+void ft_bidimensional_free(char **arr)
+{
+    int i;
+
+    i = 0;
+    while (arr[i])
+    {
+        free(arr[i]);
+        i++;
+    }
+    free(arr);
+}
+

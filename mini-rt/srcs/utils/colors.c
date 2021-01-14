@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 20:02:19 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/12 15:38:31 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/14 00:12:04 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,8 @@ t_rgb rgb_from_int(int color)
 	c.g = (color >> 8)  &  0xFF;
 	c.b = (color & 0xFF);
 	return (c);
+}
+int int_from_rgb(int r, int g, int b)
+{
+	return(r << 16 | g << 8 | b);
 }
