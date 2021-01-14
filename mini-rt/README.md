@@ -1,6 +1,14 @@
 
 
 
+Run(for now only on mac)
+
+    1- Make install
+
+    2- Make 
+    
+    3- minirt <scene.rt>
+    
 Controls:
 
     - c to shwitch cams
