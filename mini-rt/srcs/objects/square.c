@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/10 15:06:52 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/12 16:44:46 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/15 17:24:31 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,29 +30,4 @@ int get_sq_inter(t_ray *ray, t_square sq)
     return 1;
 }
 
-int square_intersection(t_ray *ray, t_list *plane,t_file c)
-{
-    t_square sq;
-    t_list *aux;
-    int color;
-    float len_aux;
-
-    color = 0;
-    sq = *(t_square *)plane->content;
-    aux = plane;
-    while (aux->next)
-    {
-        len_aux = ray->len;
-        sq = *(t_square *)aux->content;
-        if (get_sq_inter(ray, sq) && ray->len < len_aux)
-            color = create_int_color(sq.rgb,c.ambient_ligth);
-        aux = aux->next;
-    }
-    len_aux = ray->len;
-    sq = *(t_square *)aux->content;
-   if (get_sq_inter(ray, sq) && ray->len < len_aux)
-            color = create_int_color(sq.rgb,c.ambient_ligth);
-    aux = aux->next;
-    return color;
-}
 

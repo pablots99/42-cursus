@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 10:51:00 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/14 01:53:45 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/15 17:24:34 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,30 +35,7 @@ int get_sp_inter(t_ray *ray, t_sphere sp)
     return (1);
 }
 
-int spheres_intersection(t_ray *ray, t_list *list, t_file c)
-{
-    t_sphere sp;
-    t_list *aux;
-    int color;
-    float len_aux;
 
-    color = 0;
-    sp = *(t_sphere *)list->content;
-    aux = list;
-    while (aux->next)
-    {
-        len_aux = ray->len;
-        sp = *(t_sphere *)aux->content;
-        if (get_sp_inter(ray, sp) && ray->len < len_aux)
-            color = create_int_color(sp.rgb, c.ambient_ligth);
-        aux = aux->next;
-    }
-    len_aux = ray->len;
-    sp = *(t_sphere *)aux->content;
-    if (get_sp_inter(ray, sp) && ray->len < len_aux)
-        color = create_int_color(sp.rgb, c.ambient_ligth);
-    return (color);
-}
 
 void move_sphere(t_sphere *sp, int axis)
 {
@@ -70,4 +47,44 @@ void move_sphere(t_sphere *sp, int axis)
         sp->cord.y += 10;
     if (axis == 125)
         sp->cord.y -= 10;
+    if (axis == 45)
+        sp->cord.z += 10;
+    if (axis == 46)
+        sp->cord.z -= 10;
+    ft_printf("     Sphere Moved");
+}
+void size_sphere(t_sphere *sp, int k)
+{
+    if (k == 30)
+        sp->diameter += 10;
+    if (k == 44)
+        sp->diameter -= 10;
+    if(sp->diameter < 1)
+        sp->diameter = 1;
+    ft_printf("     Sphere Resized");
+
+}
+
+int select_sp(t_file *c)
+{
+    if (c->sp_count == 0)
+    {
+        c->curr_sp = c->sphere;
+        c->sp_count++;
+    }
+    else
+    {
+        if (c->curr_sp->next)
+        {
+            c->sp_count++;
+            c->curr_sp = c->curr_sp->next;
+        }
+        else
+        {
+            c->sp_count = 1;
+            c->curr_sp = c->sphere;
+        }
+    }
+    ft_printf("Sphere: %d selected.\n", c->sp_count);
+    return (1);
 }

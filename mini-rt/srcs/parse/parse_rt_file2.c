@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 16:08:44 by ptorres           #+#    #+#             */
-/*   Updated: 2021/01/14 01:30:29 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/16 00:32:14 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,8 +104,9 @@ int save_new_cylinder(char **splited, t_file *configFile)
 	cylinder->diameter = ft_atof(splited[3]);
 	cylinder->height = ft_atof(splited[4]);
 	err += save_rgb(&cylinder->rgb, splited[5], "Cylinder");
-	if (!is_norm_vec(&cylinder->norm_v))
-		err += (parse_error("Cylinder Error: vector not normalized \n"));
+	// if (!is_norm_vec(&cylinder->norm_v))
+	// 	err += (parse_error("Cylinder Error: vector not normalized \n"));
+	cylinder->norm_v = norm_vec(cylinder->norm_v);
 	ft_lstadd_back(&configFile->cylinder, ft_lstnew(cylinder));
 	if (err)
 	{

@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 21:06:31 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/14 02:16:13 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/15 17:15:14 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,35 +15,14 @@
 void select_type_object(t_file *c)
 {
     c->obj_selected++;
-    if (c->obj_selected > 1)
+    if (c->obj_selected > 2)
         c->obj_selected = 0;
     if (c->obj_selected == 0)
         ft_printf("Selected Object: None.\n");
     if (c->obj_selected == 1)
         ft_printf("Selected Object: Spheres.\n");
-}
-int select_sp(t_file *c)
-{
-    if (c->sp_count == 0)
-    {
-        c->curr_sp = c->sphere;
-        c->sp_count++;
-    }
-    else
-    {
-        if (c->curr_sp->next)
-        {
-            c->sp_count++;
-            c->curr_sp = c->curr_sp->next;
-        }
-        else
-        {
-            c->sp_count = 1;
-            c->curr_sp = c->sphere;
-        }
-    }
-    ft_printf("Sphere: %d selected.\n", c->sp_count);
-    return (1);
+    if (c->obj_selected == 2)
+        ft_printf("Selected Object: Camera.\n");
 }
 
 void select_object(t_file *c)
@@ -52,6 +31,8 @@ void select_object(t_file *c)
         ft_printf("     -No Type selected\n");
     else if (c->obj_selected == 1 && c->sphere)
         select_sp(c);
+    else if (c->obj_selected == 2 && c->camera)
+        ft_printf("Camera: %d selected.(Press 'c' to switch.)\n", c->cam_count);
     else
         ft_printf("     -No object of the type selected\n");
 }
@@ -59,12 +40,27 @@ void move_objects(t_file *c, int key)
 {
     if (c->obj_selected == 1 && c->curr_sp)
         move_sphere((t_sphere *)c->curr_sp->content, key);
+    else if (c->obj_selected == 2 && c->camera)
+        move_camera((t_camera *)c->camera->content, key);
     else
     {
         ft_printf("     -No Object selected\n");
         return;
     }
-  
+    paint_scene(c);
+    mlx_put_image_to_window(c->mlx_ptr, c->win_ptr, c->img.mlx_img, 0, 0);
+}
+void size_objects(t_file *c, int key)
+{
+    if (c->obj_selected == 1 && c->curr_sp)
+        size_sphere((t_sphere *)c->curr_sp->content, key);
+    else if (c->obj_selected == 2 && c->camera)
+        zoom_camera((t_camera *)c->camera->content, key);
+    else
+    {
+        ft_printf("     -No Object selected\n");
+        return;
+    }
     paint_scene(c);
     mlx_put_image_to_window(c->mlx_ptr, c->win_ptr, c->img.mlx_img, 0, 0);
 }
@@ -76,25 +72,10 @@ int detect_key(int keycode, t_file *c)
         select_type_object(c);
     if (keycode == 35)
         select_object(c);
-    if (keycode >= 123 && keycode <= 126)
+    if ((keycode >= 123 && keycode <= 126) || keycode == 45 || keycode == 46)
         move_objects(c, keycode);
+    if (keycode == 30 || keycode == 44)
+        size_objects(c, keycode);
     return 1;
 }
 
-int select_camera(t_file *c)
-{
-    if (c->camera->next)
-    {
-        c->cam_count++;
-        c->camera = c->camera->next;
-    }
-    else
-    {
-        c->cam_count = 1;
-        c->camera = c->first_cam;
-    }
-    paint_scene(c);
-    mlx_put_image_to_window(c->mlx_ptr, c->win_ptr, c->img.mlx_img, 0, 0);
-    ft_printf("Camera: %d\n", c->cam_count);
-    return (1);
-}

@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 19:15:09 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/14 02:07:15 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/15 17:23:33 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,15 @@ typedef struct s_cord
 	float y;
 	float z;
 } t_cord;
+
+typedef struct s_cord4
+{
+	float a;
+	float b;
+	float c;
+	float d;
+
+} t_cord4;
 
 typedef struct s_matrix
 {
@@ -84,7 +93,7 @@ typedef struct s_square
 	float side;
 	float angle;
 	t_rgb rgb;
-
+	t_cord4 corners;
 } t_square;
 typedef struct s_cylinder
 {
@@ -235,3 +244,23 @@ void adjust_res(t_file *c);
 int int_from_rgb(int r, int g, int b);
 
 void move_sphere(t_sphere *sp, int axis);
+
+void size_sphere(t_sphere *sp, int k);
+
+void move_camera(t_camera *c, int axis);
+
+void zoom_camera(t_camera *c, int k);
+
+int select_camera(t_file *c);
+
+int select_sp(t_file *c);
+
+int get_tr_inter(t_ray *ray, t_triangle tr);
+
+int get_sq_inter(t_ray *ray, t_square sq);
+
+int get_pl_inter(t_ray *ray, t_plane pl);
+
+int get_cy_inter(t_ray *ray, t_cylinder cy);
+
+int get_sp_inter(t_ray *ray, t_sphere sp);
