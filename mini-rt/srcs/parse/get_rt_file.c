@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 14:39:35 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/02 18:30:55 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/19 23:15:13 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,13 @@ int save_rt_file(char **splited, t_file *configFile)
 	err = 0;
 	if (*splited)
 	{
-		if ( ft_strlen(*splited) == 1 && *splited[0] == 'R')
+		if (ft_strlen(*splited) == 1 && *splited[0] == 'R')
 			err = save_res(splited, configFile);
 		else if (ft_strlen(*splited) == 1 && *splited[0] == 'l')
 			err = save_new_ligth(splited, configFile);
-		else if (ft_strlen(*splited) == 1 && *splited[0] == 'A' )
+		else if (ft_strlen(*splited) == 1 && *splited[0] == 'A')
 			err = save_ambient_ligth(splited, configFile);
-		else if (ft_strlen(*splited) == 1 && *splited[0] == 'c' )
+		else if (ft_strlen(*splited) == 1 && *splited[0] == 'c')
 			err = save_new_camera(splited, configFile);
 		else if (ft_strlen(*splited) == 2 && ft_strncmp(*splited, "sp", 2) == 0)
 			err = save_new_sphere(splited, configFile);
@@ -101,4 +101,24 @@ int read_rt_file(char *file, t_file *configFile)
 	if (read_file(fd, configFile) == 1)
 		return (0);
 	return (1);
+}
+
+void save_sq_points(t_square *sq)
+{
+	float side;
+	t_matrix rot_mat;
+
+	side = sq->side / 2;
+	rot_mat.v3 = sq->norm_v;
+	rot_mat.v1 = prod_vec(vector(0, 1, 0), sq->norm_v);
+	rot_mat.v2 = prod_vec(sq->norm_v, rot_mat.v1);
+	if (fabs(sq->norm_v.y) == 1)
+	{
+		rot_mat.v1 = esc_dot_vec(sq->norm_v.y * -1, vector(1, 0, 0));
+		rot_mat.v2 = esc_dot_vec(sq->norm_v.y * -1, vector(0, 0, 1));
+	}
+	sq->points.p0 = sum_vec(vector_dot_matrix(rot_center_point(vector(side * -1, side, -1), sq->angle), rot_mat), sq->cord);
+	sq->points.p1 = sum_vec(vector_dot_matrix(rot_center_point(vector(side, side, -1), sq->angle), rot_mat), sq->cord);
+	sq->points.p2 = sum_vec(vector_dot_matrix(rot_center_point(vector(side * -1, side * -1, -1), sq->angle), rot_mat), sq->cord);
+	sq->points.p3 = sum_vec(vector_dot_matrix(rot_center_point(vector(side, side * -1, -1), sq->angle), rot_mat), sq->cord);
 }

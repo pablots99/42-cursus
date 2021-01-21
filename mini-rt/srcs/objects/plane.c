@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+ /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   plane.c                                            :+:      :+:    :+:   */
@@ -24,7 +24,7 @@ int get_pl_inter(t_ray *ray, t_plane pl)
         if (len < ray->len && len >= 0)
         {
             ray->len = len - 1;
-            ray->normal = norm_vec(sum_vec(sum_vec(esc_dot_vec(ray->len, ray->direction), ray->origin), pl.norm_v));
+            ray->normal = pl.norm_v;
             return 1;
         }
     }

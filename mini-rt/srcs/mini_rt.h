@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 19:15:09 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/15 17:23:33 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/21 22:37:46 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,21 @@
 #include <math.h>
 #include <fcntl.h>
 
+
+#define SPHERE 		1
+#define CAMERA 		2
+#define SQUARE 		3
+#define PLANE 		4
+#define TRIANGLE 	5
+#define CYLINDER 	6
+
+
+#define REFRACTED 			1
+#define REFRACTIVE_INDEX  	1
+#define SPECULAR_EXPONENT  	50
+#define SPECULAR_KS  		0.01
+
+
 typedef struct s_cord
 {
 	float x;
@@ -25,14 +40,14 @@ typedef struct s_cord
 	float z;
 } t_cord;
 
-typedef struct s_cord4
+typedef struct s_sqpoints
 {
-	float a;
-	float b;
-	float c;
-	float d;
+	t_cord p0;
+	t_cord p1;
+	t_cord p2;
+	t_cord p3;
 
-} t_cord4;
+} t_sqpoints;
 
 typedef struct s_matrix
 {
@@ -93,7 +108,7 @@ typedef struct s_square
 	float side;
 	float angle;
 	t_rgb rgb;
-	t_cord4 corners;
+	t_sqpoints points;
 } t_square;
 typedef struct s_cylinder
 {
@@ -117,7 +132,8 @@ typedef struct s_ray
 	t_cord origin;
 	t_cord direction;
 	t_cord normal;
-	float len;
+	int    object;
+	float  len;
 } t_ray;
 typedef struct s_img
 {
@@ -137,6 +153,7 @@ typedef struct s_file
 	float aspect_ratio;
 	int cam_count;
 	int sp_count;
+	int sq_count;
 	int obj_selected;
 	t_img img;
 	t_ambient_ligth ambient_ligth;
@@ -146,6 +163,7 @@ typedef struct s_file
 	t_list *curr_sp;
 	t_list *sphere;
 	t_list *plane;
+	t_list *curr_sq;
 	t_list *square;
 	t_list *cylinder;
 	t_list *triangle;
@@ -191,11 +209,11 @@ t_cord vector_dot_matrix(t_cord v, t_matrix matrix);
 
 t_cord esc_dot_vec(float num, t_cord c);
 
-int get_intersections(t_ray *ray, t_file c);
+int get_intersections(t_ray *ray, t_file *c);
 
-int spheres_intersection(t_ray *ray, t_list *list, t_file c);
+int spheres_intersection(t_ray *ray, t_list *list);
 
-int create_int_color(t_rgb color, t_ambient_ligth ambient);
+int ambient_color(t_rgb color, t_ambient_ligth ambient);
 
 float prod_esc(t_cord v1, t_cord v2);
 
@@ -203,31 +221,31 @@ float rad_ang_vec(t_cord v1, t_cord v2);
 
 float proy_vect(t_cord v1, t_cord v2); //V2 SOBRE V1
 
-int plane_intersection(t_ray *ray, t_list *plane, t_file c);
+int plane_intersection(t_ray *ray, t_list *plane);
 
 t_cord sum_vec(t_cord v1, t_cord v2);
 
 t_cord rest_vec(t_cord v1, t_cord v2);
 
-int shading(t_ray *ray, int color, t_file c);
+int shading(t_ray *ray, int color, t_file *c);
 
 t_cord vector(float x, float y, float z);
 
-int create_int_color_shade(t_rgb color, t_ligth ligth, float brigth);
+int create_shade_color(t_rgb color, t_ligth ligth,float brigth);
 
 t_rgb rgb_from_int(int color);
 
 t_cord ray_cut_point(t_ray ray);
 
-int cylinder_intersection(t_ray *ray, t_list *list, t_file c);
+int cylinder_intersection(t_ray *ray, t_list *list);
 
 int get_pl_inter(t_ray *ray, t_plane pl);
 
-int square_intersection(t_ray *ray, t_list *plane, t_file c);
+int square_intersection(t_ray *ray, t_list *plane);
 
 t_cord ray_intersection(t_ray ray, float len);
 
-int triangle_intersection(t_ray *ray, t_list *plane, t_file c);
+int triangle_intersection(t_ray *ray, t_list *plane);
 
 t_cord barycentric_cords(t_triangle tr, t_cord point);
 
@@ -264,3 +282,21 @@ int get_pl_inter(t_ray *ray, t_plane pl);
 int get_cy_inter(t_ray *ray, t_cylinder cy);
 
 int get_sp_inter(t_ray *ray, t_sphere sp);
+
+t_cord rot_center_point(t_cord p, int ang);
+
+void save_sq_points(t_square *sq);
+
+t_triangle new_triangle(t_cord p1, t_cord p2, t_cord p3);
+
+int select_sq(t_file *c);
+
+void size_square(t_square *sq, int k);
+
+void move_square(t_square *sq, int axis);
+
+void rot_square(t_square *sq, int k);
+
+float max_float(float a, float b);
+
+t_ray refracted_ray(t_ray *ray);

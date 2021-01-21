@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 16:08:44 by ptorres           #+#    #+#             */
-/*   Updated: 2021/01/16 00:32:14 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/20 00:29:16 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,10 @@ int save_new_square(char **splited, t_file *configFile)
 	if (!ft_isfloat(splited[5]))
 		return (parse_error("Square Ligth Error: Bad value for angle \n"));
 	square->angle = ft_atof(splited[5]);
+	save_sq_points(square);
 	ft_lstadd_back(&configFile->square, ft_lstnew(square));
 	if (err)
-	{
-		//free(square);
 		return (1);
-	}
 	return (0);
 }
 int save_new_cylinder(char **splited, t_file *configFile)
@@ -109,10 +107,7 @@ int save_new_cylinder(char **splited, t_file *configFile)
 	cylinder->norm_v = norm_vec(cylinder->norm_v);
 	ft_lstadd_back(&configFile->cylinder, ft_lstnew(cylinder));
 	if (err)
-	{
-		//free(cylinder);
 		return (1);
-	}
 	return (0);
 }
 int save_new_triangle(char **splited, t_file *configFile)
@@ -131,9 +126,6 @@ int save_new_triangle(char **splited, t_file *configFile)
 	err += save_rgb(&triangle->rgb, splited[4], "Triangle");
 	ft_lstadd_back(&configFile->triangle, ft_lstnew(triangle));
 	if (err)
-	{
-		//free(triangle);
 		return (1);
-	}
 	return (0);
 }

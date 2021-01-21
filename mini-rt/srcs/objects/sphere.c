@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 10:51:00 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/15 17:24:34 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/21 17:34:45 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int get_sp_inter(t_ray *ray, t_sphere sp)
     if (l_p1 < ray->len)
     {
         ray->len = l_p1 - 1;
-        ray->normal = norm_vec(rest_vec(esc_dot_vec(l_p1, ray->direction), sp.cord)); //puede haber error
+        ray->normal = norm_vec(rest_vec(ray_cut_point(*ray),sp.cord));
     }
     return (1);
 }
@@ -51,7 +51,7 @@ void move_sphere(t_sphere *sp, int axis)
         sp->cord.z += 10;
     if (axis == 46)
         sp->cord.z -= 10;
-    ft_printf("     Sphere Moved");
+    ft_printf("     Sphere Moved\n");
 }
 void size_sphere(t_sphere *sp, int k)
 {
@@ -61,7 +61,7 @@ void size_sphere(t_sphere *sp, int k)
         sp->diameter -= 10;
     if(sp->diameter < 1)
         sp->diameter = 1;
-    ft_printf("     Sphere Resized");
+    ft_printf("     Sphere Resized\n");
 
 }
 

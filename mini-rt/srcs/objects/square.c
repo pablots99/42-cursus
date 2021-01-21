@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/10 15:06:52 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/15 17:24:31 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/21 17:59:07 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,94 @@
 
 int get_sq_inter(t_ray *ray, t_square sq)
 {
+    float den;
     float len;
-    float i_to_center;
+    t_triangle tr;
+    t_cord ab;
+    int cond;
 
-    len = prod_esc(rest_vec(sq.cord, ray->origin), sq.norm_v) /
-          prod_esc(ray->direction, sq.norm_v);
-    if (len <= 0)
-        return (-1);
-    i_to_center= fabs(mod_vec(rest_vec(sq.cord,ray_intersection(*ray,len))));
-    if ( i_to_center < sq.side/2 && len < ray->len)
+    cond = 0;
+    den = prod_esc(ray->direction, sq.norm_v);
+    if (fabs(den) > 0)
     {
-        ray->len = len - 1;
-        ray->normal = norm_vec(sum_vec(sum_vec(esc_dot_vec(ray->len,ray->direction),ray->origin),sq.norm_v));
+        if ((len = prod_esc(rest_vec(sq.cord, ray->origin), sq.norm_v) / den) >= 0)
+        {
+            tr = new_triangle(sq.points.p0, sq.points.p1, sq.points.p2);
+            ab = barycentric_cords(tr, ray_intersection(*ray, len));
+            if (!cond && len < ray->len && (ab.x <= 1 && ab.x >= 0) &&
+                (ab.y <= 1 && ab.y >= 0))
+            {
+                ray->normal = norm_vec(esc_dot_vec(-1,sum_vec(ray_intersection(*ray, len), sq.norm_v)));
+                ray->len = len - 1;
+                return (1);
+            }
+        }
     }
-    return 1;
+    return (-1);
+}
+void move_square(t_square *sq, int axis)
+{
+    if (axis == 123)
+        sq->cord.x -= 10;
+    if (axis == 124)
+        sq->cord.x += 10;
+    if (axis == 126)
+        sq->cord.y += 10;
+    if (axis == 125)
+        sq->cord.y -= 10;
+    if (axis == 45)
+        sq->cord.z += 10;
+    if (axis == 46)
+        sq->cord.z -= 10;
+    save_sq_points(sq);
+    ft_printf("     Square Moved\n");
+}
+void size_square(t_square *sq, int k)
+{
+    if (k == 30)
+        sq->side += 10;
+    if (k == 44)
+        sq->side -= 10;
+    if (sq->side < 1)
+        sq->side = 1;
+    save_sq_points(sq);
+    ft_printf("     Square Resized\n");
 }
 
+int select_sq(t_file *c)
+{
+    if (c->sq_count == 0)
+    {
+        c->curr_sq = c->square;
+        c->sq_count++;
+    }
+    else
+    {
+        if (c->curr_sq->next)
+        {
+            c->sq_count++;
+            c->curr_sq = c->curr_sq->next;
+        }
+        else
+        {
+            c->sq_count = 1;
+            c->curr_sq = c->square;
+        }
+    }
+    ft_printf("Square: %d selected.\n", c->sq_count);
+    return (1);
+}
+void rot_square(t_square *sq, int k)
+{
+    if (k == 6)
+        sq->angle += 10;
+    if (k == 7)
+        sq->angle -= 10;
+    if(sq->angle < 0)
+        sq->angle = 360;
+      if(sq->angle > 360)
+        sq->angle = 0;
+    save_sq_points(sq);
+    ft_printf("     Square Rotated\n");
+}
 

@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 19:14:12 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/14 00:39:57 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/21 20:55:54 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ void paint_scene(t_file *c)
         while (x < c->win_width)
         {
             ray = generate_ray(x, y, *c);
-            color = get_intersections(&ray, *c);
+            color = get_intersections(&ray, c);
             if (c->ligth && color != 0)
-                color = shading(&ray, color, *c);
+                color = shading(&ray, color, c);
             my_mlx_pixel_put(&c->img, x, y, color);
             x++;
         }

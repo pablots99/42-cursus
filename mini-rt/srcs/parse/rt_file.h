@@ -6,12 +6,11 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 20:13:39 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/03 21:44:58 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/19 19:30:36 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 int save_res(char **splited,t_file *configFile);
-
 
 
 int save_new_ligth(char **splited, t_file *configFile);

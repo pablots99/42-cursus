@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 17:05:59 by ptorres           #+#    #+#             */
-/*   Updated: 2021/01/14 02:12:51 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/19 22:28:35 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,5 @@ void adjust_res(t_file *c)
 		c->win_width = w;
 	if (c->win_heigth > h)
 		c->win_heigth = h;
-	c->aspect_ratio = c->win_width/ c->win_heigth;
+	c->aspect_ratio = (float)((float)c->win_width / (float)c->win_heigth);
 }

@@ -6,14 +6,14 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 20:02:19 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/14 00:12:04 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/21 18:21:48 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../mini_rt.h"
 
 
-int create_int_color_shade(t_rgb color, t_ligth ligth,float brigth)
+int create_shade_color(t_rgb color, t_ligth ligth,float brigth)
 {
 	t_rgb c;
 	c.r = (color.r  * ligth.rgb.r * brigth ) / 255;
@@ -22,7 +22,7 @@ int create_int_color_shade(t_rgb color, t_ligth ligth,float brigth)
 	return ( c.r << 16 | c.g << 8 | c.b);
 }
 
-int create_int_color(t_rgb color, t_ambient_ligth ambient)
+int ambient_color(t_rgb color, t_ambient_ligth ambient)
 {
 	t_rgb c;
 
