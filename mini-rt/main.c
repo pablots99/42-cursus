@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 19:14:12 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/21 20:55:54 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/24 23:16:50 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@ void paint_scene(t_file *c)
 
     color = 0;
     y = 0;
-    ft_printf("\nLoading ");
+    c->img.mlx_img = mlx_new_image(c->mlx_ptr, c->win_width, c->win_heigth);
+    c->img.address = mlx_get_data_addr(c->img.mlx_img, &c->img.bits_per_pixel,
+        &c->img.line_length, &c->img.endian);
     while (y < c->win_heigth)
     {
         x = 0;
@@ -34,10 +36,10 @@ void paint_scene(t_file *c)
             my_mlx_pixel_put(&c->img, x, y, color);
             x++;
         }
-        ft_printf("\rLoading: %d%%",y / (c->win_heigth/100));
+        ft_printf("\rLoading: %d%%", y / (c->win_heigth / 100));
         y++;
     }
-    ft_printf("\rLoading: %d%%\n",100);
+    ft_printf("\rLoading: %d%%\n", 100);
 }
 
 int init_window(t_file *c)
@@ -50,9 +52,6 @@ int init_window(t_file *c)
     mlx_hook(c->win_ptr, 2, 1L << 0, exit_win, c);
     mlx_hook(c->win_ptr, 17, 1L << 2, exit_win2, c);
     mlx_key_hook(c->win_ptr, detect_key, c);
-    c->img.mlx_img = mlx_new_image(c->mlx_ptr, c->win_width, c->win_heigth);
-    c->img.address = mlx_get_data_addr(c->img.mlx_img, &c->img.bits_per_pixel,
-                                       &c->img.line_length, &c->img.endian);
     paint_scene(c);
     mlx_put_image_to_window(c->mlx_ptr, c->win_ptr, c->img.mlx_img, 0, 0);
     mlx_loop(c->mlx_ptr);
@@ -78,6 +77,5 @@ int main(int argc, char **argv)
     ft_printf("\n\n\n\n------------------LEAKS---------------------------------------\n");
     system("leaks minirt");
     ft_printf("--------------------------------------------------------\n");
-
     return 0;
 }

@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/15 17:19:10 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/21 20:46:24 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/24 12:47:33 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int spheres_intersection(t_ray *ray, t_list *list)
         {
             color = int_from_rgb(sp.rgb.r,sp.rgb.g,sp.rgb.b);
             ray->object = SPHERE;
+            ray->refraction = sp.refraction;
         }
         aux = aux->next;
     }
@@ -53,6 +54,7 @@ int plane_intersection(t_ray *ray, t_list *plane)
         {
             color = int_from_rgb(pl.rgb.r,pl.rgb.g,pl.rgb.b);
             ray->object = PLANE;
+            ray->refraction = pl.refraction;
         }
         aux = aux->next;
     }
@@ -77,6 +79,7 @@ int triangle_intersection(t_ray *ray, t_list *plane)
         {
             color = int_from_rgb(tr.rgb.r,tr.rgb.g,tr.rgb.b);
             ray->object = TRIANGLE;
+            ray->refraction = tr.refraction;
         }
         aux = aux->next;
     }
@@ -100,6 +103,7 @@ int square_intersection(t_ray *ray, t_list *plane)
         {
             color = int_from_rgb(sq.rgb.r,sq.rgb.g,sq.rgb.b);
             ray->object = SQUARE;
+            ray->refraction = sq.refraction;
         }
         aux = aux->next;
     }
@@ -119,10 +123,11 @@ int cylinder_intersection(t_ray *ray, t_list *list)
     {
         len_aux = ray->len;
         cy = *(t_cylinder *)aux->content;
-        if (get_cy_inter(ray, cy))
+        if (get_cy_inter(ray, cy) && ray->len < len_aux)
         {
             color = int_from_rgb(cy.rgb.r,cy.rgb.g,cy.rgb.b);
             ray->object = CYLINDER;
+            ray->refraction = cy.refraction;
         }
         aux = aux->next;
     }

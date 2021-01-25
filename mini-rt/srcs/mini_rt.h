@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 19:15:09 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/21 22:37:46 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/24 18:03:24 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,16 @@
 #include <math.h>
 #include <fcntl.h>
 
+#define SPHERE 1
+#define CAMERA 2
+#define SQUARE 3
+#define PLANE 4
+#define TRIANGLE 5
+#define CYLINDER 6
 
-#define SPHERE 		1
-#define CAMERA 		2
-#define SQUARE 		3
-#define PLANE 		4
-#define TRIANGLE 	5
-#define CYLINDER 	6
-
-
-#define REFRACTED 			1
-#define REFRACTIVE_INDEX  	1
-#define SPECULAR_EXPONENT  	50
-#define SPECULAR_KS  		0.01
-
+#define SPECULAR_EXPONENT 50
+#define SPECULAR_KS 0.01
+#define BIAS 1
 
 typedef struct s_cord
 {
@@ -93,12 +89,15 @@ typedef struct s_sphere
 	t_cord cord;
 	float diameter;
 	t_rgb rgb;
+	float refraction;
+
 } t_sphere;
 typedef struct s_plane
 {
 	t_cord cord;
 	t_cord norm_v;
 	t_rgb rgb;
+	float refraction;
 
 } t_plane;
 typedef struct s_square
@@ -109,6 +108,8 @@ typedef struct s_square
 	float angle;
 	t_rgb rgb;
 	t_sqpoints points;
+	float refraction;
+
 } t_square;
 typedef struct s_cylinder
 {
@@ -117,7 +118,7 @@ typedef struct s_cylinder
 	float diameter;
 	float height;
 	t_rgb rgb;
-
+	float refraction;
 } t_cylinder;
 typedef struct s_triangle
 {
@@ -125,6 +126,7 @@ typedef struct s_triangle
 	t_cord cord_2;
 	t_cord cord_3;
 	t_rgb rgb;
+	float refraction;
 
 } t_triangle;
 typedef struct s_ray
@@ -132,8 +134,9 @@ typedef struct s_ray
 	t_cord origin;
 	t_cord direction;
 	t_cord normal;
-	int    object;
-	float  len;
+	int object;
+	float refraction;
+	float len;
 } t_ray;
 typedef struct s_img
 {
@@ -154,6 +157,9 @@ typedef struct s_file
 	int cam_count;
 	int sp_count;
 	int sq_count;
+	int tr_count;
+	int pl_count;
+	int cy_count;
 	int obj_selected;
 	t_img img;
 	t_ambient_ligth ambient_ligth;
@@ -162,10 +168,14 @@ typedef struct s_file
 	t_list *ligth;
 	t_list *curr_sp;
 	t_list *sphere;
+	t_list *curr_pl;
 	t_list *plane;
 	t_list *curr_sq;
 	t_list *square;
+	t_list *curr_cy;
 	t_list *cylinder;
+	t_list *curr_tr;
+
 	t_list *triangle;
 } t_file;
 
@@ -231,7 +241,7 @@ int shading(t_ray *ray, int color, t_file *c);
 
 t_cord vector(float x, float y, float z);
 
-int create_shade_color(t_rgb color, t_ligth ligth,float brigth);
+int create_shade_color(t_rgb color, t_ligth ligth,float brigth,float specular);
 
 t_rgb rgb_from_int(int color);
 
@@ -300,3 +310,25 @@ void rot_square(t_square *sq, int k);
 float max_float(float a, float b);
 
 t_ray refracted_ray(t_ray *ray);
+
+float min_float(float a, float b);
+
+t_rgb sum_colors(t_rgb c1,t_rgb c2);
+
+int select_cy(t_file *c);
+
+void size_cylinder(t_cylinder *cy, int k);
+
+void move_cylinder(t_cylinder *cy, int axis);
+
+void sum_vec2(float num,float *x,float *y,float *z);
+
+void size_triangle(t_triangle *tr, int k);
+
+void move_triangle(t_triangle *tr, int axis);
+
+int select_tr(t_file *c);
+
+int select_pl(t_file *c);
+
+void move_plane(t_plane *pl, int axis);

@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/03 12:16:02 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/21 20:55:41 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/21 23:01:48 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,35 +36,17 @@ int get_intersections(t_ray *ray, t_file *c)
 
     color = 0;
     len = ray->len;
-    if (c->sphere && (color_aux = spheres_intersection(ray, c->sphere)) && ray->len < len)
-    {
+    if (c->sphere && (color_aux = spheres_intersection(ray, c->sphere)) )
         color = color_aux;
-        len = ray->len;
-    }
-    if (c->plane && (color_aux = plane_intersection(ray, c->plane)) && ray->len < len)
-    {
+    if (c->plane && (color_aux = plane_intersection(ray, c->plane)) )
         color = color_aux;
-        len = ray->len;
-    }
-    if (c->cylinder && (color_aux = cylinder_intersection(ray, c->cylinder)) && ray->len < len)
-    {
+    if (c->cylinder && (color_aux = cylinder_intersection(ray, c->cylinder)))
         color = color_aux;
-        len = ray->len;
-    }
-    if (c->square && (color_aux = square_intersection(ray, c->square)) && ray->len < len)
-    {
+    if (c->square && (color_aux = square_intersection(ray, c->square)))
         color = color_aux;
-        len = ray->len;
-    }
-    if (c->triangle && (color_aux = triangle_intersection(ray, c->triangle)) && ray->len < len)
-    {
+    if (c->triangle && (color_aux = triangle_intersection(ray, c->triangle)))
         color = color_aux;
-        len = ray->len;
-    }
-    if (c->square && (color_aux = square_intersection(ray, c->square)) && ray->len < len)
-    {
+    if (c->square && (color_aux = square_intersection(ray, c->square)))
         color = color_aux;
-        len = ray->len;
-    }
     return (color);
 }

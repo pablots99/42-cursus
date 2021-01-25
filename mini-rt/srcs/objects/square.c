@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/10 15:06:52 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/21 17:59:07 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/24 20:13:46 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,19 @@ int get_sq_inter(t_ray *ray, t_square sq)
     float len;
     t_triangle tr;
     t_cord ab;
-    int cond;
 
-    cond = 0;
     den = prod_esc(ray->direction, sq.norm_v);
     if (fabs(den) > 0)
     {
-        if ((len = prod_esc(rest_vec(sq.cord, ray->origin), sq.norm_v) / den) >= 0)
+        len = prod_esc(rest_vec(sq.cord, ray->origin), sq.norm_v) / den;
+        if ( len >= 0 && len < ray->len)
         {
             tr = new_triangle(sq.points.p0, sq.points.p1, sq.points.p2);
             ab = barycentric_cords(tr, ray_intersection(*ray, len));
-            if (!cond && len < ray->len && (ab.x <= 1 && ab.x >= 0) &&
-                (ab.y <= 1 && ab.y >= 0))
+            if ((ab.x <= 1 && ab.x >= 0) && (ab.y <= 1 && ab.y >= 0))
             {
-                ray->normal = norm_vec(esc_dot_vec(-1,sum_vec(ray_intersection(*ray, len), sq.norm_v)));
-                ray->len = len - 1;
+                ray->len = len - BIAS;
+                ray->normal = sq.norm_v; 
                 return (1);
             }
         }
@@ -99,7 +97,7 @@ void rot_square(t_square *sq, int k)
         sq->angle -= 10;
     if(sq->angle < 0)
         sq->angle = 360;
-      if(sq->angle > 360)
+    if(sq->angle > 360)
         sq->angle = 0;
     save_sq_points(sq);
     ft_printf("     Square Rotated\n");

@@ -23,10 +23,51 @@ int get_pl_inter(t_ray *ray, t_plane pl)
         len = prod_esc(rest_vec(pl.cord,ray->origin),pl.norm_v) /den;
         if (len < ray->len && len >= 0)
         {
-            ray->len = len - 1;
+            ray->len = len - BIAS;
             ray->normal = pl.norm_v;
             return 1;
         }
     }
     return -1;
+}
+
+void move_plane(t_plane *pl, int axis)
+{
+    if (axis == 123)
+        pl->cord.x -= 10;
+    if (axis == 124)
+        pl->cord.x += 10;
+    if (axis == 126)
+        pl->cord.y += 10;
+    if (axis == 125)
+        pl->cord.y -= 10;
+    if (axis == 45)
+        pl->cord.z += 10;
+    if (axis == 46)
+        pl->cord.z -= 10;
+    ft_printf("     Plane Moved\n");
+}
+
+int select_pl(t_file *c)
+{
+    if (c->pl_count == 0)
+    {
+        c->curr_pl = c->plane;
+        c->pl_count++;
+    }
+    else
+    {
+        if (c->curr_pl->next)
+        {
+            c->pl_count++;
+            c->curr_pl = c->curr_pl->next;
+        }
+        else
+        {
+            c->pl_count = 1;
+            c->curr_pl = c->plane;
+        }
+    }
+    ft_printf("Pane: %d selected.\n", c->pl_count);
+    return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/02 21:45:28 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/21 21:04:11 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/24 14:43:21 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,12 @@ t_cord sum_vec(t_cord v1, t_cord v2)
 	vec.y = v1.y + v2.y;
 	vec.z = v1.z + v2.z;
 	return (vec);
+}
+void sum_vec2(float num,float *x,float *y,float *z)
+{
+	*x+=num;
+	*y+=num;
+	*z+=num;
 }
 t_cord rest_vec(t_cord v1, t_cord v2)
 {
@@ -146,6 +152,7 @@ t_ray refracted_ray(t_ray *ray)
 
 	dir = esc_dot_vec(-1,ray->direction);
 
+	//cambiar direccion para objetos traslucidos
 	res.direction =	rest_vec(esc_dot_vec(2 * prod_esc(ray->normal, dir),
 					ray->normal), dir);
 	res.len = 	INFINITY;

@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/10 14:34:03 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/20 18:42:07 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/24 19:23:41 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ int get_dyscs_inter1(t_ray *ray, t_cylinder cy)
         i_to_center = fabs(mod_vec(rest_vec(cy.cord, ray_intersection(*ray, len))));
         if (len >= 0 && i_to_center <= (cy.diameter / 2) && len < ray->len)
         {
-            ray->len = len - 1;
-            ray->normal = cy.norm_v;
+            ray->len = len - BIAS;
+            ray->normal =  norm_vec(esc_dot_vec(-1,cy.norm_v));
             return 1;
         }
     }
@@ -47,8 +47,8 @@ int get_dyscs_inter2(t_ray *ray, t_cylinder cy)
         i_to_center = fabs(mod_vec(rest_vec(p, ray_intersection(*ray, len))));
         if (len >= 0 && i_to_center <= (cy.diameter / 2) && len < ray->len)
         {
-            ray->len = len - 1;
-            ray->normal = cy.norm_v;
+            ray->len = len - BIAS;
+            ray->normal = norm_vec(esc_dot_vec(1,cy.norm_v));
             return 1;
         }
     }
@@ -62,6 +62,7 @@ float t_inter(t_ray *ray, float t1, float t2)
         return (t2);
     return -1;
 }
+
 int get_cy_inter(t_ray *ray, t_cylinder cy)
 {
     float l;
@@ -75,19 +76,18 @@ int get_cy_inter(t_ray *ray, t_cylinder cy)
     ec.x = prod_esc(ray->direction, ray->direction) - pow(prod_esc(ray->direction, h), 2);
     ec.y = 2 * (prod_esc(ray->direction, w) - (prod_esc(ray->direction, h) * prod_esc(w, h)));
     ec.z = prod_esc(w, w) - pow(prod_esc(w, h), 2) - pow(cy.diameter / 2, 2);
+    h.x = get_dyscs_inter1(ray, cy);
+    h.x =  get_dyscs_inter2(ray, cy);
     l = pow(ec.y, 2) - (4 * ec.x * ec.z);
-    get_dyscs_inter1(ray, cy);
-    //get_dyscs_inter2(ray, cy);
-    if (l > 0)
+    l = min_float((-ec.y - sqrt(l)) / (2 * ec.x), (-ec.y + sqrt(l)) / (2 * ec.x));
+    proy = prod_esc(rest_vec(ray_intersection(*ray, l), cy.cord), cy.norm_v);
+    if (l > 0 && l < ray->len && proy >= 0 && proy <= cy.height)
     {
-        l = t_inter(ray, ((-ec.y - sqrt(l)) / (2 * ec.x)), ((-ec.y + sqrt(l)) / (2 * ec.x)));
-        proy = prod_esc(rest_vec(ray_intersection(*ray, l), cy.cord), cy.norm_v);
-        if (l > 0 && l < ray->len && proy >= 0 && proy <= cy.height)
-        {
-            //ray->normal =
-            ray->len = l - 1;
-            return (1);
-        }
+        ray->normal = norm_vec(rest_vec(ray_intersection(*ray, l),sum_vec(esc_dot_vec(proy,cy.norm_v),cy.cord)));
+        ray->len = l - BIAS;
+        return (1);
     }
+    if(h.x == 1)
+        return 1;
     return (-1);
 }

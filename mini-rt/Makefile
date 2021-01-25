@@ -2,7 +2,7 @@ NAME = minirt
 
 LIBFT = libft/libft.a
 
-SRCS =  main.c 						\
+SRCS =  main.c 							\
 		srcs/parse/get_rt_file.c 		\
 		srcs/parse/parse_rt_file1.c 	\
 		srcs/parse/parse_rt_file2.c 	\
@@ -18,13 +18,14 @@ SRCS =  main.c 						\
 		srcs/math/vectors.c				\
 		srcs/math/utils.c				\
 		srcs/raytracing/cast_rays.c		\
-		srcs/objects/sphere.c		\
-		srcs/objects/camera.c		\
+		srcs/objects/sphere.c			\
+		srcs/objects/camera.c			\
 		srcs/objects/plane.c			\
-		srcs/objects/cylinder.c		\
-		srcs/objects/square.c		\
-		srcs/objects/triangle.c		\
-		srcs/raytracing/shading.c	\
+		srcs/objects/cylinder.c			\
+		srcs/objects/cylinder2.c		\
+		srcs/objects/square.c			\
+		srcs/objects/triangle.c			\
+		srcs/raytracing/shading.c		\
 		srcs/raytracing/intersections.c		
 	
 

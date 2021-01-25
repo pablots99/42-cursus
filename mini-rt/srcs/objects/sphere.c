@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 10:51:00 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/21 17:34:45 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/24 15:05:28 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,11 @@ int get_sp_inter(t_ray *ray, t_sphere sp)
     l_p1 = tca - sqrt(pow(sp.diameter / 2, 2) - pow(d, 2));
     if (l_p1 < ray->len)
     {
-        ray->len = l_p1 - 1;
+        ray->len = l_p1 - BIAS;
         ray->normal = norm_vec(rest_vec(ray_cut_point(*ray),sp.cord));
     }
     return (1);
 }
-
-
-
 void move_sphere(t_sphere *sp, int axis)
 {
     if (axis == 123)
