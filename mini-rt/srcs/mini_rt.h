@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_rt.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 19:15:09 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/24 18:03:24 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/25 18:39:24 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,7 @@ typedef struct s_ray
 	t_cord normal;
 	int object;
 	float refraction;
+	float reflexion;
 	float len;
 } t_ray;
 typedef struct s_img
@@ -153,6 +154,7 @@ typedef struct s_file
 	void *win_ptr;
 	int win_heigth;
 	int win_width;
+	int n_reflexions;
 	float aspect_ratio;
 	int cam_count;
 	int sp_count;
@@ -175,7 +177,6 @@ typedef struct s_file
 	t_list *curr_cy;
 	t_list *cylinder;
 	t_list *curr_tr;
-
 	t_list *triangle;
 } t_file;
 
@@ -332,3 +333,7 @@ int select_tr(t_file *c);
 int select_pl(t_file *c);
 
 void move_plane(t_plane *pl, int axis);
+
+int min_int(int a, int b);
+
+int sum_int_colors(int color1, int color2);

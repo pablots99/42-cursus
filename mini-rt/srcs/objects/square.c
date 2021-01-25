@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   square.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/10 15:06:52 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/24 20:13:46 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/25 16:11:38 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int get_sq_inter(t_ray *ray, t_square sq)
             if ((ab.x <= 1 && ab.x >= 0) && (ab.y <= 1 && ab.y >= 0))
             {
                 ray->len = len - BIAS;
-                ray->normal = sq.norm_v; 
+                ray->normal =  sq.norm_v; 
                 return (1);
             }
         }

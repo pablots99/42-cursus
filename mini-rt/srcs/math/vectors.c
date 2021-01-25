@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vectors.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/02 21:45:28 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/24 14:43:21 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/25 17:11:59 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,21 @@ t_ray refracted_ray(t_ray *ray)
 
 	dir = esc_dot_vec(-1,ray->direction);
 
-	//cambiar direccion para objetos traslucidos
+	//cambiar direccion para objetos traslucidos esta mal el rayo reflejado
+	res.direction =	rest_vec(esc_dot_vec(2 * prod_esc(ray->normal, dir),
+					ray->normal), dir);
+	res.len = 	INFINITY;
+	res.origin = ray_cut_point(*ray);
+	return (res);
+}
+t_ray ref_ray(t_ray *ray)
+{
+	t_ray res;
+	t_cord dir;
+
+	dir = esc_dot_vec(-1,ray->direction);
+
+	//cambiar direccion para objetos traslucidos esta mal el rayo reflejado
 	res.direction =	rest_vec(esc_dot_vec(2 * prod_esc(ray->normal, dir),
 					ray->normal), dir);
 	res.len = 	INFINITY;

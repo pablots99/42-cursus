@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 19:14:12 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/24 23:16:50 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/25 15:29:18 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void paint_scene(t_file *c)
             my_mlx_pixel_put(&c->img, x, y, color);
             x++;
         }
-        ft_printf("\rLoading: %d%%", y / (c->win_heigth / 100));
+       // ft_printf("\rLoading: %d%%", y / (c->win_heigth / 100));
         y++;
     }
     ft_printf("\rLoading: %d%%\n", 100);

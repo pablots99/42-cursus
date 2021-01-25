@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   intersections.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/15 17:19:10 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/24 12:47:33 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/25 17:11:00 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int spheres_intersection(t_ray *ray, t_list *list)
         {
             color = int_from_rgb(sp.rgb.r,sp.rgb.g,sp.rgb.b);
             ray->object = SPHERE;
-            ray->refraction = sp.refraction;
+            ray->reflexion = sp.refraction;
         }
         aux = aux->next;
     }
@@ -54,7 +54,7 @@ int plane_intersection(t_ray *ray, t_list *plane)
         {
             color = int_from_rgb(pl.rgb.r,pl.rgb.g,pl.rgb.b);
             ray->object = PLANE;
-            ray->refraction = pl.refraction;
+            ray->reflexion = pl.refraction;
         }
         aux = aux->next;
     }
@@ -79,7 +79,7 @@ int triangle_intersection(t_ray *ray, t_list *plane)
         {
             color = int_from_rgb(tr.rgb.r,tr.rgb.g,tr.rgb.b);
             ray->object = TRIANGLE;
-            ray->refraction = tr.refraction;
+            ray->reflexion = tr.refraction;
         }
         aux = aux->next;
     }
@@ -103,7 +103,7 @@ int square_intersection(t_ray *ray, t_list *plane)
         {
             color = int_from_rgb(sq.rgb.r,sq.rgb.g,sq.rgb.b);
             ray->object = SQUARE;
-            ray->refraction = sq.refraction;
+            ray->reflexion = sq.refraction;
         }
         aux = aux->next;
     }
@@ -127,7 +127,7 @@ int cylinder_intersection(t_ray *ray, t_list *list)
         {
             color = int_from_rgb(cy.rgb.r,cy.rgb.g,cy.rgb.b);
             ray->object = CYLINDER;
-            ray->refraction = cy.refraction;
+            ray->reflexion = cy.refraction;
         }
         aux = aux->next;
     }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   triangle.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 15:06:16 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/24 15:05:45 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/25 16:15:34 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,14 @@ int get_tr_inter(t_ray *ray, t_triangle tr)
     den = prod_esc(ray->direction, normal);
     if (fabs(den) > 0)
     {
-        if ((len = prod_esc(rest_vec(tr.cord_1, ray->origin), normal) / den) >= 0)
+        if ((len = prod_esc(rest_vec(tr.cord_1, ray->origin), normal) / den) > 0)
         {
             p = ray_intersection(*ray, len);
             ab = barycentric_cords(tr, p);
             if (len < ray->len && (ab.x <= 1 && ab.x >= 0) &&
                 (ab.y <= 1 && ab.y >= 0) &&  (ab.z <= 1 && ab.z >= 0))
             {
-                ray->normal = normal;
+                ray->normal = esc_dot_vec(-1, normal);
                 ray->len = len - BIAS;
                 return 1;
             }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 17:15:50 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/24 13:50:25 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/25 18:13:40 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,11 @@ float max_float(float a, float b)
 
 
 float min_float(float a, float b)
+{
+    return ((a<b)?a:b);
+}
+
+int min_int(int a, int b)
 {
     return ((a<b)?a:b);
 }
