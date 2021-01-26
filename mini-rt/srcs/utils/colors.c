@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   colors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 20:02:19 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/25 18:39:06 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/01/25 23:19:36 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,17 @@ int ambient_color(t_rgb color, t_ambient_ligth ambient)
 {
 	t_rgb c;
 
-	c.r = (color.r * ambient.rgb.r * ambient.ratio / 255);
-	c.g = (color.g * ambient.rgb.g * ambient.ratio) / 255;
-	c.b = (color.b * ambient.rgb.b * ambient.ratio) / 255;
+	c.r = min_int(255,(color.r * ambient.rgb.r * ambient.ratio / 255));
+	c.g = min_int(255,(color.g * ambient.rgb.g * ambient.ratio) / 255);
+	c.b = min_int(255,(color.b * ambient.rgb.b * ambient.ratio) / 255);
 	return (c.r << 16 | c.g << 8 | c.b);
 }
 t_rgb sum_colors(t_rgb c1, t_rgb c2)
 {
 	t_rgb res;
-	res.r = c1.r + c2.r;
-	res.g = c1.g + c2.g;
-	res.b = c1.b + c2.b;
+	res.r = min_int(255,c1.r + c2.r);
+	res.g = min_int(255,(c1.g + c2.g));
+	res.b = min_int(255,(c1.b + c2.b));
 	return (res);
 }
 t_rgb rgb_from_int(int color)
@@ -60,8 +60,8 @@ int sum_int_colors(int color1, int color2)
 
 	c1 = rgb_from_int(color1);
 	c2 = rgb_from_int(color2);
-	res.r = c1.r + c2.r;
-	res.g = c1.g + c2.g;
-	res.b = c1.b + c2.b;
+	res.r = min_int(255,c1.r + c2.r);
+	res.g = min_int(255,c1.g + c2.g);
+	res.b =  min_int(255,c1.b + c2.b);
 	return (int_from_rgb(res.r,res.g,res.b));
 }

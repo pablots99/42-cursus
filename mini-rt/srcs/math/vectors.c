@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vectors.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/02 21:45:28 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/25 17:11:59 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/01/26 11:36:47 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,8 @@ t_ray refracted_ray(t_ray *ray)
 	res.direction =	rest_vec(esc_dot_vec(2 * prod_esc(ray->normal, dir),
 					ray->normal), dir);
 	res.len = 	INFINITY;
+	res.reflexion = 0;
+	res.object = 0;
 	res.origin = ray_cut_point(*ray);
 	return (res);
 }

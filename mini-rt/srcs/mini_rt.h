@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_rt.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 19:15:09 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/25 18:39:24 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/01/25 23:47:38 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -337,3 +337,5 @@ void move_plane(t_plane *pl, int axis);
 int min_int(int a, int b);
 
 int sum_int_colors(int color1, int color2);
+
+int get_shadow_intersections(t_ray ray, t_file c);

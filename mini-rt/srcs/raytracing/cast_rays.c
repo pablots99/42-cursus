@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/03 12:16:02 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/21 23:01:48 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/26 00:24:26 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ t_ray generate_ray(int x, int y, t_file c)
     ray.direction.x = (2 * (((float)x + 0.5) / (float)c.win_width) - 1) * tan((camera.fov * (M_PI / 180) / 2)) * c.aspect_ratio;
     ray.direction.y = (1 - 2 * ((float)y + 0.5) / ((float)c.win_heigth)) * tan((camera.fov * (M_PI / 180) / 2));
     ray.direction.z = -1;
+    ray.reflexion = 0;
     ray.direction = norm_vec(vector_dot_matrix(norm_vec(ray.direction), camera.canvas.matrix));
     ray.len = INFINITY;
     ray.normal = vector(0, 0, 0);
@@ -49,4 +50,20 @@ int get_intersections(t_ray *ray, t_file *c)
     if (c->square && (color_aux = square_intersection(ray, c->square)))
         color = color_aux;
     return (color);
+}
+int get_shadow_intersections(t_ray ray, t_file c)
+{
+    if (c.sphere && (spheres_intersection(&ray, c.sphere)) )
+        return (1);
+    if (c.plane && (plane_intersection(&ray, c.plane)) )
+        return (1);
+    if (c.cylinder && (cylinder_intersection(&ray, c.cylinder)))
+        return (1);
+    if (c.square && ( square_intersection(&ray, c.square)))
+        return (1);
+    if (c.triangle && (triangle_intersection(&ray, c.triangle)))
+       return (1);
+    if (c.square && (square_intersection(&ray, c.square)))
+       return (1);
+    return (0);
 }

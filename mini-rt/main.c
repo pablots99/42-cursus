@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 19:14:12 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/25 15:29:18 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/01/25 23:41:54 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "srcs/mini_rt.h"
+
 
 void paint_scene(t_file *c)
 {
@@ -21,9 +22,7 @@ void paint_scene(t_file *c)
 
     color = 0;
     y = 0;
-    c->img.mlx_img = mlx_new_image(c->mlx_ptr, c->win_width, c->win_heigth);
-    c->img.address = mlx_get_data_addr(c->img.mlx_img, &c->img.bits_per_pixel,
-        &c->img.line_length, &c->img.endian);
+    mlx_clear_window(c->mlx_ptr, c->win_ptr);
     while (y < c->win_heigth)
     {
         x = 0;
@@ -31,12 +30,13 @@ void paint_scene(t_file *c)
         {
             ray = generate_ray(x, y, *c);
             color = get_intersections(&ray, c);
-            if (c->ligth && color != 0)
+            if (c->ligth )
                 color = shading(&ray, color, c);
             my_mlx_pixel_put(&c->img, x, y, color);
             x++;
         }
-       // ft_printf("\rLoading: %d%%", y / (c->win_heigth / 100));
+        ft_printf("\rLoading: %d%%", y / (c->win_heigth / 100));
+
         y++;
     }
     ft_printf("\rLoading: %d%%\n", 100);
@@ -52,6 +52,9 @@ int init_window(t_file *c)
     mlx_hook(c->win_ptr, 2, 1L << 0, exit_win, c);
     mlx_hook(c->win_ptr, 17, 1L << 2, exit_win2, c);
     mlx_key_hook(c->win_ptr, detect_key, c);
+     c->img.mlx_img = mlx_new_image(c->mlx_ptr, c->win_width, c->win_heigth);
+    c->img.address = mlx_get_data_addr(c->img.mlx_img, &c->img.bits_per_pixel,
+        &c->img.line_length, &c->img.endian);
     paint_scene(c);
     mlx_put_image_to_window(c->mlx_ptr, c->win_ptr, c->img.mlx_img, 0, 0);
     mlx_loop(c->mlx_ptr);
