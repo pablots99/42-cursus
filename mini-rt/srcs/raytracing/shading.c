@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   shading.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 12:51:39 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/26 12:07:33 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/26 15:07:57 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../mini_rt.h"
 
-float calculate_specular(t_ray *ray, t_cord v, float ambien_ratio, float brigth)
+float calculate_specular(t_ray *ray, t_cord v)
 {
 	t_cord r;
 	float spec;
@@ -20,7 +20,7 @@ float calculate_specular(t_ray *ray, t_cord v, float ambien_ratio, float brigth)
 
 	dir = norm_vec(esc_dot_vec(-1, ray->direction));
 	r = rest_vec(esc_dot_vec(2 * prod_esc(ray->normal, dir), ray->normal), dir);
-	spec = pow(prod_esc(r, v), 100);
+	spec = pow(max_float(0,prod_esc(r, v)), 100);
 
 	return (spec);
 }
@@ -36,16 +36,17 @@ int shading(t_ray *ray, int color, t_file *c)
 	int color_aux;
 	
 	reflected = refracted_ray(ray);
-	c->n_reflexions = 0;
 	color_aux = color;
 	aux = c->ligth;
 	brigth = 1;
-    if (ray->reflexion > 0 && c->n_reflexions < 0)
+    if (ray->reflexion > 0 && c->n_reflexions < 10)
 	{
 		c->n_reflexions++;
 		color = shading(&reflected, get_intersections(&reflected, c), c);
 		color = sum_int_colors(color, color_aux);
+		//return sum_int_colors(color_aux,shading(&reflected, get_intersections(&reflected, c), c));
 	}
+	c->n_reflexions = 0;
 	while (aux)
 	{
 		ligth = *((t_ligth *)aux->content);
@@ -58,7 +59,7 @@ int shading(t_ray *ray, int color, t_file *c)
 			brigth = c->ambient_ligth.ratio;
 		else 
 			brigth = max_float(c->ambient_ligth.ratio,brigth* (prod_esc(ray->normal, norm_vec(vec_ligth)) * (ligth.brigthness + 0.01)));
-			color = create_shade_color(rgb_from_int(color), ligth, brigth, calculate_specular(&pointo_ligth, ray->direction, c->ambient_ligth.ratio, brigth));
+			color = create_shade_color(rgb_from_int(color), ligth, brigth, calculate_specular(&pointo_ligth, ray->direction));
 		aux = aux->next;
 	}
 

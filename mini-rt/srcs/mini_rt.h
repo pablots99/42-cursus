@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_rt.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 19:15:09 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/26 13:26:38 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/26 18:47:15 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@
 #define TRIANGLE 5
 #define CYLINDER 6
 
-#define SPECULAR_EXPONENT 50
+#define SPECULAR_EXPONENT 50.0
 #define SPECULAR_KS 0.01
 #define BIAS 1
-#define THREADS 1
+#define THREADS 15
 
 typedef struct s_cord
 {
@@ -269,7 +269,7 @@ int select_camera(t_file *c);
 
 int detect_key(int keycode, t_file *c);
 
-void paint_scene(t_file  *a);
+void paint_scene(void  *a);
 
 void my_mlx_pixel_put(t_img *data, int x, int y, int color);
 

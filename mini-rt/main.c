@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 19:14:12 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/26 13:30:57 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/26 18:52:04 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,102 +14,108 @@
 
 int threats(t_file *c)
 {
-    // int i;
-    // int err;
+	int i;
+	int err;
 
-    // pthread_t th[THREADS];
-    // i = 1;
-    // printf("1\n");
-    // while (i <= THREADS)
-    // {
-    //     c->thread = i;
-    //     err = pthread_create(&th[i], NULL, paint_scene, (void *)c);
-    //     if (err)
-    //         return parse_error("Thread Error: CAN NOT CREATE THREAD");
+	pthread_t th[THREADS];
+	i = 0;
+	printf("1\n");
+	c->thread = -1;
+	mlx_clear_window(c->mlx_ptr, c->win_ptr);
 
-    //     i++;
-    // }
-    // i = 0;
-    // while (i < THREADS)
-    // {
-    //     pthread_join(th[i], NULL);
-    //     i++;
-    // }
+	while (i < THREADS)
+	{
+		err = pthread_create(&th[i], 0, (void *)paint_scene, (void *)c);
+		//pthread_detach(th[i]);
+		if (err)
+			return parse_error("Thread Error: CAN NOT CREATE THREAD");
+		i++;
+	}
+	i = 0;
+	mlx_put_image_to_window(c->mlx_ptr, c->win_ptr, c->img.mlx_img, 0, 0);
+	while (i < THREADS)
+	{
+		pthread_join(th[i], 0);
+		i++;
+	}
 
-    //pthread_exit(NULL);
-    //printf("2\n");
-    c->thread = 0;
-    paint_scene(c);
-    return 1;
+	// while (i < c->win_width * 600000)
+	// 	i++;
+
+	c->thread = 0;
+
+	return 1;
 }
 
-void paint_scene(t_file *c)
+void paint_scene(void *a)
 {
-  int y;
-    int x;
-    t_ray ray;
-    int color;
+	int y;
+	int x;
+	t_ray ray;
+	int color;
+	t_file *c;
 
-    color = 0 ;
-    y = 0 + (c->win_heigth / c->thread);
-    mlx_clear_window(c->mlx_ptr, c->win_ptr);
-    while (y < c->win_heigth)
-    {
-        x = 0;
-        while (x < c->win_width)
-        {
-            ray = generate_ray(x, y, *c);
-            color = get_intersections(&ray, c);
-            if (c->ligth )
-                color = shading(&ray, color, c);
-            my_mlx_pixel_put(&c->img, x, y, color);
-            x++;
-        }
-        ft_printf("\rLoading: %d%%", y / (c->win_heigth / 100));
-
-        y++;
-    }
-    ft_printf("\rLoading: %d%%\n", 100);
+	c = (t_file *)a;
+	color = 0;
+	c->thread++;
+	y = (c->thread * (c->win_heigth / THREADS));
+	printf("y:%d,hilo%d\n", y, c->thread);
+	while (y < (c->thread + 1) * (c->win_heigth / THREADS))
+	{
+		x = 0;
+		while (x < c->win_width)
+		{
+			ray = generate_ray(x, y, *c);
+			color = get_intersections(&ray, c);
+			if (c->ligth)
+				color = shading(&ray, color, c);
+			my_mlx_pixel_put(&c->img, x, y, color);
+			x++;
+		}
+		//ft_printf("\rLoading%d: %d%%", c->thread, y / (c->win_heigth / 100));
+		y++;
+	}
+	pthread_exit(0);
 }
 
 int init_window(t_file *c)
 {
-if (!(c->mlx_ptr = mlx_init()))
-        return parse_error("Minilibx Error: CAN NOT INITIALIZE MINILIBX");
-    adjust_res(c);
-    if (!(c->win_ptr = mlx_new_window(c->mlx_ptr, c->win_width, c->win_heigth, "MiniRt")))
-        return parse_error("Minilibx Error: CAN NOT OPEN A WINDOW");
-    mlx_hook(c->win_ptr, 2, 1L << 0, exit_win, c);
-    mlx_hook(c->win_ptr, 17, 1L << 2, exit_win2, c);
-    mlx_key_hook(c->win_ptr, detect_key, c);
-     c->img.mlx_img = mlx_new_image(c->mlx_ptr, c->win_width, c->win_heigth);
-    c->img.address = mlx_get_data_addr(c->img.mlx_img, &c->img.bits_per_pixel,
-        &c->img.line_length, &c->img.endian);
-    threats(c);
-    mlx_put_image_to_window(c->mlx_ptr, c->win_ptr, c->img.mlx_img, 0, 0);
-    mlx_loop(c->mlx_ptr);
-    return 0;
+	if (!(c->mlx_ptr = mlx_init()))
+		return parse_error("Minilibx Error: CAN NOT INITIALIZE MINILIBX");
+	adjust_res(c);
+	if (!(c->win_ptr = mlx_new_window(c->mlx_ptr, c->win_width, c->win_heigth, "MiniRt")))
+		return parse_error("Minilibx Error: CAN NOT OPEN A WINDOW");
+	mlx_hook(c->win_ptr, 2, 1L << 0, exit_win, c);
+	mlx_hook(c->win_ptr, 17, 1L << 2, exit_win2, c);
+	mlx_key_hook(c->win_ptr, detect_key, c);
+	c->img.mlx_img = mlx_new_image(c->mlx_ptr, c->win_width, c->win_heigth);
+	c->img.address = mlx_get_data_addr(c->img.mlx_img, &c->img.bits_per_pixel,
+						     &c->img.line_length, &c->img.endian);
+	threats(c);
+	mlx_loop(c->mlx_ptr);
+	return 0;
 }
 
 int main(int argc, char **argv)
 {
-    t_file config;
+	t_file config;
 
-    config.thread = 1;
-    if (argc == 2)
-    {
-        ft_bzero(&config, sizeof(t_file));
-        if (read_rt_file(argv[1], &config))
-            init_window(&config);
-    }
-    else
-    {
-        ft_printf("Error: incorrect number of parameters");
-        return 0;
-    }
-    free_config(&config);
-    ft_printf("\n\n\n\n------------------LEAKS---------------------------------------\n");
-    system("leaks minirt");
-    ft_printf("--------------------------------------------------------\n");
-    return 0;
+	//config.thread = 1;
+	config.n_reflexions = 0;
+	if (argc == 2)
+	{
+		ft_bzero(&config, sizeof(t_file));
+		if (read_rt_file(argv[1], &config))
+			init_window(&config);
+	}
+	else if (argc == 3 && ft_strncmp(argv[2],"--save",ft_strlen(argv[2])))
+	{
+		ft_printf("Error: incorrect number of parameters");
+		return 0;
+	}
+	free_config(&config);
+	ft_printf("\n\n\n\n------------------LEAKS---------------------------------------\n");
+	system("leaks minirt");
+	ft_printf("--------------------------------------------------------\n");
+	return 0;
 }
