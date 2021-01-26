@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keys.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 21:06:31 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/25 15:29:39 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/01/26 12:26:47 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ void move_objects(t_file *c, int key)
         ft_printf("     -Can´t move object or No Object selected\n");
         return;
     }
-    paint_scene(c);
+       threats(c);
+
     mlx_put_image_to_window(c->mlx_ptr, c->win_ptr, c->img.mlx_img, 0, 0);
 }
 void size_objects(t_file *c, int key)
@@ -91,7 +92,8 @@ void size_objects(t_file *c, int key)
         ft_printf("     -Can´t resize object or No Object selected\n");
         return;
     }
-    paint_scene(c);
+       threats(c);
+
     mlx_put_image_to_window(c->mlx_ptr, c->win_ptr, c->img.mlx_img, 0, 0);
 }
 void rot_objects(t_file *c, int key)
@@ -103,7 +105,8 @@ void rot_objects(t_file *c, int key)
         ft_printf("     -Can´t rotate object or No Object selected\n");
         return;
     }
-    paint_scene(c);
+        threats(c);
+
     mlx_put_image_to_window(c->mlx_ptr, c->win_ptr, c->img.mlx_img, 0, 0);
 }
 int detect_key(int keycode, t_file *c)

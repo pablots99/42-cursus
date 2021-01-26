@@ -6,22 +6,52 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 19:14:12 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/25 23:41:54 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/26 13:30:57 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "srcs/mini_rt.h"
 
+int threats(t_file *c)
+{
+    // int i;
+    // int err;
+
+    // pthread_t th[THREADS];
+    // i = 1;
+    // printf("1\n");
+    // while (i <= THREADS)
+    // {
+    //     c->thread = i;
+    //     err = pthread_create(&th[i], NULL, paint_scene, (void *)c);
+    //     if (err)
+    //         return parse_error("Thread Error: CAN NOT CREATE THREAD");
+
+    //     i++;
+    // }
+    // i = 0;
+    // while (i < THREADS)
+    // {
+    //     pthread_join(th[i], NULL);
+    //     i++;
+    // }
+
+    //pthread_exit(NULL);
+    //printf("2\n");
+    c->thread = 0;
+    paint_scene(c);
+    return 1;
+}
 
 void paint_scene(t_file *c)
 {
-    int y;
+  int y;
     int x;
     t_ray ray;
     int color;
 
-    color = 0;
-    y = 0;
+    color = 0 ;
+    y = 0 + (c->win_heigth / c->thread);
     mlx_clear_window(c->mlx_ptr, c->win_ptr);
     while (y < c->win_heigth)
     {
@@ -44,7 +74,7 @@ void paint_scene(t_file *c)
 
 int init_window(t_file *c)
 {
-    if (!(c->mlx_ptr = mlx_init()))
+if (!(c->mlx_ptr = mlx_init()))
         return parse_error("Minilibx Error: CAN NOT INITIALIZE MINILIBX");
     adjust_res(c);
     if (!(c->win_ptr = mlx_new_window(c->mlx_ptr, c->win_width, c->win_heigth, "MiniRt")))
@@ -55,7 +85,7 @@ int init_window(t_file *c)
      c->img.mlx_img = mlx_new_image(c->mlx_ptr, c->win_width, c->win_heigth);
     c->img.address = mlx_get_data_addr(c->img.mlx_img, &c->img.bits_per_pixel,
         &c->img.line_length, &c->img.endian);
-    paint_scene(c);
+    threats(c);
     mlx_put_image_to_window(c->mlx_ptr, c->win_ptr, c->img.mlx_img, 0, 0);
     mlx_loop(c->mlx_ptr);
     return 0;
@@ -65,6 +95,7 @@ int main(int argc, char **argv)
 {
     t_file config;
 
+    config.thread = 1;
     if (argc == 2)
     {
         ft_bzero(&config, sizeof(t_file));

@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 19:15:09 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/25 23:47:38 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/26 13:26:38 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@
 #include <stdlib.h>
 #include <math.h>
 #include <fcntl.h>
+#include <pthread.h>
+
+
 
 #define SPHERE 1
 #define CAMERA 2
@@ -28,6 +31,7 @@
 #define SPECULAR_EXPONENT 50
 #define SPECULAR_KS 0.01
 #define BIAS 1
+#define THREADS 1
 
 typedef struct s_cord
 {
@@ -162,6 +166,7 @@ typedef struct s_file
 	int tr_count;
 	int pl_count;
 	int cy_count;
+	int thread;
 	int obj_selected;
 	t_img img;
 	t_ambient_ligth ambient_ligth;
@@ -264,7 +269,7 @@ int select_camera(t_file *c);
 
 int detect_key(int keycode, t_file *c);
 
-void paint_scene(t_file *c);
+void paint_scene(t_file  *a);
 
 void my_mlx_pixel_put(t_img *data, int x, int y, int color);
 
@@ -339,3 +344,6 @@ int min_int(int a, int b);
 int sum_int_colors(int color1, int color2);
 
 int get_shadow_intersections(t_ray ray, t_file c);
+
+
+int threats(t_file *c);
