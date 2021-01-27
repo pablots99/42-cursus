@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shading.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 12:51:39 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/26 22:10:39 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/27 15:23:08 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int shading(t_ray *ray, int color, t_file *c)
 	color_aux = color;
 	aux = c->ligth;
 	brigth = 1;
-    if (ray->reflexion > 0 && c->n_reflexions < 10)
+    if (ray->reflexion > 0)
 	{
 		c->n_reflexions++;
 		color = shading(&reflected, get_intersections(&reflected, c), c);

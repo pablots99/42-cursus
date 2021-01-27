@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_rt.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 19:15:09 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/27 09:43:53 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/27 18:00:41 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@
 #include <fcntl.h>
 #include <pthread.h>
 
-
-
 #define SPHERE 1
 #define CAMERA 2
 #define SQUARE 3
@@ -33,7 +31,7 @@
 #define SPECULAR_EXPONENT 50.0
 #define SPECULAR_KS 0.01
 #define BIAS 1
-#define THREADS 1
+#define THREADS 6
 
 typedef struct s_cord
 {
@@ -41,6 +39,7 @@ typedef struct s_cord
 	float y;
 	float z;
 } t_cord;
+
 
 typedef struct s_sqpoints
 {
@@ -168,7 +167,6 @@ typedef struct s_file
 	int tr_count;
 	int pl_count;
 	int cy_count;
-	int thread;
 	int obj_selected;
 	t_img img;
 	t_ambient_ligth ambient_ligth;
@@ -186,6 +184,11 @@ typedef struct s_file
 	t_list *curr_tr;
 	t_list *triangle;
 } t_file;
+typedef struct s_threads
+{
+	unsigned int thread;
+	t_file *c;
+} t_threads;
 
 int read_rt_file(char *file, t_file *configFile);
 
@@ -249,7 +252,7 @@ int shading(t_ray *ray, int color, t_file *c);
 
 t_cord vector(float x, float y, float z);
 
-int create_shade_color(t_rgb color, t_ligth ligth,float brigth,float specular);
+int create_shade_color(t_rgb color, t_ligth ligth, float brigth, float specular);
 
 t_rgb rgb_from_int(int color);
 
@@ -271,7 +274,7 @@ int select_camera(t_file *c);
 
 int detect_key(int keycode, t_file *c);
 
-void paint_scene(void  *a);
+void paint_scene(void *a);
 
 void my_mlx_pixel_put(t_img *data, int x, int y, int color);
 
@@ -321,7 +324,7 @@ t_ray refracted_ray(t_ray *ray);
 
 float min_float(float a, float b);
 
-t_rgb sum_colors(t_rgb c1,t_rgb c2);
+t_rgb sum_colors(t_rgb c1, t_rgb c2);
 
 int select_cy(t_file *c);
 
@@ -329,7 +332,7 @@ void size_cylinder(t_cylinder *cy, int k);
 
 void move_cylinder(t_cylinder *cy, int axis);
 
-void sum_vec2(float num,float *x,float *y,float *z);
+void sum_vec2(float num, float *x, float *y, float *z);
 
 void size_triangle(t_triangle *tr, int k);
 
@@ -347,7 +350,9 @@ int sum_int_colors(int color1, int color2);
 
 int get_shadow_intersections(t_ray ray, t_file c);
 
+int threats(t_file *c,int save);
 
-int threats(t_file *c);
+int create_bmp_file(t_file *c, char *file);
+
 
 #endif

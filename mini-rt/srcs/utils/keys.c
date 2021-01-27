@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 21:06:31 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/26 15:28:13 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/01/27 15:51:56 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void move_objects(t_file *c, int key)
 		ft_printf("     -Can´t move object or No Object selected\n");
 		return;
 	}
-	threats(c);
+	threats(c,0);
 
 	mlx_put_image_to_window(c->mlx_ptr, c->win_ptr, c->img.mlx_img, 0, 0);
 }
@@ -92,7 +92,7 @@ void size_objects(t_file *c, int key)
 		ft_printf("     -Can´t resize object or No Object selected\n");
 		return;
 	}
-	threats(c);
+	threats(c,0);
 
 	mlx_put_image_to_window(c->mlx_ptr, c->win_ptr, c->img.mlx_img, 0, 0);
 }
@@ -105,7 +105,7 @@ void rot_objects(t_file *c, int key)
 		ft_printf("     -Can´t rotate object or No Object selected\n");
 		return;
 	}
-	threats(c);
+	threats(c,0);
 
 	mlx_put_image_to_window(c->mlx_ptr, c->win_ptr, c->img.mlx_img, 0, 0);
 }

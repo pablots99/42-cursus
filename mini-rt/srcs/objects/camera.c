@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   camera.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 17:10:38 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/26 12:27:16 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/27 15:52:05 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int select_camera(t_file *c)
         c->camera = c->first_cam;
     }
     //paint_scene(c);
-    threats(c);
+    threats(c,0);
     mlx_put_image_to_window(c->mlx_ptr, c->win_ptr, c->img.mlx_img, 0, 0);
     ft_printf("Camera: %d\n", c->cam_count);
     return (1);
