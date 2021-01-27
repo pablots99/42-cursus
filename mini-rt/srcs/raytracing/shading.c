@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shading.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 12:51:39 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/26 15:07:57 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/01/26 22:10:39 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int shading(t_ray *ray, int color, t_file *c)
 			brigth = c->ambient_ligth.ratio;
 		else 
 			brigth = max_float(c->ambient_ligth.ratio,brigth* (prod_esc(ray->normal, norm_vec(vec_ligth)) * (ligth.brigthness + 0.01)));
+			//especular se ve en la sombra
 			color = create_shade_color(rgb_from_int(color), ligth, brigth, calculate_specular(&pointo_ligth, ray->direction));
 		aux = aux->next;
 	}

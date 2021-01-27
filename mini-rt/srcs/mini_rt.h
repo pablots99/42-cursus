@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   mini_rt.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 19:15:09 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/26 18:47:15 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/01/27 09:43:53 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#ifndef MINIRT_H
 
 #include "../libft/libft.h"
 #include "../minilibx/mlx.h"
@@ -31,7 +33,7 @@
 #define SPECULAR_EXPONENT 50.0
 #define SPECULAR_KS 0.01
 #define BIAS 1
-#define THREADS 15
+#define THREADS 1
 
 typedef struct s_cord
 {
@@ -347,3 +349,5 @@ int get_shadow_intersections(t_ray ray, t_file c);
 
 
 int threats(t_file *c);
+
+#endif
