@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 21:27:31 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/27 19:12:42 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/01/27 19:18:02 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int create_bmp_file(t_file *c, char *file)
 	if ((fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0744)) == -1)
 		return ft_printf("Bmp Error: Can´t create Bmp file\n");
 	write_headder(fd, c);
-	y =  c->win_heigth -1 ;
+	y =  c->win_heigth -1;
 	while (y > 0)
 	{
 		x = 0;
