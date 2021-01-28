@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_rt_file2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 16:08:44 by ptorres           #+#    #+#             */
-/*   Updated: 2021/01/21 23:52:06 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/28 19:24:30 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int save_new_sphere(char **splited, t_file *configFile)
 	int err;
 
 	err = 0;
-	if (ft_bistrlen(splited) != 5)
+	if (!(ft_bistrlen(splited) == 5 || ft_bistrlen(splited) == 6))
 		return (parse_error("Sphere Error: Bad number of arguments \n"));
 	if (!ft_isfloat(splited[2]))
 		return (parse_error("Sphere Error: Bad value for Diameter \n"));
@@ -30,6 +30,13 @@ int save_new_sphere(char **splited, t_file *configFile)
 	err += save_rgb(&sphere->rgb, splited[3], "Sphere");
 	sphere->diameter = ft_atof(splited[2]);
 	sphere->refraction = ft_atof(splited[4]);
+	if(ft_bistrlen(splited) == 6)
+	{
+		sphere->mapping = 1;
+		sphere->bmp = read_bmp(splited[5],configFile);
+	}
+	else 
+		sphere->mapping = 0;
 	ft_lstadd_back(&configFile->sphere, ft_lstnew(sphere));
 	if (err)
 		return (1);
@@ -47,19 +54,15 @@ int save_new_plane(char **splited, t_file *configFile)
 	if (!(plane = malloc(1 * sizeof(t_plane))))
 		return (parse_error("Plane Error: Malloc error on t_plane\n"));
 	if (!ft_isfloat(splited[4]))
-		return (parse_error("Pane Error: Bad value for Refraction \n"));
+		return (parse_error("Pane Error: Bad value for Reflexion \n"));
 	err += save_cord(&plane->cord, splited[1], "Plane");
 	err += save_cord(&plane->norm_v, splited[2], "Plane");
 	err += save_rgb(&plane->rgb, splited[3], "Plane");
-	if (!is_norm_vec(&plane->norm_v))
-		err += (parse_error("Plane Error: vector not normalized \n"));
+	plane->norm_v = norm_vec(plane->norm_v);
 	plane->refraction = ft_atof(splited[4]);
 	ft_lstadd_back(&configFile->plane, ft_lstnew(plane));
 	if (err)
-	{
-		//free(plane);
 		return (1);
-	}
 	return (0);
 }
 int save_new_square(char **splited, t_file *configFile)
@@ -79,8 +82,7 @@ int save_new_square(char **splited, t_file *configFile)
 	square->side = ft_atof(splited[3]);
 	square->refraction = ft_atof(splited[6]);
 	err += save_rgb(&square->rgb, splited[4], "Square");
-	if (!is_norm_vec(&square->norm_v))
-		err += (parse_error("Square Error: vector not normalized \n"));
+	square->norm_v = norm_vec(square->norm_v);
 	if (!ft_isfloat(splited[5]))
 		return (parse_error("Square Ligth Error: Bad value for angle \n"));
 	square->angle = ft_atof(splited[5]);
@@ -110,8 +112,6 @@ int save_new_cylinder(char **splited, t_file *configFile)
 	cylinder->height = ft_atof(splited[4]);
 	err += save_rgb(&cylinder->rgb, splited[5], "Cylinder");
 	cylinder->refraction =ft_atof(splited[6]);
-	// if (!is_norm_vec(&cylinder->norm_v))
-	// 	err += (parse_error("Cylinder Error: vector not normalized \n"));
 	cylinder->norm_v = norm_vec(cylinder->norm_v);
 	ft_lstadd_back(&configFile->cylinder, ft_lstnew(cylinder));
 	if (err)

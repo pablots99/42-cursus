@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bmp_img.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 21:27:31 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/27 21:28:15 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/28 20:31:03 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,56 @@ int create_bmp_file(t_file *c, char *file)
 	close(fd);
 	ft_printf("%s Created",file);
 	return 0;
+}
+t_bmp  read_bmp(char *file, t_file *c)
+{
+	int fd;
+	t_bmp bmp;
+
+	
+	fd = 0;
+	bmp.width = 0;
+	bmp.heigth = 0;
+	printf("file: %s\n",file);
+	if (!ft_strnstr(file, ".xpm", ft_strlen(file)))
+	{
+		ft_printf("Error\n       Error: Map file is invalid\n");
+	}
+	else
+	{
+	
+		bmp.img.mlx_img = mlx_xpm_file_to_image(c->mlx_ptr, file,&bmp.width, &bmp.heigth);
+	
+		if(!bmp.img.mlx_img)
+		{
+			ft_printf("Error\n       Error: No map\n");
+		}
+		bmp.img.address = mlx_get_data_addr(bmp.img.mlx_img, &bmp.img.bits_per_pixel,
+						     &bmp.img.line_length, &bmp.img.endian);
+	}
+
+	return bmp; 
+}
+
+unsigned int sp_bmp(t_ray ray, t_bmp bmp,t_sphere sp)
+{
+	float u;
+	float v;
+	int u1;
+	int v1;
+	t_cord d;
+
+
+	d = norm_vec(rest_vec(ray_cut_point(ray),sp.cord ));
+
+	u = (0.5 + (atan2(d.x,d.z) / (2*M_PI))) *bmp.width;
+	//u1 = floor(u);
+	printf("w: %f\n", u);
+	v =	(0.5 + asin(d.y/ (sp.diameter/2) ) /( M_PI ))* bmp.heigth ;
+	//v1 = floor(v);
+	printf("h: %f\n", v);
+		
+	//data->address + ((y) * data->line_length + x *(data->bits_per_pixel / 8))
+	return (unsigned int )bmp.img.address + (v * bmp.img.line_length + u * (bmp.img.bits_per_pixel/8));
+	
 }

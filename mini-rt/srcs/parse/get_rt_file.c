@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_rt_file.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 14:39:35 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/19 23:15:13 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/28 19:29:45 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ int save_rt_file(char **splited, t_file *configFile)
 {
 
 	int err;
-
+	if (!(configFile->mlx_ptr = mlx_init()))
+		return parse_error("Minilibx Error: CAN NOT INITIALIZE MINILIBX");
 	err = 0;
 	if (*splited)
 	{

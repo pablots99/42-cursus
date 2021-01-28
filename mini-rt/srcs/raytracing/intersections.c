@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   intersections.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/15 17:19:10 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/25 22:13:39 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/28 20:14:06 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../mini_rt.h"
 
-int spheres_intersection(t_ray *ray, t_list *list)
+int spheres_intersection(t_ray *ray, t_list *list,t_file *c)
 {
     t_sphere sp;
     t_list *aux;
@@ -26,11 +26,15 @@ int spheres_intersection(t_ray *ray, t_list *list)
     {
         len_aux = ray->len;
         sp = *(t_sphere *)aux->content;
-        if (get_sp_inter(ray, sp) && ray->len < len_aux)
+        if (get_sp_inter(ray, sp,c) && ray->len < len_aux)
         {
             color = int_from_rgb(sp.rgb.r,sp.rgb.g,sp.rgb.b);
             ray->object = SPHERE;
             ray->reflexion = sp.refraction;
+		if(sp.mapping == 1)
+		{
+			color = sp_bmp(*ray,sp.bmp,sp);
+		}
         }
         aux = aux->next;
     }

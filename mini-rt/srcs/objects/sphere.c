@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   sphere.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 10:51:00 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/24 15:05:28 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/28 15:17:37 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../mini_rt.h"
 
-int get_sp_inter(t_ray *ray, t_sphere sp)
+int get_sp_inter(t_ray *ray, t_sphere sp,t_file *c)
 {
     t_cord l;
     float tca;
@@ -34,6 +34,11 @@ int get_sp_inter(t_ray *ray, t_sphere sp)
     }
     return (1);
 }
+int get_sp_inter_analitic(t_ray *ray, t_sphere sp,t_file *c)
+{
+	return 0 ;
+}
+
 void move_sphere(t_sphere *sp, int axis)
 {
     if (axis == 123)

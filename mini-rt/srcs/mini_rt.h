@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_rt.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 19:15:09 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/28 01:22:33 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/28 20:13:37 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,9 @@
 #define SPECULAR_EXPONENT 50.0
 #define SPECULAR_KS 0.01
 #define BIAS 1
+
 #define THREADS 6
+
 
 typedef struct s_cord
 {
@@ -39,7 +41,6 @@ typedef struct s_cord
 	float y;
 	float z;
 } t_cord;
-
 
 typedef struct s_sqpoints
 {
@@ -89,14 +90,7 @@ typedef struct s_camera
 	int fov;
 	t_canvas canvas;
 } t_camera;
-typedef struct s_sphere
-{
-	t_cord cord;
-	float diameter;
-	t_rgb rgb;
-	float refraction;
 
-} t_sphere;
 typedef struct s_plane
 {
 	t_cord cord;
@@ -152,7 +146,22 @@ typedef struct s_img
 	int line_length;
 	int endian;
 } t_img;
+typedef struct s_bmp
+{
+	int width;
+	int heigth;
+	t_img img;
+} t_bmp;
+typedef struct s_sphere
+{
+	t_cord cord;
+	float diameter;
+	t_rgb rgb;
+	float refraction;
+	t_bmp bmp;
+	int mapping;
 
+} t_sphere;
 typedef struct s_file
 {
 	void *mlx_ptr;
@@ -232,7 +241,7 @@ t_cord esc_dot_vec(float num, t_cord c);
 
 int get_intersections(t_ray *ray, t_file *c);
 
-int spheres_intersection(t_ray *ray, t_list *list);
+int spheres_intersection(t_ray *ray, t_list *list,t_file *c);
 
 int ambient_color(t_rgb color, t_ambient_ligth ambient);
 
@@ -302,7 +311,7 @@ int get_pl_inter(t_ray *ray, t_plane pl);
 
 int get_cy_inter(t_ray *ray, t_cylinder cy);
 
-int get_sp_inter(t_ray *ray, t_sphere sp);
+int get_sp_inter(t_ray *ray, t_sphere sp,t_file *c);
 
 t_cord rot_center_point(t_cord p, int ang);
 
@@ -354,5 +363,10 @@ int threats(t_file *c,int save);
 
 int create_bmp_file(t_file *c, char *file);
 
+int get_sp_inter_analitic(t_ray *ray, t_sphere sp,t_file *c);
+
+t_bmp  read_bmp(char *file, t_file *c);
+
+unsigned int sp_bmp(t_ray ray, t_bmp bmp,t_sphere sp);
 
 #endif

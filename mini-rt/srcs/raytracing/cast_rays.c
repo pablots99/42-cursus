@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cast_rays.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/03 12:16:02 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/26 00:24:26 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/28 12:40:30 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int get_intersections(t_ray *ray, t_file *c)
 
     color = 0;
     len = ray->len;
-    if (c->sphere && (color_aux = spheres_intersection(ray, c->sphere)) )
+    if (c->sphere && (color_aux = spheres_intersection(ray, c->sphere,c)) )
         color = color_aux;
     if (c->plane && (color_aux = plane_intersection(ray, c->plane)) )
         color = color_aux;
@@ -53,7 +53,7 @@ int get_intersections(t_ray *ray, t_file *c)
 }
 int get_shadow_intersections(t_ray ray, t_file c)
 {
-    if (c.sphere && (spheres_intersection(&ray, c.sphere)) )
+    if (c.sphere && (spheres_intersection(&ray, c.sphere,&c)) )
         return (1);
     if (c.plane && (plane_intersection(&ray, c.plane)) )
         return (1);

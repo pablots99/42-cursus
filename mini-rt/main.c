@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 19:14:12 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/27 21:20:48 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/28 19:29:25 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,7 @@ void paint_scene(void *a)
 int init_window(t_file *c, int save)
 {
 	printf("inti:%d", save);
-	if (!(c->mlx_ptr = mlx_init()))
-		return parse_error("Minilibx Error: CAN NOT INITIALIZE MINILIBX");
+
 	adjust_res(c);
 	if (!(c->win_ptr = mlx_new_window(c->mlx_ptr, c->win_width, c->win_heigth, "MiniRt")))
 		return parse_error("Minilibx Error: CAN NOT OPEN A WINDOW");

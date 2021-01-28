@@ -44,7 +44,7 @@ LFAGS = -L libft -lft   libmlx.dylib -framework Metal -framework AppKit
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
+$(NAME):$(OBJS)
 	$(CC) $(CFLAGS) -g $(LFAGS) $(OBJS) -o $(NAME)
 	make clean
 

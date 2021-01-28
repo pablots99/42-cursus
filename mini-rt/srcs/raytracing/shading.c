@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 12:51:39 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/27 15:23:08 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/01/28 13:34:52 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ float calculate_specular(t_ray *ray, t_cord v)
 	dir = norm_vec(esc_dot_vec(-1, ray->direction));
 	r = rest_vec(esc_dot_vec(2 * prod_esc(ray->normal, dir), ray->normal), dir);
 	spec = pow(max_float(0,prod_esc(r, v)), 100);
-
 	return (spec);
 }
 
@@ -63,7 +62,5 @@ int shading(t_ray *ray, int color, t_file *c)
 			color = create_shade_color(rgb_from_int(color), ligth, brigth, calculate_specular(&pointo_ligth, ray->direction));
 		aux = aux->next;
 	}
-
-
 	return (color);
 }
