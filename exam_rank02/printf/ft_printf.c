@@ -1,241 +1,182 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/13 21:52:50 by pablo             #+#    #+#             */
-/*   Updated: 2020/12/17 10:15:40 by pablo            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+#include "unistd.h"
+#include "stdarg.h"
 
-#include <stdlib.h>
-#include <stdarg.h>
-#include <unistd.h>
-#include <stdio.h>
-
-int ft_strlen(char *str)
+int ft_strlen(char *c)
 {
-	int i;
-
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
+    int i = 0;
+    while (c[i])
+        i++;
+    return (i);
 }
 
 int ft_putchar(char a)
 {
-	write(1, &a, 1);
-	return 1;
+    write(1, &a, 1);
+    return 1;
 }
-void len_basenbr(long long int num, char *base, int *len)
+int ft_strchr( char *set,char a)
 {
-	int b;
-
-	b = ft_strlen(base);
-	if (num >= b)
-		len_basenbr(num / b, base, len);
-	*len = *len + 1;
+    int i = 0;
+    while (set[i])
+    {
+        if (a == set[i])
+            return 1;
+        i++;
+    }
+    return 0;
 }
-
-void put_basenbr(long long int num, char *base)
+int print_spaces(int n, int zero)
 {
-	int b;
-
-	b = ft_strlen(base);
-	if (num >= b)
-		put_basenbr(num / b, base);
-	ft_putchar(base[num % b]);
+    char c = (zero)?'0':' ';
+    int i = 0;
+    while (i < n)
+    {
+        write(1,&c,1);
+        i++;
+    }
+    return n;
 }
-int ft_strchr(char *str, char a)
+void lennum(long long int n, char *base, int *len)
 {
-	int i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == a)
-			return 1;
-		i++;
-	}
-	return 0;
+    int b = ft_strlen(base);
+    if( n >= b)
+        lennum(n/b,base,len);
+    *len = *len +1; 
 }
-int print_gaps(int len, int zero)
+void putnbr(long long int n, char *base)
 {
-
-	int i;
-
-	i = 0;
-	while (len > 0)
-	{
-		ft_putchar((zero) ? '0' : ' ');
-		len--;
-		i++;
-	}
-
-	return (i);
+   int b = ft_strlen(base);
+    if( n >= b)
+        putnbr(n/b,base);
+     ft_putchar(base[n%b]);
 }
-int pritnstr(char *str, int precision, int width)
-{
-	int len;
-	int f;
+/////////////////////////////////////////
+/////////////////////////////////////////
+/////////////////////////////////////////
+/////////////////////////////////////////
+/////////////////////////////////////////
+/////////////////////////////////////////
+/////////////////////////////////////////
+/////////////////////////////////////////
 
-	f = 0;
-	if (str == NULL)
-		str = "(null)";
-	len = ft_strlen(str);
-	if (precision == 0)
-		len = 0;
-	if (precision > 0 && precision < len)
-		len = precision;
-	if (width > len)
-		f += print_gaps(width - len, 0);
-	write(1, str, len);
-	return len + f;
+
+int printstr(char *str,int pre, int wid)
+{
+    int len = 0;
+    int aux = 0;
+    if(str == NULL)
+        str = "(null)";
+    len = ft_strlen(str);
+    if(pre == 0)
+        len = 0;
+    if(pre > 0 && pre < len)
+        len = pre;
+    if(wid > len)
+        aux += print_spaces(wid - len, 0);
+    write(1,str, len);
+    return len + aux;
+    
 }
 
-
-
-int printint(long int num, int precision, int width)
+int printnum(long int n,int pre, int wid)
 {
-	int len;
-	int final_len;
-	int aux;
+    int len;
+    int final = 0;
+    int neg = 0;
 
-	aux = 0;
-	len = 0;
-	final_len = 0;
-	if (num == 0 && precision == 0)
-		len = -1;
-	if (num < 0)
-	{
-		aux = 1;
-		num *= -1;
-		width--;
-	}
-	len_basenbr(num, "0123456789", &len);
-	if (width > precision && width > len)
-	{
-		if (precision > len)
-			final_len += print_gaps(width - precision, 0);
-		else
-			final_len += print_gaps(width - len, 0);
-	}
-	if (aux == 1)
-	{
-		final_len++;
-		write(1, "-", 1);
-		;
-	}
-	if (precision > len)
-		final_len += print_gaps(precision - len, 1);
-	if (!(num == 0 && precision == 0))
-		put_basenbr(num, "0123456789");
-	return (len + final_len);
+    len = 0;
+    if(n == 0 && pre == 0)
+        len = -1;
+    if(n < 0)
+    {
+        neg = 1;
+        n *= -1;
+        wid--;
+    }
+    lennum(n,"0123456789",&len);
+    if(wid > pre && wid > len)
+    {
+        if(pre > len)
+            final += print_spaces(wid - pre,0);
+        else
+            final += print_spaces(wid - len,0);
+    }
+    if(neg == 1)
+        final += ft_putchar('-');
+    if(pre > len)
+        final += print_spaces(pre - len,1);
+    if(!(n == 0 && pre == 0))
+        putnbr(n,"0123456789");
+    return len + final;
 }
-
-int print_exa(unsigned int num, int precision, int width)
+int printexa(unsigned int n,int pre, int wid)
 {
-	int len;
-	int final_len;
+    int len;
+    int final = 0;
 
-	len = 0;
-	final_len = 0;
-	len_basenbr(num, "0123456789abcdef", &len);
-	if (num == 0 && precision == 0)
-		len = -1;
-	if (num == 0 && precision == 0)
-		len = 0;
-	if (width > precision && width > len)
-	{
-		if (precision > len)
-			final_len += print_gaps(width - precision, 0);
-		else
-			final_len += print_gaps(width - len, 0);
-	}
-	if (precision > len)
-		final_len += print_gaps(precision - len, 1);
-	if (!(num == 0 && precision == 0))
-		put_basenbr(num, "0123456789abcdef");
-	return (len + final_len);
-}
-int printflgs(va_list args, char c, int precision, int width)
-{
-	int len;
-
-	len = 0;
-	if (c == 's')
-		len += pritnstr(va_arg(args, char *), precision, width);
-	else if (c == 'd')
-		len += printint(va_arg(args, int), precision, width);
-	else if (c == 'x')
-		len += print_exa(va_arg(args, unsigned int), precision, width);
-	return len;
-}
-void load_flags(int *width, int *precision, int *i, const char *input)
-{
-	while (ft_strchr("0123456789", input[*i]))
-	{
-		*width = *width * 10 + (input[*i] - '0');
-		*i = *i + 1;
-	}
-	if (input[*i] == '.')
-	{
-		*i = *i + 1;
-		*precision = 0;
-		while (ft_strchr("0123456789", input[*i]))
-		{
-			*precision = *precision * 10 + (input[*i] - '0');
-			*i = *i + 1;
-		}
-	}
+    len = 0;
+    if(n == 0 && pre == 0)
+        len = -1;
+    lennum(n,"0123456789abcdef",&len);
+    if(wid > pre && wid > len)
+    {
+        if(pre > len)
+            final += print_spaces(wid - pre,0);
+        else
+            final += print_spaces(wid - len,0);
+    }
+    if(pre > len)
+        final += print_spaces(pre - len,1);
+    if(!(n == 0 && pre == 0))
+        putnbr(n,"0123456789abcdef");
+    return len + final;
 }
 int ft_printf(const char *input, ...)
 {
-	va_list args;
-	int len;
-	int i;
-	int precision;
-	int width;
+    int i = 0;
+    int len = 0;
+    int pre = -1;
+    int wid = 0;
+    va_list args;
 
-	precision = -1;
-	len = 0;
-	i = 0;
-
-	width = 0;
-	va_start(args, input);
-	while (input[i])
-	{
-		width = 0;
-		precision = -1;
-		if (input[i] == '%' && input[i + 1])
-		{
-			i++;
-			load_flags(&width, &precision, &i, input);
-			if (ft_strchr("sdx", input[i]))
-				len += printflgs(args, input[i], precision, width);
-			else
-				break;
-		}
-		else
-			len += ft_putchar(input[i]);
-		i++;
-	}
-	va_end(args);
-	return (len);
+    va_start(args, input);
+    while (input[i])
+    {
+        wid = 0;
+        pre = -1;
+        if (input[i] == '%' && input[i + 1])
+        {
+            i++;
+            while (ft_strchr("0123456789", input[i]))
+            {
+                wid = wid * 10 + (input[i] - '0');
+                i++;
+            }
+            if (input[i] == '.')
+            {
+                i++;
+                pre = 0;
+                while (ft_strchr("0123456789", input[i]))
+                {
+                    pre = pre * 10 + (input[i] - '0');
+                    i++;
+                }
+            }
+            if(ft_strchr("sdx",input[i]))
+            {
+                if(input[i]=='s')
+                    len+= printstr(va_arg(args,char *),pre,wid);
+                if(input[i] == 'd')
+                    len += printnum(va_arg(args,int),pre,wid);
+                 if(input[i] == 'x')
+                    len += printexa(va_arg(args,int),pre,wid);
+            }
+            else 
+                break ;
+        }
+        else
+                len += ft_putchar(input[i]);
+        i++;
+    }
+    return (len);
 }
-
-// int main()
-// {
-// 	int len;
-
-// 	int len1;
-// 	len = 0, len1 = 0;
-
-// 	len = ft_printf("60:d4w0p %4.0d.\n", 0);
-// 	len1 = printf("60:d4w0p %4.0d.\n", 0);
-// 	printf("len:%d, len1:%d",len , len1);
-
-// }

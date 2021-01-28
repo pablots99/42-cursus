@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 19:14:12 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/27 16:00:34 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/01/27 21:20:48 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int threats(t_file *c, int save)
 	int i;
 	int err;
 	t_threads params[THREADS];
-
 	pthread_t th[THREADS];
 
 	i = 0;
@@ -32,12 +31,7 @@ int threats(t_file *c, int save)
 		i++;
 	}
 	while (i-- > 0)
-	{
 		err = pthread_join(th[i], 0);
-		if (err)
-			return parse_error("Thread Error: CAN NOT JOIN THREAD");
-	}
-	printf("Done\n");
 	if (save == 0)
 		mlx_put_image_to_window(c->mlx_ptr, c->win_ptr, c->img.mlx_img, 0, 0);
 	else

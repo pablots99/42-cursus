@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bmp_img.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 21:27:31 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/27 19:18:02 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/01/27 21:28:15 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,16 +49,18 @@ int create_bmp_file(t_file *c, char *file)
 		return ft_printf("Bmp Error: Can´t create Bmp file\n");
 	write_headder(fd, c);
 	y =  c->win_heigth -1;
-	while (y > 0)
+	while (y >= 0)
 	{
 		x = 0;
 		while (x < c->win_width)
 		{
-			write(fd,data->address + ((y) * data->line_length + x * (data->bits_per_pixel / 8)),(data->bits_per_pixel / 8));
+			write(fd,data->address + ((y) * data->line_length + x *
+                (data->bits_per_pixel / 8)),(data->bits_per_pixel / 8));
 			x++;
 		}
 		y--;
 	}
 	close(fd);
+	ft_printf("%s Created",file);
 	return 0;
 }

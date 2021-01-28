@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keys.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 21:06:31 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/27 15:51:56 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/01/27 21:28:35 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,5 +124,7 @@ int detect_key(int keycode, t_file *c)
 		size_objects(c, keycode);
 	if (keycode == 6 || keycode == 7 || keycode == 0 || keycode == 1 || keycode == 2 || keycode == 13)
 		rot_objects(c, keycode);
+	if (keycode == 4)
+		create_bmp_file(c,"screeshot.bmp");
 	return 1;
 }

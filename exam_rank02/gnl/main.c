@@ -3,23 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/13 21:11:36 by pablo             #+#    #+#             */
-/*   Updated: 2020/12/14 16:56:25 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/01/28 00:23:59 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-
-
 #include "get_next_line.h"
 
-int
-	main(void)
+int main(void)
 {
-	int		r;
-	char	*line;
+	int r;
+	char *line;
 
 	line = NULL;
 	while ((r = get_next_line(&line)) > 0)
@@ -32,4 +28,8 @@ int
 	free(line);
 
 	line = NULL;
+
+	// printf("\n\n\n\n------------------LEAKS---------------------------------------\n");
+	// system("leaks get_next_line");
+	// printf("--------------------------------------------------------\n");
 }
