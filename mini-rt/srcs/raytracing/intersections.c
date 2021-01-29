@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   intersections.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/15 17:19:10 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/28 20:14:06 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/01/29 16:17:30 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,7 @@ int spheres_intersection(t_ray *ray, t_list *list,t_file *c)
             ray->object = SPHERE;
             ray->reflexion = sp.refraction;
 		if(sp.mapping == 1)
-		{
 			color = sp_bmp(*ray,sp.bmp,sp);
-		}
         }
         aux = aux->next;
     }

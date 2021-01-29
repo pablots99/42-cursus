@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sphere.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 10:51:00 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/28 15:17:37 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/01/29 16:23:53 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,11 @@ int get_sp_inter(t_ray *ray, t_sphere sp,t_file *c)
     {
         ray->len = l_p1 - BIAS;
         ray->normal = norm_vec(rest_vec(ray_cut_point(*ray),sp.cord));
+        if(mod_vec(rest_vec(((t_camera*)c->camera->content)->cord,sp.cord)) <= sp.diameter/2)
+        {
+            ray->len = l_p1 - BIAS;
+            ray->normal = norm_vec(esc_dot_vec(-1,rest_vec(ray_cut_point(*ray),sp.cord)));
+        }
     }
     return (1);
 }

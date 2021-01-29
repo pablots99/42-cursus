@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_rt.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 19:15:09 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/28 20:13:37 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/01/28 22:51:59 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -367,6 +367,6 @@ int get_sp_inter_analitic(t_ray *ray, t_sphere sp,t_file *c);
 
 t_bmp  read_bmp(char *file, t_file *c);
 
-unsigned int sp_bmp(t_ray ray, t_bmp bmp,t_sphere sp);
+ int sp_bmp(t_ray ray, t_bmp bmp,t_sphere sp);
 
 #endif

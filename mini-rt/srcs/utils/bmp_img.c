@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bmp_img.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 21:27:31 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/28 20:31:03 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/01/29 16:13:13 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,71 +48,70 @@ int create_bmp_file(t_file *c, char *file)
 	if ((fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0744)) == -1)
 		return ft_printf("Bmp Error: Can´t create Bmp file\n");
 	write_headder(fd, c);
-	y =  c->win_heigth -1;
+	y = c->win_heigth - 1;
 	while (y >= 0)
 	{
 		x = 0;
 		while (x < c->win_width)
 		{
-			write(fd,data->address + ((y) * data->line_length + x *
-                (data->bits_per_pixel / 8)),(data->bits_per_pixel / 8));
+			write(fd, data->address + ((y)*data->line_length + x * (data->bits_per_pixel / 8)), (data->bits_per_pixel / 8));
 			x++;
 		}
 		y--;
 	}
 	close(fd);
-	ft_printf("%s Created",file);
+	ft_printf("%s Created", file);
 	return 0;
 }
-t_bmp  read_bmp(char *file, t_file *c)
+t_bmp read_bmp(char *file, t_file *c)
 {
 	int fd;
 	t_bmp bmp;
 
-	
 	fd = 0;
 	bmp.width = 0;
 	bmp.heigth = 0;
-	printf("file: %s\n",file);
+	printf("file: %s\n", file);
 	if (!ft_strnstr(file, ".xpm", ft_strlen(file)))
 	{
 		ft_printf("Error\n       Error: Map file is invalid\n");
 	}
 	else
 	{
-	
-		bmp.img.mlx_img = mlx_xpm_file_to_image(c->mlx_ptr, file,&bmp.width, &bmp.heigth);
-	
-		if(!bmp.img.mlx_img)
+
+		bmp.img.mlx_img = mlx_xpm_file_to_image(c->mlx_ptr, file, &bmp.width, &bmp.heigth);
+
+		if (!bmp.img.mlx_img)
 		{
 			ft_printf("Error\n       Error: No map\n");
 		}
 		bmp.img.address = mlx_get_data_addr(bmp.img.mlx_img, &bmp.img.bits_per_pixel,
-						     &bmp.img.line_length, &bmp.img.endian);
+											&bmp.img.line_length, &bmp.img.endian);
 	}
 
-	return bmp; 
+	return bmp;
 }
 
-unsigned int sp_bmp(t_ray ray, t_bmp bmp,t_sphere sp)
+int sp_bmp(t_ray ray, t_bmp bmp, t_sphere sp)
 {
 	float u;
 	float v;
-	int u1;
-	int v1;
+	char *dst;
 	t_cord d;
 
-
-	d = norm_vec(rest_vec(ray_cut_point(ray),sp.cord ));
-
-	u = (0.5 + (atan2(d.x,d.z) / (2*M_PI))) *bmp.width;
-	//u1 = floor(u);
-	printf("w: %f\n", u);
-	v =	(0.5 + asin(d.y/ (sp.diameter/2) ) /( M_PI ))* bmp.heigth ;
-	//v1 = floor(v);
-	printf("h: %f\n", v);
-		
-	//data->address + ((y) * data->line_length + x *(data->bits_per_pixel / 8))
-	return (unsigned int )bmp.img.address + (v * bmp.img.line_length + u * (bmp.img.bits_per_pixel/8));
-	
+	d = rest_vec(ray_cut_point(ray), sp.cord);
+	if (d.z > 0 && d.x > 0)
+		u = atan(d.x / d.z);
+	else if (d.z > 0 && d.x < 0)
+		u = (2 * M_PI) + atan(d.x / d.z);
+	else if (d.z < 0)
+		u = M_PI + atan(d.x / d.z);
+	if (d.y > 0)
+		v = atan((sqrt(d.z * d.z + d.x * d.x)) / d.y);
+	else if (d.y < 0)
+		v = M_PI + atan((sqrt(d.z * d.z + d.x * d.x)) / d.y);
+	u = ((u) / (2 * M_PI)) * bmp.width;
+	v = ((v) / (M_PI)) * bmp.heigth;
+	dst = (bmp.img.address + (((int)(v)*bmp.img.line_length) + ((int)(u) * (bmp.img.bits_per_pixel / 8))));
+	return (*(unsigned int *)dst);
 }

@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 21:06:31 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/27 21:28:35 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/29 17:08:11 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,13 +100,13 @@ void rot_objects(t_file *c, int key)
 {
 	if (c->obj_selected == SQUARE && c->curr_sq)
 		rot_square((t_square *)c->curr_sq->content, key);
+	
 	else
 	{
 		ft_printf("     -Can´t rotate object or No Object selected\n");
 		return;
 	}
 	threats(c,0);
-
 	mlx_put_image_to_window(c->mlx_ptr, c->win_ptr, c->img.mlx_img, 0, 0);
 }
 int detect_key(int keycode, t_file *c)
