@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/02 21:45:28 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/26 11:36:47 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/29 19:06:07 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,20 +158,6 @@ t_ray refracted_ray(t_ray *ray)
 	res.len = 	INFINITY;
 	res.reflexion = 0;
 	res.object = 0;
-	res.origin = ray_cut_point(*ray);
-	return (res);
-}
-t_ray ref_ray(t_ray *ray)
-{
-	t_ray res;
-	t_cord dir;
-
-	dir = esc_dot_vec(-1,ray->direction);
-
-	//cambiar direccion para objetos traslucidos esta mal el rayo reflejado
-	res.direction =	rest_vec(esc_dot_vec(2 * prod_esc(ray->normal, dir),
-					ray->normal), dir);
-	res.len = 	INFINITY;
 	res.origin = ray_cut_point(*ray);
 	return (res);
 }

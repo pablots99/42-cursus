@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 19:14:12 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/28 19:29:25 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/01/29 18:10:47 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ void paint_scene(void *a)
 	param = (t_threads *)a;
 	color = 0;
 	y = (param->thread * (param->c->win_heigth / THREADS));
-	printf("hilo%d\n", y, param->thread);
 	while (y < (param->thread + 1) * (param->c->win_heigth / THREADS))
 	{
 		x = 0;

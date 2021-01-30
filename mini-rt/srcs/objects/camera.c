@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 17:10:38 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/29 17:08:13 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/29 19:51:52 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,22 @@ int select_camera(t_file *c)
         c->cam_count = 1;
         c->camera = c->first_cam;
     }
-    //paint_scene(c);
     threats(c,0);
     mlx_put_image_to_window(c->mlx_ptr, c->win_ptr, c->img.mlx_img, 0, 0);
     ft_printf("Camera: %d\n", c->cam_count);
     return (1);
+}
+void rot_cam(t_camera *camera,int key,t_file *c)
+{
+    if (key == 0)
+        camera->norm_v.x += 0.1;
+    if (key == 2)
+         camera->norm_v.x -= 0.1;
+    if (key == 13)
+        camera->norm_v.y += 0.1;
+    if (key == 1)
+         camera->norm_v.y -= 0.1;
+    camera->norm_v = norm_vec(camera->norm_v);
+    camera->canvas = save_canvas(camera,*c);
+    ft_printf("Camera: rotated\n");
 }

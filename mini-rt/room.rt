@@ -16,7 +16,7 @@ c 0,300,0 0,-1,0 100
 
 l -130,200,0 1 255,255,255
 
-sp 0,100,0 100 255,0,0   0 scenes/uv_textures/grid.xpm
+sp 0,100,0 100 255,0,0   1 scenes/uv_textures/grid.xpm
 
 sp -100,100,0 80 255,0,0   1
 

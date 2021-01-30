@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 20:13:39 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/19 19:30:36 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/29 18:10:18 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,5 @@ int save_new_square(char **splited, t_file *configFile);
 int save_new_cylinder(char **splited, t_file *configFile);
 
 int save_new_triangle(char **splited, t_file *configFile);
-
-t_canvas save_canvas(float fov);
 
 

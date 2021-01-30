@@ -37,7 +37,7 @@ OBJS = $(SRCS:.c=.o)
 
 CC = gcc
 
-CFLAGS = #-Wall -Wextra -Werror #-fsanitize=address
+CFLAGS = -fsanitize=address #-Wall -Wextra -Werror 
 
 LFAGS = -L libft -lft   libmlx.dylib -framework Metal -framework AppKit
 
@@ -45,8 +45,7 @@ LFAGS = -L libft -lft   libmlx.dylib -framework Metal -framework AppKit
 all: $(NAME)
 
 $(NAME):$(OBJS)
-	$(CC) $(CFLAGS) -g $(LFAGS) $(OBJS) -o $(NAME)
-	make clean
+	$(CC) -g $(CFLAGS)  $(LFAGS) $(OBJS) -o $(NAME)
 
 re_libft:
 	$(MAKE) fclean -C ./libft
