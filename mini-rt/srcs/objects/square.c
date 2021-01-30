@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/10 15:06:52 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/25 16:11:38 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/01/30 19:51:15 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,17 +89,24 @@ int select_sq(t_file *c)
     ft_printf("Square: %d selected.\n", c->sq_count);
     return (1);
 }
-void rot_square(t_square *sq, int k)
+void rot_sq(t_square *sq, int key)
 {
-    if (k == 6)
-        sq->angle += 10;
-    if (k == 7)
-        sq->angle -= 10;
-    if(sq->angle < 0)
-        sq->angle = 360;
-    if(sq->angle > 360)
-        sq->angle = 0;
-    save_sq_points(sq);
-    ft_printf("     Square Rotated\n");
+	int angle;
+
+	angle = ROT_ANGLE;
+	if (key == 0)
+		sq->norm_v = rot_vec_x(sq->norm_v, angle);
+	if (key == 2)
+		sq->norm_v = rot_vec_x(sq->norm_v ,-angle);
+	if (key == 13)
+		sq->norm_v = rot_vec_y(sq->norm_v, angle);
+	if (key == 1)
+		sq->norm_v = rot_vec_y(sq->norm_v, -angle);
+	if (key == 6)
+		sq->norm_v = rot_vec_z(sq->norm_v, angle);
+	if (key == 7)
+		sq->norm_v = rot_vec_z(sq->norm_v, -angle);
+	sq->norm_v = norm_vec(sq->norm_v);
+	ft_printf("Plane: rotated\n");
 }
 

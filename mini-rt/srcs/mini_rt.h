@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_rt.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 19:15:09 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/29 19:45:44 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/30 19:59:57 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@
 #define SPECULAR_EXPONENT 50.0
 #define SPECULAR_KS 0.01
 #define BIAS 1
+
+#define ROT_ANGLE 50
 
 #define THREADS 6
 
@@ -138,7 +140,7 @@ typedef struct s_ray
 	float reflexion;
 	float len;
 } t_ray;
-typedef struct s_img
+typedef struct s_img 
 {
 	void *mlx_img;
 	char *address;
@@ -325,8 +327,6 @@ void size_square(t_square *sq, int k);
 
 void move_square(t_square *sq, int axis);
 
-void rot_square(t_square *sq, int k);
-
 float max_float(float a, float b);
 
 t_ray refracted_ray(t_ray *ray);
@@ -372,6 +372,18 @@ t_bmp  read_bmp(char *file, t_file *c);
  t_canvas save_canvas(t_camera *cam, t_file c);
 
 void rot_cam(t_camera *camera,int key,t_file *c);
+
+t_cord rot_vec_z(t_cord vec, int a);
+
+t_cord rot_vec_y(t_cord vec, int a);
+
+t_cord rot_vec_x(t_cord vec, int a);
+
+void rot_cy(t_cylinder *cy, int key);
+
+void rot_pl(t_plane *pl, int key);
+
+void rot_sq(t_square *sq, int key);
 
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vectors.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/02 21:45:28 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/29 19:06:07 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/30 20:00:12 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,11 @@ t_cord sum_vec(t_cord v1, t_cord v2)
 	vec.z = v1.z + v2.z;
 	return (vec);
 }
-void sum_vec2(float num,float *x,float *y,float *z)
+void sum_vec2(float num, float *x, float *y, float *z)
 {
-	*x+=num;
-	*y+=num;
-	*z+=num;
+	*x += num;
+	*y += num;
+	*z += num;
 }
 t_cord rest_vec(t_cord v1, t_cord v2)
 {
@@ -122,10 +122,28 @@ t_cord barycentric_cords(t_triangle tr, t_cord point)
 	v0 = rest_vec(tr.cord_2, tr.cord_1);
 	v1 = rest_vec(tr.cord_3, tr.cord_1);
 	v2 = rest_vec(point, tr.cord_1);
-	den = (prod_esc(v0,v0)* prod_esc(v1,v1))-((prod_esc(v0,v1)* prod_esc(v0,v1)));
-	res.x = ((prod_esc(v1,v1)* prod_esc(v2,v0))-((prod_esc(v0,v1)* prod_esc(v2,v1))))/ den;
-	res.y = ((prod_esc(v0,v0)* prod_esc(v2,v1))-((prod_esc(v0,v1)* prod_esc(v2,v0)))) / den;
+	den = (prod_esc(v0, v0) * prod_esc(v1, v1)) - ((prod_esc(v0, v1) * prod_esc(v0, v1)));
+	res.x = ((prod_esc(v1, v1) * prod_esc(v2, v0)) - ((prod_esc(v0, v1) * prod_esc(v2, v1)))) / den;
+	res.y = ((prod_esc(v0, v0) * prod_esc(v2, v1)) - ((prod_esc(v0, v1) * prod_esc(v2, v0)))) / den;
 	res.z = 1.0f - res.x - res.y;
+	return (res);
+}
+
+t_ray refracted_ray(t_ray *ray)
+{
+	t_ray res;
+	t_cord dir;
+
+	dir = esc_dot_vec(-1, ray->direction);
+
+	//cambiar direccion para objetos traslucidos esta mal el rayo reflejado
+	res.direction = rest_vec(esc_dot_vec(2 * prod_esc(ray->normal, dir),
+							 ray->normal),
+					 dir);
+	res.len = INFINITY;
+	res.reflexion = 0;
+	res.object = 0;
+	res.origin = ray_cut_point(*ray);
 	return (res);
 }
 
@@ -135,7 +153,7 @@ t_cord rot_center_point(t_cord p, int ang)
 	float s;
 	float c;
 
-	if(ang == 0)
+	if (ang == 0)
 		return (p);
 	s = sin(ang * M_PI / 180);
 	c = cos(ang * M_PI / 180);
@@ -145,19 +163,37 @@ t_cord rot_center_point(t_cord p, int ang)
 	return (res);
 }
 
-t_ray refracted_ray(t_ray *ray)
+t_cord rot_vec_x(t_cord vec, int a)
 {
-	t_ray res;
-	t_cord dir;
+	t_matrix mat;
 
-	dir = esc_dot_vec(-1,ray->direction);
+	if (a > 360)
+		a = a - 360;
+	mat.v1 = vector(1, 0, 0);
+	mat.v2 = vector(0, cos(a), -sin(a));
+	mat.v3 = vector(0, sin(a), cos(a));
+	printf("anlge:%d\n", a);
+	return vector_dot_matrix(vec, mat);
+}
+t_cord rot_vec_y(t_cord vec, int a)
+{
+	t_matrix mat;
 
-	//cambiar direccion para objetos traslucidos esta mal el rayo reflejado
-	res.direction =	rest_vec(esc_dot_vec(2 * prod_esc(ray->normal, dir),
-					ray->normal), dir);
-	res.len = 	INFINITY;
-	res.reflexion = 0;
-	res.object = 0;
-	res.origin = ray_cut_point(*ray);
-	return (res);
+	if (a > 360)
+		a = a - 360;
+	mat.v1 = vector(cos(a), 0, sin(a));
+	mat.v2 = vector(0, 1, 0);
+	mat.v3 = vector(-sin(a), 0, cos(a));
+	return vector_dot_matrix(vec, mat);
+}
+t_cord rot_vec_z(t_cord vec, int a)
+{
+	t_matrix mat;
+
+	if (a > 360)
+		a = a - 360;
+	mat.v1 = vector(cos(a), -sin(a), 0);
+	mat.v2 = vector(sin(a), cos(a), 0);
+	mat.v3 = vector(0, 0, 1);
+	return vector_dot_matrix(vec, mat);
 }

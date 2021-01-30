@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cylinder2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/20 18:00:01 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/24 14:17:45 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/30 19:54:24 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,24 @@ void size_cylinder(t_cylinder *cy, int k)
      if (cy->diameter < 1)
         cy->diameter = 1;
     ft_printf("     Cylinder Resized\n");
+}
+void rot_cy(t_cylinder *cy, int key)
+{
+	int angle;
+
+	angle = ROT_ANGLE;
+	if (key == 0)
+		cy->norm_v = rot_vec_x(cy->norm_v, angle);
+	if (key == 2)
+		cy->norm_v = rot_vec_x(cy->norm_v ,-angle);
+	if (key == 13)
+		cy->norm_v = rot_vec_y(cy->norm_v, angle);
+	if (key == 1)
+		cy->norm_v = rot_vec_y(cy->norm_v, -angle);
+	if (key == 6)
+		cy->norm_v = rot_vec_z(cy->norm_v, angle);
+	if (key == 7)
+		cy->norm_v = rot_vec_z(cy->norm_v, -angle);
+	cy->norm_v = norm_vec(cy->norm_v);
+	ft_printf("Cylinder: rotated\n");
 }

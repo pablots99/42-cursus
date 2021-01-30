@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keys.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 21:06:31 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/29 19:48:10 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/30 19:58:21 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void move_objects(t_file *c, int key)
 		ft_printf("     -Can´t move object or No Object selected\n");
 		return;
 	}
-	threats(c,0);
+	threats(c, 0);
 
 	mlx_put_image_to_window(c->mlx_ptr, c->win_ptr, c->img.mlx_img, 0, 0);
 }
@@ -92,24 +92,26 @@ void size_objects(t_file *c, int key)
 		ft_printf("     -Can´t resize object or No Object selected\n");
 		return;
 	}
-	threats(c,0);
+	threats(c, 0);
 
 	mlx_put_image_to_window(c->mlx_ptr, c->win_ptr, c->img.mlx_img, 0, 0);
 }
 void rot_objects(t_file *c, int key)
 {
-	if (c->obj_selected == SQUARE && c->curr_sq)
-		rot_square((t_square *)c->curr_sq->content, key);
 	if (c->obj_selected == CAMERA && c->camera)
-	{
-		rot_cam((t_camera *)c->camera->content,key,c);
-	}
+		rot_cam((t_camera *)c->camera->content, key, c);
+	else if (c->obj_selected == CYLINDER && c->cylinder)
+		rot_cy((t_cylinder *)c->curr_cy->content, key);
+	else if (c->obj_selected == PLANE && c->plane)
+		rot_pl((t_plane *)c->curr_pl->content, key);
+	else if (c->obj_selected == SQUARE && c->square)
+		rot_sq((t_square *)c->curr_sq->content, key);
 	else
 	{
 		ft_printf("     -Can´t rotate object or No Object selected\n");
 		return;
 	}
-	threats(c,0);
+	threats(c, 0);
 	mlx_put_image_to_window(c->mlx_ptr, c->win_ptr, c->img.mlx_img, 0, 0);
 }
 int detect_key(int keycode, t_file *c)
@@ -128,6 +130,6 @@ int detect_key(int keycode, t_file *c)
 	if (keycode == 6 || keycode == 7 || keycode == 0 || keycode == 1 || keycode == 2 || keycode == 13)
 		rot_objects(c, keycode);
 	if (keycode == 4)
-		create_bmp_file(c,"screeshot.bmp");
+		create_bmp_file(c, "screeshot.bmp");
 	return 1;
 }

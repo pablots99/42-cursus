@@ -71,3 +71,23 @@ int select_pl(t_file *c)
     ft_printf("Pane: %d selected.\n", c->pl_count);
     return (1);
 }
+void rot_pl(t_plane *pl, int key)
+{
+	int angle;
+
+	angle = ROT_ANGLE;
+	if (key == 0)
+		pl->norm_v = rot_vec_x(pl->norm_v, angle);
+	if (key == 2)
+		pl->norm_v = rot_vec_x(pl->norm_v ,-angle);
+	if (key == 13)
+		pl->norm_v = rot_vec_y(pl->norm_v, angle);
+	if (key == 1)
+		pl->norm_v = rot_vec_y(pl->norm_v, -angle);
+	if (key == 6)
+		pl->norm_v = rot_vec_z(pl->norm_v, angle);
+	if (key == 7)
+		pl->norm_v = rot_vec_z(pl->norm_v, -angle);
+	pl->norm_v = norm_vec(pl->norm_v);
+	ft_printf("Plane: rotated\n");
+}
