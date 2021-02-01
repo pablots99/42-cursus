@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 10:51:00 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/29 16:23:53 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/31 12:30:21 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int get_sp_inter(t_ray *ray, t_sphere sp,t_file *c)
     float l_p1;
 
     l = rest_vec(sp.cord, ray->origin);
-    tca = proy_vect(ray->direction, l);
+    tca = prod_esc(ray->direction, l);
     if (tca < 0)
         return (-1);
     d = sqrt(prod_esc(l, l) - (tca * tca));
@@ -33,7 +33,7 @@ int get_sp_inter(t_ray *ray, t_sphere sp,t_file *c)
         ray->normal = norm_vec(rest_vec(ray_cut_point(*ray),sp.cord));
         if(mod_vec(rest_vec(((t_camera*)c->camera->content)->cord,sp.cord)) <= sp.diameter/2)
         {
-            ray->len = l_p1 - BIAS;
+            ray->len =tca + sqrt(pow(sp.diameter / 2, 2) - pow(d, 2)) - BIAS;
             ray->normal = norm_vec(esc_dot_vec(-1,rest_vec(ray_cut_point(*ray),sp.cord)));
         }
     }
@@ -41,6 +41,7 @@ int get_sp_inter(t_ray *ray, t_sphere sp,t_file *c)
 }
 int get_sp_inter_analitic(t_ray *ray, t_sphere sp,t_file *c)
 {
+
 	return 0 ;
 }
 

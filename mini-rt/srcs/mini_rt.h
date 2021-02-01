@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_rt.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 19:15:09 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/30 19:59:57 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/01/31 20:20:44 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,16 @@
 #define TRIANGLE 5
 #define CYLINDER 6
 
-#define SPECULAR_EXPONENT 50.0
-#define SPECULAR_KS 0.01
 #define BIAS 1
-
 #define ROT_ANGLE 50
-
-#define THREADS 6
-
+#if !defined BONUS
+	#define BONUS 1
+#endif
+#if !BONUS
+	#define THREADS 1
+#else
+	#define THREADS 6
+#endif
 
 typedef struct s_cord
 {
@@ -99,6 +101,7 @@ typedef struct s_plane
 	t_cord norm_v;
 	t_rgb rgb;
 	float refraction;
+	int specular;
 
 } t_plane;
 typedef struct s_square
@@ -110,6 +113,7 @@ typedef struct s_square
 	t_rgb rgb;
 	t_sqpoints points;
 	float refraction;
+	int specular;
 
 } t_square;
 typedef struct s_cylinder
@@ -120,6 +124,8 @@ typedef struct s_cylinder
 	float height;
 	t_rgb rgb;
 	float refraction;
+	int specular;
+
 } t_cylinder;
 typedef struct s_triangle
 {
@@ -128,7 +134,7 @@ typedef struct s_triangle
 	t_cord cord_3;
 	t_rgb rgb;
 	float refraction;
-
+	int specular;
 } t_triangle;
 typedef struct s_ray
 {
@@ -138,9 +144,10 @@ typedef struct s_ray
 	int object;
 	float refraction;
 	float reflexion;
+	int specular;
 	float len;
 } t_ray;
-typedef struct s_img 
+typedef struct s_img
 {
 	void *mlx_img;
 	char *address;
@@ -162,7 +169,7 @@ typedef struct s_sphere
 	float refraction;
 	t_bmp bmp;
 	int mapping;
-
+	int specular;
 } t_sphere;
 typedef struct s_file
 {
@@ -243,7 +250,7 @@ t_cord esc_dot_vec(float num, t_cord c);
 
 int get_intersections(t_ray *ray, t_file *c);
 
-int spheres_intersection(t_ray *ray, t_list *list,t_file *c);
+int spheres_intersection(t_ray *ray, t_list *list, t_file *c);
 
 int ambient_color(t_rgb color, t_ambient_ligth ambient);
 
@@ -313,7 +320,7 @@ int get_pl_inter(t_ray *ray, t_plane pl);
 
 int get_cy_inter(t_ray *ray, t_cylinder cy);
 
-int get_sp_inter(t_ray *ray, t_sphere sp,t_file *c);
+int get_sp_inter(t_ray *ray, t_sphere sp, t_file *c);
 
 t_cord rot_center_point(t_cord p, int ang);
 
@@ -359,19 +366,19 @@ int sum_int_colors(int color1, int color2);
 
 int get_shadow_intersections(t_ray ray, t_file c);
 
-int threats(t_file *c,int save);
+int threats(t_file *c, int save);
 
 int create_bmp_file(t_file *c, char *file);
 
-int get_sp_inter_analitic(t_ray *ray, t_sphere sp,t_file *c);
+int get_sp_inter_analitic(t_ray *ray, t_sphere sp, t_file *c);
 
-t_bmp  read_bmp(char *file, t_file *c);
+t_bmp read_bmp(char *file, t_file *c);
 
- int sp_bmp(t_ray ray, t_bmp bmp,t_sphere sp);
+int sp_bmp(t_ray ray, t_bmp bmp, t_sphere sp);
 
- t_canvas save_canvas(t_camera *cam, t_file c);
+t_canvas save_canvas(t_camera *cam, t_file c);
 
-void rot_cam(t_camera *camera,int key,t_file *c);
+void rot_cam(t_camera *camera, int key, t_file *c);
 
 t_cord rot_vec_z(t_cord vec, int a);
 
@@ -384,6 +391,5 @@ void rot_cy(t_cylinder *cy, int key);
 void rot_pl(t_plane *pl, int key);
 
 void rot_sq(t_square *sq, int key);
-
 
 #endif

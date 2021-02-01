@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keys.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 21:06:31 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/30 19:58:21 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/01/31 17:39:59 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,20 +116,20 @@ void rot_objects(t_file *c, int key)
 }
 int detect_key(int keycode, t_file *c)
 {
-	printf("key%d\n", keycode);
+	//printf("key%d\n", keycode);
 	if (keycode == 8 && c->camera)
 		select_camera(c);
-	if (keycode == 31)
+	if (keycode == 31 && BONUS == 1)
 		select_type_object(c);
-	if (keycode == 35)
+	if (keycode == 35 && BONUS == 1)
 		select_object(c);
-	if ((keycode >= 123 && keycode <= 126) || keycode == 45 || keycode == 46)
+	if ((keycode >= 123 && keycode <= 126) || keycode == 45 || keycode == 46 && BONUS == 1)
 		move_objects(c, keycode);
-	if (keycode == 30 || keycode == 44)
+	if (keycode == 30 || keycode == 44 && BONUS == 1)
 		size_objects(c, keycode);
-	if (keycode == 6 || keycode == 7 || keycode == 0 || keycode == 1 || keycode == 2 || keycode == 13)
-		rot_objects(c, keycode);
-	if (keycode == 4)
+	if ((keycode == 6 || keycode == 7 || keycode == 0 || keycode == 1 || keycode == 2 || keycode == 13)&& BONUS == 1)
+		rot_objects(c, keycode );
+	if (keycode == 4 && BONUS == 1)
 		create_bmp_file(c, "screeshot.bmp");
 	return 1;
 }

@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 20:15:34 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/29 19:22:23 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/31 19:54:26 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ t_canvas save_canvas(t_camera *cam, t_file c)
 	if (fabs(cam->norm_v.y) == 1)
 	{
 		
-		canvas.matrix.v3 = esc_dot_vec(-1, cam->norm_v);
-		canvas.matrix.v1 = esc_dot_vec(cam->norm_v.y*-1,vector(1,0,0));
+		canvas.matrix.v3 = esc_dot_vec(1, cam->norm_v);
+		canvas.matrix.v1 = esc_dot_vec(cam->norm_v.y,vector(1,0,0));
 		canvas.matrix.v2 =  esc_dot_vec(cam->norm_v.y*-1,vector(0,0,1));
 	}
 	else

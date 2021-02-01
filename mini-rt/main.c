@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 19:14:12 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/29 18:10:47 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/31 14:49:13 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,6 @@ void paint_scene(void *a)
 
 int init_window(t_file *c, int save)
 {
-	printf("inti:%d", save);
-
 	adjust_res(c);
 	if (!(c->win_ptr = mlx_new_window(c->mlx_ptr, c->win_width, c->win_heigth, "MiniRt")))
 		return parse_error("Minilibx Error: CAN NOT OPEN A WINDOW");
@@ -95,6 +93,7 @@ int main(int argc, char **argv)
 	t_file config;
 	int save;
 
+	ft_printf("BONUS:%d\nTHREADS:%d\n",BONUS,THREADS);
 	save = 0;
 	if (argc == 3 && !ft_strncmp(argv[2], "--save", 6))
 		save = 1;

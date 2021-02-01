@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bmp_img.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 21:27:31 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/30 17:04:05 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/01/31 11:41:36 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ t_bmp read_bmp(char *file, t_file *c)
 
 		if (!bmp.img.mlx_img)
 		{
-			ft_printf("Error\n       Error: No map\n");
+			ft_printf("Error\n       Error: No map named %s\n",file);
 		}
 		bmp.img.address = mlx_get_data_addr(bmp.img.mlx_img, &bmp.img.bits_per_pixel,
 											&bmp.img.line_length, &bmp.img.endian);

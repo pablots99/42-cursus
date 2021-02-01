@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/15 17:19:10 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/29 16:17:30 by pablo            ###   ########.fr       */
+/*   Updated: 2021/01/31 17:29:47 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ int spheres_intersection(t_ray *ray, t_list *list,t_file *c)
             color = int_from_rgb(sp.rgb.r,sp.rgb.g,sp.rgb.b);
             ray->object = SPHERE;
             ray->reflexion = sp.refraction;
-		if(sp.mapping == 1)
+            ray->specular = sp.specular;
+		if(sp.bmp.heigth)
 			color = sp_bmp(*ray,sp.bmp,sp);
         }
         aux = aux->next;
@@ -57,6 +58,8 @@ int plane_intersection(t_ray *ray, t_list *plane)
             color = int_from_rgb(pl.rgb.r,pl.rgb.g,pl.rgb.b);
             ray->object = PLANE;
             ray->reflexion = pl.refraction;
+            ray->specular = pl.specular;
+
         }
         aux = aux->next;
     }
@@ -82,6 +85,7 @@ int triangle_intersection(t_ray *ray, t_list *plane)
             color = int_from_rgb(tr.rgb.r,tr.rgb.g,tr.rgb.b);
             ray->object = TRIANGLE;
             ray->reflexion = tr.refraction;
+            ray->specular = tr.specular;
         }
         aux = aux->next;
     }
@@ -106,6 +110,7 @@ int square_intersection(t_ray *ray, t_list *plane)
             color = int_from_rgb(sq.rgb.r,sq.rgb.g,sq.rgb.b);
             ray->object = SQUARE;
             ray->reflexion = sq.refraction;
+            ray->specular = sq.specular;
         }
         aux = aux->next;
     }
@@ -130,6 +135,7 @@ int cylinder_intersection(t_ray *ray, t_list *list)
             color = int_from_rgb(cy.rgb.r,cy.rgb.g,cy.rgb.b);
             ray->object = CYLINDER;
             ray->reflexion = cy.refraction;
+            ray->specular = cy.specular;
         }
         aux = aux->next;
     }

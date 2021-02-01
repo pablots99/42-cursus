@@ -34,18 +34,27 @@ SRCS =  main.c 							\
 
 
 OBJS = $(SRCS:.c=.o)
-
+OBJS_BONUS = $(SRCS:.c=.o)
 CC = gcc
 
-CFLAGS = #-fsanitize=address #-Wall -Wextra -Werror 
+CFLAGS = -D BONUS=0 #-fsanitize=address #-Wall -Wextra -Werror 
+
+CFLAGS_BONUS = -D BONUS=1 #-fsanitize=address #-Wall -Wextra -Werror 
 
 LFAGS = -L libft -lft   libmlx.dylib -framework Metal -framework AppKit
 
 
 all: $(NAME)
 
+
+
+bonus:$(OBJS)
+	 $(CC) -g   $(CFLAGS_BONUS) $(LFAGS) $(SRCS) -o $(NAME)
+
+
 $(NAME):$(OBJS)
-	$(CC) -g $(CFLAGS)  $(LFAGS) $(OBJS) -o $(NAME)
+	$(CC) -g   $(CFLAGS)   $(LFAGS) $(SRCS) -o $(NAME)
+
 
 re_libft:
 	$(MAKE) fclean -C ./libft

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_rt_file2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 16:08:44 by ptorres           #+#    #+#             */
-/*   Updated: 2021/01/28 19:24:30 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/01/31 17:30:21 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int save_new_sphere(char **splited, t_file *configFile)
 	int err;
 
 	err = 0;
-	if (!(ft_bistrlen(splited) == 5 || ft_bistrlen(splited) == 6))
+	if (!(ft_bistrlen(splited) == 6 || ft_bistrlen(splited) == 7))
 		return (parse_error("Sphere Error: Bad number of arguments \n"));
 	if (!ft_isfloat(splited[2]))
 		return (parse_error("Sphere Error: Bad value for Diameter \n"));
@@ -30,13 +30,11 @@ int save_new_sphere(char **splited, t_file *configFile)
 	err += save_rgb(&sphere->rgb, splited[3], "Sphere");
 	sphere->diameter = ft_atof(splited[2]);
 	sphere->refraction = ft_atof(splited[4]);
-	if(ft_bistrlen(splited) == 6)
-	{
-		sphere->mapping = 1;
-		sphere->bmp = read_bmp(splited[5],configFile);
-	}
+	sphere->specular =  ft_atoi(splited[5]);
+	if(ft_bistrlen(splited) == 7)
+		sphere->bmp = read_bmp(splited[6],configFile);
 	else 
-		sphere->mapping = 0;
+		sphere->bmp.heigth = 0;
 	ft_lstadd_back(&configFile->sphere, ft_lstnew(sphere));
 	if (err)
 		return (1);
@@ -49,7 +47,7 @@ int save_new_plane(char **splited, t_file *configFile)
 	int err;
 
 	err = 0;
-	if (ft_bistrlen(splited) != 5)
+	if (ft_bistrlen(splited) != 6)
 		return (parse_error("Plane Error: Bad number of arguments \n"));
 	if (!(plane = malloc(1 * sizeof(t_plane))))
 		return (parse_error("Plane Error: Malloc error on t_plane\n"));
@@ -60,6 +58,7 @@ int save_new_plane(char **splited, t_file *configFile)
 	err += save_rgb(&plane->rgb, splited[3], "Plane");
 	plane->norm_v = norm_vec(plane->norm_v);
 	plane->refraction = ft_atof(splited[4]);
+	plane->specular =  ft_atoi(splited[5]);
 	ft_lstadd_back(&configFile->plane, ft_lstnew(plane));
 	if (err)
 		return (1);
@@ -80,12 +79,12 @@ int save_new_square(char **splited, t_file *configFile)
 	err += save_cord(&square->cord, splited[1], "PlSquareane");
 	err += save_cord(&square->norm_v, splited[2], "Square");
 	square->side = ft_atof(splited[3]);
-	square->refraction = ft_atof(splited[6]);
+	square->refraction = ft_atof(splited[5]);
 	err += save_rgb(&square->rgb, splited[4], "Square");
 	square->norm_v = norm_vec(square->norm_v);
-	if (!ft_isfloat(splited[5]))
-		return (parse_error("Square Ligth Error: Bad value for angle \n"));
-	square->angle = ft_atof(splited[5]);
+	square->specular =  ft_atoi(splited[6]);
+
+	square->angle = 0;
 	save_sq_points(square);
 	ft_lstadd_back(&configFile->square, ft_lstnew(square));
 	if (err)
@@ -98,7 +97,7 @@ int save_new_cylinder(char **splited, t_file *configFile)
 	int err;
 
 	err = 0;
-	if (ft_bistrlen(splited) != 7)
+	if (ft_bistrlen(splited) != 8)
 		return (parse_error("Cylinder Error: Bad number of arguments \n"));
 	if (!ft_isfloat(splited[3]))
 		return (parse_error("Cylinder  Error: Bad value for diameter \n"));
@@ -112,6 +111,7 @@ int save_new_cylinder(char **splited, t_file *configFile)
 	cylinder->height = ft_atof(splited[4]);
 	err += save_rgb(&cylinder->rgb, splited[5], "Cylinder");
 	cylinder->refraction =ft_atof(splited[6]);
+	cylinder->specular =  ft_atoi(splited[7]);
 	cylinder->norm_v = norm_vec(cylinder->norm_v);
 	ft_lstadd_back(&configFile->cylinder, ft_lstnew(cylinder));
 	if (err)
@@ -124,7 +124,7 @@ int save_new_triangle(char **splited, t_file *configFile)
 	int err;
 
 	err = 0;
-	if (ft_bistrlen(splited) != 6)
+	if (ft_bistrlen(splited) != 7)
 		return (parse_error("Triangle Error: Bad number of arguments \n"));
 	if (!(triangle = malloc(1 * sizeof(t_triangle))))
 		return (parse_error("Triangle Error: Malloc error on t_triangle\n"));
@@ -135,6 +135,7 @@ int save_new_triangle(char **splited, t_file *configFile)
 	err += save_cord(&triangle->cord_3, splited[3], "Triangle");
 	err += save_rgb(&triangle->rgb, splited[4], "Triangle");
 	triangle->refraction = ft_atof(splited[5]);
+	triangle->specular =  ft_atoi(splited[6]);
 	ft_lstadd_back(&configFile->triangle, ft_lstnew(triangle));
 	if (err)
 		return (1);

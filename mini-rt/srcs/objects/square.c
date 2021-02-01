@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   square.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/10 15:06:52 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/30 19:51:15 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/01/31 17:16:11 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,6 @@ void rot_sq(t_square *sq, int key)
 	if (key == 7)
 		sq->norm_v = rot_vec_z(sq->norm_v, -angle);
 	sq->norm_v = norm_vec(sq->norm_v);
-	ft_printf("Plane: rotated\n");
+	ft_printf("Square: rotated\n");
 }
 

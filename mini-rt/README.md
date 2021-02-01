@@ -21,6 +21,12 @@ Controls:
     
     - m,n for the z axis
 
+    - w,s,a,d,z,x to rotate selected object
+
+    - h to take a screenshot
+
+    - execute with flag --save to save the render scene
+
 Resources:
 
     -Minilibx:   https://harm-smits.github.io/42docs/libs/minilibx
@@ -29,12 +35,3 @@ Resources:
     
     -cylinder: http://www.illusioncatalyst.com/notes_files/mathematics/line_cylinder_intersection.php
 
-
-sp -80,25,0 50 0,255,0
-
-sp -200,25,0 50 255,255,0
-
-tr 0,100,0 -30,0,0 30,0,35 255,0,0
-
-
-pl 0,0,0 0,1,0 50,200,200
