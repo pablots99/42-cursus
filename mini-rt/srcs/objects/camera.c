@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   camera.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 17:10:38 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/31 20:44:07 by pablo            ###   ########.fr       */
+/*   Updated: 2021/02/01 14:11:25 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,18 +70,26 @@ void rot_cam(t_camera *camera, int key, t_file *c)
 	if (key == 13)
 	{
 		camera->canvas.matrix.v2 = rot_vec_x(camera->canvas.matrix.v2, angle);
+		camera->canvas.matrix.v3 = rot_vec_x(camera->canvas.matrix.v3, angle);
+
 	}
 	if (key == 1)
 	{
 		camera->canvas.matrix.v2 = rot_vec_x(camera->canvas.matrix.v2 ,-angle);
+		camera->canvas.matrix.v3 = rot_vec_x(camera->canvas.matrix.v3, -angle);
+
+
 	}
 	if (key == 0)
 	{
 		camera->canvas.matrix.v1 = rot_vec_y(camera->canvas.matrix.v1, angle);
+		camera->canvas.matrix.v3 = rot_vec_y(camera->canvas.matrix.v3, angle);
+
 	}
 	if (key == 2)
 	{
 		camera->canvas.matrix.v1 = rot_vec_y(camera->canvas.matrix.v1, -angle);
+	      camera->canvas.matrix.v3 = rot_vec_y(camera->canvas.matrix.v3, -angle);
 	}
 	camera->canvas.matrix.v2 = norm_vec(camera->canvas.matrix.v2);
 		camera->canvas.matrix.v3 = norm_vec(camera->canvas.matrix.v3);

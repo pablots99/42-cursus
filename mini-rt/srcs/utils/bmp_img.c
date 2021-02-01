@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bmp_img.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 21:27:31 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/31 11:41:36 by pablo            ###   ########.fr       */
+/*   Updated: 2021/02/01 18:32:42 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,22 +73,16 @@ t_bmp read_bmp(char *file, t_file *c)
 	bmp.heigth = 0;
 	printf("file: %s\n", file);
 	if (!ft_strnstr(file, ".xpm", ft_strlen(file)))
-	{
 		ft_printf("Error\n       Error: Map file is invalid\n");
-	}
 	else
 	{
 
 		bmp.img.mlx_img = mlx_xpm_file_to_image(c->mlx_ptr, file, &bmp.width, &bmp.heigth);
-
 		if (!bmp.img.mlx_img)
-		{
 			ft_printf("Error\n       Error: No map named %s\n",file);
-		}
 		bmp.img.address = mlx_get_data_addr(bmp.img.mlx_img, &bmp.img.bits_per_pixel,
 											&bmp.img.line_length, &bmp.img.endian);
 	}
-
 	return bmp;
 }
 

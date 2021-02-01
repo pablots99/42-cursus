@@ -24,6 +24,7 @@ SRCS =  main.c 							\
 		srcs/objects/cylinder.c				\
 		srcs/objects/cylinder2.c			\
 		srcs/objects/square.c				\
+		srcs/objects/ligth.c				\
 		srcs/objects/triangle.c				\
 		srcs/raytracing/shading.c			\
 		srcs/raytracing/intersections.c		

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cylinder.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/10 14:34:03 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/27 21:22:42 by pablo            ###   ########.fr       */
+/*   Updated: 2021/02/01 18:27:11 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,6 @@ int get_dyscs_inter2(t_ray *ray, t_cylinder cy)
     }
     return -1;
 }
-float t_inter(t_ray *ray, float t1, float t2)
-{
-    if (t1 >= 0 && ray->len > t1)
-        return (t1);
-    else if (t2 >= 0 && ray->len > t2)
-        return (t2);
-    return -1;
-}
 
 int get_cy_inter(t_ray *ray, t_cylinder cy)
 {
@@ -79,15 +71,17 @@ int get_cy_inter(t_ray *ray, t_cylinder cy)
     h.x = get_dyscs_inter1(ray, cy);
     h.x =  get_dyscs_inter2(ray, cy);
     l = pow(ec.y, 2) - (4 * ec.x * ec.z);
-    l = min_float((-ec.y - sqrt(l)) / (2 * ec.x), (-ec.y + sqrt(l)) / (2 * ec.x));
+    l = (-ec.y - sqrt(l)) / (2 * ec.x);
+    if(l < 0)
+	l = (-ec.y + sqrt(l)) / (2 * ec.x);
+    if(l < 0)
+	return (-1);
     proy = prod_esc(rest_vec(ray_intersection(*ray, l), cy.cord), cy.norm_v);
-    if (l > 0 && l < ray->len && proy >= 0 && proy <= cy.height)
+    if (l < ray->len && proy >= 0 && proy <= cy.height)
     {
         ray->normal = norm_vec(rest_vec(ray_intersection(*ray, l),sum_vec(esc_dot_vec(proy,cy.norm_v),cy.cord)));
         ray->len = l - BIAS;
         return (1);
     }
-    if(h.x == 1)
-        return 1;
-    return (-1);
+    return(h.x == 1)?1: (-1);
 }

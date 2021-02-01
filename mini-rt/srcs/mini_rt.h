@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_rt.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 19:15:09 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/31 20:20:44 by pablo            ###   ########.fr       */
+/*   Updated: 2021/02/01 18:41:51 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@
 #define PLANE 4
 #define TRIANGLE 5
 #define CYLINDER 6
+#define LIGTH 7
+
 
 #define BIAS 1
 #define ROT_ANGLE 50
@@ -183,6 +185,7 @@ typedef struct s_file
 	int sp_count;
 	int sq_count;
 	int tr_count;
+	int l_count;
 	int pl_count;
 	int cy_count;
 	int obj_selected;
@@ -190,6 +193,7 @@ typedef struct s_file
 	t_ambient_ligth ambient_ligth;
 	t_list *first_cam;
 	t_list *camera;
+	t_list *curr_l;
 	t_list *ligth;
 	t_list *curr_sp;
 	t_list *sphere;
@@ -391,5 +395,12 @@ void rot_cy(t_cylinder *cy, int key);
 void rot_pl(t_plane *pl, int key);
 
 void rot_sq(t_square *sq, int key);
+
+int select_l(t_file *c);
+
+void change_ligth_intesity(t_ligth *l, int k);
+
+void move_ligth(t_ligth *l, int axis);
+
 
 #endif
