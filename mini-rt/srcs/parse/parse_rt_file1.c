@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_rt_file1.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 20:15:34 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/31 19:54:26 by pablo            ###   ########.fr       */
+/*   Updated: 2021/02/01 19:04:48 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,8 +107,6 @@ int save_new_camera(char **splited, t_file *configFile)
 		return (parse_error("Camera Error: Malloc error on t_camera\n"));
 	err += save_cord(&camera->cord, splited[1], "Camera");
 	err += save_cord(&camera->norm_v, splited[2], "Camera");
-	// if (!is_norm_vec(&camera->norm_v))
-	// 	err += (parse_error("Camera Error: vector not normalized \n"));
 	camera->norm_v = norm_vec(camera->norm_v);
 	camera->fov = atoi(splited[3]);
 	ft_lstadd_back(&configFile->camera, ft_lstnew(camera));

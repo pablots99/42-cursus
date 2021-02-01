@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 14:39:35 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/28 19:29:45 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/02/01 19:03:48 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,7 @@ int save_rt_file(char **splited, t_file *configFile)
 {
 
 	int err;
-	if (!(configFile->mlx_ptr = mlx_init()))
-		return parse_error("Minilibx Error: CAN NOT INITIALIZE MINILIBX");
+	
 	err = 0;
 	if (*splited)
 	{
@@ -77,7 +76,10 @@ int read_file(int fd, t_file *configFile)
 		free(line);
 	}
 	line_splited = ft_split(line, ' ');
-	err += save_rt_file(line_splited, configFile);
+	if (BONUS == 1)
+		err += save_rt_file(line_splited, configFile);
+	else
+		err += save_rt_file_no_bonus(line_splited, configFile);
 	free(line);
 	ft_bidimensional_free(line_splited);
 	close(fd);
@@ -101,6 +103,8 @@ int read_rt_file(char *file, t_file *configFile)
 	}
 	if (read_file(fd, configFile) == 1)
 		return (0);
+	if (!(configFile->mlx_ptr = mlx_init()))
+		return parse_error("Minilibx Error: CAN NOT INITIALIZE MINILIBX");
 	return (1);
 }
 
