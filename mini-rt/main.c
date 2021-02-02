@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 19:14:12 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/31 14:49:13 by pablo            ###   ########.fr       */
+/*   Updated: 2021/02/02 12:25:03 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ void paint_scene(void *a)
 			color = get_intersections(&ray, param->c);
 			if (param->c->ligth)
 				color = shading(&ray, color, param->c);
+			else 
+				color = ambient_color(rgb_from_int(color),param->c->ambient_ligth);
 			my_mlx_pixel_put(&param->c->img, x, y, color);
 			x++;
 		}

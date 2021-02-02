@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_rt_file.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 14:39:35 by pablo             #+#    #+#             */
-/*   Updated: 2021/02/01 19:03:48 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/02/02 12:07:45 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ int save_rt_file(char **splited, t_file *configFile)
 {
 
 	int err;
-	
+
 	err = 0;
-	if (*splited)
+	if (*splited && *splited[0] != '#')
 	{
 		if (ft_strlen(*splited) == 1 && *splited[0] == 'R')
 			err = save_res(splited, configFile);
@@ -71,7 +71,10 @@ int read_file(int fd, t_file *configFile)
 	while (get_next_line(fd, &line) > 0)
 	{
 		line_splited = ft_split(line, ' ');
-		err += save_rt_file(line_splited, configFile);
+		if (BONUS == 1)
+			err += save_rt_file(line_splited, configFile);
+		else
+			err += save_rt_file_no_bonus(line_splited, configFile);
 		ft_bidimensional_free(line_splited);
 		free(line);
 	}
@@ -93,18 +96,24 @@ int read_rt_file(char *file, t_file *configFile)
 	if (!ft_strnstr(file, ".rt", ft_strlen(file)))
 	{
 		ft_printf("Error\n      File Error: Input file is a non rt file\n");
-		return 0;
+		return (0);
 	}
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
 	{
 		ft_printf("Error\n      File Error: no rt file named: %s\n", file);
-		return 0;
+		return (0);
 	}
 	if (read_file(fd, configFile) == 1)
 		return (0);
+	if (!configFile->first_cam || !(configFile->ambient_ligth.ratio) || !configFile->win_width)
+	{
+		ft_printf("Error:\n	Parse Error: No cam or No Rmbient Rigth or no Resolution\n");
+		return (0);
+	}
 	if (!(configFile->mlx_ptr = mlx_init()))
-		return parse_error("Minilibx Error: CAN NOT INITIALIZE MINILIBX");
+		return (parse_error("Minilibx Error: CAN NOT INITIALIZE MINILIBX"));
+
 	return (1);
 }
 

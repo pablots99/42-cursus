@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keys.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 21:06:31 by pablo             #+#    #+#             */
-/*   Updated: 2021/02/01 18:44:07 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/02/02 11:30:08 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,11 +108,11 @@ void rot_objects(t_file *c, int key)
 {
 	if (c->obj_selected == CAMERA && c->camera)
 		rot_cam((t_camera *)c->camera->content, key, c);
-	else if (c->obj_selected == CYLINDER && c->cylinder)
+	else if (c->obj_selected == CYLINDER && c->curr_cy)
 		rot_cy((t_cylinder *)c->curr_cy->content, key);
-	else if (c->obj_selected == PLANE && c->plane)
+	else if (c->obj_selected == PLANE && c->curr_pl)
 		rot_pl((t_plane *)c->curr_pl->content, key);
-	else if (c->obj_selected == SQUARE && c->square)
+	else if (c->obj_selected == SQUARE && c->curr_sq)
 		rot_sq((t_square *)c->curr_sq->content, key);
 	else
 	{
