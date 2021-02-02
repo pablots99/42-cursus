@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 16:08:44 by ptorres           #+#    #+#             */
-/*   Updated: 2021/02/01 19:14:02 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/02/02 18:43:17 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int save_new_sphere(char **splited, t_file *configFile)
 	int err;
 
 	err = 0;
-	if (!(ft_bistrlen(splited) == 6 || ft_bistrlen(splited) == 7))
+	if (!(ft_bistrlen(splited) == 6 || ft_bistrlen(splited) == 7 || ft_bistrlen(splited) == 8))
 		return (parse_error("Sphere Error: Bad number of arguments \n"));
 	if (!ft_isfloat(splited[2]))
 		return (parse_error("Sphere Error: Bad value for Diameter \n"));
@@ -35,6 +35,14 @@ int save_new_sphere(char **splited, t_file *configFile)
 		sphere->bmp = read_bmp(splited[6],configFile);
 	else 
 		sphere->bmp.heigth = 0;
+	if(ft_bistrlen(splited) >= 7)
+		sphere->bmp = read_bmp(splited[6],configFile);
+	else 
+		sphere->bmp.heigth = 0;
+	if(ft_bistrlen(splited) == 8)
+		sphere->bump = read_bmp(splited[7],configFile);
+	else 
+		sphere->bump.heigth = 0;
 	ft_lstadd_back(&configFile->sphere, ft_lstnew(sphere));
 	if (err)
 		return (1);
@@ -83,7 +91,6 @@ int save_new_square(char **splited, t_file *configFile)
 	err += save_rgb(&square->rgb, splited[4], "Square");
 	square->norm_v = norm_vec(square->norm_v);
 	square->specular =  ft_atoi(splited[6]);
-
 	square->angle = 0;
 	save_sq_points(square);
 	ft_lstadd_back(&configFile->square, ft_lstnew(square));

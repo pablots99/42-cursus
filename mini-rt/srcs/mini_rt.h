@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 19:15:09 by pablo             #+#    #+#             */
-/*   Updated: 2021/02/01 18:41:51 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/02/02 19:12:04 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@
 #define TRIANGLE 5
 #define CYLINDER 6
 #define LIGTH 7
-
-
+#define CUBE 8
+#define PYRAMID 8
 #define BIAS 1
 #define ROT_ANGLE 50
 #if !defined BONUS
@@ -157,12 +157,15 @@ typedef struct s_img
 	int line_length;
 	int endian;
 } t_img;
+//en vd es xmp
 typedef struct s_bmp
 {
 	int width;
 	int heigth;
 	t_img img;
 } t_bmp;
+
+
 typedef struct s_sphere
 {
 	t_cord cord;
@@ -172,7 +175,27 @@ typedef struct s_sphere
 	t_bmp bmp;
 	int mapping;
 	int specular;
+	t_bmp bump;
 } t_sphere;
+typedef struct s_cube
+{
+	t_cord norm_vec;
+	t_cord cord;
+	float width;
+	t_rgb rgb;
+	t_list *faces;
+	float reflexion;
+	int specular;
+} t_cube;
+
+typedef struct s_pyramid
+{
+	t_cord center;
+	float heigth;
+	float width;
+	t_square base;
+	t_list *faces;
+} t_pyramid;
 typedef struct s_file
 {
 	void *mlx_ptr;
@@ -183,6 +206,8 @@ typedef struct s_file
 	float aspect_ratio;
 	int cam_count;
 	int sp_count;
+	int cu_count;
+	int py_count;
 	int sq_count;
 	int tr_count;
 	int l_count;
@@ -197,6 +222,10 @@ typedef struct s_file
 	t_list *ligth;
 	t_list *curr_sp;
 	t_list *sphere;
+	t_list *curr_cu;
+	t_list *cube;
+	t_list *curr_py;
+	t_list *pyramid;
 	t_list *curr_pl;
 	t_list *plane;
 	t_list *curr_sq;
@@ -211,6 +240,7 @@ typedef struct s_threads
 	unsigned int thread;
 	t_file *c;
 } t_threads;
+
 
 int read_rt_file(char *file, t_file *configFile);
 
@@ -402,5 +432,10 @@ void change_ligth_intesity(t_ligth *l, int k);
 
 void move_ligth(t_ligth *l, int axis);
 
+void sp_bump(t_ray ray, t_bmp bmp, t_sphere sp);
+
+int get_cu_inter(t_ray *ray, t_list *sides);
+
+int cube_intersection(t_ray *ray, t_list *list);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_rt_file.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 14:39:35 by pablo             #+#    #+#             */
-/*   Updated: 2021/02/02 12:07:45 by pablo            ###   ########.fr       */
+/*   Updated: 2021/02/02 19:16:25 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ int save_rt_file_aux1(char **splited, t_file *configFile)
 		err = save_new_cylinder(splited, configFile);
 	else if (ft_strlen(*splited) == 2 && ft_strncmp(*splited, "tr", 2) == 0)
 		err = save_new_triangle(splited, configFile);
+	else if (ft_strlen(*splited) == 2 && ft_strncmp(*splited, "cu", 2) == 0)
+		err = save_new_cube(splited, configFile);
 	else
 		err = ft_printf("Error: '%s' is a bad identifer\n", *splited);
 	if (!err)
@@ -66,7 +68,8 @@ int read_file(int fd, t_file *configFile)
 	char *line;
 	char **line_splited;
 	int err;
-
+	if (!(configFile->mlx_ptr = mlx_init()))
+		return (parse_error("Minilibx Error: CAN NOT INITIALIZE MINILIBX"));
 	err = 0;
 	while (get_next_line(fd, &line) > 0)
 	{
@@ -106,13 +109,11 @@ int read_rt_file(char *file, t_file *configFile)
 	}
 	if (read_file(fd, configFile) == 1)
 		return (0);
-	if (!configFile->first_cam || !(configFile->ambient_ligth.ratio) || !configFile->win_width)
+	if (!configFile->first_cam || !(configFile->ambient_ligth.rgb.r) || !configFile->win_width)
 	{
 		ft_printf("Error:\n	Parse Error: No cam or No Rmbient Rigth or no Resolution\n");
 		return (0);
 	}
-	if (!(configFile->mlx_ptr = mlx_init()))
-		return (parse_error("Minilibx Error: CAN NOT INITIALIZE MINILIBX"));
 
 	return (1);
 }

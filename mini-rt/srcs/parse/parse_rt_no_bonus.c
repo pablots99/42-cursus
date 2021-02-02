@@ -3,15 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   parse_rt_no_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 19:00:12 by ptorres           #+#    #+#             */
-/*   Updated: 2021/02/02 12:08:00 by pablo            ###   ########.fr       */
+/*   Updated: 2021/02/02 15:52:38 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include "../mini_rt.h"
 #include "./rt_file.h"
+ 
+
 
 int save_rt_file_aux1_no(char **splited, t_file *configFile)
 {
@@ -55,5 +58,8 @@ int save_rt_file_no_bonus(char **splited, t_file *configFile)
 		else
 			return save_rt_file_aux1_no(splited, configFile);
 	}
-	return ((!err) ? 0 : 1);
+	if (!err)
+		return (0);
+	else
+		return (1);
 }

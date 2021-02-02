@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 21:27:31 by pablo             #+#    #+#             */
-/*   Updated: 2021/02/01 18:32:42 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/02/02 18:05:59 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,11 @@ t_bmp read_bmp(char *file, t_file *c)
 	else
 	{
 
-		bmp.img.mlx_img = mlx_xpm_file_to_image(c->mlx_ptr, file, &bmp.width, &bmp.heigth);
-		if (!bmp.img.mlx_img)
+		if (!(bmp.img.mlx_img = mlx_xpm_file_to_image(c->mlx_ptr, file, &bmp.width, &bmp.heigth)))
+		{
 			ft_printf("Error\n       Error: No map named %s\n",file);
+			return bmp;
+		}
 		bmp.img.address = mlx_get_data_addr(bmp.img.mlx_img, &bmp.img.bits_per_pixel,
 											&bmp.img.line_length, &bmp.img.endian);
 	}
@@ -108,4 +110,27 @@ int sp_bmp(t_ray ray, t_bmp bmp, t_sphere sp)
 	v = ((v) / (M_PI)) * bmp.heigth;
 	dst = (bmp.img.address + (((int)(v)*bmp.img.line_length) + ((int)(u) * (bmp.img.bits_per_pixel / 8))));
 	return (*(unsigned int *)dst);
+}
+void sp_bump(t_ray ray, t_bmp bmp, t_sphere sp)
+{
+	float u;
+	float v;
+	char *dst;
+	t_cord d;
+
+	d = rest_vec(ray_cut_point(ray), sp.cord);
+	if (d.z > 0 && d.x > 0)
+		u = atan(d.x / d.z);
+	else if (d.z > 0 && d.x < 0)
+		u = (2 * M_PI) + atan(d.x / d.z);
+	else if (d.z < 0)
+		u = M_PI + atan(d.x / d.z);
+	if (d.y > 0)
+		v = atan((sqrt(d.z * d.z + d.x * d.x)) / d.y);
+	else if (d.y < 0)
+		v = M_PI + atan((sqrt(d.z * d.z + d.x * d.x)) / d.y);
+	u = ((u) / (2 * M_PI)) * bmp.width;
+	v = ((v) / (M_PI)) * bmp.heigth;
+	
+	dst = (bmp.img.address + (((int)(v)*bmp.img.line_length) + ((int)(u) * (bmp.img.bits_per_pixel / 8))));                                                      
 }
