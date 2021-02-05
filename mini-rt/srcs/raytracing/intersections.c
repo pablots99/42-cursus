@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   intersections.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/15 17:19:10 by pablo             #+#    #+#             */
-/*   Updated: 2021/02/02 19:13:19 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/02/03 20:52:45 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ int plane_intersection(t_ray *ray, t_list *plane)
             ray->object = PLANE;
             ray->reflexion = pl.refraction;
             ray->specular = pl.specular;
-
         }
         aux = aux->next;
     }

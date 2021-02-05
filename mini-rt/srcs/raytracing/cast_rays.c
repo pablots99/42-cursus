@@ -3,24 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   cast_rays.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/03 12:16:02 by pablo             #+#    #+#             */
-/*   Updated: 2021/02/02 19:11:30 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/02/04 23:54:50 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../mini_rt.h"
 
-t_ray generate_ray(int x, int y, t_file c)
+t_ray generate_ray(int x, int y, t_file c,float r1,float r2)
 {
 	t_ray ray;
 	t_camera camera;
 
 	camera = *((t_camera *)c.camera->content);
 	ray.origin = camera.cord;
-	ray.direction.x = (2 * (((float)x + 0.5) / (float)c.win_width) - 1) * tan((camera.fov * (M_PI / 180) / 2)) * c.aspect_ratio;
-	ray.direction.y = (1 - 2 * ((float)y + 0.5) / ((float)c.win_heigth)) * tan((camera.fov * (M_PI / 180) / 2));
+	ray.direction.x = (2 * (((float)x + r1) / (float)c.win_width) - 1) * tan((camera.fov * (M_PI / 180) / 2)) * c.aspect_ratio;
+	ray.direction.y = (1 - 2 * ((float)y + r2) / ((float)c.win_heigth)) * tan((camera.fov * (M_PI / 180) / 2));
 	ray.direction.z = -1;
 	ray.reflexion = 0;
 	ray.direction = norm_vec(vector_dot_matrix(norm_vec(ray.direction), camera.canvas.matrix));

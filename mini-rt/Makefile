@@ -2,23 +2,26 @@ NAME = minirt
 
 LIBFT = libft/libft.a
 
-SRCS =  main.c 							\
+SRCS =  main.c 								\
 		srcs/parse/get_rt_file.c 			\
-		srcs/parse/parse_rt_file1.c 			\
-		srcs/parse/parse_rt_file2.c 			\
+		srcs/parse/parse_rt_file1.c 		\
+		srcs/parse/parse_rt_file2.c 		\
 		srcs/parse/parse_rt_no_bonus.c		\
 		srcs/parse/parse_rt_file2_no.c		\
 		srcs/parse/parse_rt_file_aux3.c		\
-		srcs/utils/utils.c				\
-		srcs/utils/utils2.c				\
-		srcs/utils/utils3.c				\
-		srcs/utils/colors.c				\
+		srcs/utils/utils.c					\
+		srcs/utils/utils2.c					\
+		srcs/utils/utils3.c					\
+		srcs/utils/colors.c					\
 		srcs/utils/keys.c					\
 		srcs/utils/mlx_utils.c				\
 		srcs/utils/bmp_img.c				\
 		srcs/utils/ft_atof.c				\
 		srcs/utils/utils_free.c				\
-		srcs/math/vectors.c				\
+		srcs/math/vectors.c					\
+		srcs/math/vectors1.c				\
+		srcs/math/vectors2.c				\
+		srcs/math/vectors3.c				\
 		srcs/math/utils.c					\
 		srcs/raytracing/cast_rays.c			\
 		srcs/objects/sphere.c				\
@@ -28,9 +31,10 @@ SRCS =  main.c 							\
 		srcs/objects/cylinder2.c			\
 		srcs/objects/square.c				\
 		srcs/objects/ligth.c				\
-		srcs/objects/cube.c				\
+		srcs/objects/cube.c					\
 		srcs/objects/triangle.c				\
 		srcs/raytracing/shading.c			\
+		srcs/raytracing/paint_scene.c		\
 		srcs/raytracing/intersections.c		\
 		srcs/raytracing/intersections1.c		
 
@@ -44,9 +48,9 @@ OBJS = $(SRCS:.c=.o)
 OBJS_BONUS = $(SRCS:.c=.o)
 CC = gcc
 
-CFLAGS = -D BONUS=0 -fsanitize=address #-Wall -Wextra -Werror 
+CFLAGS = -D BONUS=0 #-fsanitize=address #-Wall -Wextra -Werror 
 
-CFLAGS_BONUS = -D BONUS=1 -fsanitize=address #-Wall -Wextra -Werror 
+CFLAGS_BONUS = -D BONUS=1 #-fsanitize=address #-Wall -Wextra -Werror 
 
 LFAGS = -L libft -lft   libmlx.dylib -framework Metal -framework AppKit
 

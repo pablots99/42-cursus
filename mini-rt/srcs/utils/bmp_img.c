@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bmp_img.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 21:27:31 by pablo             #+#    #+#             */
-/*   Updated: 2021/02/02 18:05:59 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/02/05 00:31:53 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,35 @@ int sp_bmp(t_ray ray, t_bmp bmp, t_sphere sp)
 	v = ((v) / (M_PI)) * bmp.heigth;
 	dst = (bmp.img.address + (((int)(v)*bmp.img.line_length) + ((int)(u) * (bmp.img.bits_per_pixel / 8))));
 	return (*(unsigned int *)dst);
+}
+int sp_bmp1(t_ray ray, t_bmp bmp, t_sphere sp)
+{
+	float u;
+	float v;
+	char *dst;
+	t_cord d;
+	int colors[5];
+
+	init_int_arr(colors,5);
+	d = rest_vec(ray_cut_point(ray), sp.cord);
+	if (d.z > 0 && d.x > 0)
+		u = atan(d.x / d.z);
+	else if (d.z > 0 && d.x < 0)
+		u = (2 * M_PI) + atan(d.x / d.z);
+	else if (d.z < 0)
+		u = M_PI + atan(d.x / d.z);
+	if (d.y > 0)
+		v = atan((sqrt(d.z * d.z + d.x * d.x)) / d.y);
+	else if (d.y < 0)
+		v = M_PI + atan((sqrt(d.z * d.z + d.x * d.x)) / d.y);
+	u = ((u) / (2 * M_PI)) * bmp.width;
+	v = ((v) / (M_PI)) * bmp.heigth;
+	colors[0] = (*(unsigned int *)(bmp.img.address + (((int)(v)*bmp.img.line_length) + ((int)(u) * (bmp.img.bits_per_pixel / 8)))));
+	colors[1] = (*(unsigned int *)(bmp.img.address + (((int)(v + 1)*bmp.img.line_length) + ((int)(u) * (bmp.img.bits_per_pixel / 8)))));
+	colors[2] = (*(unsigned int *)(bmp.img.address + (((int)(v + 1)*bmp.img.line_length) + ((int)(u) * (bmp.img.bits_per_pixel / 8)))));
+	colors[3] = (*(unsigned int *)(bmp.img.address + (((int)(v)*bmp.img.line_length) + ((int)(u + 1) * (bmp.img.bits_per_pixel / 8)))));
+	colors[4] = (*(unsigned int *)(bmp.img.address + (((int)(v)*bmp.img.line_length) + ((int)(u - 1) * (bmp.img.bits_per_pixel / 8)))));
+	return average_color(colors,4);
 }
 void sp_bump(t_ray ray, t_bmp bmp, t_sphere sp)
 {

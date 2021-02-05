@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 21:06:31 by pablo             #+#    #+#             */
-/*   Updated: 2021/02/02 11:30:08 by pablo            ###   ########.fr       */
+/*   Updated: 2021/02/04 19:26:20 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void select_type_object(t_file *c)
 {
 	c->obj_selected++;
-	if (c->obj_selected > 7)
+	if (c->obj_selected > 8)
 		c->obj_selected = 0;
 	if (c->obj_selected == 0)
 		ft_printf("Selected Object: None.\n");
@@ -33,6 +33,8 @@ void select_type_object(t_file *c)
 		ft_printf("Selected Object: Cylinder.\n");
 	if (c->obj_selected == LIGTH)
 		ft_printf("Selected Object: Ligth.\n");
+	if (c->obj_selected == CUBE)
+		ft_printf("Selected Object: Cube.\n");
 }
 
 void select_object(t_file *c)
@@ -53,6 +55,8 @@ void select_object(t_file *c)
 		select_pl(c);
 	else if (c->obj_selected == LIGTH && c->ligth)
 		select_l(c);
+	else if (c->obj_selected == CUBE && c->cube)
+		select_cu(c);
 	else
 		ft_printf("     -No object of the type selected\n");
 }
@@ -68,10 +72,12 @@ void move_objects(t_file *c, int key)
 		move_cylinder((t_cylinder *)c->curr_cy->content, key);
 	else if (c->obj_selected == TRIANGLE && c->curr_tr)
 		move_triangle((t_triangle *)c->curr_tr->content, key);
-	else if (c->obj_selected == PLANE && c->plane)
+	else if (c->obj_selected == PLANE && c->curr_pl)
 		move_plane((t_plane *)c->curr_pl->content, key);
-	else if (c->obj_selected == LIGTH && c->ligth)
+	else if (c->obj_selected == LIGTH && c->curr_l)
 		move_ligth((t_ligth *)c->curr_l->content, key);
+	else if (c->obj_selected == CUBE && c->curr_cu)
+		move_cube((t_cube *)c->curr_cu->content, key);
 	else
 	{
 		ft_printf("     -Can´t move object or No Object selected\n");
@@ -95,6 +101,8 @@ void size_objects(t_file *c, int key)
 		size_triangle((t_triangle *)c->curr_tr->content, key);
 	else if (c->obj_selected == LIGTH && c->curr_tr)
 		change_ligth_intesity((t_ligth *)c->curr_l->content, key);
+	else if (c->obj_selected == CUBE && c->curr_cu)
+		size_cube((t_cube *)c->curr_cu->content, key);
 	else
 	{
 		ft_printf("     -Can´t resize object or No Object selected\n");
@@ -114,6 +122,8 @@ void rot_objects(t_file *c, int key)
 		rot_pl((t_plane *)c->curr_pl->content, key);
 	else if (c->obj_selected == SQUARE && c->curr_sq)
 		rot_sq((t_square *)c->curr_sq->content, key);
+	else if (c->obj_selected == CUBE && c->curr_cu)
+		rot_cu((t_cube *)c->curr_cu->content, key);
 	else
 	{
 		ft_printf("     -Can´t rotate object or No Object selected\n");

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   intersections1.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 19:01:00 by ptorres           #+#    #+#             */
-/*   Updated: 2021/02/02 19:12:17 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/02/03 20:53:00 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int cube_intersection(t_ray *ray, t_list *list)
             color = int_from_rgb(cu.rgb.r,cu.rgb.g,cu.rgb.b);
             ray->object = CUBE;
             ray->reflexion = cu.reflexion;
+            ray->specular = cu.specular;
         }
         aux = aux->next;
     }

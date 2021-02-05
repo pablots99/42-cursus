@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 17:15:50 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/25 18:13:40 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/02/05 00:42:27 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,10 @@ float min_float(float a, float b)
 int min_int(int a, int b)
 {
     return ((a<b)?a:b);
+}
+
+float rand_unit_float()
+{
+    srand(time(NULL));
+    return  (float)rand()/RAND_MAX;
 }

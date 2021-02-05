@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_rt_file1.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 20:15:34 by pablo             #+#    #+#             */
-/*   Updated: 2021/02/02 18:37:13 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/02/03 19:43:53 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,10 +87,7 @@ int save_new_ligth(char **splited, t_file *configFile)
 	err += save_rgb(&ligth->rgb, splited[3], "Ligth");
 	ft_lstadd_back(&configFile->ligth, ft_lstnew(ligth));
 	if (err)
-	{
-		//free(ligth);
 		return (1);
-	}
 	return (0);
 }
 int save_new_camera(char **splited, t_file *configFile)

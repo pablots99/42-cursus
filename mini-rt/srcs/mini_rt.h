@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_rt.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 19:15:09 by pablo             #+#    #+#             */
-/*   Updated: 2021/02/02 19:12:04 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/02/05 18:47:49 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,14 @@
 #define BIAS 1
 #define ROT_ANGLE 50
 #if !defined BONUS
-	#define BONUS 1
+#define BONUS 1
 #endif
 #if !BONUS
-	#define THREADS 1
+#define ANTIALIASING 1
+#define THREADS 1
 #else
-	#define THREADS 6
+#define ANTIALIASING 5
+#define THREADS 10
 #endif
 
 typedef struct s_cord
@@ -165,7 +167,6 @@ typedef struct s_bmp
 	t_img img;
 } t_bmp;
 
-
 typedef struct s_sphere
 {
 	t_cord cord;
@@ -177,13 +178,24 @@ typedef struct s_sphere
 	int specular;
 	t_bmp bump;
 } t_sphere;
+
+typedef struct s_faces
+{
+	t_square face1;
+	t_square face2;
+	t_square face3;
+	t_square face4;
+	t_square face5;
+	t_square face6;
+} t_faces;
+
 typedef struct s_cube
 {
 	t_cord norm_vec;
 	t_cord cord;
 	float width;
 	t_rgb rgb;
-	t_list *faces;
+	t_faces faces;
 	float reflexion;
 	int specular;
 } t_cube;
@@ -241,7 +253,6 @@ typedef struct s_threads
 	t_file *c;
 } t_threads;
 
-
 int read_rt_file(char *file, t_file *configFile);
 
 int parse_error(char *err);
@@ -272,7 +283,7 @@ int ft_bistrlen(char **str);
 
 float ft_atof(char *num);
 
-t_ray generate_ray(int x, int y, t_file c);
+t_ray generate_ray(int x, int y, t_file c,float r1,float r2);
 
 float mod_vec(t_cord v);
 
@@ -434,8 +445,26 @@ void move_ligth(t_ligth *l, int axis);
 
 void sp_bump(t_ray ray, t_bmp bmp, t_sphere sp);
 
-int get_cu_inter(t_ray *ray, t_list *sides);
+int get_cu_inter(t_ray *ray, t_faces faces);
 
 int cube_intersection(t_ray *ray, t_list *list);
+
+void move_cube(t_cube *pl, int axis);
+
+int select_cu(t_file *c);
+
+void rot_cu(t_cube *pl, int key);
+
+void size_cube(t_cube *sq, int k);
+
+int save_cube_sides(t_cube *cube);
+
+void paint_scene(void *a);
+
+int average_color(int *color, int base);
+
+float rand_unit_float();
+
+void init_int_arr(int  *color,int n);
 
 #endif
