@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   triangle.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 15:06:16 by pablo             #+#    #+#             */
-/*   Updated: 2021/01/25 16:15:34 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/02/10 22:48:24 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,21 @@ int get_tr_inter(t_ray *ray, t_triangle tr)
     t_cord normal;
     t_cord p;
 
-    normal = norm_vec(prod_vec((rest_vec(tr.cord_2, tr.cord_3)),
+        tr.norm_v  = norm_vec(prod_vec((rest_vec(tr.cord_2, tr.cord_1)),
                                (rest_vec(tr.cord_3, tr.cord_1))));
-    den = prod_esc(ray->direction, normal);
+    if(prod_esc(tr.norm_v,ray->direction) <= 0)
+        tr.norm_v = esc_dot_vec(-1,tr.norm_v);
+    den = prod_esc(ray->direction, tr.norm_v );
     if (fabs(den) > 0)
     {
-        if ((len = prod_esc(rest_vec(tr.cord_1, ray->origin), normal) / den) > 0)
+        if ((len = prod_esc(rest_vec(tr.cord_1, ray->origin), tr.norm_v ) / den) > 0)
         {
             p = ray_intersection(*ray, len);
             ab = barycentric_cords(tr, p);
             if (len < ray->len && (ab.x <= 1 && ab.x >= 0) &&
                 (ab.y <= 1 && ab.y >= 0) &&  (ab.z <= 1 && ab.z >= 0))
             {
-                ray->normal = esc_dot_vec(-1, normal);
+                ray->normal = esc_dot_vec(-1, tr.norm_v );
                 ray->len = len - BIAS;
                 return 1;
             }

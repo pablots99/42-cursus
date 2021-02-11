@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 12:51:39 by pablo             #+#    #+#             */
-/*   Updated: 2021/02/02 12:17:39 by pablo            ###   ########.fr       */
+/*   Updated: 2021/02/10 23:03:44 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,56 @@ float calculate_specular(t_ray *ray, t_cord v)
 	spec = pow(max_float(0,prod_esc(r, v)),100);
 	return (spec);
 }
+void get_point_to_ligth(t_ligth ligth, t_ray *pointo_ligth, t_ray *ray)
+{
+    t_cord vec_ligth;
 
+    vec_ligth = rest_vec(ligth.cord, pointo_ligth->origin);
+    pointo_ligth->origin = ray_cut_point(*ray);
+    pointo_ligth->direction = norm_vec(vec_ligth);
+    pointo_ligth->len = mod_vec(vec_ligth);
+    pointo_ligth->normal = ray->normal;
+    pointo_ligth->specular = ray->specular;
+}
+
+int get_shadow(t_shades *sh, t_file *c, t_ray *pointo_ligth)
+{
+    if (get_shadow_intersections(*pointo_ligth, *c) != 0)
+    {
+        sh->difuse = c->ambient_ligth.ratio;
+        pointo_ligth->specular = 0;
+        return (1);
+    }
+    return (0);
+}
+int shading2(t_ray *ray, int color, t_file *c)
+{
+    int len;
+    t_list *lst_ligth;
+    t_ray pointo_ligth;
+    t_shades shades;
+
+    lst_ligth = c->ligth;
+	shades.difuse = 1;
+	shades.specular = 1;
+	shades.ligth_color = (t_rgb){0,0,0};
+    while (lst_ligth)
+    {
+        shades.ligth = *((t_ligth *)lst_ligth->content);
+        get_point_to_ligth(shades.ligth, &pointo_ligth, ray);
+        if(!(get_shadow(&shades,c,&pointo_ligth)))
+        {
+             shades.difuse = max_float(c->ambient_ligth.ratio,
+                (prod_esc(ray->normal, pointo_ligth.direction) * (shades.ligth.brigthness)));
+			shades.specular = 0;
+             shades.specular = calculate_specular(&pointo_ligth, ray->direction);
+            shades.ligth_color = sum_colors(shades.ligth_color,shades.ligth.rgb);
+        }
+        lst_ligth = lst_ligth->next;
+    }
+	color = create_shade_color2(rgb_from_int(color), shades);
+    return (color);
+}
 int shading(t_ray *ray, int color, t_file *c)
 {
 	t_cord vec_ligth;
@@ -40,7 +89,7 @@ int shading(t_ray *ray, int color, t_file *c)
 	color_aux = color;
 	aux = c->ligth;
 	brigth = 1;
-    if (BONUS == 1 && ray->reflexion > 0)
+    if (BONUS == 1 && ray->reflexion < 0 )
 	{
 		c->n_reflexions++;
 		color = shading(&reflected, get_intersections(&reflected, c), c);

@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 19:15:09 by pablo             #+#    #+#             */
-/*   Updated: 2021/02/05 18:47:49 by pablo            ###   ########.fr       */
+/*   Updated: 2021/02/10 23:05:17 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,7 @@ typedef struct s_triangle
 	t_cord cord_2;
 	t_cord cord_3;
 	t_rgb rgb;
+	t_cord norm_v;
 	float refraction;
 	int specular;
 } t_triangle;
@@ -199,6 +200,14 @@ typedef struct s_cube
 	float reflexion;
 	int specular;
 } t_cube;
+
+typedef struct s_shades
+{
+	float specular;
+	float difuse;
+	t_ligth ligth;
+	t_rgb ligth_color;
+} t_shades;
 
 typedef struct s_pyramid
 {
@@ -466,5 +475,9 @@ int average_color(int *color, int base);
 float rand_unit_float();
 
 void init_int_arr(int  *color,int n);
+
+void check_leaks();
+
+int create_shade_color2(t_rgb color, t_shades sh);
 
 #endif

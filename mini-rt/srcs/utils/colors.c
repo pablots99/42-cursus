@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 20:02:19 by pablo             #+#    #+#             */
-/*   Updated: 2021/02/05 00:48:56 by pablo            ###   ########.fr       */
+/*   Updated: 2021/02/07 20:05:02 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,15 @@ int create_shade_color(t_rgb color, t_ligth ligth, float brigth, float specular)
 	c.b = min_int(255, ligth.rgb.b * ((color.b * brigth / 255) + specular));
 	return (c.r << 16 | c.g << 8 | c.b);
 }
+int create_shade_color2(t_rgb color, t_shades sh)
+{
+	t_rgb c;
 
+	c.r = min_int(255, sh.ligth_color.r * ((color.r * sh.difuse / 255) + sh.specular));
+	c.g = min_int(255, sh.ligth_color.g * ((color.g * sh.difuse / 255) + sh.specular));
+	c.b = min_int(255, sh.ligth_color.b * ((color.b * sh.difuse / 255) + sh.specular));
+	return (c.r << 16 | c.g << 8 | c.b);
+}
 int ambient_color(t_rgb color, t_ambient_ligth ambient)
 {
 	t_rgb c;
@@ -79,12 +87,10 @@ int average_color(int *color, int base)
 		c.r += aux_c.r;
 		c.g += aux_c.g;
 		c.b += aux_c.b;
-		//printf("color r:%d,g:%d,b:%d\n",aux_c.r,aux_c.g,aux_c.b);
 		i++;
 	}
 	c.r /= base;
 	c.g /= base;
 	c.b /= base;
-	//printf("-----------------------\n");
 	return int_from_rgb(c.r, c.g, c.b);
 }

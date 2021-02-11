@@ -36,7 +36,8 @@ SRCS =  main.c 								\
 		srcs/raytracing/shading.c			\
 		srcs/raytracing/paint_scene.c		\
 		srcs/raytracing/intersections.c		\
-		srcs/raytracing/intersections1.c		
+		srcs/raytracing/intersections1.c	
+	
 
 	
 
@@ -48,9 +49,9 @@ OBJS = $(SRCS:.c=.o)
 OBJS_BONUS = $(SRCS:.c=.o)
 CC = gcc
 
-CFLAGS = -D BONUS=0 #-fsanitize=address #-Wall -Wextra -Werror 
+CFLAGS = -D BONUS=0 #-fsanitize=address  -g #-Wall -Wextra -Werror 
 
-CFLAGS_BONUS = -D BONUS=1 #-fsanitize=address #-Wall -Wextra -Werror 
+CFLAGS_BONUS = -D BONUS=1 #-fsanitize=address -g  #-Wall -Wextra -Werror 
 
 LFAGS = -L libft -lft   libmlx.dylib -framework Metal -framework AppKit
 
@@ -60,11 +61,11 @@ all: $(NAME)
 
 
 bonus:$(OBJS)
-	 $(CC) -g   $(CFLAGS_BONUS) $(LFAGS) $(SRCS) -o $(NAME)
+	 $(CC)    $(CFLAGS_BONUS) $(LFAGS) $(SRCS) -o $(NAME) 
 
 
 $(NAME):$(OBJS)
-	$(CC) -g   $(CFLAGS)   $(LFAGS) $(SRCS) -o $(NAME)
+	$(CC)    $(CFLAGS)   $(LFAGS) $(SRCS) -o $(NAME)
 
 
 re_libft:

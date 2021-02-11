@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vectots1.c                                         :+:      :+:    :+:   */
+/*   vectors1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/04 11:05:23 by pablo             #+#    #+#             */
-/*   Updated: 2021/02/04 17:24:14 by pablo            ###   ########.fr       */
+/*   Updated: 2021/02/06 21:15:56 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ t_ray refracted_ray(t_ray *ray)
 	t_cord dir;
 
 	dir = esc_dot_vec(-1, ray->direction);
-
-	//cambiar direccion para objetos traslucidos esta mal el rayo reflejado
 	res.direction = rest_vec(esc_dot_vec(2 * prod_esc(ray->normal, dir),
 							 ray->normal),
 					 dir);
