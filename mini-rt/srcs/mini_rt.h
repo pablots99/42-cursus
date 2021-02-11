@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_rt.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 19:15:09 by pablo             #+#    #+#             */
-/*   Updated: 2021/02/10 23:05:17 by pablo            ###   ########.fr       */
+/*   Updated: 2021/02/11 15:42:01 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@
 #define ANTIALIASING 1
 #define THREADS 1
 #else
-#define ANTIALIASING 5
-#define THREADS 10
+#define ANTIALIASING 1
+#define THREADS 50
 #endif
 
 typedef struct s_cord

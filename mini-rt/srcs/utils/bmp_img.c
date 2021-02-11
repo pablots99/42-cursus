@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bmp_img.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 21:27:31 by pablo             #+#    #+#             */
-/*   Updated: 2021/02/05 00:31:53 by pablo            ###   ########.fr       */
+/*   Updated: 2021/02/11 14:49:35 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,11 @@ t_bmp read_bmp(char *file, t_file *c)
 
 		if (!(bmp.img.mlx_img = mlx_xpm_file_to_image(c->mlx_ptr, file, &bmp.width, &bmp.heigth)))
 		{
-			ft_printf("Error\n       Error: No map named %s\n",file);
+			ft_printf("Error\n       Error: No map named %s\n", file);
 			return bmp;
 		}
 		bmp.img.address = mlx_get_data_addr(bmp.img.mlx_img, &bmp.img.bits_per_pixel,
-											&bmp.img.line_length, &bmp.img.endian);
+								&bmp.img.line_length, &bmp.img.endian);
 	}
 	return bmp;
 }
@@ -119,7 +119,7 @@ int sp_bmp1(t_ray ray, t_bmp bmp, t_sphere sp)
 	t_cord d;
 	int colors[5];
 
-	init_int_arr(colors,5);
+	init_int_arr(colors, 5);
 	d = rest_vec(ray_cut_point(ray), sp.cord);
 	if (d.z > 0 && d.x > 0)
 		u = atan(d.x / d.z);
@@ -134,11 +134,11 @@ int sp_bmp1(t_ray ray, t_bmp bmp, t_sphere sp)
 	u = ((u) / (2 * M_PI)) * bmp.width;
 	v = ((v) / (M_PI)) * bmp.heigth;
 	colors[0] = (*(unsigned int *)(bmp.img.address + (((int)(v)*bmp.img.line_length) + ((int)(u) * (bmp.img.bits_per_pixel / 8)))));
-	colors[1] = (*(unsigned int *)(bmp.img.address + (((int)(v + 1)*bmp.img.line_length) + ((int)(u) * (bmp.img.bits_per_pixel / 8)))));
-	colors[2] = (*(unsigned int *)(bmp.img.address + (((int)(v + 1)*bmp.img.line_length) + ((int)(u) * (bmp.img.bits_per_pixel / 8)))));
+	colors[1] = (*(unsigned int *)(bmp.img.address + (((int)(v + 1) * bmp.img.line_length) + ((int)(u) * (bmp.img.bits_per_pixel / 8)))));
+	colors[2] = (*(unsigned int *)(bmp.img.address + (((int)(v + 1) * bmp.img.line_length) + ((int)(u) * (bmp.img.bits_per_pixel / 8)))));
 	colors[3] = (*(unsigned int *)(bmp.img.address + (((int)(v)*bmp.img.line_length) + ((int)(u + 1) * (bmp.img.bits_per_pixel / 8)))));
 	colors[4] = (*(unsigned int *)(bmp.img.address + (((int)(v)*bmp.img.line_length) + ((int)(u - 1) * (bmp.img.bits_per_pixel / 8)))));
-	return average_color(colors,4);
+	return average_color(colors, 4);
 }
 void sp_bump(t_ray ray, t_bmp bmp, t_sphere sp)
 {
@@ -160,6 +160,6 @@ void sp_bump(t_ray ray, t_bmp bmp, t_sphere sp)
 		v = M_PI + atan((sqrt(d.z * d.z + d.x * d.x)) / d.y);
 	u = ((u) / (2 * M_PI)) * bmp.width;
 	v = ((v) / (M_PI)) * bmp.heigth;
-	
-	dst = (bmp.img.address + (((int)(v)*bmp.img.line_length) + ((int)(u) * (bmp.img.bits_per_pixel / 8))));                                                      
+
+	dst = (bmp.img.address + (((int)(v)*bmp.img.line_length) + ((int)(u) * (bmp.img.bits_per_pixel / 8))));
 }
