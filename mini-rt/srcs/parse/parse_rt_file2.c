@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 16:08:44 by ptorres           #+#    #+#             */
-/*   Updated: 2021/02/07 21:56:02 by pablo            ###   ########.fr       */
+/*   Updated: 2021/02/11 22:09:52 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ int save_new_cylinder(char **splited, t_file *configFile)
 	cylinder->diameter = ft_atof(splited[3]);
 	cylinder->height = ft_atof(splited[4]);
 	err += save_rgb(&cylinder->rgb, splited[5], "Cylinder");
-	cylinder->refraction =ft_atof(splited[6]);
+	cylinder->refraction = ft_atof(splited[6]);
 	cylinder->specular =  ft_atoi(splited[7]);
 	cylinder->norm_v = norm_vec(cylinder->norm_v);
 	ft_lstadd_back(&configFile->cylinder, ft_lstnew(cylinder));

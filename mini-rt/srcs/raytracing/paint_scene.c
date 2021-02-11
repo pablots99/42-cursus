@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   paint_scene.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/04 20:10:37 by pablo             #+#    #+#             */
-/*   Updated: 2021/02/11 16:52:09 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/02/11 22:44:17 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ int		threats(t_file *c, int save)
 			return parse_error("Thread Error: CAN NOT CREATE THREAD");
 		i++;
 	}
-	while (i-- > 0)
-		err = pthread_join(th[i], 0);
+	 while (i-- > 0)
+	 	err = pthread_join(th[i], 0);
 	if (save == 0)
 		mlx_put_image_to_window(c->mlx_ptr, c->win_ptr, c->img.mlx_img, 0, 0);
 	else

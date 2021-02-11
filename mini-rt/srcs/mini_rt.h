@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_rt.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 19:15:09 by pablo             #+#    #+#             */
-/*   Updated: 2021/02/11 15:42:01 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/02/11 23:17:02 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@
 #define TRIANGLE 5
 #define CYLINDER 6
 #define LIGTH 7
-#define CUBE 8
 #define PYRAMID 8
 #define BIAS 1
 #define ROT_ANGLE 50
@@ -40,7 +39,7 @@
 #define THREADS 1
 #else
 #define ANTIALIASING 1
-#define THREADS 50
+#define THREADS 10
 #endif
 
 typedef struct s_cord
@@ -227,7 +226,6 @@ typedef struct s_file
 	float aspect_ratio;
 	int cam_count;
 	int sp_count;
-	int cu_count;
 	int py_count;
 	int sq_count;
 	int tr_count;
@@ -243,8 +241,6 @@ typedef struct s_file
 	t_list *ligth;
 	t_list *curr_sp;
 	t_list *sphere;
-	t_list *curr_cu;
-	t_list *cube;
 	t_list *curr_py;
 	t_list *pyramid;
 	t_list *curr_pl;
@@ -454,19 +450,6 @@ void move_ligth(t_ligth *l, int axis);
 
 void sp_bump(t_ray ray, t_bmp bmp, t_sphere sp);
 
-int get_cu_inter(t_ray *ray, t_faces faces);
-
-int cube_intersection(t_ray *ray, t_list *list);
-
-void move_cube(t_cube *pl, int axis);
-
-int select_cu(t_file *c);
-
-void rot_cu(t_cube *pl, int key);
-
-void size_cube(t_cube *sq, int k);
-
-int save_cube_sides(t_cube *cube);
 
 void paint_scene(void *a);
 

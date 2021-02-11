@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shading.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 12:51:39 by pablo             #+#    #+#             */
-/*   Updated: 2021/02/11 17:09:17 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/02/11 23:19:37 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int get_shadow(t_shades *sh, t_file *c, t_ray *pointo_ligth)
 	}
 	return (0);
 }
-int shading2(t_ray *ray, int color, t_file *c)
+int shading(t_ray *ray, int color, t_file *c)
 {
 	int len;
 	t_list *lst_ligth;
@@ -74,7 +74,7 @@ int shading2(t_ray *ray, int color, t_file *c)
 	color = create_shade_color2(rgb_from_int(color), shades);
 	return (color);
 }
-int shading(t_ray *ray, int color, t_file *c)
+int shading2(t_ray *ray, int color, t_file *c)
 {
 	t_cord vec_ligth;
 	t_ray pointo_ligth;
@@ -88,13 +88,11 @@ int shading(t_ray *ray, int color, t_file *c)
 	color_aux = color;
 	aux = c->ligth;
 	brigth = 1;
-	if (BONUS == 1 && ray->reflexion < 0)
+	if (BONUS == 1 && ray->reflexion > 0)
 	{
-		c->n_reflexions++;
 		color = shading(&reflected, get_intersections(&reflected, c), c);
 		color = sum_int_colors(color, color_aux);
 	}
-	c->n_reflexions = 0;
 	color_aux = 0;
 	while (aux)
 	{
@@ -112,8 +110,7 @@ int shading(t_ray *ray, int color, t_file *c)
 		}
 		else
 			brigth = max_float(c->ambient_ligth.ratio, brigth * (prod_esc(ray->normal, norm_vec(vec_ligth)) * (ligth.brigthness + 0.01)));
-		if (color_aux)
-			color = color_aux;
+	
 		color = sum_int_colors(color_aux, create_shade_color(rgb_from_int(color), ligth, brigth, calculate_specular(&pointo_ligth, ray->direction)));
 		color_aux = color;
 		aux = aux->next;
