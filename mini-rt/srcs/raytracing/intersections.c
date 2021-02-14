@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/15 17:19:10 by pablo             #+#    #+#             */
-/*   Updated: 2021/02/11 22:03:52 by pablo            ###   ########.fr       */
+/*   Updated: 2021/02/14 18:10:02 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ int spheres_intersection(t_ray *ray, t_list *list,t_file *c)
             ray->specular = sp.specular;
 		if(sp.bmp.heigth)
 			color = sp_bmp(*ray,sp.bmp,sp);
-		if(sp.bump.heigth)
-			sp_bump(*ray,sp.bump,sp);
         }
         aux = aux->next;
     }

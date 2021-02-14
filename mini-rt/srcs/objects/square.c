@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   square.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/10 15:06:52 by pablo             #+#    #+#             */
-/*   Updated: 2021/02/11 15:28:42 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/02/14 18:39:54 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,16 @@ int get_sq_inter(t_ray *ray, t_square sq)
 	float len;
 	t_triangle tr;
 	t_cord ab;
-	int cond;
+	t_cord norm;
 
-	cond = 0;
-	den = prod_esc(ray->direction, sq.norm_v);
+	norm = norm_vec(prod_vec((rest_vec(sq.points.p2, sq.points.p1)),
+							 (rest_vec(sq.points.p3, sq.points.p2))));
+	if (prod_esc(norm, ray->direction) <= 0)
+		norm = esc_dot_vec(-1, norm);
+	den = prod_esc(ray->direction, norm);
 	if (fabs(den) > 0)
 	{
-		len = prod_esc(rest_vec(sq.cord, ray->origin), sq.norm_v) / den;
+		len = prod_esc(rest_vec(sq.cord, ray->origin), norm) / den;
 		if (len >= 0 && len < ray->len)
 		{
 			tr = new_triangle(sq.points.p0, sq.points.p1, sq.points.p2);
@@ -93,21 +96,43 @@ int select_sq(t_file *c)
 }
 void rot_sq(t_square *sq, int key)
 {
-	int angle;
-
-	angle = ROT_ANGLE;
-	if (key == 0)
-		sq->norm_v = rot_vec_x(sq->norm_v, angle);
-	if (key == 2)
-		sq->norm_v = rot_vec_x(sq->norm_v, -angle);
-	if (key == 13)
-		sq->norm_v = rot_vec_y(sq->norm_v, angle);
-	if (key == 1)
-		sq->norm_v = rot_vec_y(sq->norm_v, -angle);
-	if (key == 6)
-		sq->norm_v = rot_vec_z(sq->norm_v, angle);
 	if (key == 7)
-		sq->norm_v = rot_vec_z(sq->norm_v, -angle);
-	sq->norm_v = norm_vec(sq->norm_v);
-	ft_printf("Square: rotated\n");
+	{
+		sq->rot_mat.v1 = norm_vec(rot_vec_z(sq->rot_mat.v1, ROT_ANGLE));
+		sq->rot_mat.v3 = norm_vec(rot_vec_z(sq->rot_mat.v3, ROT_ANGLE));
+	}
+	if (key == 6)
+	{
+		sq->rot_mat.v1 = norm_vec(rot_vec_z(sq->rot_mat.v1, -ROT_ANGLE));
+		sq->rot_mat.v3 = norm_vec(rot_vec_z(sq->rot_mat.v3, -ROT_ANGLE));
+	}
+	if (key == 13)
+	{
+		sq->rot_mat.v2 = norm_vec(rot_vec_x(sq->rot_mat.v2, ROT_ANGLE));
+		sq->rot_mat.v3 = norm_vec(rot_vec_x(sq->rot_mat.v3, ROT_ANGLE));
+	}
+	if (key == 1)
+	{
+		sq->rot_mat.v2 = norm_vec(rot_vec_x(sq->rot_mat.v2, -ROT_ANGLE));
+		sq->rot_mat.v3 = norm_vec(rot_vec_x(sq->rot_mat.v3, -ROT_ANGLE));
+	}
+	rot_sq2(sq, key);
+}
+void rot_sq2(t_square *sq, int key)
+{
+
+	if (key == 0)
+	{
+		sq->rot_mat.v1 = norm_vec(rot_vec_y(sq->rot_mat.v1, ROT_ANGLE));
+		sq->rot_mat.v2 = norm_vec(rot_vec_y(sq->rot_mat.v2, ROT_ANGLE));
+	}
+	if (key == 2)
+	{
+		sq->rot_mat.v1 = norm_vec(rot_vec_y(sq->rot_mat.v1, -ROT_ANGLE));
+		sq->rot_mat.v2 = norm_vec(rot_vec_y(sq->rot_mat.v2, -ROT_ANGLE));
+	}
+	sq->points.p0 = sum_vec(vector_dot_matrix(vector(sq->side / 2 * -1, sq->side / 2, -1), sq->rot_mat), sq->cord);
+	sq->points.p1 = sum_vec(vector_dot_matrix(vector(sq->side / 2, sq->side / 2, -1), sq->rot_mat), sq->cord);
+	sq->points.p2 = sum_vec(vector_dot_matrix(vector(sq->side / 2 * -1, sq->side / 2 * -1, -1), sq->rot_mat), sq->cord);
+	sq->points.p3 = sum_vec(vector_dot_matrix(vector(sq->side / 2, sq->side / 2 * -1, -1), sq->rot_mat), sq->cord);
 }

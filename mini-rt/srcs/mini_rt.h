@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 19:15:09 by pablo             #+#    #+#             */
-/*   Updated: 2021/02/11 23:17:02 by pablo            ###   ########.fr       */
+/*   Updated: 2021/02/14 18:24:08 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 #define PYRAMID 8
 #define BIAS 1
 #define ROT_ANGLE 50
+#define	NREFLEXIONS 10
 #if !defined BONUS
 #define BONUS 1
 #endif
@@ -39,7 +40,7 @@
 #define THREADS 1
 #else
 #define ANTIALIASING 1
-#define THREADS 10
+#define THREADS 20
 #endif
 
 typedef struct s_cord
@@ -117,6 +118,7 @@ typedef struct s_square
 	t_sqpoints points;
 	float refraction;
 	int specular;
+	t_matrix rot_mat;
 
 } t_square;
 typedef struct s_cylinder
@@ -386,7 +388,7 @@ void move_square(t_square *sq, int axis);
 
 float max_float(float a, float b);
 
-t_ray refracted_ray(t_ray *ray);
+t_ray reflected_ray(t_ray *ray);
 
 float min_float(float a, float b);
 
@@ -428,7 +430,7 @@ int sp_bmp(t_ray ray, t_bmp bmp, t_sphere sp);
 
 t_canvas save_canvas(t_camera *cam, t_file c);
 
-void rot_cam(t_camera *camera, int key, t_file *c);
+void rot_cam(t_camera *camera, int key);
 
 t_cord rot_vec_z(t_cord vec, int a);
 
@@ -462,5 +464,8 @@ void init_int_arr(int  *color,int n);
 void check_leaks();
 
 int create_shade_color2(t_rgb color, t_shades sh);
+
+void rot_sq2(t_square *sq, int key);
+
 
 #endif

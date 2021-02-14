@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 21:06:31 by pablo             #+#    #+#             */
-/*   Updated: 2021/02/11 22:49:52 by pablo            ###   ########.fr       */
+/*   Updated: 2021/02/14 18:40:25 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ void size_objects(t_file *c, int key)
 void rot_objects(t_file *c, int key)
 {
 	if (c->obj_selected == CAMERA && c->camera)
-		rot_cam((t_camera *)c->camera->content, key, c);
+		rot_cam((t_camera *)c->camera->content, key);
 	else if (c->obj_selected == CYLINDER && c->curr_cy)
 		rot_cy((t_cylinder *)c->curr_cy->content, key);
 	else if (c->obj_selected == PLANE && c->curr_pl)

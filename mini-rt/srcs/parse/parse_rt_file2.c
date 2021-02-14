@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 16:08:44 by ptorres           #+#    #+#             */
-/*   Updated: 2021/02/11 22:09:52 by pablo            ###   ########.fr       */
+/*   Updated: 2021/02/14 13:44:29 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int save_new_sphere(char **splited, t_file *configFile)
 	int err;
 
 	err = 0;
-	if (!(ft_bistrlen(splited) == 6 || ft_bistrlen(splited) == 7 || ft_bistrlen(splited) == 8))
+	if (!(ft_bistrlen(splited) == 6 || ft_bistrlen(splited) == 7))
 		return (parse_error("Sphere Error: Bad number of arguments \n"));
 	if (!ft_isfloat(splited[2]))
 		return (parse_error("Sphere Error: Bad value for Diameter \n"));
@@ -35,18 +35,8 @@ int save_new_sphere(char **splited, t_file *configFile)
 		sphere->bmp = read_bmp(splited[6],configFile);
 	else 
 		sphere->bmp.heigth = 0;
-	if(ft_bistrlen(splited) >= 7)
-		sphere->bmp = read_bmp(splited[6],configFile);
-	else 
-		sphere->bmp.heigth = 0;
-	if(ft_bistrlen(splited) == 8)
-		sphere->bump = read_bmp(splited[7],configFile);
-	else 
-		sphere->bump.heigth = 0;
 	ft_lstadd_back(&configFile->sphere, ft_lstnew(sphere));
-	if (err)
-		return (1);
-	return (0);
+	return ((err)?1:0);
 }
 
 int save_new_plane(char **splited, t_file *configFile)
@@ -84,7 +74,7 @@ int save_new_square(char **splited, t_file *configFile)
 		return (parse_error("Square Ligth Error: Bad value for side size \n"));
 	if (!(square = malloc(1 * sizeof(t_square))))
 		return (parse_error("Square Error: Malloc error on t_square\n"));
-	err += save_cord(&square->cord, splited[1], "PlSquareane");
+	err += save_cord(&square->cord, splited[1], "Square");
 	err += save_cord(&square->norm_v, splited[2], "Square");
 	square->side = ft_atof(splited[3]);
 	square->refraction = ft_atof(splited[5]);

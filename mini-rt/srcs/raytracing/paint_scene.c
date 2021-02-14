@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/04 20:10:37 by pablo             #+#    #+#             */
-/*   Updated: 2021/02/11 22:44:17 by pablo            ###   ########.fr       */
+/*   Updated: 2021/02/14 18:07:43 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,6 @@ void	init_int_arr(int *color, int n)
 void	get_color(t_rgb h, t_threads *param, int *color)
 {
 	t_ray ray;
-	float rand1;
-	float rand2;
 
 	if (h.b == 1)
 		ray = generate_ray(h.g, h.r, *param->c, 0.2, 0.2);
@@ -83,14 +81,13 @@ void	get_color(t_rgb h, t_threads *param, int *color)
 void	paint_scene(void *a)
 {
 	t_rgb h;
-	t_ray ray;
 	t_threads *param;
 	int color[ANTIALIASING];
 
 	param = (t_threads *)a;
 	init_int_arr(color, ANTIALIASING);
 	h.r = (param->thread * (param->c->win_heigth / THREADS));
-	while (h.r < (param->thread + 1) * (param->c->win_heigth / THREADS))
+	while (h.r < (int)((param->thread + 1) * (param->c->win_heigth / THREADS)))
 	{
 		h.g = 0;
 		while (h.g < param->c->win_width)

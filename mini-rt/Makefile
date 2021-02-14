@@ -47,9 +47,10 @@ OBJS = $(SRCS:.c=.o)
 OBJS_BONUS = $(SRCS:.c=.o)
 CC = gcc
 
-CFLAGS = -D BONUS=0 #-fsanitize=address  -g #-Wall -Wextra -Werror 
+#-fsanitize=address 
+CFLAGS = -D BONUS=0   -g   -Wall -Wextra -Werror 
 
-CFLAGS_BONUS = -D BONUS=1 #-fsanitize=address -g  #-Wall -Wextra -Werror 
+CFLAGS_BONUS = -D BONUS=1 -g   -Wall -Wextra -Werror 
 
 LFAGS = -L libft -lft   libmlx.dylib -framework Metal -framework AppKit
 

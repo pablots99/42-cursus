@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 14:39:35 by pablo             #+#    #+#             */
-/*   Updated: 2021/02/11 22:48:07 by pablo            ###   ########.fr       */
+/*   Updated: 2021/02/14 15:19:23 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,19 +119,23 @@ int read_rt_file(char *file, t_file *configFile)
 void save_sq_points(t_square *sq)
 {
 	float side;
-	t_matrix rot_mat;
 
 	side = sq->side / 2;
-	rot_mat.v3 = sq->norm_v;
-	rot_mat.v1 = prod_vec(vector(0, 1, 0), sq->norm_v);
-	rot_mat.v2 = prod_vec(sq->norm_v, rot_mat.v1);
 	if (fabs(sq->norm_v.y) == 1)
 	{
-		rot_mat.v1 = esc_dot_vec(sq->norm_v.y , vector(1, 0, 0));
-		rot_mat.v2 = esc_dot_vec(sq->norm_v.y * -1, vector(0, 0, 1));
+		
+		sq->rot_mat.v3 = esc_dot_vec(1, sq->norm_v);
+		sq->rot_mat.v1 = esc_dot_vec(sq->norm_v.y,vector(1,0,0));
+		sq->rot_mat.v2 =  esc_dot_vec(sq->norm_v.y*-1,vector(0,0,1));
 	}
-	sq->points.p0 = sum_vec(vector_dot_matrix(vector(side * -1, side, 0), rot_mat), sq->cord);
-	sq->points.p1 = sum_vec(vector_dot_matrix(vector(side, side, 0),rot_mat), sq->cord);
-	sq->points.p2 = sum_vec(vector_dot_matrix(vector(side * -1, side * -1, 0), rot_mat), sq->cord);
-	sq->points.p3 = sum_vec(vector_dot_matrix(vector(side, side * -1, 0), rot_mat), sq->cord);
+	else
+	{
+		sq->rot_mat.v3 = esc_dot_vec(1, sq->norm_v);
+		sq->rot_mat.v1 = prod_vec(vector(0,1,0), sq->norm_v);
+		sq->rot_mat.v2 = prod_vec(sq->norm_v, sq->rot_mat.v1);
+	}
+	sq->points.p0 = sum_vec(vector_dot_matrix(vector(side * -1, side, -1), sq->rot_mat),sq->cord);
+	sq->points.p1 = sum_vec(vector_dot_matrix(vector(side, side, -1), sq->rot_mat), sq->cord);
+	sq->points.p2 = sum_vec(vector_dot_matrix(vector(side * -1, side * -1, -1), sq->rot_mat), sq->cord);
+	sq->points.p3 = sum_vec(vector_dot_matrix(vector(side, side * -1, -1), sq->rot_mat), sq->cord);
 }

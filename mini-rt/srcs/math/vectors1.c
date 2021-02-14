@@ -6,14 +6,14 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/04 11:05:23 by pablo             #+#    #+#             */
-/*   Updated: 2021/02/11 21:55:46 by pablo            ###   ########.fr       */
+/*   Updated: 2021/02/14 17:54:46 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../mini_rt.h"
 
 
-t_ray refracted_ray(t_ray *ray)
+t_ray reflected_ray(t_ray *ray)
 {
 	t_ray res;
 	t_cord dir;

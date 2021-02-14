@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   camera.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 17:10:38 by pablo             #+#    #+#             */
-/*   Updated: 2021/02/01 14:11:25 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/02/14 18:06:07 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,42 +57,31 @@ int select_camera(t_file *c)
 	ft_printf("Camera: %d\n", c->cam_count);
 	return (1);
 }
-void rot_cam(t_camera *camera, int key, t_file *c)
+void rot_cam(t_camera *camera, int key)
 {
-	int angle;
-
-	angle = ROT_ANGLE;
 	if (key == 7 || key == 6)
-	{
 		ft_printf("Camera: can´t ratate this axis\n");
-		return ;
-	}
 	if (key == 13)
 	{
-		camera->canvas.matrix.v2 = rot_vec_x(camera->canvas.matrix.v2, angle);
-		camera->canvas.matrix.v3 = rot_vec_x(camera->canvas.matrix.v3, angle);
-
+		camera->canvas.matrix.v2 = rot_vec_x(camera->canvas.matrix.v2, ROT_ANGLE);
+		camera->canvas.matrix.v3 = rot_vec_x(camera->canvas.matrix.v3, ROT_ANGLE);
 	}
 	if (key == 1)
 	{
-		camera->canvas.matrix.v2 = rot_vec_x(camera->canvas.matrix.v2 ,-angle);
-		camera->canvas.matrix.v3 = rot_vec_x(camera->canvas.matrix.v3, -angle);
-
-
+		camera->canvas.matrix.v2 = rot_vec_x(camera->canvas.matrix.v2 ,-ROT_ANGLE);
+		camera->canvas.matrix.v3 = rot_vec_x(camera->canvas.matrix.v3, -ROT_ANGLE);
 	}
 	if (key == 0)
 	{
-		camera->canvas.matrix.v1 = rot_vec_y(camera->canvas.matrix.v1, angle);
-		camera->canvas.matrix.v3 = rot_vec_y(camera->canvas.matrix.v3, angle);
-
+		camera->canvas.matrix.v1 = rot_vec_y(camera->canvas.matrix.v1, ROT_ANGLE);
+		camera->canvas.matrix.v3 = rot_vec_y(camera->canvas.matrix.v3, ROT_ANGLE);
 	}
 	if (key == 2)
 	{
-		camera->canvas.matrix.v1 = rot_vec_y(camera->canvas.matrix.v1, -angle);
-	      camera->canvas.matrix.v3 = rot_vec_y(camera->canvas.matrix.v3, -angle);
+		camera->canvas.matrix.v1 = rot_vec_y(camera->canvas.matrix.v1, -ROT_ANGLE);
+	    camera->canvas.matrix.v3 = rot_vec_y(camera->canvas.matrix.v3, -ROT_ANGLE);
 	}
 	camera->canvas.matrix.v2 = norm_vec(camera->canvas.matrix.v2);
-		camera->canvas.matrix.v3 = norm_vec(camera->canvas.matrix.v3);
+	camera->canvas.matrix.v3 = norm_vec(camera->canvas.matrix.v3);
 	camera->canvas.matrix.v1 = norm_vec(camera->canvas.matrix.v1);
-	ft_printf("Camera: rotated\n");
 }

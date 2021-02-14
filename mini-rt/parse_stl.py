@@ -6,7 +6,7 @@
 #    By: pablo <pablo@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/07 20:39:23 by pablo             #+#    #+#              #
-#    Updated: 2021/02/10 23:10:40 by pablo            ###   ########.fr        #
+#    Updated: 2021/02/14 17:35:16 by pablo            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -93,9 +93,7 @@ for triangle in stlData.tris:
     f.write(a)
     a = " "+str(triangle.v2.x) + ","+str(triangle.v2.y)+","+str(triangle.v2.z)
     f.write(a)
-    f.write(' 40,20,100 0 1')
-    a = " "+str(triangle.normal.x) + ","+str(triangle.normal.x)+","+str(triangle.normal.z)
-    f.write(a)
+    f.write(' 40,20,100 1 0')
     f.write('\n')
 
     

@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 15:06:16 by pablo             #+#    #+#             */
-/*   Updated: 2021/02/10 22:48:24 by pablo            ###   ########.fr       */
+/*   Updated: 2021/02/14 15:36:44 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int get_tr_inter(t_ray *ray, t_triangle tr)
     float len;
     float den;
     t_cord ab;
-    t_cord normal;
     t_cord p;
 
         tr.norm_v  = norm_vec(prod_vec((rest_vec(tr.cord_2, tr.cord_1)),
