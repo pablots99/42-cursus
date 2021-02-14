@@ -6,13 +6,13 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/10 15:06:52 by pablo             #+#    #+#             */
-/*   Updated: 2021/02/14 18:39:54 by pablo            ###   ########.fr       */
+/*   Updated: 2021/02/14 20:39:03 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../mini_rt.h"
 
-int get_sq_inter(t_ray *ray, t_square sq)
+int get_sq_inter(t_ray *ray, t_square *sq)
 {
 	float den;
 	float len;
@@ -20,22 +20,22 @@ int get_sq_inter(t_ray *ray, t_square sq)
 	t_cord ab;
 	t_cord norm;
 
-	norm = norm_vec(prod_vec((rest_vec(sq.points.p2, sq.points.p1)),
-							 (rest_vec(sq.points.p3, sq.points.p2))));
+	norm = norm_vec(prod_vec((rest_vec(sq->points.p2, sq->points.p1)),
+							 (rest_vec(sq->points.p3, sq->points.p2))));
 	if (prod_esc(norm, ray->direction) <= 0)
 		norm = esc_dot_vec(-1, norm);
 	den = prod_esc(ray->direction, norm);
 	if (fabs(den) > 0)
 	{
-		len = prod_esc(rest_vec(sq.cord, ray->origin), norm) / den;
+		len = prod_esc(rest_vec(sq->cord, ray->origin), norm) / den;
 		if (len >= 0 && len < ray->len)
 		{
-			tr = new_triangle(sq.points.p0, sq.points.p1, sq.points.p2);
+			tr = new_triangle(sq->points.p0, sq->points.p1, sq->points.p2);
 			ab = barycentric_cords(tr, ray_intersection(*ray, len));
 			if ((ab.x <= 1 && ab.x >= 0) && (ab.y <= 1 && ab.y >= 0))
 			{
 				ray->len = len - BIAS;
-				ray->normal = sq.norm_v;
+				ray->normal = sq->norm_v;
 				return (1);
 			}
 		}
@@ -94,6 +94,26 @@ int select_sq(t_file *c)
 	ft_printf("Square: %d selected.\n", c->sq_count);
 	return (1);
 }
+
+void rot_sq2(t_square *sq, int key)
+{
+
+	if (key == 0)
+	{
+		sq->rot_mat.v1 = norm_vec(rot_vec_y(sq->rot_mat.v1, ROT_ANGLE));
+		sq->rot_mat.v2 = norm_vec(rot_vec_y(sq->rot_mat.v2, ROT_ANGLE));
+	}
+	if (key == 2)
+	{
+		sq->rot_mat.v1 = norm_vec(rot_vec_y(sq->rot_mat.v1, -ROT_ANGLE));
+		sq->rot_mat.v2 = norm_vec(rot_vec_y(sq->rot_mat.v2, -ROT_ANGLE));
+	}
+	sq->points.p0 = sum_vec(vector_dot_matrix(vector(sq->side / 2 * -1, sq->side / 2, -1), sq->rot_mat), sq->cord);
+	sq->points.p1 = sum_vec(vector_dot_matrix(vector(sq->side / 2, sq->side / 2, -1), sq->rot_mat), sq->cord);
+	sq->points.p2 = sum_vec(vector_dot_matrix(vector(sq->side / 2 * -1, sq->side / 2 * -1, -1), sq->rot_mat), sq->cord);
+	sq->points.p3 = sum_vec(vector_dot_matrix(vector(sq->side / 2, sq->side / 2 * -1, -1), sq->rot_mat), sq->cord);
+}
+
 void rot_sq(t_square *sq, int key)
 {
 	if (key == 7)
@@ -118,21 +138,4 @@ void rot_sq(t_square *sq, int key)
 	}
 	rot_sq2(sq, key);
 }
-void rot_sq2(t_square *sq, int key)
-{
 
-	if (key == 0)
-	{
-		sq->rot_mat.v1 = norm_vec(rot_vec_y(sq->rot_mat.v1, ROT_ANGLE));
-		sq->rot_mat.v2 = norm_vec(rot_vec_y(sq->rot_mat.v2, ROT_ANGLE));
-	}
-	if (key == 2)
-	{
-		sq->rot_mat.v1 = norm_vec(rot_vec_y(sq->rot_mat.v1, -ROT_ANGLE));
-		sq->rot_mat.v2 = norm_vec(rot_vec_y(sq->rot_mat.v2, -ROT_ANGLE));
-	}
-	sq->points.p0 = sum_vec(vector_dot_matrix(vector(sq->side / 2 * -1, sq->side / 2, -1), sq->rot_mat), sq->cord);
-	sq->points.p1 = sum_vec(vector_dot_matrix(vector(sq->side / 2, sq->side / 2, -1), sq->rot_mat), sq->cord);
-	sq->points.p2 = sum_vec(vector_dot_matrix(vector(sq->side / 2 * -1, sq->side / 2 * -1, -1), sq->rot_mat), sq->cord);
-	sq->points.p3 = sum_vec(vector_dot_matrix(vector(sq->side / 2, sq->side / 2 * -1, -1), sq->rot_mat), sq->cord);
-}

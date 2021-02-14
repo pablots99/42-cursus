@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 19:15:09 by pablo             #+#    #+#             */
-/*   Updated: 2021/02/14 18:24:08 by pablo            ###   ########.fr       */
+/*   Updated: 2021/02/14 20:31:22 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,7 @@ typedef struct s_img
 	int line_length;
 	int endian;
 } t_img;
-//en vd es xmp
+
 typedef struct s_bmp
 {
 	int width;
@@ -202,6 +202,22 @@ typedef struct s_cube
 	int specular;
 } t_cube;
 
+typedef struct s_pyramid
+{
+	t_cord cord;
+	t_cord norm_vec;
+	float width;
+	float heigth;
+	t_rgb rgb;
+	float reflexion;
+	int specular;
+	t_triangle tr1;
+	t_triangle tr2;
+	t_triangle tr3;
+	t_triangle tr4;
+	t_square base;
+} t_pyramid;
+
 typedef struct s_shades
 {
 	float specular;
@@ -210,14 +226,6 @@ typedef struct s_shades
 	t_rgb ligth_color;
 } t_shades;
 
-typedef struct s_pyramid
-{
-	t_cord center;
-	float heigth;
-	float width;
-	t_square base;
-	t_list *faces;
-} t_pyramid;
 typedef struct s_file
 {
 	void *mlx_ptr;
@@ -366,7 +374,7 @@ int select_sp(t_file *c);
 
 int get_tr_inter(t_ray *ray, t_triangle tr);
 
-int get_sq_inter(t_ray *ray, t_square sq);
+int get_sq_inter(t_ray *ray, t_square *sq);
 
 int get_pl_inter(t_ray *ray, t_plane pl);
 
@@ -465,7 +473,20 @@ void check_leaks();
 
 int create_shade_color2(t_rgb color, t_shades sh);
 
-void rot_sq2(t_square *sq, int key);
+void rot_sq(t_square *sq, int key);
+
+void save_py_faces(t_pyramid *pyramid);
+
+int pyramid_intersection(t_ray *ray, t_list *list);
+
+int get_py_inter(t_ray *ray, t_pyramid py);
+
+int select_py(t_file *c);
+
+void move_pyramid(t_pyramid *py, int axis);
+
+void rot_py(t_pyramid *py, int key);
+
 
 
 #endif

@@ -6,6 +6,7 @@ SRCS =  main.c 								\
 		srcs/parse/get_rt_file.c 			\
 		srcs/parse/parse_rt_file1.c 		\
 		srcs/parse/parse_rt_file2.c 		\
+		srcs/parse/parse_rt_file3.c 		\
 		srcs/parse/parse_rt_no_bonus.c		\
 		srcs/parse/parse_rt_file2_no.c		\
 		srcs/utils/utils.c					\
@@ -31,6 +32,9 @@ SRCS =  main.c 								\
 		srcs/objects/square.c				\
 		srcs/objects/ligth.c				\
 		srcs/objects/triangle.c				\
+		srcs/objects/cube.c					\
+		srcs/objects/cube2.c				\
+		srcs/objects/pyramid.c				\
 		srcs/raytracing/shading.c			\
 		srcs/raytracing/paint_scene.c		\
 		srcs/raytracing/intersections.c		\

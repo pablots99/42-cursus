@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 21:06:31 by pablo             #+#    #+#             */
-/*   Updated: 2021/02/14 18:40:25 by pablo            ###   ########.fr       */
+/*   Updated: 2021/02/14 20:27:35 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void select_type_object(t_file *c)
 {
 	c->obj_selected++;
-	if (c->obj_selected > 7)
+	if (c->obj_selected > 8)
 		c->obj_selected = 0;
 	if (c->obj_selected == 0)
 		ft_printf("Selected Object: None.\n");
@@ -33,6 +33,8 @@ void select_type_object(t_file *c)
 		ft_printf("Selected Object: Cylinder.\n");
 	if (c->obj_selected == LIGTH)
 		ft_printf("Selected Object: Ligth.\n");
+	if (c->obj_selected == PYRAMID)
+		ft_printf("Selected Object: Pyramid.\n");
 }
 
 void select_object(t_file *c)
@@ -53,6 +55,8 @@ void select_object(t_file *c)
 		select_pl(c);
 	else if (c->obj_selected == LIGTH && c->ligth)
 		select_l(c);
+	else if (c->obj_selected == PYRAMID && c->pyramid)
+		select_py(c);
 	else
 		ft_printf("     -No object of the type selected\n");
 }
@@ -72,6 +76,8 @@ void move_objects(t_file *c, int key)
 		move_plane((t_plane *)c->curr_pl->content, key);
 	else if (c->obj_selected == LIGTH && c->curr_l)
 		move_ligth((t_ligth *)c->curr_l->content, key);
+	else if (c->obj_selected == PYRAMID && c->curr_py)
+		move_pyramid((t_pyramid *)c->curr_py->content, key);
 	else
 	{
 		ft_printf("     -Can´t move object or No Object selected\n");
@@ -114,6 +120,8 @@ void rot_objects(t_file *c, int key)
 		rot_pl((t_plane *)c->curr_pl->content, key);
 	else if (c->obj_selected == SQUARE && c->curr_sq)
 		rot_sq((t_square *)c->curr_sq->content, key);
+	else if (c->obj_selected == PYRAMID && c->curr_py)
+		rot_py((t_pyramid *)c->curr_py->content, key);
 	else
 	{
 		ft_printf("     -Can´t rotate object or No Object selected\n");

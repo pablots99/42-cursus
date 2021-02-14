@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_file.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 20:13:39 by pablo             #+#    #+#             */
-/*   Updated: 2021/02/02 19:27:19 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/02/14 19:43:42 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,9 @@ int save_new_cylinder_no(char **splited, t_file *configFile);
 int save_new_triangle_no(char **splited, t_file *configFile);
 
 int save_new_cube(char **splited, t_file *configFile);
+
+int save_new_pyramid(char **splited, t_file *configFile);
+
+int get_py_inter(t_ray *ray, t_pyramid py);
 
 

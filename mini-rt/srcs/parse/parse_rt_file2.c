@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 16:08:44 by ptorres           #+#    #+#             */
-/*   Updated: 2021/02/14 13:44:29 by pablo            ###   ########.fr       */
+/*   Updated: 2021/02/14 19:14:17 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ int save_new_triangle(char **splited, t_file *configFile)
 	int err;
 
 	err = 0;
-	if (!(ft_bistrlen(splited) == 7 || ft_bistrlen(splited) == 8))
+	if (!(ft_bistrlen(splited) == 7 ))
 		return (parse_error("Triangle Error: Bad number of arguments \n"));
 	if (!(triangle = malloc(1 * sizeof(t_triangle))))
 		return (parse_error("Triangle Error: Malloc error on t_triangle\n"));
@@ -130,10 +130,6 @@ int save_new_triangle(char **splited, t_file *configFile)
 	err += save_cord(&triangle->cord_1, splited[1], "Triangle");
 	err += save_cord(&triangle->cord_2, splited[2], "Triangle");
 	err += save_cord(&triangle->cord_3, splited[3], "Triangle");
-	err += save_rgb(&triangle->rgb, splited[4], "Triangle");
-	if(ft_bistrlen(splited) == 8)
-		err += save_cord(&triangle->norm_v, splited[7], "Triangle");
-	triangle->norm_v = norm_vec(triangle->norm_v);
 	triangle->refraction = ft_atof(splited[5]);
 	triangle->specular =  ft_atoi(splited[6]);
 	ft_lstadd_back(&configFile->triangle, ft_lstnew(triangle));

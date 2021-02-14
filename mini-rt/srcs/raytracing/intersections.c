@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/15 17:19:10 by pablo             #+#    #+#             */
-/*   Updated: 2021/02/14 18:10:02 by pablo            ###   ########.fr       */
+/*   Updated: 2021/02/14 20:33:52 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int square_intersection(t_ray *ray, t_list *plane)
     {
         len_aux = ray->len;
         sq = *(t_square *)aux->content;
-        if (get_sq_inter(ray, sq) && ray->len < len_aux)
+        if (get_sq_inter(ray, &sq) && ray->len < len_aux)
         {
             color = int_from_rgb(sq.rgb.r,sq.rgb.g,sq.rgb.b);
             ray->object = SQUARE;

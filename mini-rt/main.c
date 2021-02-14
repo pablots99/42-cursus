@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 19:14:12 by pablo             #+#    #+#             */
-/*   Updated: 2021/02/04 23:50:19 by pablo            ###   ########.fr       */
+/*   Updated: 2021/02/14 18:57:03 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int main(int argc, char **argv)
 
 	ft_printf("BONUS:%d\nTHREADS:%d\nANTIALIASING:%d\n",BONUS,THREADS,ANTIALIASING);
 	save = 0;
-	if (argc == 3 && !ft_strncmp(argv[2], "--save", 6))
+	if (argc == 3 && !ft_strncmp(argv[2], "--save", 6) && ft_strlen(argv[2]) == 6)
 		save = 1;
 	if (argc == 2 || (argc == 3 & save == 1))
 	{
@@ -47,7 +47,7 @@ int main(int argc, char **argv)
 	}
 	else
 	{
-		ft_printf("Error: Parameters");
+		ft_printf("Error:Bad number of Parameters");
 		return 0;
 	}
 	free_config(&config);

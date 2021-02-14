@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/03 12:16:02 by pablo             #+#    #+#             */
-/*   Updated: 2021/02/11 22:46:59 by pablo            ###   ########.fr       */
+/*   Updated: 2021/02/14 19:48:28 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ int get_intersections(t_ray *ray, t_file *c)
 		color = color_aux;
 	if (c->square && (color_aux = square_intersection(ray, c->square)))
 		color = color_aux;
+	if (c->pyramid && (color_aux = pyramid_intersection(ray, c->pyramid)))
+		color = color_aux;
 	return (color);
 }
 int get_shadow_intersections(t_ray ray, t_file c)
@@ -65,6 +67,8 @@ int get_shadow_intersections(t_ray ray, t_file c)
 	if (c.triangle && (triangle_intersection(&ray, c.triangle)))
 		return (1);
 	if (c.square && (square_intersection(&ray, c.square)))
+		return (1);
+	if (c.pyramid && (square_intersection(&ray, c.pyramid)))
 		return (1);
 	if (ray.object == 0)
 		return (0);
