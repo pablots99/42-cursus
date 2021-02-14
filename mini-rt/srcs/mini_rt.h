@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 19:15:09 by pablo             #+#    #+#             */
-/*   Updated: 2021/02/14 20:31:22 by pablo            ###   ########.fr       */
+/*   Updated: 2021/02/14 23:19:24 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@
 #define CYLINDER 6
 #define LIGTH 7
 #define PYRAMID 8
+#define CUBE 9
+
+
 #define BIAS 1
 #define ROT_ANGLE 50
 #define	NREFLEXIONS 10
@@ -113,8 +116,8 @@ typedef struct s_square
 	t_cord cord;
 	t_cord norm_v;
 	float side;
-	float angle;
 	t_rgb rgb;
+	float angle;
 	t_sqpoints points;
 	float refraction;
 	int specular;
@@ -181,23 +184,18 @@ typedef struct s_sphere
 	t_bmp bump;
 } t_sphere;
 
-typedef struct s_faces
-{
-	t_square face1;
-	t_square face2;
-	t_square face3;
-	t_square face4;
-	t_square face5;
-	t_square face6;
-} t_faces;
-
 typedef struct s_cube
 {
 	t_cord norm_vec;
 	t_cord cord;
 	float width;
 	t_rgb rgb;
-	t_faces faces;
+	t_square face1;
+	t_square face2;
+	t_square face3;
+	t_square face4;
+	t_square face5;
+	t_square face6;
 	float reflexion;
 	int specular;
 } t_cube;
@@ -239,6 +237,7 @@ typedef struct s_file
 	int py_count;
 	int sq_count;
 	int tr_count;
+	int cu_count;
 	int l_count;
 	int pl_count;
 	int cy_count;
@@ -253,6 +252,8 @@ typedef struct s_file
 	t_list *sphere;
 	t_list *curr_py;
 	t_list *pyramid;
+	t_list *curr_cu;
+	t_list *cube;
 	t_list *curr_pl;
 	t_list *plane;
 	t_list *curr_sq;
@@ -487,6 +488,9 @@ void move_pyramid(t_pyramid *py, int axis);
 
 void rot_py(t_pyramid *py, int key);
 
+int cube_intersection(t_ray *ray, t_list *list);
+
+int get_cu_inter(t_ray *ray, t_cube cu);
 
 
 #endif

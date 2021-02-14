@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/14 19:13:03 by pablo             #+#    #+#             */
-/*   Updated: 2021/02/14 21:56:49 by pablo            ###   ########.fr       */
+/*   Updated: 2021/02/14 22:58:01 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,16 +66,16 @@ int save_new_pyramid(char **splited, t_file *configFile)
     if (ft_bistrlen(splited) != 8)
         return (parse_error("Pyramid Error: Bad number of arguments \n"));
     if (!ft_isfloat(splited[3]))
-        return (parse_error("Cylinder  Error: Bad value for width \n"));
+        return (parse_error("Pyramid  Error: Bad value for width \n"));
     if (!ft_isfloat(splited[4]))
-        return (parse_error("Cylinder  Error: Bad value for height \n"));
+        return (parse_error("Pyramid  Error: Bad value for height \n"));
     if (!(pyramid = malloc(1 * sizeof(t_pyramid))))
-        return (parse_error("Cylinder Error: Malloc error on t_cylinder\n"));
+        return (parse_error("Pyramid Error: Malloc error on t_yramid\n"));
     err += save_cord(&pyramid->cord, splited[1], "Pyramid");
     err += save_cord(&pyramid->norm_vec, splited[2], "Pyramid");
     pyramid->width = ft_atof(splited[3]);
     pyramid->heigth = ft_atof(splited[4]);
-    err += save_rgb(&pyramid->rgb, splited[5], "pyramid");
+    err += save_rgb(&pyramid->rgb, splited[5], "Pyramid");
     pyramid->reflexion = ft_atof(splited[6]);
     pyramid->specular = ft_atoi(splited[7]);
     pyramid->norm_vec = norm_vec(pyramid->norm_vec);

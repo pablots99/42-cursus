@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 12:51:39 by pablo             #+#    #+#             */
-/*   Updated: 2021/02/14 18:24:20 by pablo            ###   ########.fr       */
+/*   Updated: 2021/02/14 22:22:32 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,13 @@ void reflection(t_file *c, t_ray *ray, t_shades *shades, int *color)
 	t_ray reflected;
 	int color_aux;
 
-	color_aux = *color;
-	reflected = reflected_ray(ray);
-	if (BONUS == 1 && ray->reflexion > 0 && c->n_reflexions <  NREFLEXIONS)
+	if (BONUS == 1 && ray->reflexion > 0)
 	{
+		color_aux = *color;
+		reflected = reflected_ray(ray);
 		c->n_reflexions++;
 		*color = shading(&reflected, get_intersections(&reflected, c), c);
-		*color = sum_int_colors(*color, color_aux);
+		*color = sum_int_colors(*color, color_aux); //color_aux * reflexion
 	}
 	shades->difuse = 0;
 	shades->specular = 0;
