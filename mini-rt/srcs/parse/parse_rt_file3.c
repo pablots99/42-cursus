@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/14 19:13:03 by pablo             #+#    #+#             */
-/*   Updated: 2021/02/15 20:26:16 by pablo            ###   ########.fr       */
+/*   Updated: 2021/02/15 23:20:42 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,5 +85,18 @@ int save_new_pyramid(char **splited, t_file *configFile)
 
     save_py_faces(pyramid);
     ft_lstadd_back(&configFile->pyramid, ft_lstnew(pyramid));
+    return ((err) ? 1 : 0);
+}
+
+int save_antialising(char **splited, t_file *configFile)
+{
+     int err;
+
+    err = 0;
+    if (ft_bistrlen(splited) != 2)
+        return (parse_error("Antialiasing Error: Bad number of arguments \n"));
+    if(!ft_str_isnum(splited[1]))
+         return (parse_error("Antialiasing Error: Bad value\n"));
+    configFile->antialiasing = ft_atoi(splited[1]);
     return ((err) ? 1 : 0);
 }

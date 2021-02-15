@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 16:08:44 by ptorres           #+#    #+#             */
-/*   Updated: 2021/02/14 23:18:49 by pablo            ###   ########.fr       */
+/*   Updated: 2021/02/15 23:56:08 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ int save_new_triangle(char **splited, t_file *configFile)
 	err += save_cord(&triangle->cord_1, splited[1], "Triangle");
 	err += save_cord(&triangle->cord_2, splited[2], "Triangle");
 	err += save_cord(&triangle->cord_3, splited[3], "Triangle");
+	err += save_rgb(&triangle->rgb, splited[4], "Triangle");
 	triangle->refraction = ft_atof(splited[5]);
 	triangle->specular =  ft_atoi(splited[6]);
 	ft_lstadd_back(&configFile->triangle, ft_lstnew(triangle));

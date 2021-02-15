@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 14:39:35 by pablo             #+#    #+#             */
-/*   Updated: 2021/02/15 20:50:56 by pablo            ###   ########.fr       */
+/*   Updated: 2021/02/15 23:22:42 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ int save_rt_file_aux1(char **splited, t_file *configFile)
 
 int save_rt_file(char **splited, t_file *configFile)
 {
-
 	int err;
 
 	err = 0;
@@ -58,13 +57,12 @@ int save_rt_file(char **splited, t_file *configFile)
 			err = save_new_camera(splited, configFile);
 		else if (ft_strlen(*splited) == 2 && ft_strncmp(*splited, "sp", 2) == 0)
 			err = save_new_sphere(splited, configFile);
+		else if (ft_strlen(*splited) == 12 && ft_strncmp(*splited, "ANTIALIASING", 12) == 0)
+			err = save_antialising(splited,configFile);
 		else
 			return save_rt_file_aux1(splited, configFile);
 	}
-	if (!err)
-		return (0);
-	else
-		return (1);
+	return ((!err) ? 0 : (1));
 }
 
 int read_file(int fd, t_file *configFile)
@@ -118,7 +116,8 @@ int read_rt_file(char *file, t_file *configFile)
 		ft_printf("Error:\n	Parse Error: No cam or No Rmbient Rigth or no Resolution\n");
 		return (0);
 	}
-
+	if(!configFile->antialiasing)
+		configFile->antialiasing=1;
 	return (1);
 }
 
@@ -129,18 +128,18 @@ void save_sq_points(t_square *sq)
 	side = sq->side / 2;
 	if (fabs(sq->norm_v.y) == 1)
 	{
-		
+
 		sq->rot_mat.v3 = esc_dot_vec(1, sq->norm_v);
-		sq->rot_mat.v1 = esc_dot_vec(sq->norm_v.y,vector(1,0,0));
-		sq->rot_mat.v2 =  esc_dot_vec(sq->norm_v.y*-1,vector(0,0,1));
+		sq->rot_mat.v1 = esc_dot_vec(sq->norm_v.y, vector(1, 0, 0));
+		sq->rot_mat.v2 = esc_dot_vec(sq->norm_v.y * -1, vector(0, 0, 1));
 	}
 	else
 	{
 		sq->rot_mat.v3 = esc_dot_vec(1, sq->norm_v);
-		sq->rot_mat.v1 = prod_vec(vector(0,1,0), sq->norm_v);
+		sq->rot_mat.v1 = prod_vec(vector(0, 1, 0), sq->norm_v);
 		sq->rot_mat.v2 = prod_vec(sq->norm_v, sq->rot_mat.v1);
 	}
-	sq->points.p0 = sum_vec(vector_dot_matrix(vector(side * -1, side, -1), sq->rot_mat),sq->cord);
+	sq->points.p0 = sum_vec(vector_dot_matrix(vector(side * -1, side, -1), sq->rot_mat), sq->cord);
 	sq->points.p1 = sum_vec(vector_dot_matrix(vector(side, side, -1), sq->rot_mat), sq->cord);
 	sq->points.p2 = sum_vec(vector_dot_matrix(vector(side * -1, side * -1, -1), sq->rot_mat), sq->cord);
 	sq->points.p3 = sum_vec(vector_dot_matrix(vector(side, side * -1, -1), sq->rot_mat), sq->cord);

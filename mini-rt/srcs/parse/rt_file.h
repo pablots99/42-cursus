@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 20:13:39 by pablo             #+#    #+#             */
-/*   Updated: 2021/02/14 19:43:42 by pablo            ###   ########.fr       */
+/*   Updated: 2021/02/15 23:14:33 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,7 @@ int save_new_cube(char **splited, t_file *configFile);
 int save_new_pyramid(char **splited, t_file *configFile);
 
 int get_py_inter(t_ray *ray, t_pyramid py);
+
+int save_antialising(char **splited, t_file *configFile);
 
 

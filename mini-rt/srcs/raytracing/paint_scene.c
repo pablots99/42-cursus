@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/04 20:10:37 by pablo             #+#    #+#             */
-/*   Updated: 2021/02/15 20:49:45 by pablo            ###   ########.fr       */
+/*   Updated: 2021/02/15 23:20:26 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,10 @@ void	paint_scene(void *a)
 {
 	t_rgb h;
 	t_threads *param;
-	int color[ANTIALIASING];
+	int color[((t_threads *)a)->c->antialiasing];
 
 	param = (t_threads *)a;
-	init_int_arr(color, ANTIALIASING);
+	init_int_arr(color, param->c->antialiasing);
 	h.r = (param->thread * (param->c->win_heigth / THREADS));
 	while (h.r < (int)((param->thread + 1) * (param->c->win_heigth / THREADS)))
 	{
@@ -93,12 +93,12 @@ void	paint_scene(void *a)
 		while (h.g < param->c->win_width)
 		{
 			h.b = 0;
-			while (h.b < ANTIALIASING)
+			while (h.b < param->c->antialiasing)
 			{
 				get_color(h, param, &color[h.b]);
 				h.b++;
 			}
-			color[0] = average_color(color, ANTIALIASING,param->c);
+			color[0] = average_color(color, param->c->antialiasing,param->c);
 			my_mlx_pixel_put(&param->c->img, h.g, h.r, color[0]);
 			h.g++;
 		}

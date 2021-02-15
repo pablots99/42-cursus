@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 19:15:09 by pablo             #+#    #+#             */
-/*   Updated: 2021/02/15 20:48:43 by pablo            ###   ########.fr       */
+/*   Updated: 2021/02/15 23:46:51 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,9 @@
 #define BONUS 1
 #endif
 #if !BONUS
-#define ANTIALIASING 1
 #define THREADS 1
 #else
-#define ANTIALIASING 1
-#define THREADS 20
+#define THREADS 8
 #endif
 
 typedef struct s_cord
@@ -239,6 +237,7 @@ typedef struct s_file
 	int tr_count;
 	int cu_count;
 	int l_count;
+	int antialiasing;
 	int pl_count;
 	int cy_count;
 	int obj_selected;
