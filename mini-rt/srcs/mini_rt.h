@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 19:15:09 by pablo             #+#    #+#             */
-/*   Updated: 2021/02/15 19:21:59 by pablo            ###   ########.fr       */
+/*   Updated: 2021/02/15 20:48:43 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,6 +242,7 @@ typedef struct s_file
 	int pl_count;
 	int cy_count;
 	int obj_selected;
+	int sepia;
 	t_img img;
 	t_ambient_ligth ambient_ligth;
 	t_list *first_cam;
@@ -464,7 +465,7 @@ void sp_bump(t_ray ray, t_bmp bmp, t_sphere sp);
 
 void paint_scene(void *a);
 
-int average_color(int *color, int base);
+int average_color(int *color, int base, t_file *con);
 
 float rand_unit_float();
 

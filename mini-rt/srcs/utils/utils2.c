@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/28 16:34:52 by pablo             #+#    #+#             */
-/*   Updated: 2021/02/07 21:06:31 by pablo            ###   ########.fr       */
+/*   Updated: 2021/02/15 20:30:34 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,12 @@ int save_cord(t_cord *cord, char *vec, char *msg)
     cord->x = ft_atof(split[0]);
     cord->y = ft_atof(split[1]);
     cord->z = ft_atof(split[2]);
-    // if (!ft_isfloat(split[0]) || !ft_isfloat(split[1]) || !ft_isfloat(split[2]))
-    // {
-    //     ft_printf("%s", msg);
-    //     ft_bidimensional_free(split);
-    //     return (parse_error("Error: invalid value for x,y,z \n"));
-    // }
+    if (!ft_isfloat(split[0]) || !ft_isfloat(split[1]) || !ft_isfloat(split[2]))
+    {
+        ft_printf("%s", msg);
+        ft_bidimensional_free(split);
+        return (parse_error("Error: invalid value for x,y,z \n"));
+    }
     ft_bidimensional_free(split);
     return (0);
 }
@@ -46,7 +46,7 @@ int save_rgb(t_rgb *rgb, char *vec, char *msg)
     {
         ft_bidimensional_free(split);
         ft_printf("%s", msg);
-        return (parse_error("Ligth Error: Bad number of arguments for R,G,B  \n"));
+        return (parse_error("Error: Bad number of arguments for R,G,B  \n"));
     }
     rgb->r = ft_atoi(split[0]);
     rgb->g = ft_atoi(split[1]);
@@ -56,7 +56,7 @@ int save_rgb(t_rgb *rgb, char *vec, char *msg)
     {
         ft_printf("%s", msg);
         ft_bidimensional_free(split);
-        return (parse_error("Ligth Error: invalid value for R,G,B \n"));
+        return (parse_error("Error: invalid value for R,G,B \n"));
     }
     ft_bidimensional_free(split);
     return (0);

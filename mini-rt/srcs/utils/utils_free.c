@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 16:09:22 by ptorres           #+#    #+#             */
-/*   Updated: 2021/02/14 22:54:40 by pablo            ###   ########.fr       */
+/*   Updated: 2021/02/15 20:31:42 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ void free_config(t_file *c)
         ft_lstclear(&c->triangle, &free);
     if (c->pyramid)
         ft_lstclear(&c->pyramid, &free);
+    if (c->cube)
+        ft_lstclear(&c->cube, &free);
 }
 
 void ft_bidimensional_free(char **arr)

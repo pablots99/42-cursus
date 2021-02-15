@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 20:02:19 by pablo             #+#    #+#             */
-/*   Updated: 2021/02/13 13:45:39 by pablo            ###   ########.fr       */
+/*   Updated: 2021/02/15 20:57:38 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,23 @@ int sum_int_colors(int color1, int color2)
 	res.b = min_int(255, c1.b + c2.b);
 	return (int_from_rgb(res.r, res.g, res.b));
 }
-int average_color(int *color, int base)
+
+int sepia_filter(t_rgb color)
+{
+	t_rgb c;
+
+	c.r = min_int(255, (float)((float)color.r * 0.393) + (float)((float)color.g * 0.769) + (float)((float)color.b * 0.189));
+	c.g = min_int(255, (float)((float)color.r * 0.349) + (float)((float)color.g * 0.686) + (float)((float)color.b * 0.168));
+	c.b = min_int(255, (float)((float)color.r * 0.272) + (float)((float)color.g * 0.534) + (float)((float)color.b * 0.131));
+	return (c.r << 16 | c.g << 8 | c.b);
+}
+
+int average_color(int *color, int base, t_file *con)
 {
 	int i;
 	t_rgb c;
 	t_rgb aux_c;
+	int color_a;
 
 	i = 0;
 	c = rgb_from_int(0);
@@ -92,5 +104,8 @@ int average_color(int *color, int base)
 	c.r /= base;
 	c.g /= base;
 	c.b /= base;
-	return int_from_rgb(c.r, c.g, c.b);
+	color_a = int_from_rgb(c.r, c.g, c.b);
+	if(con->sepia)
+		color_a= sepia_filter(c); 
+	return color_a;
 }

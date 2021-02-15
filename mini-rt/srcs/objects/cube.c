@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/14 19:28:06 by pablo             #+#    #+#             */
-/*   Updated: 2021/02/15 19:37:44 by pablo            ###   ########.fr       */
+/*   Updated: 2021/02/15 20:03:24 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int get_cu_inter(t_ray *ray, t_cube cu)
         return 1;
     return 0;
 }
-
 
 int select_cu(t_file *c)
 {
@@ -55,40 +54,40 @@ int select_cu(t_file *c)
 
 void move_cube(t_cube *cu, int axis)
 {
-	if (axis == 123)
-		cu->cord.x -= 10;
-	if (axis == 124)
-		cu->cord.x += 10;
-	if (axis == 126)
-		cu->cord.y += 10;
-	if (axis == 125)
-		cu->cord.y -= 10;
-	if (axis == 45)
-		cu->cord.z += 10;
-	if (axis == 46)
-		cu->cord.z -= 10;
+    if (axis == 123)
+        cu->cord.x -= 10;
+    if (axis == 124)
+        cu->cord.x += 10;
+    if (axis == 126)
+        cu->cord.y += 10;
+    if (axis == 125)
+        cu->cord.y -= 10;
+    if (axis == 45)
+        cu->cord.z += 10;
+    if (axis == 46)
+        cu->cord.z -= 10;
     save_sq_points(&cu->face1);
-    save_cube_base(cu,0);
+    save_cube_base(cu, 0);
     save_cube_faces(cu);
-	ft_printf("     Cube Moved\n");
+    ft_printf("     Cube Moved\n");
 }
 
 void rot_cu(t_cube *cu, int key)
 {
-    rot_sq(&cu->face1,key);
-    save_cube_base(cu,1);
-    rot_sq(&cu->face2,key);
+    rot_sq(&cu->face1, key);
+    save_cube_base(cu, 1);
+    rot_sq(&cu->face2, key);
 
     save_cube_faces(cu);
 }
 void size_cu(t_cube *cu, int k)
 {
-	if (k == 30)
-		cu->width += 10;
-	if (k == 44)
-		cu->width -= 10;
-	if (cu->width < 1)
-		cu->width= 1;
+    if (k == 30)
+        cu->width += 10;
+    if (k == 44)
+        cu->width -= 10;
+    if (cu->width < 1)
+        cu->width = 1;
     save_cube_faces(cu);
-	ft_printf("     Cube Resized\n");
+    ft_printf("     Cube Resized\n");
 }

@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/14 19:13:03 by pablo             #+#    #+#             */
-/*   Updated: 2021/02/15 19:38:50 by pablo            ###   ########.fr       */
+/*   Updated: 2021/02/15 20:15:05 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,22 +87,45 @@ int save_new_cube(char **splited, t_file *configFile)
     int err;
 
     err = 0;
-    if (ft_bistrlen(splited) != 7)
+    if (ft_bistrlen(splited) != 6)
         return (parse_error("Cube Error: Bad number of arguments \n"));
-    if (!ft_isfloat(splited[3]))
+    if (!ft_isfloat(splited[2]))
         return (parse_error("Cube  Error: Bad value for width \n"));
     if (!(cube = malloc(1 * sizeof(t_cube))))
         return (parse_error("Cube Error: Malloc error on cube\n"));
     err += save_cord(&cube->cord, splited[1], "Cube");
-    err += save_cord(&cube->norm_vec, splited[2], "Cube");
-    cube->width = ft_atof(splited[3]);
-    err += save_rgb(&cube->rgb, splited[4], "Cube");
-    cube->reflexion = ft_atof(splited[5]);
-    cube->specular = ft_atoi(splited[6]);
-    cube->norm_vec = norm_vec(cube->norm_vec);
+    cube->width = ft_atof(splited[2]);
+    err += save_rgb(&cube->rgb, splited[3], "Cube");
+    cube->reflexion = ft_atof(splited[4]);
+    cube->specular = ft_atoi(splited[5]);
+    cube->norm_vec = vector(0,1,0);
     save_cube_base(cube, 0);
     save_cube_faces(cube);
-
     ft_lstadd_back(&configFile->cube, ft_lstnew(cube));
     return ((err) ? 1 : 0);
 }
+
+int save_new_skybox(char **splited, t_file *configFile)
+{
+    t_cube *cube;
+    int err;
+
+    err = 0;
+    if (ft_bistrlen(splited) != 6)
+        return (parse_error("Cube Error: Bad number of arguments \n"));
+    if (!ft_isfloat(splited[2]))
+        return (parse_error("Cube  Error: Bad value for width \n"));
+    if (!(cube = malloc(1 * sizeof(t_cube))))
+        return (parse_error("Cube Error: Malloc error on cube\n"));
+    err += save_cord(&cube->cord, splited[1], "Cube");
+    cube->width = ft_atof(splited[2]);
+    err += save_rgb(&cube->rgb, splited[3], "Cube");
+    cube->reflexion = ft_atof(splited[4]);
+    cube->specular = ft_atoi(splited[5]);
+    cube->norm_vec = vector(0,1,0);
+    save_cube_base(cube, 0);
+    save_cube_faces(cube);
+    ft_lstadd_back(&configFile->cube, ft_lstnew(cube));
+    return ((err) ? 1 : 0);
+}
+

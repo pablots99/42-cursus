@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/04 20:10:37 by pablo             #+#    #+#             */
-/*   Updated: 2021/02/14 18:07:43 by pablo            ###   ########.fr       */
+/*   Updated: 2021/02/15 20:49:45 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	paint_scene(void *a)
 				get_color(h, param, &color[h.b]);
 				h.b++;
 			}
-			color[0] = average_color(color, ANTIALIASING);
+			color[0] = average_color(color, ANTIALIASING,param->c);
 			my_mlx_pixel_put(&param->c->img, h.g, h.r, color[0]);
 			h.g++;
 		}

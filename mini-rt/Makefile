@@ -9,7 +9,7 @@ SRCS =  main.c 								\
 		srcs/parse/parse_rt_file3.c 		\
 		srcs/parse/parse_rt_file4.c 		\
 		srcs/parse/parse_rt_no_bonus.c		\
-		srcs/parse/parse_rt_file2_no.c		\
+		srcs/parse/parse_rt_file2_no_bonus.c		\
 		srcs/utils/utils.c					\
 		srcs/utils/utils2.c					\
 		srcs/utils/utils3.c					\

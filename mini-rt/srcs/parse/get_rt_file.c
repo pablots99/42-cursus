@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 14:39:35 by pablo             #+#    #+#             */
-/*   Updated: 2021/02/15 18:11:11 by pablo            ###   ########.fr       */
+/*   Updated: 2021/02/15 20:50:56 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ int save_rt_file_aux1(char **splited, t_file *configFile)
 		err = save_new_pyramid(splited, configFile);
 	else if (ft_strlen(*splited) == 2 && ft_strncmp(*splited, "cu", 2) == 0)
 		err = save_new_cube(splited, configFile);
+	else if (ft_strlen(*splited) == 5 && ft_strncmp(*splited, "SEPIA", 5) == 0)
+		configFile->sepia = 1;
 	else
 		err = ft_printf("Error: '%s' is a bad identifer\n", *splited);
 	if (!err)
