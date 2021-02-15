@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 19:15:09 by pablo             #+#    #+#             */
-/*   Updated: 2021/02/14 23:19:24 by pablo            ###   ########.fr       */
+/*   Updated: 2021/02/15 19:21:59 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -492,5 +492,20 @@ int cube_intersection(t_ray *ray, t_list *list);
 
 int get_cu_inter(t_ray *ray, t_cube cu);
 
+void save_cube_faces(t_cube *cu);
+
+void move_cube(t_cube *cu, int axis);
+
+int select_cu(t_file *c);
+
+void rot_cu(t_cube *cu, int key);
+
+void save_base_py(t_pyramid *pyramid);
+
+void save_cube_base(t_cube *cu, int cond);
+
+
+
+void size_cu(t_cube *cu, int k);
 
 #endif

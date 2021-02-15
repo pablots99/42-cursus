@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 21:06:31 by pablo             #+#    #+#             */
-/*   Updated: 2021/02/14 20:27:35 by pablo            ###   ########.fr       */
+/*   Updated: 2021/02/15 18:42:57 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void select_type_object(t_file *c)
 {
 	c->obj_selected++;
-	if (c->obj_selected > 8)
+	if (c->obj_selected > 9)
 		c->obj_selected = 0;
 	if (c->obj_selected == 0)
 		ft_printf("Selected Object: None.\n");
@@ -35,6 +35,8 @@ void select_type_object(t_file *c)
 		ft_printf("Selected Object: Ligth.\n");
 	if (c->obj_selected == PYRAMID)
 		ft_printf("Selected Object: Pyramid.\n");
+	if (c->obj_selected == CUBE)
+		ft_printf("Selected Object: Cube.\n");
 }
 
 void select_object(t_file *c)
@@ -57,6 +59,8 @@ void select_object(t_file *c)
 		select_l(c);
 	else if (c->obj_selected == PYRAMID && c->pyramid)
 		select_py(c);
+	else if (c->obj_selected == CUBE && c->cube)
+		select_cu(c);
 	else
 		ft_printf("     -No object of the type selected\n");
 }
@@ -78,13 +82,14 @@ void move_objects(t_file *c, int key)
 		move_ligth((t_ligth *)c->curr_l->content, key);
 	else if (c->obj_selected == PYRAMID && c->curr_py)
 		move_pyramid((t_pyramid *)c->curr_py->content, key);
+	else if (c->obj_selected == CUBE && c->curr_cu)
+		move_cube((t_cube *)c->curr_cu->content, key);
 	else
 	{
 		ft_printf("     -Can´t move object or No Object selected\n");
 		return;
 	}
 	threats(c, 0);
-
 	mlx_put_image_to_window(c->mlx_ptr, c->win_ptr, c->img.mlx_img, 0, 0);
 }
 void size_objects(t_file *c, int key)
@@ -101,13 +106,14 @@ void size_objects(t_file *c, int key)
 		size_triangle((t_triangle *)c->curr_tr->content, key);
 	else if (c->obj_selected == LIGTH && c->curr_tr)
 		change_ligth_intesity((t_ligth *)c->curr_l->content, key);
+	else if (c->obj_selected == CUBE && c->curr_cu)
+		size_cu((t_cube *)c->curr_cu->content, key);
 	else
 	{
 		ft_printf("     -Can´t resize object or No Object selected\n");
 		return;
 	}
 	threats(c, 0);
-
 	mlx_put_image_to_window(c->mlx_ptr, c->win_ptr, c->img.mlx_img, 0, 0);
 }
 void rot_objects(t_file *c, int key)
@@ -122,6 +128,8 @@ void rot_objects(t_file *c, int key)
 		rot_sq((t_square *)c->curr_sq->content, key);
 	else if (c->obj_selected == PYRAMID && c->curr_py)
 		rot_py((t_pyramid *)c->curr_py->content, key);
+	else if (c->obj_selected == CUBE && c->curr_cu)
+		rot_cu((t_cube *)c->curr_cu->content, key);
 	else
 	{
 		ft_printf("     -Can´t rotate object or No Object selected\n");

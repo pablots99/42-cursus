@@ -34,7 +34,6 @@ SRCS =  main.c 								\
 		srcs/objects/ligth.c				\
 		srcs/objects/triangle.c				\
 		srcs/objects/cube.c					\
-		srcs/objects/cube2.c				\
 		srcs/objects/pyramid.c				\
 		srcs/raytracing/shading.c			\
 		srcs/raytracing/paint_scene.c		\

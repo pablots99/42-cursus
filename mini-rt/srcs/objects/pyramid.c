@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/14 19:11:14 by pablo             #+#    #+#             */
-/*   Updated: 2021/02/14 21:54:52 by pablo            ###   ########.fr       */
+/*   Updated: 2021/02/15 18:55:15 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void move_pyramid(t_pyramid *py, int axis)
 	if (axis == 46)
 		py->cord.z -= 10;
     save_sq_points(&py->base);
+    save_base_py(py);
     save_py_faces(py);
 	ft_printf("     Pyramid Moved\n");
 }

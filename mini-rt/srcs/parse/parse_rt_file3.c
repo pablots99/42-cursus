@@ -6,13 +6,13 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/14 19:13:03 by pablo             #+#    #+#             */
-/*   Updated: 2021/02/14 22:58:01 by pablo            ###   ########.fr       */
+/*   Updated: 2021/02/15 18:54:27 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../mini_rt.h"
 
-void save_base(t_pyramid *pyramid)
+void save_base_py(t_pyramid *pyramid)
 {
     pyramid->base.cord = pyramid->cord;
     pyramid->base.norm_v = pyramid->norm_vec;
@@ -41,7 +41,9 @@ void save_py_faces(t_pyramid *pyramid)
 {
     t_cord vortex;
 
-    vortex = sum_vec(pyramid->cord, esc_dot_vec(pyramid->heigth,norm_vec(prod_vec((rest_vec(pyramid->base.points.p3, pyramid->base.points.p2)),(rest_vec(pyramid->base.points.p2, pyramid->base.points.p1))))));
+    vortex = sum_vec(pyramid->cord, esc_dot_vec(pyramid->heigth,
+                                                norm_vec(prod_vec((rest_vec(pyramid->base.points.p3, pyramid->base.points.p2)),
+                                                                  (rest_vec(pyramid->base.points.p2, pyramid->base.points.p1))))));
     pyramid->tr1.cord_1 = vortex;
     pyramid->tr2.cord_1 = vortex;
     pyramid->tr3.cord_1 = vortex;
@@ -79,7 +81,8 @@ int save_new_pyramid(char **splited, t_file *configFile)
     pyramid->reflexion = ft_atof(splited[6]);
     pyramid->specular = ft_atoi(splited[7]);
     pyramid->norm_vec = norm_vec(pyramid->norm_vec);
-    save_base(pyramid);
+            save_base_py(pyramid);
+
     save_py_faces(pyramid);
     ft_lstadd_back(&configFile->pyramid, ft_lstnew(pyramid));
     return ((err) ? 1 : 0);

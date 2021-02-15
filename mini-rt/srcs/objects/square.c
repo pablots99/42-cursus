@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/10 15:06:52 by pablo             #+#    #+#             */
-/*   Updated: 2021/02/14 23:22:21 by pablo            ###   ########.fr       */
+/*   Updated: 2021/02/15 19:24:42 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int get_sq_inter(t_ray *ray, t_square *sq)
 
 	norm = norm_vec(prod_vec((rest_vec(sq->points.p2, sq->points.p1)),
 							 (rest_vec(sq->points.p3, sq->points.p2))));
-	if (prod_esc(norm, ray->direction) <= 0)
+	if (prod_esc(norm, ray->direction) > 0)
 		norm = esc_dot_vec(-1, norm);
 	den = prod_esc(ray->direction, norm);
 	if (fabs(den) > 0)
@@ -35,7 +35,7 @@ int get_sq_inter(t_ray *ray, t_square *sq)
 			if ((ab.x <= 1 && ab.x >= 0) && (ab.y <= 1 && ab.y >= 0))
 			{
 				ray->len = len - BIAS;
-				ray->normal = sq->norm_v;
+				ray->normal = norm;
 				return (1);
 			}
 		}
