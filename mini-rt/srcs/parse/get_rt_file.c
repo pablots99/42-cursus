@@ -3,35 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   get_rt_file.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 14:39:35 by pablo             #+#    #+#             */
-/*   Updated: 2021/02/15 23:22:42 by pablo            ###   ########.fr       */
+/*   Updated: 2021/02/16 18:01:52 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../mini_rt.h"
 #include "./rt_file.h"
 
-int save_rt_file_aux1(char **splited, t_file *configFile)
+int		save_rt_file_aux1(char **splited, t_file *configfile)
 {
 	int err;
 
 	err = 0;
 	if (ft_strlen(*splited) == 2 && ft_strncmp(*splited, "pl", 2) == 0)
-		err = save_new_plane(splited, configFile);
+		err = save_new_plane(splited, configfile);
 	else if (ft_strlen(*splited) == 2 && ft_strncmp(*splited, "sq", 2) == 0)
-		err = save_new_square(splited, configFile);
+		err = save_new_square(splited, configfile);
 	else if (ft_strlen(*splited) == 2 && ft_strncmp(*splited, "cy", 2) == 0)
-		err = save_new_cylinder(splited, configFile);
+		err = save_new_cylinder(splited, configfile);
 	else if (ft_strlen(*splited) == 2 && ft_strncmp(*splited, "tr", 2) == 0)
-		err = save_new_triangle(splited, configFile);
+		err = save_new_triangle(splited, configfile);
 	else if (ft_strlen(*splited) == 2 && ft_strncmp(*splited, "py", 2) == 0)
-		err = save_new_pyramid(splited, configFile);
+		err = save_new_pyramid(splited, configfile);
 	else if (ft_strlen(*splited) == 2 && ft_strncmp(*splited, "cu", 2) == 0)
-		err = save_new_cube(splited, configFile);
+		err = save_new_cube(splited, configfile);
 	else if (ft_strlen(*splited) == 5 && ft_strncmp(*splited, "SEPIA", 5) == 0)
-		configFile->sepia = 1;
+		configfile->sepia = 1;
 	else
 		err = ft_printf("Error: '%s' is a bad identifer\n", *splited);
 	if (!err)
@@ -40,7 +40,7 @@ int save_rt_file_aux1(char **splited, t_file *configFile)
 		return (1);
 }
 
-int save_rt_file(char **splited, t_file *configFile)
+int		save_rt_file(char **splited, t_file *configfile)
 {
 	int err;
 
@@ -48,56 +48,56 @@ int save_rt_file(char **splited, t_file *configFile)
 	if (*splited && *splited[0] != '#')
 	{
 		if (ft_strlen(*splited) == 1 && *splited[0] == 'R')
-			err = save_res(splited, configFile);
+			err = save_res(splited, configfile);
 		else if (ft_strlen(*splited) == 1 && *splited[0] == 'l')
-			err = save_new_ligth(splited, configFile);
+			err = save_new_ligth(splited, configfile);
 		else if (ft_strlen(*splited) == 1 && *splited[0] == 'A')
-			err = save_ambient_ligth(splited, configFile);
+			err = save_ambient_ligth(splited, configfile);
 		else if (ft_strlen(*splited) == 1 && *splited[0] == 'c')
-			err = save_new_camera(splited, configFile);
+			err = save_new_camera(splited, configfile);
 		else if (ft_strlen(*splited) == 2 && ft_strncmp(*splited, "sp", 2) == 0)
-			err = save_new_sphere(splited, configFile);
-		else if (ft_strlen(*splited) == 12 && ft_strncmp(*splited, "ANTIALIASING", 12) == 0)
-			err = save_antialising(splited,configFile);
+			err = save_new_sphere(splited, configfile);
+		else if (ft_strlen(*splited) == 12 &&
+			ft_strncmp(*splited, "ANTIALIASING", 12) == 0)
+			err = save_antialising(splited, configfile);
 		else
-			return save_rt_file_aux1(splited, configFile);
+			return (save_rt_file_aux1(splited, configfile));
 	}
 	return ((!err) ? 0 : (1));
 }
 
-int read_file(int fd, t_file *configFile)
+int		read_file(int fd, t_file *configfile)
 {
-	char *line;
-	char **line_splited;
-	int err;
-	if (!(configFile->mlx_ptr = mlx_init()))
+	char	*line;
+	char	**line_splited;
+	int		err;
+
+	if (!(configfile->mlx_ptr = mlx_init()))
 		return (parse_error("Minilibx Error: CAN NOT INITIALIZE MINILIBX"));
 	err = 0;
 	while (get_next_line(fd, &line) > 0)
 	{
 		line_splited = ft_split(line, ' ');
 		if (BONUS == 1)
-			err += save_rt_file(line_splited, configFile);
+			err += save_rt_file(line_splited, configfile);
 		else
-			err += save_rt_file_no_bonus(line_splited, configFile);
+			err += save_rt_file_no_bonus(line_splited, configfile);
 		ft_bidimensional_free(line_splited);
 		free(line);
 	}
 	line_splited = ft_split(line, ' ');
-	if (BONUS == 1)
-		err += save_rt_file(line_splited, configFile);
-	else
-		err += save_rt_file_no_bonus(line_splited, configFile);
+	err += (BONUS == 1) ? save_rt_file(line_splited, configfile) :
+		save_rt_file_no_bonus(line_splited, configfile);
 	free(line);
 	ft_bidimensional_free(line_splited);
 	close(fd);
-	if (err)
-		return (1);
-	return (0);
+	return ((err) ? 1 : 0);
 }
-int read_rt_file(char *file, t_file *configFile)
+
+int		read_rt_file(char *file, t_file *configfile)
 {
 	int fd;
+
 	if (!ft_strnstr(file, ".rt", ft_strlen(file)))
 	{
 		ft_printf("Error\n      File Error: Input file is a non rt file\n");
@@ -109,26 +109,27 @@ int read_rt_file(char *file, t_file *configFile)
 		ft_printf("Error\n      File Error: no rt file named: %s\n", file);
 		return (0);
 	}
-	if (read_file(fd, configFile) == 1)
+	if (read_file(fd, configfile) == 1)
 		return (0);
-	if (!configFile->first_cam || !(configFile->ambient_ligth.rgb.r) || !configFile->win_width)
+	if (!configfile->first_cam ||
+		!(configfile->ambient_ligth.rgb.r) || !configfile->win_width)
 	{
-		ft_printf("Error:\n	Parse Error: No cam or No Rmbient Rigth or no Resolution\n");
+		ft_printf("Error:\n	\
+			Parse Error: No cam or No Rmbient Rigth or no Resolution\n");
 		return (0);
 	}
-	if(!configFile->antialiasing)
-		configFile->antialiasing=1;
+	if (!configfile->antialiasing)
+		configfile->antialiasing = 1;
 	return (1);
 }
 
-void save_sq_points(t_square *sq)
+void	save_sq_points(t_square *sq)
 {
 	float side;
 
 	side = sq->side / 2;
 	if (fabs(sq->norm_v.y) == 1)
 	{
-
 		sq->rot_mat.v3 = esc_dot_vec(1, sq->norm_v);
 		sq->rot_mat.v1 = esc_dot_vec(sq->norm_v.y, vector(1, 0, 0));
 		sq->rot_mat.v2 = esc_dot_vec(sq->norm_v.y * -1, vector(0, 0, 1));
@@ -139,8 +140,12 @@ void save_sq_points(t_square *sq)
 		sq->rot_mat.v1 = prod_vec(vector(0, 1, 0), sq->norm_v);
 		sq->rot_mat.v2 = prod_vec(sq->norm_v, sq->rot_mat.v1);
 	}
-	sq->points.p0 = sum_vec(vector_dot_matrix(vector(side * -1, side, -1), sq->rot_mat), sq->cord);
-	sq->points.p1 = sum_vec(vector_dot_matrix(vector(side, side, -1), sq->rot_mat), sq->cord);
-	sq->points.p2 = sum_vec(vector_dot_matrix(vector(side * -1, side * -1, -1), sq->rot_mat), sq->cord);
-	sq->points.p3 = sum_vec(vector_dot_matrix(vector(side, side * -1, -1), sq->rot_mat), sq->cord);
+	sq->points.p0 = sum_vec(vector_dot_matrix(
+		vector(side * -1, side, -1), sq->rot_mat), sq->cord);
+	sq->points.p1 = sum_vec(vector_dot_matrix(
+			vector(side, side, -1), sq->rot_mat), sq->cord);
+	sq->points.p2 = sum_vec(vector_dot_matrix(
+			vector(side * -1, side * -1, -1), sq->rot_mat), sq->cord);
+	sq->points.p3 = sum_vec(vector_dot_matrix(
+			vector(side, side * -1, -1), sq->rot_mat), sq->cord);
 }

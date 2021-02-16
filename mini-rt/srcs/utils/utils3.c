@@ -3,36 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   utils3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 17:05:59 by ptorres           #+#    #+#             */
-/*   Updated: 2021/02/15 23:27:28 by pablo            ###   ########.fr       */
+/*   Updated: 2021/02/16 16:38:44 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../mini_rt.h"
 
-int exit_win(int keycode, t_file *c)
+int		exit_win(int keycode, t_file *c)
 {
 	if (keycode == 53)
 	{
 		mlx_destroy_window(c->mlx_ptr, c->win_ptr);
 		free_config(c);
-		ft_printf("\n\n\n\n------------------LEAKS---------------------------------------\n");
+		ft_printf("\n\n\n\n------------------LEAKS-------------------------\n");
 		system("leaks minirt");
 		ft_printf("--------------------------------------------------------\n");
 		exit(0);
 	}
 	return (0);
 }
-int exit_win2(t_file *c)
+
+int		exit_win2(t_file *c)
 {
 	mlx_destroy_window(c->mlx_ptr, c->win_ptr);
 	free_config(c);
 	exit(0);
 	return (0);
 }
-void adjust_res(t_file *c)
+
+void	adjust_res(t_file *c)
 {
 	int h;
 	int w;

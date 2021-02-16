@@ -3,41 +3,45 @@ NAME = minirt
 LIBFT = libft/libft.a
 
 SRCS =  main.c 								\
-		srcs/parse/get_rt_file.c 			\
-		srcs/parse/parse_rt_file1.c 		\
-		srcs/parse/parse_rt_file2.c 		\
-		srcs/parse/parse_rt_file3.c 		\
-		srcs/parse/parse_rt_file4.c 		\
-		srcs/parse/parse_rt_no_bonus.c		\
+		srcs/parse/get_rt_file.c 				\
+		srcs/parse/parse_rt_file1.c 				\
+		srcs/parse/parse_rt_file2.c 				\
+		srcs/parse/parse_rt_file3.c 				\
+		srcs/parse/parse_rt_file4.c 				\
+		srcs/parse/parse_rt_no_bonus.c			\
 		srcs/parse/parse_rt_file2_no_bonus.c		\
 		srcs/utils/utils.c					\
 		srcs/utils/utils2.c					\
 		srcs/utils/utils3.c					\
 		srcs/utils/colors.c					\
-		srcs/utils/keys.c					\
-		srcs/utils/mlx_utils.c				\
-		srcs/utils/bmp_img.c				\
-		srcs/utils/ft_atof.c				\
-		srcs/utils/utils_free.c				\
+		srcs/utils/colors2.c					\
+		srcs/utils/keys.c						\
+		srcs/utils/keys2.c						\
+		srcs/utils/mlx_utils.c					\
+		srcs/utils/bmp_img.c					\
+		srcs/utils/ft_atof.c					\
+		srcs/utils/utils_free.c					\
 		srcs/math/vectors.c					\
-		srcs/math/vectors1.c				\
-		srcs/math/vectors2.c				\
-		srcs/math/vectors3.c				\
-		srcs/math/utils.c					\
-		srcs/raytracing/cast_rays.c			\
-		srcs/objects/sphere.c				\
-		srcs/objects/camera.c				\
-		srcs/objects/plane.c				\
-		srcs/objects/cylinder.c				\
-		srcs/objects/cylinder2.c			\
-		srcs/objects/square.c				\
-		srcs/objects/ligth.c				\
-		srcs/objects/triangle.c				\
+		srcs/math/vectors1.c					\
+		srcs/math/vectors2.c					\
+		srcs/math/vectors3.c					\
+		srcs/math/utils.c						\
+		srcs/raytracing/cast_rays.c				\
+		srcs/objects/sphere.c					\
+		srcs/objects/sphere2.c					\
+		srcs/objects/camera.c					\
+		srcs/objects/plane.c					\
+		srcs/objects/cylinder.c					\
+		srcs/objects/cylinder2.c				\
+		srcs/objects/square.c					\
+		srcs/objects/square2.c					\
+		srcs/objects/ligth.c					\
+		srcs/objects/triangle.c					\
 		srcs/objects/cube.c					\
-		srcs/objects/pyramid.c				\
-		srcs/raytracing/shading.c			\
-		srcs/raytracing/paint_scene.c		\
-		srcs/raytracing/intersections.c		\
+		srcs/objects/pyramid.c					\
+		srcs/raytracing/shading.c				\
+		srcs/raytracing/paint_scene.c				\
+		srcs/raytracing/intersections.c			\
 		srcs/raytracing/intersections1.c	
 	
 

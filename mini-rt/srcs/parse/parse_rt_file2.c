@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   parse_rt_file2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 16:08:44 by ptorres           #+#    #+#             */
-/*   Updated: 2021/02/15 23:56:08 by pablo            ###   ########.fr       */
+/*   Updated: 2021/02/16 15:40:25 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../mini_rt.h"
 
-int save_new_sphere(char **splited, t_file *configFile)
+int		save_new_sphere(char **splited, t_file *configfile)
 {
-	t_sphere *sphere;
-	int err;
+	t_sphere	*sphere;
+	int			err;
 
 	err = 0;
 	if (!(ft_bistrlen(splited) == 6 || ft_bistrlen(splited) == 7))
@@ -30,19 +30,19 @@ int save_new_sphere(char **splited, t_file *configFile)
 	err += save_rgb(&sphere->rgb, splited[3], "Sphere");
 	sphere->diameter = ft_atof(splited[2]);
 	sphere->refraction = ft_atof(splited[4]);
-	sphere->specular =  ft_atoi(splited[5]);
-	if(ft_bistrlen(splited) == 7)
-		sphere->bmp = read_bmp(splited[6],configFile);
-	else 
+	sphere->specular = ft_atoi(splited[5]);
+	if (ft_bistrlen(splited) == 7)
+		sphere->bmp = read_bmp(splited[6], configfile);
+	else
 		sphere->bmp.heigth = 0;
-	ft_lstadd_back(&configFile->sphere, ft_lstnew(sphere));
-	return ((err)?1:0);
+	ft_lstadd_back(&configfile->sphere, ft_lstnew(sphere));
+	return ((err) ? 1 : 0);
 }
 
-int save_new_plane(char **splited, t_file *configFile)
+int		save_new_plane(char **splited, t_file *configfile)
 {
-	t_plane *plane;
-	int err;
+	t_plane	*plane;
+	int		err;
 
 	err = 0;
 	if (ft_bistrlen(splited) != 6)
@@ -56,16 +56,17 @@ int save_new_plane(char **splited, t_file *configFile)
 	err += save_rgb(&plane->rgb, splited[3], "Plane");
 	plane->norm_v = norm_vec(plane->norm_v);
 	plane->refraction = ft_atof(splited[4]);
-	plane->specular =  ft_atoi(splited[5]);
-	ft_lstadd_back(&configFile->plane, ft_lstnew(plane));
+	plane->specular = ft_atoi(splited[5]);
+	ft_lstadd_back(&configfile->plane, ft_lstnew(plane));
 	if (err)
 		return (1);
 	return (0);
 }
-int save_new_square(char **splited, t_file *configFile)
+
+int		save_new_square(char **splited, t_file *configfile)
 {
-	t_square *square;
-	int err;
+	t_square	*square;
+	int			err;
 
 	err = 0;
 	if (ft_bistrlen(splited) != 7)
@@ -80,18 +81,19 @@ int save_new_square(char **splited, t_file *configFile)
 	square->refraction = ft_atof(splited[5]);
 	err += save_rgb(&square->rgb, splited[4], "Square");
 	square->norm_v = norm_vec(square->norm_v);
-	square->specular =  ft_atoi(splited[6]);
+	square->specular = ft_atoi(splited[6]);
 	square->angle = 0;
 	save_sq_points(square);
-	ft_lstadd_back(&configFile->square, ft_lstnew(square));
+	ft_lstadd_back(&configfile->square, ft_lstnew(square));
 	if (err)
 		return (1);
 	return (0);
 }
-int save_new_cylinder(char **splited, t_file *configFile)
+
+int		save_new_cylinder(char **splited, t_file *configfile)
 {
-	t_cylinder *cylinder;
-	int err;
+	t_cylinder	*cylinder;
+	int			err;
 
 	err = 0;
 	if (ft_bistrlen(splited) != 8)
@@ -108,20 +110,21 @@ int save_new_cylinder(char **splited, t_file *configFile)
 	cylinder->height = ft_atof(splited[4]);
 	err += save_rgb(&cylinder->rgb, splited[5], "Cylinder");
 	cylinder->refraction = ft_atof(splited[6]);
-	cylinder->specular =  ft_atoi(splited[7]);
+	cylinder->specular = ft_atoi(splited[7]);
 	cylinder->norm_v = norm_vec(cylinder->norm_v);
-	ft_lstadd_back(&configFile->cylinder, ft_lstnew(cylinder));
+	ft_lstadd_back(&configfile->cylinder, ft_lstnew(cylinder));
 	if (err)
 		return (1);
 	return (0);
 }
-int save_new_triangle(char **splited, t_file *configFile)
+
+int		save_new_triangle(char **splited, t_file *configfile)
 {
-	t_triangle *triangle;
-	int err;
+	t_triangle	*triangle;
+	int			err;
 
 	err = 0;
-	if (!(ft_bistrlen(splited) == 7 ))
+	if (!(ft_bistrlen(splited) == 7))
 		return (parse_error("Triangle Error: Bad number of arguments \n"));
 	if (!(triangle = malloc(1 * sizeof(t_triangle))))
 		return (parse_error("Triangle Error: Malloc error on t_triangle\n"));
@@ -132,8 +135,8 @@ int save_new_triangle(char **splited, t_file *configFile)
 	err += save_cord(&triangle->cord_3, splited[3], "Triangle");
 	err += save_rgb(&triangle->rgb, splited[4], "Triangle");
 	triangle->refraction = ft_atof(splited[5]);
-	triangle->specular =  ft_atoi(splited[6]);
-	ft_lstadd_back(&configFile->triangle, ft_lstnew(triangle));
+	triangle->specular = ft_atoi(splited[6]);
+	ft_lstadd_back(&configfile->triangle, ft_lstnew(triangle));
 	if (err)
 		return (1);
 	return (0);

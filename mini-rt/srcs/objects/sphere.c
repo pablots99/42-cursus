@@ -6,42 +6,48 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 10:51:00 by pablo             #+#    #+#             */
-/*   Updated: 2021/02/02 16:16:49 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/02/16 17:08:57 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../mini_rt.h"
 
-int get_sp_inter(t_ray *ray, t_sphere sp, t_file *c)
+void	sp_inter_aux(t_cord *l, t_ray *ray, t_sphere sp, float *tca)
 {
-	t_cord l;
-	float tca;
-	float d;
-	float l_p;
-	float tch;
+	*l = rest_vec(sp.cord, ray->origin);
+	*tca = prod_esc(ray->direction, *l);
+}
 
-	l = rest_vec(sp.cord, ray->origin);
-	tca = prod_esc(ray->direction, l);
+int		get_sp_inter(t_ray *ray, t_sphere sp, t_file *c)
+{
+	t_cord	l;
+	float	tca;
+	float	d;
+	float	l_p;
+	float	tch;
+
+	sp_inter_aux(&l, ray, sp, &tca);
 	d = sqrt(prod_esc(l, l) - (tca * tca));
 	if (d < 0 || d > sp.diameter / 2)
 		return (-1);
 	tch = (sqrt(pow(sp.diameter / 2, 2) - pow(d, 2)));
 	l_p = tca - tch;
-	if(l_p < 0)
+	if (l_p < 0)
 		l_p = tca + tch;
-	if(l_p < 0)
+	if (l_p < 0)
 		return (-1);
-	if (l_p < ray->len)
-	{
-		ray->len = l_p - BIAS;
-		ray->normal = norm_vec(rest_vec(ray_cut_point(*ray), sp.cord));
-		if (mod_vec(rest_vec(((t_camera *)c->camera->content)->cord, sp.cord)) <= sp.diameter / 2)
-			ray->normal = norm_vec(esc_dot_vec(-1, rest_vec(ray_cut_point(*ray), sp.cord)));
-	}
+	if (!(l_p < ray->len))
+		return (-1);
+	ray->len = l_p - BIAS;
+	ray->normal = norm_vec(rest_vec(ray_cut_point(*ray), sp.cord));
+	if (mod_vec(rest_vec(((t_camera *)c->camera->content)->cord, sp.cord))
+		<= sp.diameter / 2)
+		ray->normal = norm_vec(esc_dot_vec(-1,
+			rest_vec(ray_cut_point(*ray), sp.cord)));
 	return (1);
 }
 
-void move_sphere(t_sphere *sp, int axis)
+void	move_sphere(t_sphere *sp, int axis)
 {
 	if (axis == 123)
 		sp->cord.x -= 10;
@@ -56,38 +62,4 @@ void move_sphere(t_sphere *sp, int axis)
 	if (axis == 46)
 		sp->cord.z -= 10;
 	ft_printf("     Sphere Moved\n");
-}
-void size_sphere(t_sphere *sp, int k)
-{
-	if (k == 30)
-		sp->diameter += 10;
-	if (k == 44)
-		sp->diameter -= 10;
-	if (sp->diameter < 1)
-		sp->diameter = 1;
-	ft_printf("     Sphere Resized\n");
-}
-
-int select_sp(t_file *c)
-{
-	if (c->sp_count == 0)
-	{
-		c->curr_sp = c->sphere;
-		c->sp_count++;
-	}
-	else
-	{
-		if (c->curr_sp->next)
-		{
-			c->sp_count++;
-			c->curr_sp = c->curr_sp->next;
-		}
-		else
-		{
-			c->sp_count = 1;
-			c->curr_sp = c->sphere;
-		}
-	}
-	ft_printf("Sphere: %d selected.\n", c->sp_count);
-	return (1);
 }

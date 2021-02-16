@@ -3,29 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   shading.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 12:51:39 by pablo             #+#    #+#             */
-/*   Updated: 2021/02/14 22:22:32 by pablo            ###   ########.fr       */
+/*   Updated: 2021/02/16 16:21:25 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../mini_rt.h"
 
-float calculate_specular(t_ray *ray, t_cord v)
+float	calculate_specular(t_ray *ray, t_cord v)
 {
-	t_cord r;
-	float spec;
-	t_cord dir;
+	t_cord	r;
+	float	spec;
+	t_cord	dir;
 
 	if (ray->specular == 0 || BONUS == 0)
-		return 0;
+		return (0);
 	dir = norm_vec(esc_dot_vec(-1, ray->direction));
 	r = rest_vec(esc_dot_vec(2 * prod_esc(ray->normal, dir), ray->normal), dir);
 	spec = pow(max_float(0, prod_esc(r, v)), 100);
 	return (spec);
 }
-void get_point_to_ligth(t_ligth ligth, t_ray *pointo_ligth, t_ray *ray)
+
+void	get_point_to_ligth(t_ligth ligth, t_ray *pointo_ligth, t_ray *ray)
 {
 	t_cord vec_ligth;
 
@@ -37,10 +38,10 @@ void get_point_to_ligth(t_ligth ligth, t_ray *pointo_ligth, t_ray *ray)
 	pointo_ligth->specular = ray->specular;
 }
 
-void reflection(t_file *c, t_ray *ray, t_shades *shades, int *color)
+void	reflection(t_file *c, t_ray *ray, t_shades *shades, int *color)
 {
-	t_ray reflected;
-	int color_aux;
+	t_ray	reflected;
+	int		color_aux;
 
 	if (BONUS == 1 && ray->reflexion > 0)
 	{
@@ -48,7 +49,7 @@ void reflection(t_file *c, t_ray *ray, t_shades *shades, int *color)
 		reflected = reflected_ray(ray);
 		c->n_reflexions++;
 		*color = shading(&reflected, get_intersections(&reflected, c), c);
-		*color = sum_int_colors(*color, color_aux); //color_aux * reflexion
+		*color = sum_int_colors(*color, color_aux);
 	}
 	shades->difuse = 0;
 	shades->specular = 0;
@@ -56,11 +57,11 @@ void reflection(t_file *c, t_ray *ray, t_shades *shades, int *color)
 	c->n_reflexions = 0;
 }
 
-int shading(t_ray *ray, int color, t_file *c)
+int		shading(t_ray *ray, int color, t_file *c)
 {
-	t_list *lst_ligth;
-	t_ray pointo_ligth;
-	t_shades shades;
+	t_list		*lst_ligth;
+	t_ray		pointo_ligth;
+	t_shades	shades;
 
 	lst_ligth = c->ligth;
 	reflection(c, ray, &shades, &color);
@@ -71,8 +72,10 @@ int shading(t_ray *ray, int color, t_file *c)
 		if (get_shadow_intersections(pointo_ligth, *c) == 0)
 		{
 			shades.difuse += max_float(c->ambient_ligth.ratio,
-									   (prod_esc(ray->normal, pointo_ligth.direction) * (shades.ligth.brigthness)));
-			shades.specular += calculate_specular(&pointo_ligth, ray->direction);
+				(prod_esc(ray->normal,
+					pointo_ligth.direction) * (shades.ligth.brigthness)));
+			shades.specular += calculate_specular(&pointo_ligth,
+				ray->direction);
 		}
 		else
 			shades.difuse += c->ambient_ligth.ratio;

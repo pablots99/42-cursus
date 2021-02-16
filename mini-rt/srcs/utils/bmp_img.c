@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   bmp_img.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 21:27:31 by pablo             #+#    #+#             */
-/*   Updated: 2021/02/14 18:05:50 by pablo            ###   ########.fr       */
+/*   Updated: 2021/02/16 16:24:38 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../mini_rt.h"
 
-void write_headder(int fd, t_file *c)
+void	write_headder(int fd, t_file *c)
 {
-	unsigned char headder[54];
-	int i;
+	unsigned char	headder[54];
+	int				i;
 
 	i = 0;
 	while (i < 54)
@@ -37,16 +37,16 @@ void write_headder(int fd, t_file *c)
 	write(fd, headder, 54);
 }
 
-int create_bmp_file(t_file *c, char *file)
+int		create_bmp_file(t_file *c, char *file)
 {
-	int fd;
-	int x;
-	int y;
-	t_img *data;
+	int		fd;
+	int		x;
+	int		y;
+	t_img	*data;
 
 	data = &c->img;
 	if ((fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0744)) == -1)
-		return ft_printf("Bmp Error: Can´t create Bmp file\n");
+		return (ft_printf("Bmp Error: Can´t create Bmp file\n"));
 	write_headder(fd, c);
 	y = c->win_heigth - 1;
 	while (y >= 0)
@@ -54,19 +54,21 @@ int create_bmp_file(t_file *c, char *file)
 		x = 0;
 		while (x < c->win_width)
 		{
-			write(fd, data->address + ((y)*data->line_length + x * (data->bits_per_pixel / 8)), (data->bits_per_pixel / 8));
+			write(fd, data->address + ((y) * data->line_length + x
+				* (data->bits_per_pixel / 8)), (data->bits_per_pixel / 8));
 			x++;
 		}
 		y--;
 	}
 	close(fd);
 	ft_printf("%s Created", file);
-	return 0;
+	return (0);
 }
-t_bmp read_bmp(char *file, t_file *c)
+
+t_bmp	read_bmp(char *file, t_file *c)
 {
-	int fd;
-	t_bmp bmp;
+	int		fd;
+	t_bmp	bmp;
 
 	fd = 0;
 	bmp.width = 0;
@@ -76,24 +78,24 @@ t_bmp read_bmp(char *file, t_file *c)
 		ft_printf("Error\n       Error: Map file is invalid\n");
 	else
 	{
-
-		if (!(bmp.img.mlx_img = mlx_xpm_file_to_image(c->mlx_ptr, file, &bmp.width, &bmp.heigth)))
+		if (!(bmp.img.mlx_img = mlx_xpm_file_to_image(c->mlx_ptr,
+			file, &bmp.width, &bmp.heigth)))
 		{
 			ft_printf("Error\n       Error: No map named %s\n", file);
-			return bmp;
+			return (bmp);
 		}
-		bmp.img.address = mlx_get_data_addr(bmp.img.mlx_img, &bmp.img.bits_per_pixel,
-								&bmp.img.line_length, &bmp.img.endian);
+		bmp.img.address = mlx_get_data_addr(bmp.img.mlx_img,
+			&bmp.img.bits_per_pixel, &bmp.img.line_length, &bmp.img.endian);
 	}
-	return bmp;
+	return (bmp);
 }
 
-int sp_bmp(t_ray ray, t_bmp bmp, t_sphere sp)
+int		sp_bmp(t_ray ray, t_bmp bmp, t_sphere sp)
 {
-	float u;
-	float v;
-	char *dst;
-	t_cord d;
+	float	u;
+	float	v;
+	char	*dst;
+	t_cord	d;
 
 	u = 0;
 	v = 0;
@@ -110,6 +112,7 @@ int sp_bmp(t_ray ray, t_bmp bmp, t_sphere sp)
 		v = M_PI + atan((sqrt(d.z * d.z + d.x * d.x)) / d.y);
 	u = ((u) / (2 * M_PI)) * bmp.width;
 	v = ((v) / (M_PI)) * bmp.heigth;
-	dst = (bmp.img.address + (((int)(v)*bmp.img.line_length) + ((int)(u) * (bmp.img.bits_per_pixel / 8))));
+	dst = (bmp.img.address + (((int)(v) * bmp.img.line_length) +
+		((int)(u) * (bmp.img.bits_per_pixel / 8))));
 	return (*(unsigned int *)dst);
 }
