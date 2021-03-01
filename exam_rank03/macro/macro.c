@@ -3,22 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   macro.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 22:32:41 by pablo             #+#    #+#             */
-/*   Updated: 2021/02/24 20:17:26 by pablo            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   mini.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/22 22:32:44 by pablo             #+#    #+#             */
-/*   Updated: 2021/02/24 19:25:09 by pablo            ###   ########.fr       */
+/*   Updated: 2021/02/25 14:48:53 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,27 +68,31 @@ int read_file(char *filename, t_config *c)
         while (fscanf(file, "%c", &type) != -1)
         {
 
-                if (type == 'c'  || type == 'C')
+                if (type == 'r'  || type == 'R')
                         save_square(file, &c->squares,type);
                 else if ((type != ' ') && (type != '\n'))
                         err++;
         }
         return (err ? 1 : 0);
 }
-char paint_square(t_square *circles,int x, int y)
+char paint_square(t_square *sq,int x, int y)
 {
          t_square *list;
          float val;
          char a;
 
          a = 0;
-         list = circles;
+         list = sq;
          while (list)
          {      
-                 val = sqrtf(powf(x - list->x, 2) + powf(y - list->y, 2));
-                 if (list->type == 'c' &&  (val <= list->r && val > list->r -1))
+			 float x1 = list->x - list->width/2;
+			 float y1 = list->y - list->height/2;
+			 float x2 = list->x + list->width/2;
+			 float y2 = list->y + list->height/2;
+                 if (list->type == 'R' && (( x >= x1 &&  y>= y1) && (x <= x2 && y <= y2) ))
                         a =  list->c;
-                 if (list->type == 'C' && val <= list->r)
+                 if (list->type == 'r' && ((( x > x1 && x < x1 + 1 ) && (y > y1 && y < y1 + 1)) &&  
+				 							(( x < x2 && x > x2 - 1 ) && (y > y2 && y > y2 - 1))))
                         a =   list->c;
                  list = list->next;     
          }
@@ -120,7 +112,7 @@ void paint_scene(t_config c)
                 while (x < c.width)
                 {
                         a = 0;
-                        a = paint_csquare(c.squares,x,y);
+                        a = paint_square(c.squares,x,y);
                         if(!a)
                                 a = c.background;
                         write(1, &a, 1);
