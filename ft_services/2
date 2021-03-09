@@ -1,0 +1,21 @@
+echo "Minikube starting...."
+
+minikube --vm-driver=docker start
+
+minikube addons enable dashboard
+
+echo "Building Nginx"
+
+docker build -t my_nginx ./srcs/nginx
+
+echo "Deployment of Nginx"
+
+$(minikube docker-env) 
+
+kubectl create -f ./srcs/nginx/
+
+echo "Starting dashboard...."
+
+minikube dashboard
+
+
