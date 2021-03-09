@@ -1,1 +1,0 @@
-kubectl create deployment kubernetes-bootcamp --image="imagename"

@@ -1,12 +1,16 @@
 #!/bin/bash
 
+Black='\033[0;30m'        # Black
+Red='\033[0;31m'          # Red
+Green='\033[0;32m'        # Green
+Yellow='\033[0;33m'       # Yellow
+Blue='\033[0;34m'         # Blue
+Purple='\033[0;35m'       # Purple
+Cyan='\033[0;36m'         # Cyan
+White='\033[0;37m' 
+endColour='\033[0m'
 
-greenColour="\e[0;32m\033[1m"
-endColour="\033[0m\e[0m"
-redColour="\e[0;31m\033[1m"
-blueColour="\e[0;34m\033[1m"
-
-echo -e "\n${greenColour}Minikube starting...${endColour}"
+echo "\n${Green}Minikube starting...${endColour}"
 
 minikube --vm-driver=docker start
 

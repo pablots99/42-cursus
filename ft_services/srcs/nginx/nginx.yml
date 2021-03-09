@@ -1,23 +1,16 @@
+kind: Service
+apiVersion: v1
 
-apiVersion: apps/v1
-kind: Deployment
 metadata:
-  name: nginx-deployment
+    name: nginx
 spec:
-  selector:
-    matchLabels:
-      app: nginx
-  template:
-    metadata:
-      labels:
+    type: NodePort
+    selector:
         app: nginx
-    spec:
-      containers:
-      - name: nginx
-        image: my_nginx
-        imagePullPolicy: Never
-        ports:
-        - containerPort: 80
-          name: http
-        - containerPort: 443
-          name: https
+    image: my_nginx
+    ports:
+    - port: 80
+      name: http
+    - port: 443
+      name: https
+    
