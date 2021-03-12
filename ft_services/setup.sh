@@ -21,25 +21,31 @@ minikube addons enable metallb
 
 
 
-#metalLB instalation
+#metalLB instalation && preparation 
+kubectl get configmap kube-proxy -n kube-system -o yaml | \
+sed -e "s/strictARP: false/strictARP: true/" | \
+kubectl apply -f - -n kube-system
+
 echo "\n${Green}Installing metalLB...${endColour}"
 kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.5/manifests/namespace.yaml
 kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.5/manifests/metallb.yaml
 kubectl create secret generic -n metallb-system memberlist --from-literal=secretkey="$(openssl rand -base64 128)"
 
-#configuration file load balancer 
-kubectl apply -f srcs/metalLB.yml
 
-#link local docker images with minikube
-eval $(minikube docker-env)
+
+
 
 #building docker images
-echo "${Green}Building images${endColour}"
-docker build -t my_nginx ./srcs/nginx
+echo "${Green}Building Docker images${endColour}"
+docker build -t my_nginx ./srcs/nginx --network host
 
 #Deployment and Services
 echo "${Green}Minikube Deployment and Services${endColour}"
-kubectl apply -f ./srcs/nginx/nginx.yml
+kubectl apply -f srcs/nginx/nginx.yml
+
+#configuration file load balancer 
+kubectl apply -f srcs/loadbalancer/metallb-config.yml
+kubectl apply -f srcs/loadbalancer/service.yml
 
 
 #open k8s dashboard
