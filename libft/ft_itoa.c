@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/06 20:07:30 by pablo             #+#    #+#             */
-/*   Updated: 2020/09/07 21:35:35 by pablo            ###   ########.fr       */
+/*   Updated: 2021/03/15 13:30:44 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <stdlib.h>
 
-int		is_neg(int n)
+int	is_neg(int n)
 {
 	if (n < 0)
 		return (1);
@@ -38,11 +38,14 @@ char	*ft_itoa(int n)
 
 	i = 1;
 	aux = n;
-	while (n /= 10)
+	while (n)
+	{
+		n /= 10;
 		i++;
-	if (aux != -2147483648 &&
-			!(ptr = (char *)malloc((i + (is_neg(aux) ? 2 : 1)) * sizeof(char))))
+	}
+	if (aux != -2147483648)
 		return (NULL);
+	ptr = (char *)malloc((i + 1 + (is_neg(aux))) * sizeof(char));
 	if (aux == -2147483648)
 		return (ft_strdup("-2147483648"));
 	is_neg2(&aux, ptr, &i);

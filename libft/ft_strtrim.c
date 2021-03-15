@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/06 16:40:22 by pablo             #+#    #+#             */
-/*   Updated: 2020/09/08 00:15:18 by pablo            ###   ########.fr       */
+/*   Updated: 2021/03/15 13:21:46 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 static unsigned int	isequalto(char a, const char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])
@@ -28,7 +28,7 @@ static unsigned int	isequalto(char a, const char *str)
 	return (0);
 }
 
-char				*ft_strtrim(char const *s1, char const *set)
+char	*ft_strtrim(char const *s1, char const *set)
 {
 	int				i;
 	unsigned int	len;
@@ -46,9 +46,11 @@ char				*ft_strtrim(char const *s1, char const *set)
 	while (i >= 0 && isequalto(s1[i], set))
 		i--;
 	end = i;
-	len = ((start - end) < 0) ? ((start - end) * -1) + 2 : start - end + 2;
-	if (!(str = malloc(sizeof(char) * len)))
-		return (NULL);
+	if ((start - end) < 0)
+		len = ((start - end) * -1) + 2;
+	else
+		len = start - end + 2;
+	str = malloc(sizeof(char) * len);
 	ft_strlcpy(str, &s1[start], len);
 	return (str);
 }

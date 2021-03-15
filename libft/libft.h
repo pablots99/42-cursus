@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/30 17:27:09 by pablo             #+#    #+#             */
-/*   Updated: 2020/08/19 15:10:54 by pablo            ###   ########.fr       */
+/*   Updated: 2021/03/15 13:17:01 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <unistd.h>
 # include "string.h"
 
-typedef struct	s_list
+typedef struct s_list
 {
 	void			*content;
 	struct s_list	*next;
@@ -49,7 +49,7 @@ char			*ft_strchr(const char *s, int c);
 char			*ft_strrchr(const char *s, int c);
 
 char			*ft_strnstr(const char *haystack,
-				const char *needle, size_t len);
+					const char *needle, size_t len);
 
 int				ft_strncmp(const char *s1, const char *s2, size_t n);
 
@@ -110,6 +110,6 @@ void			ft_lstiter(t_list *lst, void (*f)(void *));
 void			ft_lstclear(t_list **lst, void (*del)(void *));
 
 t_list			*ft_lstmap(t_list *lst,
-				void *(*f)(void *), void (*del)(void *));
+					void *(*f)(void *), void (*del)(void *));
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/03 20:19:26 by pablo             #+#    #+#             */
-/*   Updated: 2020/09/07 15:02:20 by pablo            ###   ########.fr       */
+/*   Updated: 2021/03/15 13:23:08 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 {
-	unsigned int i;
-	unsigned int j;
-	unsigned int l;
+	unsigned int	i;
+	unsigned int	j;
+	unsigned int	l;
 
 	j = 0;
 	l = 0;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/06 17:14:18 by pablo             #+#    #+#             */
-/*   Updated: 2020/09/07 23:23:26 by pablo            ###   ########.fr       */
+/*   Updated: 2021/03/15 13:27:48 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ unsigned int	parts(char const *s, char c)
 	return (cont);
 }
 
-int				len_part2(char *s, int i, char c)
+int	len_part2(char *s, int i, char c)
 {
-	int j;
+	int	j;
 
 	j = 0;
 	while (s[i] && s[i] != c)
@@ -54,7 +54,7 @@ int				len_part2(char *s, int i, char c)
 	return (j);
 }
 
-char			**ft_split(char const *s, char c)
+char	**ft_split(char const *s, char c)
 {
 	char	**res;
 	int		len_parts;
@@ -65,8 +65,7 @@ char			**ft_split(char const *s, char c)
 	if (!s)
 		return (NULL);
 	len_parts = parts(s, c);
-	if (!(res = malloc((len_parts + 1) * sizeof(char *))))
-		return (NULL);
+	res = malloc((len_parts + 1) * sizeof(char *));
 	while (var[1]++ < len_parts)
 	{
 		while (s[var[0]] && s[var[0]] == c)
@@ -74,8 +73,7 @@ char			**ft_split(char const *s, char c)
 		if (var[0] == (int)ft_strlen((char *)s))
 			break ;
 		var[2] = len_part2((char *)s, var[0], c);
-		if (!(res[var[1]] = malloc(var[2] * sizeof(char *))))
-			return (NULL);
+		res[var[1]] = malloc(var[2] * sizeof(char *));
 		ft_strlcpy(res[var[1]], &s[var[0]], var[2] + 1);
 		var[0] += var[2];
 	}
