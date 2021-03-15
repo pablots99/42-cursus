@@ -34,9 +34,7 @@ SRC = 	./ft_atoi.c			\
 		./ft_strtrim.c		\
 		./ft_substr.c		\
 		./ft_tolower.c		\
-		./ft_toupper.c		\
-		./get_next_line.c   \
-		./get_next_line_utils.c \
+		./ft_toupper.c
 
 SRC_BONUS =	ft_lstnew.c	ft_lstadd_front.c ft_lstsize.c ft_lstlast.c 	\
 			ft_lstadd_back.c ft_lstdelone.c ft_lstclear.c ft_lstiter.c ft_lstmap.c
@@ -57,23 +55,15 @@ $(NAME):
 	ranlib $(NAME)
 
 bonus:
-	make -C ft_printf
-	cp ft_printf/libftprintf.a $(NAME)
 	$(CC) $(CFLAGS) $(SRC) $(SRC_BONUS)
 	ar rc $(NAME) $(OBJS) $(OBJS_BONUS)
 	ranlib $(NAME)
 
 clean:
 	/bin/rm -f $(OBJS) $(OBJS_BONUS)
-	$(MAKE) clean -C ./ft_printf
-
 
 fclean: clean
 	/bin/rm -f $(NAME)
-	$(MAKE) fclean -C ./ft_printf
-
-
-	
 
 re: fclean all
 

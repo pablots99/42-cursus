@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/03 20:16:04 by pablo             #+#    #+#             */
-/*   Updated: 2020/09/02 16:56:17 by pablo            ###   ########.fr       */
+/*   Updated: 2021/03/15 13:26:32 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,13 @@ void	*ft_memmove(void *dst, const void *src, size_t len)
 		while (len--)
 			d[len] = s[len];
 	else
-		while (i--)
+	{
+		while (i)
 		{
 			*d = *s;
 			d++;
 			s++;
 		}
+	}
 	return (dst);
 }
