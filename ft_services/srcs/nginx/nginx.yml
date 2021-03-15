@@ -1,9 +1,29 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+spec:
+  type: LoadBalancer
+  ports:
+  - name: http
+    port: 80
+    targetPort: 80
+  - name: https
+    port: 443
+    targetPort: 443
+  selector:
+    app: nginx
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+<<<<<<< HEAD
+    name: nginx
+=======
     name: nginx-deployment
     labels:
       app: nginx
+>>>>>>> e3c6c445707464786619b696469b758e7fd9e7f5
 spec:
     replicas: 1
     selector:
