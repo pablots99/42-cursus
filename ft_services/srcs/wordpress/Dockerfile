@@ -23,9 +23,6 @@ COPY	./nginx.conf  /etc/nginx/nginx.conf
 
 RUN mkdir /etc/nginx/ssl
 
-RUN openssl req -x509 -nodes -newkey rsa:4096 -days 365  -out /etc/nginx/ssl/local.pem -keyout /etc/nginx/ssl/local-key.pem -subj '/CN=localhost'
-
-
 CMD nginx -g 'daemon off;'
 
 EXPOSE 80

@@ -1,21 +1,16 @@
-
-<<<<<<< HEAD
-=======
 apiVersion: v1
 kind: Service
 metadata:
   name: nginx-service
-  annotations:
-     metallb.universe.tf/allow-shared-ip: 192.168.99.105
 spec:
   type: LoadBalancer
   ports:
-  - port: 80
-    name: http
+  - name: http
+    port: 80
     targetPort: 80
-  - port: 443
-    name: https
+  - name: https
+    port: 443
     targetPort: 443
   selector:
     app: nginx
->>>>>>> e3c6c445707464786619b696469b758e7fd9e7f5
+---
