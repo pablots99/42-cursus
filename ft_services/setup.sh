@@ -13,14 +13,14 @@ endColour='\033[0m'
 
 echo "\n${Green}Deleting previous minikube...${endColour}"
 #delete previous minikube
-minikube stop
-minikube delete
+#minikube stop
+#minikube delete
 rm -rf ~/.minikube
 
 #start minikube
 
 echo "\n${Green}Minikube starting...${endColour}"
-minikube start --cpus=2 --disk-size 11000 --vm-driver virtualbox 
+minikube start --cpus=2 --disk-size 2000 --vm-driver virtualbox 
 minikube addons enable metrics-server
 minikube addons enable dashboard
 minikube addons enable metallb
