@@ -7,6 +7,8 @@ RUN apk add openssl ca-certificates
 RUN apk add openrc --no-cache
 RUN apk add openssh
 
+
+
 RUN adduser -D -g  'www' www
 
 RUN mkdir /www

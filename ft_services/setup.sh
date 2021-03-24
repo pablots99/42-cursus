@@ -13,14 +13,14 @@ endColour='\033[0m'
 
 echo "\n${Green}Deleting previous minikube...${endColour}"
 #delete previous minikube
-#minikube stop
-#minikube delete
+minikube stop
+minikube delete
 rm -rf ~/.minikube
 
 #start minikube
 
 echo "\n${Green}Minikube starting...${endColour}"
-minikube start --cpus=2 --disk-size 2000 --vm-driver virtualbox 
+minikube start --cpus=2 --disk-size 20000 --vm-driver virtualbox 
 minikube addons enable metrics-server
 minikube addons enable dashboard
 minikube addons enable metallb
@@ -33,13 +33,15 @@ echo "\n${Green}Installing metalLB...${endColour}"
 kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.5/manifests/namespace.yaml
 kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.5/manifests/metallb.yaml
 kubectl create secret generic -n metallb-system memberlist --from-literal=secretkey="$(openssl rand -base64 128)"
-kubectl apply -f srcs/loadbalancer/metallb-config.yml
-kubectl apply -f srcs/loadbalancer/service.yml
 
 #building docker images
 echo "${Green}Building Docker images${endColour}"
-docker build -t my_nginx ./srcs/nginx --network host
-docker build -t my_ftps  ./srcs/ftps  --network host
+docker build -t my_nginx ./srcs/nginx --network host 
+docker build -t my_ftps  ./srcs/ftps  --network host 
+docker build -t my_wordpress  ./srcs/wordpress  --network host
+docker build -t my_mysql  ./srcs/mysql   --network host 
+
+
 
 
 
@@ -48,6 +50,10 @@ docker build -t my_ftps  ./srcs/ftps  --network host
 echo "${Green}Minikube Deployment and Services${endColour}"
 kubectl apply -f srcs/nginx/nginx.yml
 kubectl apply -f srcs/ftps/ftps.yml
+kubectl apply -f srcs/wordpress/wordpress.yml
+kubectl apply -f srcs/mysql/mysql.yml
+
+
 kubectl apply -f srcs/loadbalancer/metallb-config.yml
 kubectl apply -f srcs/loadbalancer/service.yml
 

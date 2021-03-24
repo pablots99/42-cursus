@@ -18,3 +18,8 @@ spec:
               imagePullPolicy: Never
               ports:
               - containerPort: 21
+              - containerPort: 20
+              - containerPort: 10090
+                name: pasv
+              - containerPort: 10091
+                name: pasv1
