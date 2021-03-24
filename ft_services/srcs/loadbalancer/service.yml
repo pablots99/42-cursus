@@ -58,6 +58,21 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  name: phpmyadmin-service
+  annotations:
+    metallb.universe.tf/allow-shared-ip: shared
+spec:
+  type: LoadBalancer
+  ports:
+  - name: phpmyadmin
+    port: 5000
+    targetPort: 5000
+  selector:
+    app: phpmyadmin
+---
+apiVersion: v1
+kind: Service
+metadata:
   name: mysql-service
   annotations:
     metallb.universe.tf/allow-shared-ip: shared

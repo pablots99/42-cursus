@@ -40,6 +40,8 @@ docker build -t my_nginx ./srcs/nginx --network host
 docker build -t my_ftps  ./srcs/ftps  --network host 
 docker build -t my_wordpress  ./srcs/wordpress  --network host
 docker build -t my_mysql  ./srcs/mysql   --network host 
+docker build -t my_phpmyadmin  ./srcs/phpMyAdmin   --network host 
+
 
 
 
@@ -52,7 +54,7 @@ kubectl apply -f srcs/nginx/nginx.yml
 kubectl apply -f srcs/ftps/ftps.yml
 kubectl apply -f srcs/wordpress/wordpress.yml
 kubectl apply -f srcs/mysql/mysql.yml
-
+kubectl apply -f srcs/phpMyAdmin/phpmyadmin.yml
 
 kubectl apply -f srcs/loadbalancer/metallb-config.yml
 kubectl apply -f srcs/loadbalancer/service.yml
