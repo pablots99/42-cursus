@@ -31,7 +31,7 @@ $cfg['Servers'][$i]['auth_type'] = 'cookie';
 /* Server parameters */
 $cfg['Servers'][$i]['host'] = '10.96.0.3';
 $cfg['Servers'][$i]['compress'] = false;
-$cfg['Servers'][$i]['AllowNoPassword'] = true;
+$cfg['Servers'][$i]['AllowNoPassword'] = false;
 
 
 /**
@@ -39,10 +39,7 @@ $cfg['Servers'][$i]['AllowNoPassword'] = true;
  */
 
 /* User used to manipulate with storage */
-// $cfg['Servers'][$i]['controlhost'] = '10.96.0.3';
-// $cfg['Servers'][$i]['controlport'] = '3306';
-// $cfg['Servers'][$i]['controluser'] = 'ptorres';
-// $cfg['Servers'][$i]['controlpass'] = 'ptorres';
+
 
 /* Storage database and tables */
 // $cfg['Servers'][$i]['pmadb'] = 'phpmyadmin';

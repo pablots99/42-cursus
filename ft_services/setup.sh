@@ -41,6 +41,8 @@ docker build -t my_ftps  ./srcs/ftps  --network host
 docker build -t my_wordpress  ./srcs/wordpress  --network host
 docker build -t my_mysql  ./srcs/mysql   --network host 
 docker build -t my_phpmyadmin  ./srcs/phpMyAdmin   --network host 
+docker build -t my_grafana  ./srcs/grafana   --network host 
+docker build -t my_influxdb  ./srcs/influxdb   --network host 
 
 
 
@@ -55,6 +57,11 @@ kubectl apply -f srcs/ftps/ftps.yml
 kubectl apply -f srcs/wordpress/wordpress.yml
 kubectl apply -f srcs/mysql/mysql.yml
 kubectl apply -f srcs/phpMyAdmin/phpmyadmin.yml
+#kubectl apply -f srcs/influxdb/influxdb-secrets.yml
+kubectl apply -f srcs/grafana/grafana.yml
+
+kubectl apply -f srcs/influxdb/influxdb.yml
+
 
 kubectl apply -f srcs/loadbalancer/metallb-config.yml
 kubectl apply -f srcs/loadbalancer/service.yml

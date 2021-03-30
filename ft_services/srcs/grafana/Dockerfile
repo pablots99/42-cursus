@@ -10,6 +10,8 @@ RUN rm -rf grafana-7.4.5.linux-amd64.tar.gz
 RUN mkdir -p  /var/lib/grafana/dashboards
 COPY provisioning/dashboards /var/lib/grafana/dashboards/
 COPY provisioning/influx-db.yml/ grafana-7.4.5/conf/provisioning/datasources/
+COPY provisioning/dashboards.yml/ /grafana-7.4.5/conf/provisioning/dashboards/
+
 CMD cd grafana-7.4.5 && ./bin/grafana-server web > /dev/null
 
 

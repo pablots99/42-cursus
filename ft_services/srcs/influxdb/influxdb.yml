@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: influxdb
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: influxdb
+    template:
+        metadata:
+            labels:
+                app: influxdb
+        spec:
+            containers:
+            - name: influxdb
+              image: my_influxdb
+              imagePullPolicy: Never
+              ports:
+              - containerPort: 8086
+              volumeMounts:
+              - name: dockersock
+                mountPath: "/var/run/docker.sock"
+            volumes:
+            - name: dockersock
+              hostPath:
+                path: /var/run/docker.sock
