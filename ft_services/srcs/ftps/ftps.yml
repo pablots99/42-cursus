@@ -23,3 +23,5 @@ spec:
                 name: pasv
               - containerPort: 10091
                 name: pasv1
+              - containerPort: 10092
+                name: pasv2

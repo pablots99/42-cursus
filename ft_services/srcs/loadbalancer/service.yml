@@ -36,6 +36,9 @@ spec:
   - name: pasv1
     port: 10091
     targetPort: 10091
+  - name: pasv2
+    port: 10092
+    targetPort: 10092
   selector:
     app: ftps
 ---
