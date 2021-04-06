@@ -25,3 +25,7 @@ spec:
             - name: dockersock
               hostPath:
                 path: /var/run/docker.sock
+            - name: influxdb-volume-claim
+              persistentVolumeClaim:
+                claimName: influxdb-volume-claim
+            

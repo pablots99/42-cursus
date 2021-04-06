@@ -1,3 +1,20 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: mysql-volume
+  labels:
+   type: local
+spec:
+  volumeMode: Filesystem
+  storageClassName: mysql
+  persistentVolumeReclaimPolicy: Retain
+  capacity:
+   storage: 2Gi
+  accessModes:
+  - ReadWriteOnce
+  hostPath:
+    path: "/var/lib/mysql"
+
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:

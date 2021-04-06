@@ -25,22 +25,12 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
-  - name: tw
-    port: 20
-  - name: ftps
-    port: 21
+  - port: 21
+    name: ftps
     targetPort: 21
-  - name: pasv
-    port: 10090
-    targetPort: 10090
-  - name: pasv1
-    port: 10091
-    targetPort: 10091
-  - name: pasv2
-    port: 10092
-    targetPort: 10092
-  selector:
-    app: ftps
+  - port: 2020
+    name: pasv
+    targetPort: 2020
 ---
 apiVersion: v1
 kind: Service

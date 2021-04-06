@@ -13,9 +13,10 @@ endColour='\033[0m'
 
 echo "\n${Green}Deleting previous minikube...${endColour}"
 #delete previous minikube
+export MINIKUBE_HOME=/goinfre/$(whoami)
 minikube stop
 minikube delete
-rm -rf ~/.minikube
+rm -rf /goinfre/$(whoami)/.minikube
 
 #start minikube
 
@@ -34,6 +35,7 @@ kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.5/manife
 kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.5/manifests/metallb.yaml
 kubectl create secret generic -n metallb-system memberlist --from-literal=secretkey="$(openssl rand -base64 128)"
 
+
 #building docker images
 echo "${Green}Building Docker images${endColour}"
 docker build -t my_nginx ./srcs/nginx --network host 
@@ -43,13 +45,10 @@ docker build -t my_mysql  ./srcs/mysql   --network host
 docker build -t my_phpmyadmin  ./srcs/phpMyAdmin   --network host 
 docker build -t my_grafana  ./srcs/grafana   --network host 
 docker build -t my_influxdb  ./srcs/influxdb   --network host 
-
-
-
-
-
-
-
+#create persistnce volumes
+echo "${Green}Creating persistnce volumes${endColour}"
+kubectl apply -f srcs/volumes/influxdb_volume.yml
+kubectl apply -f srcs/volumes/mysql_volume.yml
 #Deployment and Services
 echo "${Green}Minikube Deployment and Services${endColour}"
 kubectl apply -f srcs/nginx/nginx.yml
@@ -59,18 +58,17 @@ kubectl apply -f srcs/mysql/mysql.yml
 kubectl apply -f srcs/phpMyAdmin/phpmyadmin.yml
 #kubectl apply -f srcs/influxdb/influxdb-secrets.yml
 kubectl apply -f srcs/grafana/grafana.yml
-
 kubectl apply -f srcs/influxdb/influxdb.yml
 
 
+#configuration file load balancer
 kubectl apply -f srcs/loadbalancer/metallb-config.yml
 kubectl apply -f srcs/loadbalancer/service.yml
 
-
-#configuration file load balancer 
+ 
 
 
 #open k8s dashboard
 echo "\n${Green}Starting dashboard....${endColour}"
-#minikube dashboard
+minikube dashboard
 
