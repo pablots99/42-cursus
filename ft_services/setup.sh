@@ -13,10 +13,12 @@ endColour='\033[0m'
 
 echo "\n${Green}Deleting previous minikube...${endColour}"
 #delete previous minikube
-export MINIKUBE_HOME=/goinfre/$(whoami)
+#export MINIKUBE_HOME=/goinfre/$(whoami)
+export MINIKUBE_HOME=/Users/pablo
 minikube stop
 minikube delete
-rm -rf /goinfre/$(whoami)/.minikube
+rm -rf /Users/pablo/.minikube
+#rm -rf /goinfre/$(whoami)/.minikube
 
 #start minikube
 
@@ -45,10 +47,6 @@ docker build -t my_mysql  ./srcs/mysql   --network host
 docker build -t my_phpmyadmin  ./srcs/phpMyAdmin   --network host 
 docker build -t my_grafana  ./srcs/grafana   --network host 
 docker build -t my_influxdb  ./srcs/influxdb   --network host 
-#create persistnce volumes
-echo "${Green}Creating persistnce volumes${endColour}"
-kubectl apply -f srcs/volumes/influxdb_volume.yml
-kubectl apply -f srcs/volumes/mysql_volume.yml
 #Deployment and Services
 echo "${Green}Minikube Deployment and Services${endColour}"
 kubectl apply -f srcs/nginx/nginx.yml
