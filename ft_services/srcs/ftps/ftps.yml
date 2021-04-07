@@ -18,4 +18,6 @@ spec:
               imagePullPolicy: Never
               ports:
               - containerPort: 21
+                hostPort: 21
               - containerPort: 2020
+                hostPort: 2020
