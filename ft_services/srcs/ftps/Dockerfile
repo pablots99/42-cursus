@@ -11,7 +11,7 @@ RUN mkdir - /home/ptorres
 RUN useradd -p $(openssl passwd -1 1234) ptorres
 RUN chown ptorres:ptorres /home/ptorres
 
-RUN echo "wolcome to ptorres ftp" >  /home/ptorres/welcome.txt
+RUN echo "welcome to ptorres ftp" >  /home/ptorres/welcome.txt
 RUN chown -R ptorres  /home/ptorres/welcome.txt
 
 

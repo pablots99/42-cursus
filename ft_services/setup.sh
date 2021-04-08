@@ -13,12 +13,12 @@ endColour='\033[0m'
 
 echo "\n${Green}Deleting previous minikube...${endColour}"
 #delete previous minikube
-#export MINIKUBE_HOME=/goinfre/$(whoami)
-export MINIKUBE_HOME=/Users/pablo
+export MINIKUBE_HOME=/goinfre/$(whoami)
+#export MINIKUBE_HOME=/Users/pablo
 minikube stop
 minikube delete
-rm -rf /Users/pablo/.minikube
-#rm -rf /goinfre/$(whoami)/.minikube
+#rm -rf /Users/pablo/.minikube
+rm -rf /goinfre/$(whoami)/.minikube
 
 #start minikube
 
@@ -55,7 +55,6 @@ kubectl apply -f srcs/ftps/ftps.yml
 kubectl apply -f srcs/wordpress/wordpress.yml
 kubectl apply -f srcs/mysql/mysql.yml
 kubectl apply -f srcs/phpMyAdmin/phpmyadmin.yml
-#kubectl apply -f srcs/influxdb/influxdb-secrets.yml
 kubectl apply -f srcs/grafana/grafana.yml
 kubectl apply -f srcs/influxdb/influxdb.yml
 
@@ -63,8 +62,6 @@ kubectl apply -f srcs/influxdb/influxdb.yml
 #configuration file load balancer
 kubectl apply -f srcs/loadbalancer/metallb-config.yml
 kubectl apply -f srcs/loadbalancer/service.yml
-
- 
 
 
 #open k8s dashboard

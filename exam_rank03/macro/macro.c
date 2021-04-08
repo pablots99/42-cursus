@@ -5,153 +5,130 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/22 22:32:41 by pablo             #+#    #+#             */
-/*   Updated: 2021/02/25 14:48:53 by ptorres          ###   ########.fr       */
+/*   Created: 2021/04/08 15:36:30 by ptorres           #+#    #+#             */
+/*   Updated: 2021/04/08 15:36:30 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
 #include <string.h>
-
-typedef struct s_square
-{
-        char type;
-        float x;
-        float y;
-        float width;
-        float height;
-        char c;
-        struct s_square *next;
-} t_square;
+#include <stdio.h>
+#include <unistd.h>
 
 typedef struct s_config
 {
-        int width;
-        int height;
-        char background;
-        t_square *squares;
+	int width;
+	int height;
+	char back_char;
 } t_config;
 
-void save_square(FILE *file, t_square **square,char c)
+typedef struct s_square
 {
-         t_square *aux;
-         t_square *list;
+	float x;
+	float y;
+	float width;
+	float height;
+	char type;
+	char paint;
+} t_square;
 
-        list = *square;
-        aux = malloc(sizeof(t_square));
-        fscanf(file, "%f %f %f %f %c", &aux->x, &aux->y, &aux->width,&aux->height, &aux->c);
-        aux->type = c;
-        aux->next = NULL;
-        while (list && (list->next))
-                list = list->next;
-        if(!list )
-                 *square = aux;
-        else 
-                list->next = aux;
+int save_config(FILE *file, t_config *config)
+{
+	int scan;
+
+	scan = fscanf(file, "%d %d %c\n", &config->width, &config->height, &config->back_char);
+	if (config->width > 300 || config->width <= 0 || config->height > 300 || config->height <= 0)
+		return 1;
+	if (scan != 3)
+		return 1;
+	//printf("scan: %d, w: %d, h: %d, c: %c\n", scan, config->width, config->height, config->back_char);
+	return 0;
+}
+char is_square(int x, int y, t_square sq, char back)
+{
+	if(x < sq.x || y < sq.y || x > sq.x + sq.width || y > sq.y + sq.height)
+		return back;
+	if(sq.type == 'R')
+		return sq.paint;
+	if(sq.type == 'r' && (((x - sq.x < (float)1 ||  ( sq.x + sq.width ) - x < (float)1)) ||  
+	   						 (y - sq.y < (float)1 ||  ( sq.y + sq.height ) - y < (float)1)))
+		return sq.paint;						
+	return back;
 }
 
-int read_file(char *filename, t_config *c)
+int paint_scene(FILE *file)
 {
-        FILE *file;
-        char type;
-        int err;
+	int scan;
+	t_square sq;
+	t_config config;
+	if (!file || save_config(file, &config) == 1)
+		return 1;
+		char grid[config.height][config.width];
 
-        err = 0;
-
-        if (!(file = fopen(filename, "r")))
-                return 1;
-        if (fscanf(file, "%d %d %c", &c->width, &c->height, &c->background) == -1)
-                return 1;
-        while (fscanf(file, "%c", &type) != -1)
-        {
-
-                if (type == 'r'  || type == 'R')
-                        save_square(file, &c->squares,type);
-                else if ((type != ' ') && (type != '\n'))
-                        err++;
-        }
-        return (err ? 1 : 0);
-}
-char paint_square(t_square *sq,int x, int y)
-{
-         t_square *list;
-         float val;
-         char a;
-
-         a = 0;
-         list = sq;
-         while (list)
-         {      
-			 float x1 = list->x - list->width/2;
-			 float y1 = list->y - list->height/2;
-			 float x2 = list->x + list->width/2;
-			 float y2 = list->y + list->height/2;
-                 if (list->type == 'R' && (( x >= x1 &&  y>= y1) && (x <= x2 && y <= y2) ))
-                        a =  list->c;
-                 if (list->type == 'r' && ((( x > x1 && x < x1 + 1 ) && (y > y1 && y < y1 + 1)) &&  
-				 							(( x < x2 && x > x2 - 1 ) && (y > y2 && y > y2 - 1))))
-                        a =   list->c;
-                 list = list->next;     
-         }
-         return a;
-}
-
-void paint_scene(t_config c)
-{
-        int x;
-        int y;
-        char a;
-
-        y = 0;
-        while (y < c.height)
-        {
-                x = 0;
-                while (x < c.width)
-                {
-                        a = 0;
-                        a = paint_square(c.squares,x,y);
-                        if(!a)
-                                a = c.background;
-                        write(1, &a, 1);
-                        x++;
-                }
-                write(1, "\n", 1);
-                y++;
-        }
-}
-void free_circles(t_config *c)
-{
-        t_square *aux;
-        t_square *square = c->squares;
-        while (square)
-        {       aux = square;
-                square = square->next;
-                free(aux);
-        }
-        
+	scan = fscanf(file, "%c %f %f %f %f %c\n", &sq.type, &sq.x, &sq.y, &sq.width, &sq.height, &sq.paint);
+	int x = 0, y = 0;
+	while (y < config.height)
+	{
+		x = 0;
+		while (x < config.width)
+		{
+			grid[y][x] = config.back_char;
+			x++;
+		}
+		y++;
+	}
+	while (scan == 6)
+	{
+		//printf("scan2:%d /%c /%f /%f /%f /%f /%c\n", scan, sq.type, sq.x, sq.y, sq.width, sq.height, sq.paint);
+		x = 0, y = 0;
+		if (sq.height <= 0 || sq.width <= 0 || !(sq.type == 'r' || sq.type == 'R'))
+			return 1;
+		while (y < config.height)
+		{
+			x = 0;
+			while (x < config.width)
+			{
+				grid[y][x] = is_square(x, y, sq, grid[y][x]);
+				x++;
+			}
+			y++;
+		}
+		scan = fscanf(file, "%c %f %f %f %f %c\n", &sq.type, &sq.x, &sq.y, &sq.width, &sq.height, &sq.paint);
+	}
+	if (scan != -1)
+		return 1;
+	y = 0;
+	x = 0;
+	while (y < config.height)
+	{
+		x = 0;
+		while (x < config.width)
+		{
+			write(1, &grid[y][x], 1);
+			x++;
+		}
+		write(1, "\n", 1);
+		y++;
+	}
+	return 0;
 }
 int main(int argc, char **argv)
 {
-        t_config c;
-        int err;
+	FILE *file;
 
-        err = 0;
-        memset(&c, 0, sizeof(t_config));
-        if (argc == 2)
-                err = read_file(argv[1], &c);
-        else
-        {
-                write(1, "Error: argument\n", 16);
-               return 1;
-        }
-        if (err)
-                printf("Error\n");
-        else
-                paint_scene(c);
-        free_circles(&c);
-        //system("leaks mini");
-        return (err) ? 1 : 0;
+	if (argc == 2)
+	{
+		file = fopen(argv[1], "r");
+
+		if (!file || paint_scene(file) == 1)
+		{
+			write(1, "Error: Operation file corrupted\n", 32);
+			return 1;
+		}
+	}
+	else
+	{
+		write(1, "Error: argument\n", 16);
+		return 1;
+	}
+	return 0;
 }
