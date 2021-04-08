@@ -40,13 +40,14 @@ kubectl create secret generic -n metallb-system memberlist --from-literal=secret
 
 #building docker images
 echo "${Green}Building Docker images${endColour}"
-docker build -t my_nginx ./srcs/nginx --network host 
-docker build -t my_ftps  ./srcs/ftps  --network host 
-docker build -t my_wordpress  ./srcs/wordpress  --network host
+docker build -t my_nginx ./srcs/nginx --network host  
+docker build -t my_wordpress  ./srcs/wordpress  --network host  
 docker build -t my_mysql  ./srcs/mysql   --network host 
-docker build -t my_phpmyadmin  ./srcs/phpMyAdmin   --network host 
-docker build -t my_grafana  ./srcs/grafana   --network host 
-docker build -t my_influxdb  ./srcs/influxdb   --network host 
+docker build -t my_phpmyadmin  ./srcs/phpMyAdmin   --network host   
+docker build -t my_grafana  ./srcs/grafana   --network host   
+docker build -t my_influxdb  ./srcs/influxdb   --network host   
+docker build -t my_ftps  ./srcs/ftps  --network host   
+
 #Deployment and Services
 echo "${Green}Minikube Deployment and Services${endColour}"
 kubectl apply -f srcs/nginx/nginx.yml
