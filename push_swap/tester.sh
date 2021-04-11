@@ -1,13 +1,15 @@
 #!/bin/bash
 #brew install coreutils
 
-make re > /dev/null
+make > /dev/null
 random=$((5 + $RANDOM % 30)) 
-ARG=($(gshuf -i 0-$random -n $random )) 
-echo "list: ${ARG[@]}\n\n"
+ARG=$(gshuf -i 0-$random -n ${random- 3}) 
+echo "${ARG[@]}" > list
 
 ./push_swap $ARG > a
 cat a
-#./checker $ARG < a
+
+#./checker $ARG
 res=$(wc -l a)
-echo "\n\nLen of the list: ${#ARG[@]}\nNumer of operations: $res"
+list=$(wc -l list)
+echo "\n\nLen of the list: $list\nNumer of operations: $res"

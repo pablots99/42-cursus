@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 14:00:18 by ptorres           #+#    #+#             */
-/*   Updated: 2021/04/12 00:26:05 by pablo            ###   ########.fr       */
+/*   Updated: 2021/04/12 00:57:55 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int *sorted_array(stack a)
     
     i = 0;
     len = stk_len(a);
-    arr = malloc((len +1) * sizeof(int));
+    arr = malloc(len * sizeof(int));
     while(a != NULL)
     {
         arr[i] = a->n;
@@ -78,8 +78,16 @@ void algorithm_1(stack a, stack b)
     i = 0;
     len =  stk_len(a);
     arr =  sorted_array(a);
+    while (i < len)
+    {
+        printf(",%d",arr[i]);
+        i++;
+    }
+    printf("\n");
     //buscar el primer elemento y ver que sale mas rentable si rra o ra //pusearlo asi hasta que queden 3
+    stk_print(a);
     i = 0;
+    printf("index:%d\n",stk_index(a,arr[i]));
     while(stk_len(a) != 2)
     {
          if(len - stk_index(a,arr[i]) <= len/2)
@@ -88,24 +96,27 @@ void algorithm_1(stack a, stack b)
             r = 0;
         while(a->n != arr[i])
         {
-            if(r)
-                rra(&a);
-            else 
-                ra(&a);
+            write(1,"a:",2);
+            ft_putnbr_fd(1,a->n);
+            write(1,"arr:",4);
+            ft_putnbr_fd(1,arr[i]);
+            // if(r)
+            //     rra(&a);
+            // else 
+            ra(&a);
         }
         pb(&a,&b);
         i++;
     }
-    // ordenarlos y volver a pusher
+    //ordenarlos y volver a pusher
     if(a->n > a->next->n)
         sa(&a);
     while (b != NULL)
         pa(&a,&b);
-    
-    // printf("aaaaaaaa\n");
-    // stk_print(a);
-    // printf("bbbbbbbb\n");
-    // stk_print(b);
+    printf("aaaaaaaa\n");
+    stk_print(a);
+    printf("bbbbbbbb\n");
+    stk_print(b);
     free(arr);
 }
 
@@ -126,8 +137,7 @@ int main(int argc, char **argv)
         write(1, "Error\n", ft_strlen("Error\n"));
         return (1);
     }
-    stk_print(a);
-    //algorithm_1(a,b);
+    algorithm_1(a,b);
     return 0;
 }
 
