@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 14:00:18 by ptorres           #+#    #+#             */
-/*   Updated: 2021/04/11 23:54:43 by pablo            ###   ########.fr       */
+/*   Updated: 2021/04/12 00:26:05 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,8 @@ int main(int argc, char **argv)
         write(1, "Error\n", ft_strlen("Error\n"));
         return (1);
     }
-    algorithm_1(a,b);
+    stk_print(a);
+    //algorithm_1(a,b);
     return 0;
 }
 
