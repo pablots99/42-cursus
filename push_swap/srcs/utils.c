@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/15 13:53:37 by ptorres           #+#    #+#             */
-/*   Updated: 2021/04/10 22:06:40 by pablo            ###   ########.fr       */
+/*   Updated: 2021/04/11 17:14:24 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,55 @@ int is_stack_order(stack a)
 		a = a->next;
 	}
 	return 1;
+}
+
+int save_input(stack *s, char **input)
+{
+    int i;
+    int j;
+    char **splited;
+
+    i = 1;
+    while (input[i])
+    {
+        j = 0;
+        splited = ft_split(input[i], ' ');
+        while (splited[j])
+        {
+            if (input_errors(*s, splited[j]))
+            {
+                ft_bidimensional_free(splited);
+                return 1;
+            }
+            stk_push_last(s, (int)ft_atoi(splited[j]));
+            j++;
+        }
+        ft_bidimensional_free(splited);
+        i++;
+    }
+    return 0;
+}
+
+int input_errors(stack s, char *input)
+{
+    int i;
+    long int num;
+
+    i = 0;
+    while (input[i])
+    {
+        if (!ft_isdigit(input[i]))
+            return (1);
+        i++;
+    }
+    num = ft_atoi(input);
+    if (ft_strlen(input) > 11 || num > 2147483647 || num < -2147483648)
+        return (1);
+    while (s)
+    {
+        if (s->n == (int)num)
+            return (1);
+        s = s->next;
+    }
+    return 0;
 }

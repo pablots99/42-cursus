@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 14:53:36 by pablo             #+#    #+#             */
-/*   Updated: 2021/04/10 22:21:53 by pablo            ###   ########.fr       */
+/*   Updated: 2021/04/11 17:12:27 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,6 @@ int 	stk_len(stack s);
 void stk_pop(stack *s);
 void stk_shift(stack *s);
 void stk_rev_shift(stack *s);
-
+void stk_print(stack s);
 
 #endif

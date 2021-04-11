@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 14:49:29 by pablo             #+#    #+#             */
-/*   Updated: 2021/04/10 22:21:44 by pablo            ###   ########.fr       */
+/*   Updated: 2021/04/11 17:12:47 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,4 +115,19 @@ void stk_rev_shift(stack *s)
         stk_pop_last(s);
         stk_push(s,a->n);
     }
+}
+
+void stk_print(stack s)
+{
+    stack f;
+
+    f = s;
+    if (!s)
+        return;
+    while (s->next)
+    {
+        printf("s:%d\n", s->n);
+        s = s->next;
+    }
+    printf("s:%d\n", s->n);
 }
