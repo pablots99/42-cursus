@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/13 22:06:21 by pablo             #+#    #+#             */
-/*   Updated: 2020/10/23 17:37:07 by pablo            ###   ########.fr       */
+/*   Updated: 2021/04/09 17:32:55 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,15 @@ char	*fill_line(char *excess, char **line)
 		i++;
 	if (!(*line = malloc(sizeof(char) * (i + 1))))
 		return (0);
-	ft_strcpy(*line, excess, i);
+	gn_ft_strcpy(*line, excess, i);
 	if (excess[i] == 0)
 	{
 		free(excess);
 		return (0);
 	}
-	if (!(res = malloc(sizeof(char) * ((ft_strlen(excess) - i) + 1))))
+	if (!(res = malloc(sizeof(char) * ((gn_ft_strlen(excess) - i) + 1))))
 		return (0);
-	ft_strcpy(res, &excess[i + 1], ft_strlen(&excess[i + 1]));
+	gn_ft_strcpy(res, &excess[i + 1], gn_ft_strlen(&excess[i + 1]));
 	free(excess);
 	return (res);
 }
@@ -64,7 +64,7 @@ int		get_next_line(int fd, char **line)
 			(bytes = read(fd, buffer, BUFFER_SIZE)) != -1)
 	{
 		buffer[bytes] = '\0';
-		excess = ft_strjoin(excess, buffer);
+		excess = gn_ft_strjoin(excess, buffer);
 	}
 	free(buffer);
 	excess = fill_line(excess, line);

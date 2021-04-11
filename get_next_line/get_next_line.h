@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/31 15:46:21 by ptorres           #+#    #+#             */
-/*   Updated: 2020/10/21 18:23:09 by pablo            ###   ########.fr       */
+/*   Updated: 2021/04/09 17:33:21 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-size_t	ft_strlen(const char *s);
+size_t	gn_ft_strlen(const char *s);
 
 int		get_next_line(int fd, char **line);
 
-char	*ft_strjoin(char const *s1, char const *s2);
+char	*gn_ft_strjoin(char const *s1, char const *s2);
 
-size_t	ft_strcpy(char *dst, const char *src, size_t dstsize);
+size_t	gn_ft_strcpy(char *dst, const char *src, size_t dstsize);
 
 #endif

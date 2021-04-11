@@ -6,13 +6,13 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 21:25:17 by pablo             #+#    #+#             */
-/*   Updated: 2020/10/22 14:18:28 by pablo            ###   ########.fr       */
+/*   Updated: 2021/04/09 17:33:34 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t	ft_strlen(const char *s)
+size_t	gn_ft_strlen(const char *s)
 {
 	int i;
 
@@ -24,7 +24,7 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-size_t	ft_strcpy(char *dst, const char *src, size_t dstsize)
+size_t	gn_ft_strcpy(char *dst, const char *src, size_t dstsize)
 {
 	unsigned int i;
 
@@ -38,7 +38,7 @@ size_t	ft_strcpy(char *dst, const char *src, size_t dstsize)
 	return (i);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*gn_ft_strjoin(char const *s1, char const *s2)
 {
 	char	*ptr;
 	int		i;

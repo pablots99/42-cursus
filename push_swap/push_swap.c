@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 14:00:18 by ptorres           #+#    #+#             */
-/*   Updated: 2021/04/11 23:43:19 by pablo            ###   ########.fr       */
+/*   Updated: 2021/04/11 23:54:43 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int *sorted_array(stack a)
     
     i = 0;
     len = stk_len(a);
-    arr = malloc(len * sizeof(int));
+    arr = malloc((len +1) * sizeof(int));
     while(a != NULL)
     {
         arr[i] = a->n;
