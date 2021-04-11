@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 13:59:03 by ptorres           #+#    #+#             */
-/*   Updated: 2021/04/11 18:28:17 by pablo            ###   ########.fr       */
+/*   Updated: 2021/04/11 20:09:11 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,17 +86,17 @@ void rr(stack *a,stack *b)
 void rra(stack *a)
 {
     stk_rev_shift(a);
-     write(1,"rra\n",3);
+     write(1,"rra\n",4);
 }
 void rrb(stack *b)
 {
     stk_rev_shift(b);
-     write(1,"rrb\n",3);
+     write(1,"rrb\n",4);
 }
 
 void rrr(stack *a,stack *b)
 {
     stk_rev_shift(a);
     stk_rev_shift(b);
-     write(1,"rrr\n",3);
+     write(1,"rrr\n",4);
 }
