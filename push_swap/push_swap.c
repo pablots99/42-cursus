@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 14:00:18 by ptorres           #+#    #+#             */
-/*   Updated: 2021/04/12 00:57:55 by pablo            ###   ########.fr       */
+/*   Updated: 2021/04/12 16:07:08 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,15 @@ int stk_index(stack a,int num)
     return -1; // error ocurred
 }
 
+
+void algorithm_2(stack a, stack b)
+{
+	int *sorted_list;
+
+	sorted_list = sor	
+}
+
+
 void algorithm_1(stack a, stack b)
 {
     int *arr;
@@ -76,18 +85,11 @@ void algorithm_1(stack a, stack b)
 
     r = 0;
     i = 0;
+	if(is_stack_order(a))
+		return ;
     len =  stk_len(a);
     arr =  sorted_array(a);
-    while (i < len)
-    {
-        printf(",%d",arr[i]);
-        i++;
-    }
-    printf("\n");
-    //buscar el primer elemento y ver que sale mas rentable si rra o ra //pusearlo asi hasta que queden 3
-    stk_print(a);
     i = 0;
-    printf("index:%d\n",stk_index(a,arr[i]));
     while(stk_len(a) != 2)
     {
          if(len - stk_index(a,arr[i]) <= len/2)
@@ -96,27 +98,19 @@ void algorithm_1(stack a, stack b)
             r = 0;
         while(a->n != arr[i])
         {
-            write(1,"a:",2);
-            ft_putnbr_fd(1,a->n);
-            write(1,"arr:",4);
-            ft_putnbr_fd(1,arr[i]);
-            // if(r)
-            //     rra(&a);
-            // else 
-            ra(&a);
+
+            if(r)
+                rra(&a);
+            else 
+           		ra(&a);
         }
         pb(&a,&b);
         i++;
     }
-    //ordenarlos y volver a pusher
     if(a->n > a->next->n)
         sa(&a);
     while (b != NULL)
         pa(&a,&b);
-    printf("aaaaaaaa\n");
-    stk_print(a);
-    printf("bbbbbbbb\n");
-    stk_print(b);
     free(arr);
 }
 

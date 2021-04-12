@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checker.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 13:47:40 by ptorres           #+#    #+#             */
-/*   Updated: 2021/04/11 17:14:15 by pablo            ###   ########.fr       */
+/*   Updated: 2021/04/12 13:11:09 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,10 @@ int main(int argc, char **argv)
         write(1,"[OK]\n",5);
     else
         write(1,"[KO]\n",5);
-    printf("aaaaaaaaaaaa\n");
-    stk_print(a);
-    printf("bbbbbbbbbbbbb\n");
-    stk_print(b);
-    printf("argc: %d", argc);
+    // printf("aaaaaaaaaaaa\n");
+    // stk_print(a);
+    // printf("bbbbbbbbbbbbb\n");
+    // stk_print(b);
+    // printf("argc: %d", argc);
     return 0;
 }

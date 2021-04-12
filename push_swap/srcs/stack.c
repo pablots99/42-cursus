@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   stack.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 14:49:29 by pablo             #+#    #+#             */
-/*   Updated: 2021/04/11 17:12:47 by pablo            ###   ########.fr       */
+/*   Updated: 2021/04/12 12:35:27 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,22 +98,24 @@ void stk_shift(stack *s)
 {
     stack a;
 
-    a = *s;
-    if(a != NULL)
+  
+    if(*s != NULL)
     {
-        stk_pop(s);
+        
+		a = *s;
         stk_push_last(s,a->n);
+		stk_pop(s);
     }
 }
 void stk_rev_shift(stack *s)
 {
     stack a;
 
-    a = stk_last(*s);
-    if(a != NULL)
+    if(*s != NULL)
     {
-        stk_pop_last(s);
+		a = stk_last(*s);
         stk_push(s,a->n);
+		stk_pop_last(s);
     }
 }
 
