@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 14:00:18 by ptorres           #+#    #+#             */
-/*   Updated: 2021/04/12 16:07:08 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/04/13 18:20:49 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,16 @@ int *sorted_array(stack a)
    return arr;
 }
 
-
+int stk_is_min(stack b,int n)
+{
+	while (b != NULL)
+	{
+		if (n > b->n)
+			return 0;
+		b = b->next;
+	}
+	return 1;
+}
 int stk_index(stack a,int num)
 {
     int i;
@@ -70,8 +79,40 @@ int stk_index(stack a,int num)
 void algorithm_2(stack a, stack b)
 {
 	int *sorted_list;
-
-	sorted_list = sor	
+	int aux;
+	
+	if(is_stack_order(a))
+		return ;
+	sorted_list = sorted_array(a);
+	if(b == NULL)
+		pb(&a,&b);
+	if(stk_len(b) != 3)
+	{
+		pb(&a,&b);
+		if(b->n < b->next->n)
+			sb(&b);
+	}
+	while (stk_len(a) != 0)
+	{
+		aux = 0;
+		if(a != NULL && stk_is_min(b,a->n))
+		{
+			pb(&a,&b);
+			rb(&b);
+		}
+		while(a != NULL && a->n < b->n)
+		{
+			rb(&b);
+			aux++;
+		}
+		while(a != NULL && a->n > b->n)
+			pb(&a,&b);
+		while(aux--)
+			rrb(&b);
+	}
+	while(b != NULL)
+		pa(&a,&b);
+	//stk_print(a);
 }
 
 
@@ -131,7 +172,7 @@ int main(int argc, char **argv)
         write(1, "Error\n", ft_strlen("Error\n"));
         return (1);
     }
-    algorithm_1(a,b);
+    algorithm_2(a,b);
     return 0;
 }
 
