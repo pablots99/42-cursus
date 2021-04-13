@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   stack.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 14:53:36 by pablo             #+#    #+#             */
-/*   Updated: 2021/04/11 17:12:27 by pablo            ###   ########.fr       */
+/*   Updated: 2021/04/13 18:41:09 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ stack 	stk_last(stack s);
 stack 	stk_init(int num);
 void 	stk_push(stack *s, int number);
 void	stk_pop_last(stack *s);
-void 	stk_unshift(stack *s, int num);
 void 	stk_free(stack *s);
 void stk_push_last(stack *s, int number);
 int 	stk_len(stack s);

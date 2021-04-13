@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 14:00:18 by ptorres           #+#    #+#             */
-/*   Updated: 2021/04/13 18:20:49 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/04/13 18:42:22 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ void algorithm_2(stack a, stack b)
 	}
 	while(b != NULL)
 		pa(&a,&b);
-	//stk_print(a);
+	stk_print(a);
 }
 
 

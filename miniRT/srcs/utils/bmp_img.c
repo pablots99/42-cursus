@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 21:27:31 by pablo             #+#    #+#             */
-/*   Updated: 2021/02/16 16:24:38 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/04/13 15:36:53 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ int		sp_bmp(t_ray ray, t_bmp bmp, t_sphere sp)
 		v = M_PI + atan((sqrt(d.z * d.z + d.x * d.x)) / d.y);
 	u = ((u) / (2 * M_PI)) * bmp.width;
 	v = ((v) / (M_PI)) * bmp.heigth;
+		
 	dst = (bmp.img.address + (((int)(v) * bmp.img.line_length) +
 		((int)(u) * (bmp.img.bits_per_pixel / 8))));
 	return (*(unsigned int *)dst);
