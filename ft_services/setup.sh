@@ -14,11 +14,12 @@ endColour='\033[0m'
 echo "\n${Green}Deleting previous minikube...${endColour}"
 #delete previous minikube
 #export MINIKUBE_HOME=/Users/pablo
+export MINIKUBE_HOME=/goinfre/$(whoami)
 minikube stop
 minikube delete
 #rm -rf /Users/pablo/.minikube
 rm -rf /goinfre/$(whoami)/.minikube
-export MINIKUBE_HOME=/goinfre/$(whoami)
+
 
 #start minikube
 
