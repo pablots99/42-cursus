@@ -6,14 +6,14 @@ RUN apk add  mariadb mariadb-client openrc
 
 COPY wp.sql ./
 
+COPY start.sh ./
+
+COPY  my.cnf /etc/my.cnf
+
+
 RUN mkdir /run/openrc && touch /run/openrc/softlevel
 
-#RUN rc-status
 
-#RUN mysql_install_db --user=mysql --datadir=/var/lib/mysql 
-
-RUN rc-status && /etc/init.d/mariadb setup 
-RUN  rc-status && /etc/init.d/mariadb start && mariadb -u root  < wp.sql
-CMD /etc/init.d/mariadb restart && while true; do sleep 30; done;
+CMD  sh start.sh
 
 EXPOSE 3306
