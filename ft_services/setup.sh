@@ -13,12 +13,12 @@ endColour='\033[0m'
 
 echo "\n${Green}Deleting previous minikube...${endColour}"
 #delete previous minikube
-#export MINIKUBE_HOME=/Users/pablo
-export MINIKUBE_HOME=/goinfre/$(whoami)
+export MINIKUBE_HOME=/Users/pablo
+#export MINIKUBE_HOME=/goinfre/$(whoami)
 minikube stop
 minikube delete
-#rm -rf /Users/pablo/.minikube
-rm -rf /goinfre/$(whoami)/.minikube
+rm -rf /Users/pablo/.minikube
+#rm -rf /goinfre/$(whoami)/.minikube
 
 
 #start minikube
@@ -43,18 +43,19 @@ kubectl create secret generic -n metallb-system memberlist --from-literal=secret
 echo "${Green}Building Docker images${endColour}"
 docker build -t my_nginx ./srcs/nginx --network host  
 docker build -t my_wordpress  ./srcs/wordpress  --network host  
-docker build -t my_mysql  ./srcs/mysql   --network host 
 docker build -t my_phpmyadmin  ./srcs/phpMyAdmin   --network host   
 docker build -t my_grafana  ./srcs/grafana   --network host   
 docker build -t my_influxdb  ./srcs/influxdb   --network host   
-docker build -t my_ftps  ./srcs/ftps  --network host   
+docker build -t my_ftps  ./srcs/ftps  --network host  
+docker build -t my_mysql  ./srcs/mysql   --network host 
+
 
 #Deployment and Services
 echo "${Green}Minikube Deployment and Services${endColour}"
+kubectl apply -f srcs/mysql/mysql.yml
 kubectl apply -f srcs/nginx/nginx.yml
 kubectl apply -f srcs/ftps/ftps.yml
 kubectl apply -f srcs/wordpress/wordpress.yml
-kubectl apply -f srcs/mysql/mysql.yml
 kubectl apply -f srcs/phpMyAdmin/phpmyadmin.yml
 kubectl apply -f srcs/grafana/grafana.yml
 kubectl apply -f srcs/influxdb/influxdb.yml
@@ -67,6 +68,6 @@ kubectl apply -f srcs/loadbalancer/service.yml
 
 #open k8s dashboard
 echo "\n${Green}Starting dashboard....${endColour}"
-export MINIKUBE_HOME=/goinfre/$(whoami)
+#export MINIKUBE_HOME=/goinfre/$(whoami)
 minikube dashboard
 
