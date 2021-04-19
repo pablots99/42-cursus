@@ -12,10 +12,14 @@ Cyan='\033[0;36m'
 White='\033[0;37m'
 endColour='\033[0m'
 
-if [ -z "$1" ] || [ -z "$2" ] || [ -n "$3" ]
+if [[ "$1" == "-h" ]] || [[ "$1" == "-help" ]] || [[ "$1" == "--help" ]] || [[ "$1" == "help" ]]
 then
-	echo "${Red}error: the script need 2 arguments$endColour"
-	exit 1
+		echo "${Yellow}help: the script need 2 arguments$endColour \n${Cyan}      1->for the len of the list of numbers.\n      2->times is going to execute the program.$endColour\n${Yellow}help: the script has to be in the root of push_swap$endColour"; exit 1
+fi
+
+if [ -z "$1" ] || [ -z "$2" ] || [ -n "$3" ] 
+then
+	echo "${Red}error: the script need 2 arguments$endColour \n${Cyan}      1->for the len of the list of numbers.\n      2->times is going to execute the program."; exit 1
 fi
 re='^[0-9]+$'
 if ! [[ $1 =~ $re ]] ; then
@@ -30,15 +34,18 @@ error=0
 final[0]=""
 for i in $(seq 0 $2);
 do
-	ARG=$(gshuf -i 0-$1 -n $1) 
+	printf "${Yellow}Loading:$i/$2\r$endColour"
+	start=$((0))
+	end=$(($1))
+	ARG=$(gshuf -i $start-$end -n $1) 
 	echo "${ARG[@]}" > list
 	./push_swap $ARG > a
 	checker=$(./checker $ARG < a)
 	aux="[OK]"
 	if [[ "$checker" != "$aux" ]]
 	then	
-		echo "${Red}NOT WORKIIIING !!! test_numner: $i: checker: $checker $endColour"
-		break 
+		error=1
+		echo -e "\r${Red}error:BAD ALGORITHM RESULT!!! test_numner: $i: checker: $checker $endColour"; break 
 	fi
 	res=$(wc -l a)
 	res=${res%??}
@@ -46,9 +53,9 @@ do
 	final[i]=$res
 done
 
-if [[ -n "$error" ]]
+if [[ $error == "1" ]]
 then
-	exit 
+	exit 1;
 fi
 nums=${ARG[@]}
 min=${final[0]}
@@ -66,14 +73,13 @@ do
 	fi
 	media=$((media+$i))
 done
+echo "\b${Green}Results${endColour}"
 echo "${Purple}Length of the list:${endColour}${Blue} $1 $endColour"
 echo "${Purple}Max movements:${endColour}${Blue} $max ${endColour}"
 echo "${Purple}Min movements:${endColour}${Blue} $min $endColour"
 echo "${Purple}Total movements:${endColour}${Blue} $media $endColour"
-media=$(( $media / $2 )) 
+media=$(( $media / ($2+1) )) 
 echo "${Purple}Media movents:${endColour}${Blue} $media $endColou"
-
-
 
 
 

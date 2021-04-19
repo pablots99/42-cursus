@@ -3,43 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 14:00:18 by ptorres           #+#    #+#             */
-/*   Updated: 2021/04/13 18:42:22 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/04/19 17:43:09 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "srcs/push_swap.h"
 
-
-
-int *sorted_array(stack a)
+int *sorted_array(int *arr, int len)
 {
-    int *arr;
     int i;
-    int aux;
     int j;
-    int len;
-    
+    int aux;
+
     i = 0;
-    len = stk_len(a);
-    arr = malloc(len * sizeof(int));
-    while(a != NULL)
-    {
-        arr[i] = a->n;
-        i++;
-        a = a->next;
-    }
-    i = 0;
-    while (i < len -1)
+    while (i < len - 1)
     {
         j = i + 1;
         while (j < len)
         {
-            if(arr[i] > arr[j])
+            if (arr[i] >= arr[j])
             {
-                aux =  arr[i];
+                aux = arr[i];
                 arr[i] = arr[j];
                 arr[j] = aux;
             }
@@ -47,27 +34,46 @@ int *sorted_array(stack a)
         }
         i++;
     }
-   return arr;
+    return arr;
 }
-
-int stk_is_min(stack b,int n)
+int *sorted_stack_array(stack a)
 {
-	while (b != NULL)
-	{
-		if (n > b->n)
-			return 0;
-		b = b->next;
-	}
-	return 1;
+    int *arr;
+    int i;
+    int aux;
+    int j;
+    int len;
+
+    i = 0;
+    len = stk_len(a);
+    arr = malloc(len * sizeof(int));
+    while (a != NULL)
+    {
+        arr[i] = a->n;
+        i++;
+        a = a->next;
+    }
+    arr = sorted_array(arr, len);
+    return arr;
 }
-int stk_index(stack a,int num)
+int stk_is_min(stack b, int n)
+{
+    while (b != NULL)
+    {
+        if (n > b->n)
+            return 0;
+        b = b->next;
+    }
+    return 1;
+}
+int stk_index(stack a, int num)
 {
     int i;
 
     i = 0;
     while (a != NULL)
     {
-        if(a->n == num)
+        if (a->n == num)
             return i;
         i++;
         a = a->next;
@@ -75,46 +81,107 @@ int stk_index(stack a,int num)
     return -1; // error ocurred
 }
 
+typedef struct s_alg2
+{
+    int *soted_arr;
+    int chunk;
+    int total_chunks;
+    int len;
+    int chunk_size;
+} t_alg2;
 
+typedef struct s_aux
+{
+    int ra;
+    int movements;
+} t_aux;
+
+void  chunk_rotation(t_alg2 p, stack *a,stack *b)
+{
+    int i;
+    int *indexes;
+    int not_found;
+    t_aux aux;
+
+    i = 0;
+    indexes = malloc(p.chunk_size * sizeof(int));
+    not_found = 0;
+    while (i < p.chunk_size)
+    {
+        indexes[i] = stk_index(*a, p.soted_arr[i + (p.chunk * p.chunk_size)]);
+        if(indexes[i] == -1)
+            not_found++;
+        i++;
+    }
+    indexes = sorted_array(indexes, p.chunk_size);
+    aux.ra = 1;
+    i = 0;
+    if(p.len - indexes[0 + not_found] >  (indexes[p.chunk_size - 1] - p.len) * -1)
+    {
+        aux.ra = 0;
+        aux.movements = (indexes[p.chunk_size - 1] - p.len) * -1;
+    } 
+    else 
+         aux.movements = p.len - indexes[0 + not_found];
+    i = 0;
+    
+    while (i < aux.movements)
+    {
+        if(aux.ra)
+                ra(a);
+        else
+                rra(a);
+        i++;
+    }
+    free(indexes);
+}
 void algorithm_2(stack a, stack b)
 {
-	int *sorted_list;
-	int aux;
-	
-	if(is_stack_order(a))
-		return ;
-	sorted_list = sorted_array(a);
-	if(b == NULL)
-		pb(&a,&b);
-	if(stk_len(b) != 3)
-	{
-		pb(&a,&b);
-		if(b->n < b->next->n)
-			sb(&b);
-	}
-	while (stk_len(a) != 0)
-	{
-		aux = 0;
-		if(a != NULL && stk_is_min(b,a->n))
-		{
-			pb(&a,&b);
-			rb(&b);
-		}
-		while(a != NULL && a->n < b->n)
-		{
-			rb(&b);
-			aux++;
-		}
-		while(a != NULL && a->n > b->n)
-			pb(&a,&b);
-		while(aux--)
-			rrb(&b);
-	}
-	while(b != NULL)
-		pa(&a,&b);
-	stk_print(a);
-}
+    t_alg2 p;
+    int cont;
+    t_aux actions;
 
+    cont = 0;
+    p.soted_arr = sorted_stack_array(a);
+    p.total_chunks = 11; //determinar chunks para cada caso
+    p.chunk = 0;
+    p.len = stk_len(a);
+    p.chunk_size = p.len / p.total_chunks;
+    while (p.chunk < p.total_chunks)
+    {
+        p.len = stk_len(a);
+        chunk_rotation(p,&a,&b);
+        pb(&a, &b);
+        cont++;
+        if(cont == p.chunk_size)
+        {
+            p.chunk++;
+            cont = 0;
+        }
+    }
+    //come back all the numbers
+    //stk_print(b);
+    int index;
+    p.len = stk_len(b);
+    while (p.len--)
+    {
+        index = stk_index(b,p.soted_arr[p.len]);
+    
+        if (index < p.len / 2)
+            cont = 1;
+        else 
+            cont = 0;
+        while(b->n != p.soted_arr[p.len])
+        {
+            if (!cont)
+                rrb(&b);
+            else
+                rb(&b);
+        }  
+        pa(&a,&b);
+    }
+    free(p.soted_arr);
+}
 
 void algorithm_1(stack a, stack b)
 {
@@ -126,32 +193,30 @@ void algorithm_1(stack a, stack b)
 
     r = 0;
     i = 0;
-	if(is_stack_order(a))
-		return ;
-    len =  stk_len(a);
-    arr =  sorted_array(a);
+    len = stk_len(a);
+    arr = sorted_stack_array(a);
     i = 0;
-    while(stk_len(a) != 2)
+    while (stk_len(a) != 2)
     {
-         if(len - stk_index(a,arr[i]) <= len/2)
+        if (len - stk_index(a, arr[i]) <= len / 2)
             r = 1;
-         else 
+        else
             r = 0;
-        while(a->n != arr[i])
+        while (a->n != arr[i])
         {
 
-            if(r)
+            if (r)
                 rra(&a);
-            else 
-           		ra(&a);
+            else
+                ra(&a);
         }
-        pb(&a,&b);
+        pb(&a, &b);
         i++;
     }
-    if(a->n > a->next->n)
+    if (a->n > a->next->n)
         sa(&a);
     while (b != NULL)
-        pa(&a,&b);
+        pa(&a, &b);
     free(arr);
 }
 
@@ -163,7 +228,7 @@ int main(int argc, char **argv)
 
     b = NULL;
     a = NULL;
-    input_err = save_input(&a,argv);
+    input_err = save_input(&a, argv);
     if (argc < 2)
         input_err = 1;
     if (input_err)
@@ -172,7 +237,11 @@ int main(int argc, char **argv)
         write(1, "Error\n", ft_strlen("Error\n"));
         return (1);
     }
-    algorithm_2(a,b);
+    if (is_stack_order(a))
+        return 0;
+    if (stk_len(a) < 100)
+        algorithm_1(a,b);
+    else
+        algorithm_2(a, b);
     return 0;
 }
-

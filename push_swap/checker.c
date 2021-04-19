@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   checker.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 13:47:40 by ptorres           #+#    #+#             */
-/*   Updated: 2021/04/12 13:11:09 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/04/17 18:40:08 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "srcs/push_swap.h"
-
-
 
 int execute_comand(stack *a, stack *b, char *command)
 {
@@ -23,15 +21,15 @@ int execute_comand(stack *a, stack *b, char *command)
     else if (!ft_strncmp(command, "ss", ft_strlen(command)))
         swap_top(*a), swap_top(*b);
     else if (!ft_strncmp(command, "pa", ft_strlen(command)))
-        push_from_stack(a,b);
+        push_from_stack(a, b);
     else if (!ft_strncmp(command, "pb", ft_strlen(command)))
-        push_from_stack(b,a);
+        push_from_stack(b, a);
     else if (!ft_strncmp(command, "ra", ft_strlen(command)))
         stk_shift(a);
     else if (!ft_strncmp(command, "rb", ft_strlen(command)))
         stk_shift(b);
     else if (!ft_strncmp(command, "rr", ft_strlen(command)))
-        stk_shift(a) , stk_shift(b);
+        stk_shift(a), stk_shift(b);
     else if (!ft_strncmp(command, "rra", ft_strlen(command)))
         stk_rev_shift(a);
     else if (!ft_strncmp(command, "rrb", ft_strlen(command)))
@@ -61,18 +59,19 @@ int recive_commands(stack *a, stack *b)
     return 0;
 }
 
-
 int main(int argc, char **argv)
 {
     stack a;
     stack b;
     int input_err;
+    int len;
 
     a = NULL;
     b = NULL;
     input_err = save_input(&a, argv);
     if (argc < 2)
         input_err = 1;
+    len = stk_len(a);
     if (!input_err)
         input_err = recive_commands(&a, &b);
     if (input_err)
@@ -81,10 +80,10 @@ int main(int argc, char **argv)
         write(1, "Error\n", ft_strlen("Error\n"));
         return (1);
     }
-    if(is_stack_order(a))
-        write(1,"[OK]\n",5);
+    if (is_stack_order(a) && stk_len(a) == len)
+        write(1, "[OK]\n", 5);
     else
-        write(1,"[KO]\n",5);
+        write(1, "[KO]\n", 5);
     // printf("aaaaaaaaaaaa\n");
     // stk_print(a);
     // printf("bbbbbbbbbbbbb\n");
