@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 14:00:18 by ptorres           #+#    #+#             */
-/*   Updated: 2021/04/20 00:32:56 by pablo            ###   ########.fr       */
+/*   Updated: 2021/04/20 00:56:50 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,8 +123,9 @@ void chunk_rotation(t_alg2 p, stack *a, stack *b)
 
     while (i < aux.movements)
     {
+        stack bb = *b;
         if (aux.ra)
-            ra(a);
+            rr(a, b);
         else
             rra(a);
         i++;
@@ -148,7 +149,7 @@ void algorithm_2(stack a, stack b)
         p.soted_arr = sorted_stack_array(a);
         p.len = stk_len(a);
         p.chunk_size = p.len / p.total_chunks;
-        if(p.chunk_size < p.total_chunks)
+        if (p.chunk_size < p.total_chunks)
             p.chunk_size = p.total_chunks;
         chunk_rotation(p, &a, &b);
         //printf("num%d:%d,len:%d, chunks:%d\n",cont,a->n, p.len,p.chunk_size);
