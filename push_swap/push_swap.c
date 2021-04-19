@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 14:00:18 by ptorres           #+#    #+#             */
-/*   Updated: 2021/04/19 17:43:09 by pablo            ###   ########.fr       */
+/*   Updated: 2021/04/19 23:41:05 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ typedef struct s_aux
     int movements;
 } t_aux;
 
-void  chunk_rotation(t_alg2 p, stack *a,stack *b)
+void chunk_rotation(t_alg2 p, stack *a, stack *b)
 {
     int i;
     int *indexes;
@@ -109,28 +109,28 @@ void  chunk_rotation(t_alg2 p, stack *a,stack *b)
     while (i < p.chunk_size)
     {
         indexes[i] = stk_index(*a, p.soted_arr[i + (p.chunk * p.chunk_size)]);
-        if(indexes[i] == -1)
+        if (indexes[i] == -1)
             not_found++;
         i++;
     }
     indexes = sorted_array(indexes, p.chunk_size);
     aux.ra = 1;
     i = 0;
-    if(p.len - indexes[0 + not_found] >  (indexes[p.chunk_size - 1] - p.len) * -1)
+    if (p.len - indexes[0 + not_found] > (indexes[p.chunk_size - 1] - p.len) * -1)
     {
         aux.ra = 0;
         aux.movements = (indexes[p.chunk_size - 1] - p.len) * -1;
-    } 
-    else 
-         aux.movements = p.len - indexes[0 + not_found];
+    }
+    else
+        aux.movements = p.len - indexes[0 + not_found];
     i = 0;
-    
+
     while (i < aux.movements)
     {
-        if(aux.ra)
-                ra(a);
+        if (aux.ra)
+            ra(a);
         else
-                rra(a);
+            rra(a);
         i++;
     }
     free(indexes);
@@ -140,47 +140,48 @@ void algorithm_2(stack a, stack b)
     t_alg2 p;
     int cont;
     t_aux actions;
+    int *sort_2;
 
     cont = 0;
-    p.soted_arr = sorted_stack_array(a);
-    p.total_chunks = 11; //determinar chunks para cada caso
+    p.total_chunks = 4; //determinar chunks para cada caso
     p.chunk = 0;
     p.len = stk_len(a);
-    p.chunk_size = p.len / p.total_chunks;
-    while (p.chunk < p.total_chunks)
+    sort_2 = sorted_stack_array(a);
+
+    while (a != NULL)
     {
+        p.soted_arr = sorted_stack_array(a);
         p.len = stk_len(a);
-        chunk_rotation(p,&a,&b);
+        p.chunk_size = p.len / p.total_chunks;
+        chunk_rotation(p, &a, &b);
         pb(&a, &b);
+        free(p.soted_arr);
         cont++;
-        if(cont == p.chunk_size)
-        {
-            p.chunk++;
-            cont = 0;
-        }
     }
     //come back all the numbers
-    //stk_print(b);
+    // stk_print(b);
+    // printf("aaaaa");
+    // stk_print(a);
     int index;
     p.len = stk_len(b);
     while (p.len--)
     {
-        index = stk_index(b,p.soted_arr[p.len]);
-    
+        index = stk_index(b, sort_2[p.len]);
+
         if (index < p.len / 2)
             cont = 1;
-        else 
+        else
             cont = 0;
-        while(b->n != p.soted_arr[p.len])
+        while (b->n != sort_2[p.len])
         {
             if (!cont)
                 rrb(&b);
             else
                 rb(&b);
-        }  
-        pa(&a,&b);
+        }
+        pa(&a, &b);
     }
-    free(p.soted_arr);
+    free(sort_2);
 }
 
 void algorithm_1(stack a, stack b)
@@ -240,7 +241,7 @@ int main(int argc, char **argv)
     if (is_stack_order(a))
         return 0;
     if (stk_len(a) < 100)
-        algorithm_1(a,b);
+        algorithm_1(a, b);
     else
         algorithm_2(a, b);
     return 0;

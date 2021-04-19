@@ -81,6 +81,4 @@ echo "${Purple}Total movements:${endColour}${Blue} $media $endColour"
 media=$(( $media / ($2+1) )) 
 echo "${Purple}Media movents:${endColour}${Blue} $media $endColou"
 
-
-
 rm -rf checker.dSYM
