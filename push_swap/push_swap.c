@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 14:00:18 by ptorres           #+#    #+#             */
-/*   Updated: 2021/04/19 23:41:05 by pablo            ###   ########.fr       */
+/*   Updated: 2021/04/20 00:32:56 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,29 +100,25 @@ void chunk_rotation(t_alg2 p, stack *a, stack *b)
 {
     int i;
     int *indexes;
-    int not_found;
     t_aux aux;
 
     i = 0;
     indexes = malloc(p.chunk_size * sizeof(int));
-    not_found = 0;
     while (i < p.chunk_size)
     {
-        indexes[i] = stk_index(*a, p.soted_arr[i + (p.chunk * p.chunk_size)]);
-        if (indexes[i] == -1)
-            not_found++;
+        indexes[i] = stk_index(*a, p.soted_arr[i]);
         i++;
     }
     indexes = sorted_array(indexes, p.chunk_size);
     aux.ra = 1;
     i = 0;
-    if (p.len - indexes[0 + not_found] > (indexes[p.chunk_size - 1] - p.len) * -1)
+    if (p.len - indexes[0] > (indexes[p.chunk_size - 1] - p.len) * -1)
     {
         aux.ra = 0;
         aux.movements = (indexes[p.chunk_size - 1] - p.len) * -1;
     }
     else
-        aux.movements = p.len - indexes[0 + not_found];
+        aux.movements = p.len - indexes[0];
     i = 0;
 
     while (i < aux.movements)
@@ -143,20 +139,22 @@ void algorithm_2(stack a, stack b)
     int *sort_2;
 
     cont = 0;
-    p.total_chunks = 4; //determinar chunks para cada caso
+    p.total_chunks = 6; //determinar chunks para cada caso
     p.chunk = 0;
     p.len = stk_len(a);
     sort_2 = sorted_stack_array(a);
-
     while (a != NULL)
     {
         p.soted_arr = sorted_stack_array(a);
         p.len = stk_len(a);
         p.chunk_size = p.len / p.total_chunks;
+        if(p.chunk_size < p.total_chunks)
+            p.chunk_size = p.total_chunks;
         chunk_rotation(p, &a, &b);
+        //printf("num%d:%d,len:%d, chunks:%d\n",cont,a->n, p.len,p.chunk_size);
         pb(&a, &b);
-        free(p.soted_arr);
         cont++;
+        free(p.soted_arr);
     }
     //come back all the numbers
     // stk_print(b);
