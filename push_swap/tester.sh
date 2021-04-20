@@ -1,6 +1,6 @@
 #!/bin/bash
 #brew install coreutils
-make > /dev/null
+make re > /dev/null
 
 Black='\033[0;30m'        
 Red='\033[0;31m'         

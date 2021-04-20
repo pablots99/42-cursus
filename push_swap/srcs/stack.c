@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   stack.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 14:49:29 by pablo             #+#    #+#             */
-/*   Updated: 2021/04/12 12:35:27 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/04/21 00:51:19 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,8 +128,23 @@ void stk_print(stack s)
         return;
     while (s->next)
     {
-        printf("s:%d\n", s->n);
+        printf("s:%d-", s->n);
         s = s->next;
     }
     printf("s:%d\n", s->n);
+}
+
+int stk_index(stack a, int num)
+{
+    int i;
+
+    i = 0;
+    while (a != NULL)
+    {
+        if (a->n == num)
+            return i;
+        i++;
+        a = a->next;
+    }
+    return -1; // error ocurred
 }
