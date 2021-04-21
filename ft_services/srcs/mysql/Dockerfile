@@ -8,12 +8,13 @@ COPY wp.sql ./
 
 COPY start.sh ./
 
-COPY  my.cnf /etc/my.cnf
 
+
+
+COPY  my.cnf /etc/my.cnf
 
 RUN mkdir /run/openrc && touch /run/openrc/softlevel
 
-
-CMD  sh start.sh
+CMD sh start.sh
 
 EXPOSE 3306

@@ -14,12 +14,13 @@ RUN chown ptorres:ptorres /home/ptorres
 RUN echo "welcome to ptorres ftp" >  /home/ptorres/welcome.txt
 RUN chown -R ptorres  /home/ptorres/welcome.txt
 
-
+COPY ./start.sh ./
 COPY vsftpd.conf etc/vsftpd/vsftpd.conf
 
 RUN openssl req -x509 -nodes -newkey rsa:4096 -days 365  -out /etc/ssl/local.pem -keyout /etc/ssl/local-key.pem -subj '/CN=localhost'
 
-CMD /usr/sbin/vsftpd /etc/vsftpd/vsftpd.conf
+CMD sh start.sh
+
 EXPOSE 20
 EXPOSE 21
 EXPOSE 2020

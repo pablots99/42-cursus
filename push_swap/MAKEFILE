@@ -15,7 +15,7 @@ OBJS1 = $(SRCS1:.c=.o)
 
 CC = gcc
  
-CFLAGS = -g #-fsanitize=address   #-Wall -Wextra -Werror 
+CFLAGS = -Wall -Werror -Wextra -g3  -fsanitize=address   #-Wall -Wextra -Werror 
 
 
 LFAGS = -L. ./libft/libft.a -L. ./srcs/pushswap.a
