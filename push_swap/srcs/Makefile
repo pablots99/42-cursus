@@ -2,7 +2,8 @@ NAME = pushswap.a
 
 SRC = stack.c \
 	  utils.c \
-	  operations.c 
+	  operations.c  \
+	  algor1.c
 
 
 

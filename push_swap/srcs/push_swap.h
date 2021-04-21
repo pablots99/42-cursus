@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 13:59:28 by ptorres           #+#    #+#             */
-/*   Updated: 2021/04/21 00:57:29 by pablo            ###   ########.fr       */
+/*   Updated: 2021/04/21 17:33:11 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,7 @@ void rrb(stack *b);
 void rrr(stack *a, stack *b);
 int *sorted_stack_array(stack a);
 int *sorted_array(int *arr, int len);
+void algorithm_3(stack a, stack b);
+int ft_sqrt(int n);
 
 #endif

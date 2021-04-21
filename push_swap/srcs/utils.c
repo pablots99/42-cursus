@@ -6,43 +6,42 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/15 13:53:37 by ptorres           #+#    #+#             */
-/*   Updated: 2021/04/11 17:14:24 by pablo            ###   ########.fr       */
+/*   Updated: 2021/04/21 17:33:22 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-
-void	ft_bidimensional_free(char **arr)
+void ft_bidimensional_free(char **arr)
 {
-	int i;
+    int i;
 
-	i = 0;
-	while (arr[i])
-	{
-		free(arr[i]);
-		i++;
-	}
-	free(arr);
+    i = 0;
+    while (arr[i])
+    {
+        free(arr[i]);
+        i++;
+    }
+    free(arr);
 }
 
 int is_stack_order(stack a)
 {
-	int aux;
+    int aux;
 
-	if(a == NULL)
-		return -1;
-	
-	aux = a->n;
-	a = a->next;
-	while(a != NULL)
-	{
-		if(aux > a->n)
-			return 0;
-		aux = a->n;
-		a = a->next;
-	}
-	return 1;
+    if (a == NULL)
+        return -1;
+
+    aux = a->n;
+    a = a->next;
+    while (a != NULL)
+    {
+        if (aux > a->n)
+            return 0;
+        aux = a->n;
+        a = a->next;
+    }
+    return 1;
 }
 
 int save_input(stack *s, char **input)
@@ -94,4 +93,13 @@ int input_errors(stack s, char *input)
         s = s->next;
     }
     return 0;
+}
+
+int ft_sqrt(int n)
+{
+    int i;
+    i = 0;
+    while (i * i != n && i * i < n )
+        i++;
+    return i;
 }

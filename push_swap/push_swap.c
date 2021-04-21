@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 14:00:18 by ptorres           #+#    #+#             */
-/*   Updated: 2021/04/21 01:07:38 by pablo            ###   ########.fr       */
+/*   Updated: 2021/04/22 00:10:10 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,6 @@ typedef struct s_alg2
     int chunk_size;
 } t_alg2;
 
-
-
 void chunk_rotation(t_alg2 *p, stack *a, stack *b)
 {
     int i;
@@ -92,23 +90,20 @@ void chunk_rotation(t_alg2 *p, stack *a, stack *b)
         aux.movements = indexes[0];
     i = 0;
     stack bb;
+    stack aa;
     while (i < aux.movements)
     {
         bb = *b;
+        aa = *a;
         if (aux.ra)
         {
-            if(stk_len(bb) > 3 && bb->n < bb->next->n)
-                rr(a,b);
+            if (stk_len(bb) > 4 && bb->n < bb->next->n)
+                rr(a, b);
             else
                 ra(a);
         }
         else
-        {
-            // if(stk_len(bb)>2 && bb->n < stk_last(bb)->n)
-            //     rrr(a,b);
-            // else
-                rra(a);
-        }
+            rra(a);
         i++;
     }
     free(indexes);
@@ -120,21 +115,18 @@ void algorithm_2(stack a, stack b)
     int *sort_2;
 
     cont = 0;
-    p.total_chunks = 13; //determinar chunks para cada caso
+    //determinar chunks para cada caso
     p.chunk = 0;
     p.len = stk_len(a);
     sort_2 = sorted_stack_array(a);
+    p.total_chunks = ft_sqrt(p.len) / 2;
     while (a != NULL)
     {
         p.soted_arr = sorted_stack_array(a);
         p.len = stk_len(a);
         p.chunk_size = p.len / p.total_chunks;
-        if (p.chunk_size <=  p.total_chunks / 2)
-        {
-            // p.chunk_size = p.total_chunks;
-            // if(p.chunk_size < p.len)
-                p.chunk_size = p.len;
-        }
+        if (p.chunk_size < p.total_chunks / 2)
+            p.chunk_size = p.len;
         chunk_rotation(&p, &a, &b);
         pb(&a, &b);
         cont++;
@@ -177,17 +169,16 @@ void algorithm_1(stack a, stack b)
     i = 0;
     while (stk_len(a) != 2)
     {
-        if (len - stk_index(a, arr[i]) <= len / 2)
+        if (stk_index(a, arr[i]) < len / 2)
             r = 1;
         else
             r = 0;
         while (a->n != arr[i])
         {
-
             if (r)
-                rra(&a);
-            else
                 ra(&a);
+            else
+                rra(&a);
         }
         pb(&a, &b);
         i++;
@@ -200,7 +191,7 @@ void algorithm_1(stack a, stack b)
 }
 
 
-
+//mirar lo de dividir entre 1.3
 int main(int argc, char **argv)
 {
     stack a;
@@ -220,9 +211,11 @@ int main(int argc, char **argv)
     }
     if (is_stack_order(a))
         return 0;
-    if (stk_len(a) < 100)
+    if (stk_len(a) < 30)
         algorithm_1(a, b);
     else
         algorithm_2(a, b);
+    // printf("plen:%d sqrt:%d",stk_len(a), ft_sqrt(stk_len(a)));
+
     return 0;
 }
