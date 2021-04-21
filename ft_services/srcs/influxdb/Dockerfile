@@ -15,4 +15,4 @@ RUN rm -rf telegraf-1.18.0_linux_amd64.tar.gz
 EXPOSE 8086
 
 
-CMD influxd run -config /etc/influxdb.conf & cd /telegraf-1.18.0/usr && ./bin/telegraf
+CMD cd /telegraf-1.18.0/usr && ./bin/telegraf & influxd run -config /etc/influxdb.conf 
