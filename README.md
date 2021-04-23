@@ -2,13 +2,15 @@
 
 All my 42cursus work
 
-LIBFT         -> 115
+LIBFT         -> OK
 
-GET_NEXT_LINE -> 100
+GET_NEXT_LINE -> OK
 
-FT_PRINTF     -> 100
+FT_PRINTF     -> OK
 
-FT_SERVER     -> 100
+FT_SERVER     -> OK
 
-MINIRT        -> 109
+MINIRT        -> OK
+
+FT_SERVICES   -> OK
 
