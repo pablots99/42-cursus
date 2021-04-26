@@ -6,13 +6,13 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 13:47:40 by ptorres           #+#    #+#             */
-/*   Updated: 2021/04/17 18:40:08 by pablo            ###   ########.fr       */
+/*   Updated: 2021/04/26 12:43:04 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "srcs/push_swap.h"
 
-int execute_comand(stack *a, stack *b, char *command)
+int execute_comand(t_stack *a, t_stack *b, char *command)
 {
     if (!ft_strncmp(command, "sa", ft_strlen(command)))
         swap_top(*a);
@@ -40,7 +40,7 @@ int execute_comand(stack *a, stack *b, char *command)
         return 1;
     return 0;
 }
-int recive_commands(stack *a, stack *b)
+int recive_commands(t_stack *a, t_stack *b)
 {
     char *line;
 
@@ -61,8 +61,8 @@ int recive_commands(stack *a, stack *b)
 
 int main(int argc, char **argv)
 {
-    stack a;
-    stack b;
+    t_stack a;
+    t_stack b;
     int input_err;
     int len;
 
@@ -84,6 +84,8 @@ int main(int argc, char **argv)
         write(1, "[OK]\n", 5);
     else
         write(1, "[KO]\n", 5);
+    stk_free(&a);
+    stk_free(&b);
     // printf("aaaaaaaaaaaa\n");
     // stk_print(a);
     // printf("bbbbbbbbbbbbb\n");

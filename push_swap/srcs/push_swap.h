@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 13:59:28 by ptorres           #+#    #+#             */
-/*   Updated: 2021/04/26 11:45:50 by pablo            ###   ########.fr       */
+/*   Updated: 2021/04/26 12:42:10 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,26 +25,26 @@ typedef struct s_aux
 } t_aux;
 
 void ft_bidimensional_free(char **arr);
-void swap_top(stack a);
-void push_from_stack(stack *dest, stack *origin);
-int is_stack_order(stack a);
-int save_input(stack *s, char **input);
-int input_errors(stack s, char *input);
-void sa(stack *a);
-void sb(stack *a);
-void ss(stack *a, stack *b);
-void pa(stack *a, stack *b);
-void pb(stack *a, stack *b);
-void ra(stack *a);
-void rb(stack *b);
-void rr(stack *a, stack *b);
-void rra(stack *a);
-void rrb(stack *b);
-void rrr(stack *a, stack *b);
-int *sorted_stack_array(stack a);
+void swap_top(t_stack a);
+void push_from_stack(t_stack *dest, t_stack *origin);
+int is_stack_order(t_stack a);
+int save_input(t_stack *s, char **input);
+int input_errors(t_stack s, char *input);
+void sa(t_stack *a);
+void sb(t_stack *a);
+void ss(t_stack *a, t_stack *b);
+void pa(t_stack *a, t_stack *b);
+void pb(t_stack *a, t_stack *b);
+void ra(t_stack *a);
+void rb(t_stack *b);
+void rr(t_stack *a, t_stack *b);
+void rra(t_stack *a);
+void rrb(t_stack *b);
+void rrr(t_stack *a, t_stack *b);
+int *sorted_stack_array(t_stack a);
 int *sorted_array(int *arr, int len);
-void algorithm_3(stack a, stack b);
+void algorithm_3(t_stack a, t_stack b);
 int ft_sqrt(int n);
-void algorithm_2(stack a, stack b);
+void algorithm_2(t_stack a, t_stack b);
 
 #endif

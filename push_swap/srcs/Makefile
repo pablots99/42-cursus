@@ -1,16 +1,17 @@
 NAME = pushswap.a
 
-SRC = stack/stack.c \
-	  ps/utils.c \
-	  ps/operations.c  \
-	  ps/algor1.c		\
-	  ps/algo100.c	
+SRC = stack/stack.c 		\
+	  stack/stack1.c 		\
+	  stack/stack2.c 		\
+	  ps/utils.c 			\
+	  ps/operations.c  		\
+	  ps/algo100.c
 
 
 
 OBJS =	$(SRC:.c=.o)
 
-CFLAGS = -c -Wall -Wextra -Werror
+CFLAGS = -c -Wall -Wextra -Werror #-fsanitize=address
 
 CC = gcc
 

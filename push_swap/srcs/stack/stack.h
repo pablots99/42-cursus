@@ -6,32 +6,33 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 14:53:36 by pablo             #+#    #+#             */
-/*   Updated: 2021/04/26 11:46:41 by pablo            ###   ########.fr       */
+/*   Updated: 2021/04/26 12:43:43 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STACK_H
-#define STACK_H
+# define STACK_H
+# include <stdlib.h>
+# include <stdio.h>
 
 typedef struct s_stack
 {
-	int n;
-	struct s_stack *next;
-} * stack;
+	int				n;
+	struct s_stack	*next;
+}	*t_stack;
 
-stack 	stk_last(stack s);
-stack 	stk_init(int num);
-void 	stk_push(stack *s, int number);
-void	stk_pop_last(stack *s);
-void 	stk_free(stack *s);
-void stk_push_last(stack *s, int number);
-int 	stk_len(stack s);
-void stk_pop(stack *s);
-void stk_shift(stack *s);
-void stk_rev_shift(stack *s);
-void stk_print(stack s);
-int stk_index(stack a, int num);
-void stk_free(stack *s);
-
+t_stack	stk_last(t_stack s);
+t_stack	stk_init(int num);
+void	stk_push(t_stack *s, int number);
+void	stk_pop_last(t_stack *s);
+void	stk_free(t_stack *s);
+void	stk_push_last(t_stack *s, int number);
+int	stk_len(t_stack s);
+void	stk_pop(t_stack *s);
+void	stk_shift(t_stack *s);
+void	stk_rev_shift(t_stack *s);
+void	stk_print(t_stack s);
+int	stk_index(t_stack a, int num);
+void	stk_free(t_stack *s);
 
 #endif

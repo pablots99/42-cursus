@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   stack.c                                            :+:      :+:    :+:   */
+/*   t_stack.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 14:49:29 by pablo             #+#    #+#             */
-/*   Updated: 2021/04/26 11:46:35 by pablo            ###   ########.fr       */
+/*   Updated: 2021/04/26 12:41:00 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,149 +14,71 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-stack stk_last(stack s)
+t_stack	stk_last(t_stack s)
 {
-    stack res;
-    res = s;
-    while( res->next)
-        res = res->next;
-    return res;
+	t_stack	res;
+
+	res = s;
+	while (res->next)
+		res = res->next;
+	return (res);
 }
 
-stack  stk_init(int num)
+t_stack	stk_init(int num)
 {
-    stack s;
-    
-    s = malloc(sizeof(struct s_stack));
-    if(!s)
-        return NULL;
-    s->n = num;
-    s->next = NULL;
-    return s;
+	t_stack	s;
+
+	s = malloc(sizeof(struct s_stack));
+	if (!s)
+		return (NULL);
+	s->n = num;
+	s->next = NULL;
+	return (s);
 }
 
-void stk_push_last(stack *s, int number)
+void	stk_push_last(t_stack *s, int number)
 {
-    stack f;
-    
-    f = *s;
-    if(f == NULL)
-    {
-        *s = stk_init(number);
-        return ;
-    }
-    while(f->next)
-        f = f->next;
-    f->next = stk_init(number);
+	t_stack	f;
+
+	f = *s;
+	if (f == NULL)
+	{
+		*s = stk_init(number);
+		return ;
+	}
+	while (f->next)
+		f = f->next;
+	f->next = stk_init(number);
 }
 
-void  stk_pop_last(stack *s)
+void	stk_pop_last(t_stack *s)
 {
-    stack f;
-    f = *s;
-    while(f->next->next)
-        f = f->next;
-    free(f->next);
-    f->next = NULL;
-}
-void stk_pop(stack *s)
-{
-    stack f;
-    stack f1;
-    f = *s;
-    if(f != NULL)
-    {  
-       f1 = f;
-        f = f->next;
-        *s = f;
-        free(f1);
-    }
+	t_stack	f;
+
+	f = *s;
+	while (f->next->next)
+		f = f->next;
+	free(f->next);
+	f->next = NULL;
 }
 
-void stk_push(stack *s, int num)
+void	stk_pop(t_stack *s)
 {
-    stack f;
-    f = stk_init(num);
-    f->next = *s;
-    *s = f;
-}
+	t_stack	f;
+	t_stack	f1;
 
-int stk_len(stack s)
-{
-    int i;
-
-    i = 0;
-    while(s != NULL)
-    {
-        i++;
-        s = s->next;
-    }
-    return i;
-}
-
-void stk_shift(stack *s)
-{
-    stack a;
-
-  
-    if(*s != NULL)
-    {
-        
-		a = *s;
-        stk_push_last(s,a->n);
-		stk_pop(s);
-    }
-}
-void stk_rev_shift(stack *s)
-{
-    stack a;
-
-    if(*s != NULL)
-    {
-		a = stk_last(*s);
-        stk_push(s,a->n);
-		stk_pop_last(s);
-    }
-}
-
-void stk_print(stack s)
-{
-    stack f;
-
-    f = s;
-    if (!s)
-        return;
-    while (s->next)
-    {
-        printf("s:%d-", s->n);
-        s = s->next;
-    }
-    printf("s:%d\n", s->n);
-}
-
-int stk_index(stack a, int num)
-{
-    int i;
-
-    i = 0;
-    while (a != NULL)
-    {
-        if (a->n == num)
-            return i;
-        i++;
-        a = a->next;
-    }
-    return -1; // error ocurred
-}
-void stk_free(stack *s)
-{
-	stack aux;
-	stack aux_1;
-	aux = *s;
-	while (aux != NULL)
-    {
-		aux_1 = aux;
-        aux = aux->next;
-		free(aux_1);
-    }
+	f = *s;
+	if(f->next == NULL)
+	{
+		free(*s);
+		*s = NULL;
+		return ;
+	}
+	if (f != NULL && f->next != NULL)
+	{
+		f1 = f;
+		f = f->next;
+		*s = f;
+		free(f1);
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/22 18:27:02 by ptorres           #+#    #+#             */
-/*   Updated: 2021/04/26 11:45:21 by pablo            ###   ########.fr       */
+/*   Updated: 2021/04/26 13:14:40 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,18 @@
 
 typedef struct s_alg2
 {
-	int *soted_arr;
-	int chunk;
-	int total_chunks;
-	int len;
-	int chunk_size;
+	int	*soted_arr;
+	int	chunk;
+	int	total_chunks;
+	int	len;
+	int	chunk_size;
 } t_alg2;
 
-int *sorted_array(int *arr, int len)
+int	*sorted_array(int *arr, int len)
 {
-	int i;
-	int j;
-	int aux;
+	int	i;
+	int	j;
+	int	aux;
 
 	i = 0;
 	while (i < len - 1)
@@ -43,18 +43,18 @@ int *sorted_array(int *arr, int len)
 		}
 		i++;
 	}
-	return arr;
+	return (arr);
 }
-int *sorted_stack_array(stack a)
+int	*sorted_stack_array(t_stack a)
 {
-	int *arr;
-	int i;
-	int len;
+	int	*arr;
+	int	i;
+	int	len;
 
 	i = 0;
 	len = stk_len(a);
 	if (len == 0)
-		return NULL;
+		return (NULL);
 	arr = malloc(len * sizeof(int));
 	while (a != NULL)
 	{
@@ -63,14 +63,16 @@ int *sorted_stack_array(stack a)
 		a = a->next;
 	}
 	arr = sorted_array(arr, len);
-	return arr;
+	return (arr);
 }
 
-void chunk_rotation(t_alg2 *p, stack *a, stack *b)
+void	chunk_rotation(t_alg2 *p, t_stack *a, t_stack *b)
 {
-	int i;
-	int *indexes;
-	t_aux aux;
+	int	i;
+	int	*indexes;
+	t_aux	aux;
+	t_stack bb;
+	t_stack aa;
 
 	i = 0;
 	indexes = (int *)malloc((p->chunk_size) * sizeof(int));
@@ -90,8 +92,6 @@ void chunk_rotation(t_alg2 *p, stack *a, stack *b)
 	else
 		aux.movements = indexes[0];
 	i = 0;
-	stack bb;
-	stack aa;
 	while (i < aux.movements)
 	{
 		bb = *b;
@@ -110,11 +110,11 @@ void chunk_rotation(t_alg2 *p, stack *a, stack *b)
 	free(indexes);
 }
 
-void push_to_a(stack *a, stack *b, t_alg2 p, int *sort_2)
+void	push_to_a(t_stack *a, t_stack *b, t_alg2 p, int *sort_2)
 {
-	int cont;
-	int index;
-	stack bb;
+	int	cont;
+	int	index;
+	t_stack bb;
 
 	cont = 0;
 	p.len = stk_len(*b);
@@ -134,11 +134,11 @@ void push_to_a(stack *a, stack *b, t_alg2 p, int *sort_2)
 				rb(b);
 			bb = *b;
 		}
-		pa(a,b);
+		pa(a, b);
 	}
 }
 
-void algorithm_2(stack a, stack b)
+void algorithm_2(t_stack a, t_stack b)
 {
 	t_alg2 p;
 	int *sort_2;
@@ -158,6 +158,7 @@ void algorithm_2(stack a, stack b)
 		pb(&a, &b);
 		free(p.soted_arr);
 	}
-	push_to_a(&a,&b,p,sort_2);
+	push_to_a(&a, &b, p, sort_2);
 	free(sort_2);
+	stk_free(&a);
 }

@@ -6,14 +6,14 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 14:00:18 by ptorres           #+#    #+#             */
-/*   Updated: 2021/04/26 11:59:17 by pablo            ###   ########.fr       */
+/*   Updated: 2021/04/26 13:15:48 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "srcs/push_swap.h"
 
 
-void algorithm_1(stack a, stack b)
+void algorithm_1(t_stack a, t_stack b)
 {
     int *arr;
     int i;
@@ -46,14 +46,15 @@ void algorithm_1(stack a, stack b)
     while (b != NULL)
         pa(&a, &b);
     free(arr);
+    stk_free(&a);
 }
 
 
 //mirar lo de dividir entre 1.3
 int main(int argc, char **argv)
 {
-    stack a;
-    stack b;
+    t_stack a;
+    t_stack b;
     int input_err;
 
     b = NULL;
@@ -73,8 +74,5 @@ int main(int argc, char **argv)
         algorithm_1(a, b);
     else
         algorithm_2(a, b);
-	//stk_free(&a);
-    // printf("plen:%d sqrt:%d",stk_len(a), ft_sqrt(stk_len(a)));
-	//system("leaks push_swap");
     return 0;
 }
