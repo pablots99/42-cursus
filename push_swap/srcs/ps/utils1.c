@@ -1,40 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   utils1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/07/03 20:21:06 by pablo             #+#    #+#             */
-/*   Updated: 2021/04/26 17:27:32 by pablo            ###   ########.fr       */
+/*   Created: 2021/04/26 17:07:19 by pablo             #+#    #+#             */
+/*   Updated: 2021/04/26 17:41:06 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../push_swap.h"
 
-long int	ft_atoi(const char *str)
+void	push_to_index(t_stack *a, t_stack *b, t_aux aux)
 {
-	int			i;
-	int			cont;
-	long int	num;
+	t_stack	bb;
+	t_stack	aa;
+	int		i;
 
-	num = 0;
 	i = 0;
-	cont = 0;
-	while ((str[i] >= 9 && str[i] <= 13) || str[i] == ' ')
-		i++;
-	if (str[i] == '-' || str[i] == '+')
+	while (i < aux.movements)
 	{
-		if (str[i] == '-')
-			cont++;
+		bb = *b;
+		aa = *a;
+		if (aux.ra)
+		{
+			if (stk_len(bb) > 4 && bb->n < bb->next->n)
+				rr(a, b);
+			else
+				ra(a);
+		}
+		else
+			rra(a);
 		i++;
 	}
-	while (str[i] >= '0' && str[i] <= '9')
-	{
-		num = num * 10 + (str[i] - '0');
-		i++;
-	}
-	if (cont)
-		return (num * -1);
-	return (num);
 }

@@ -61,7 +61,7 @@ do
 		./push_swap $ARG > tests/ops
 	fi
 	checker=$(./checker $ARG < tests/ops)
-	aux="[OK]"
+	aux="OK"
 	if  [[ "$checker" != "$aux" ]]
 	then
 		error=1

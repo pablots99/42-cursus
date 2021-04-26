@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/22 18:27:02 by ptorres           #+#    #+#             */
-/*   Updated: 2021/04/26 13:14:40 by pablo            ###   ########.fr       */
+/*   Updated: 2021/04/26 17:07:58 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ typedef struct s_alg2
 	int	total_chunks;
 	int	len;
 	int	chunk_size;
-} t_alg2;
+}	t_alg2;
 
 int	*sorted_array(int *arr, int len)
 {
@@ -45,6 +45,7 @@ int	*sorted_array(int *arr, int len)
 	}
 	return (arr);
 }
+
 int	*sorted_stack_array(t_stack a)
 {
 	int	*arr;
@@ -68,11 +69,9 @@ int	*sorted_stack_array(t_stack a)
 
 void	chunk_rotation(t_alg2 *p, t_stack *a, t_stack *b)
 {
-	int	i;
-	int	*indexes;
+	int		i;
+	int		*indexes;
 	t_aux	aux;
-	t_stack bb;
-	t_stack aa;
 
 	i = 0;
 	indexes = (int *)malloc((p->chunk_size) * sizeof(int));
@@ -81,7 +80,6 @@ void	chunk_rotation(t_alg2 *p, t_stack *a, t_stack *b)
 		indexes[i] = stk_index(*a, p->soted_arr[i]);
 		i++;
 	}
-	i = 0;
 	indexes = sorted_array(indexes, p->chunk_size);
 	aux.ra = 1;
 	if (indexes[0] > p->len - indexes[p->chunk_size - 1])
@@ -91,30 +89,15 @@ void	chunk_rotation(t_alg2 *p, t_stack *a, t_stack *b)
 	}
 	else
 		aux.movements = indexes[0];
-	i = 0;
-	while (i < aux.movements)
-	{
-		bb = *b;
-		aa = *a;
-		if (aux.ra)
-		{
-			if (stk_len(bb) > 4 && bb->n < bb->next->n)
-				rr(a, b);
-			else
-				ra(a);
-		}
-		else
-			rra(a);
-		i++;
-	}
+	push_to_index(a, b, aux);
 	free(indexes);
 }
 
 void	push_to_a(t_stack *a, t_stack *b, t_alg2 p, int *sort_2)
 {
-	int	cont;
-	int	index;
-	t_stack bb;
+	int		cont;
+	int		index;
+	t_stack	bb;
 
 	cont = 0;
 	p.len = stk_len(*b);
@@ -138,10 +121,10 @@ void	push_to_a(t_stack *a, t_stack *b, t_alg2 p, int *sort_2)
 	}
 }
 
-void algorithm_2(t_stack a, t_stack b)
+void	algorithm_2(t_stack a, t_stack b)
 {
-	t_alg2 p;
-	int *sort_2;
+	t_alg2	p;
+	int		*sort_2;
 
 	p.chunk = 0;
 	p.len = stk_len(a);

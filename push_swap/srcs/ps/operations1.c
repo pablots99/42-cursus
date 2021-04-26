@@ -1,40 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   operations1.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/07/03 20:21:06 by pablo             #+#    #+#             */
-/*   Updated: 2021/04/26 17:27:32 by pablo            ###   ########.fr       */
+/*   Created: 2021/04/26 17:08:59 by pablo             #+#    #+#             */
+/*   Updated: 2021/04/26 17:10:57 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../push_swap.h"
 
-long int	ft_atoi(const char *str)
+void	rb(t_stack *b)
 {
-	int			i;
-	int			cont;
-	long int	num;
+	stk_shift(b);
+	write(1, "rb\n", 3);
+}
 
-	num = 0;
-	i = 0;
-	cont = 0;
-	while ((str[i] >= 9 && str[i] <= 13) || str[i] == ' ')
-		i++;
-	if (str[i] == '-' || str[i] == '+')
-	{
-		if (str[i] == '-')
-			cont++;
-		i++;
-	}
-	while (str[i] >= '0' && str[i] <= '9')
-	{
-		num = num * 10 + (str[i] - '0');
-		i++;
-	}
-	if (cont)
-		return (num * -1);
-	return (num);
+void	rr(t_stack *a, t_stack *b)
+{
+	stk_shift(a);
+	stk_shift(b);
+	write(1, "rr\n", 3);
+}
+
+void	rra(t_stack *a)
+{
+	stk_rev_shift(a);
+	write(1, "rra\n", 4);
+}
+
+void	rrb(t_stack *b)
+{
+	stk_rev_shift(b);
+	write(1, "rrb\n", 4);
+}
+
+void	rrr(t_stack *a, t_stack *b)
+{
+	stk_rev_shift(a);
+	stk_rev_shift(b);
+	write(1, "rrr\n", 4);
 }

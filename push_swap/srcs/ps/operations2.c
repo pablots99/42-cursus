@@ -1,40 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   operations2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/07/03 20:21:06 by pablo             #+#    #+#             */
-/*   Updated: 2021/04/26 17:27:32 by pablo            ###   ########.fr       */
+/*   Created: 2021/04/26 17:08:53 by pablo             #+#    #+#             */
+/*   Updated: 2021/04/26 17:10:26 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../push_swap.h"
 
-long int	ft_atoi(const char *str)
+void	sb(t_stack *b)
 {
-	int			i;
-	int			cont;
-	long int	num;
+	swap_top(*b);
+	write(1, "sb\n", 3);
+}
 
-	num = 0;
-	i = 0;
-	cont = 0;
-	while ((str[i] >= 9 && str[i] <= 13) || str[i] == ' ')
-		i++;
-	if (str[i] == '-' || str[i] == '+')
-	{
-		if (str[i] == '-')
-			cont++;
-		i++;
-	}
-	while (str[i] >= '0' && str[i] <= '9')
-	{
-		num = num * 10 + (str[i] - '0');
-		i++;
-	}
-	if (cont)
-		return (num * -1);
-	return (num);
+void	ss(t_stack *a, t_stack *b)
+{
+	swap_top(*a);
+	swap_top(*b);
+	write(1, "ss\n", 3);
+}
+
+void	pa(t_stack *a, t_stack *b)
+{
+	push_from_stack(a, b);
+	write(1, "pa\n", 3);
+}
+
+void	pb(t_stack *a, t_stack *b)
+{
+	push_from_stack(b, a);
+	write(1, "pb\n", 3);
+}
+
+void	ra(t_stack *a)
+{
+	stk_shift(a);
+	write(1, "ra\n", 3);
 }

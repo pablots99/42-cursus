@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 21:25:17 by pablo             #+#    #+#             */
-/*   Updated: 2021/04/26 11:15:40 by pablo            ###   ########.fr       */
+/*   Updated: 2021/04/26 17:44:00 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 size_t	gn_ft_strlen(const char *s)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!s)
@@ -26,7 +26,7 @@ size_t	gn_ft_strlen(const char *s)
 
 size_t	gn_ft_strcpy(char *dst, const char *src, size_t dstsize)
 {
-	unsigned int i;
+	unsigned int	i;
 
 	i = 0;
 	while (src[i] && i < ((unsigned int)dstsize))
@@ -47,8 +47,9 @@ char	*gn_ft_strjoin(char const *s1, char const *s2)
 	if (!s1 && !s2)
 		return (NULL);
 	i = 0;
-	if (!(ptr = (char *)malloc((gn_ft_strlen((char *)s1)
-				+ gn_ft_strlen((char *)s2) + 1) * sizeof(char))))
+	ptr = (char *)malloc((gn_ft_strlen((char *)s1)
+				+ gn_ft_strlen((char *)s2) + 1) * sizeof(char));
+	if (!(ptr))
 		return (NULL);
 	while (s1 && s1[i])
 	{
@@ -58,9 +59,8 @@ char	*gn_ft_strjoin(char const *s1, char const *s2)
 	j = 0;
 	while (s2 && s2[j])
 	{
-		ptr[i] = s2[j];
+		ptr[i] = s2[j++];
 		i++;
-		j++;
 	}
 	free((char *)s1);
 	ptr[i] = '\0';

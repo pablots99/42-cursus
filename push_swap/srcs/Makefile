@@ -4,7 +4,10 @@ SRC = stack/stack.c 		\
 	  stack/stack1.c 		\
 	  stack/stack2.c 		\
 	  ps/utils.c 			\
+	  ps/utils1.c 			\
 	  ps/operations.c  		\
+	  ps/operations1.c  		\
+	  ps/operations2.c  		\
 	  ps/algo100.c
 
 

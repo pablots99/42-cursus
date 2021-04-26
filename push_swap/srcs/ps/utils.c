@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/15 13:53:37 by ptorres           #+#    #+#             */
-/*   Updated: 2021/04/26 12:51:29 by pablo            ###   ########.fr       */
+/*   Updated: 2021/04/26 17:08:27 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	input_errors(t_stack s, char *input)
 	long int	num;
 
 	i = 0;
-	if(input[i] == '-' || ft_isdigit(input[i]))
+	if (input[i] == '-' || ft_isdigit(input[i]))
 		i++;
 	while (input[i])
 	{
