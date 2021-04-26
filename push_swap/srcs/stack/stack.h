@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 14:53:36 by pablo             #+#    #+#             */
-/*   Updated: 2021/04/21 00:51:25 by pablo            ###   ########.fr       */
+/*   Updated: 2021/04/26 11:46:41 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,7 @@ void stk_shift(stack *s);
 void stk_rev_shift(stack *s);
 void stk_print(stack s);
 int stk_index(stack a, int num);
+void stk_free(stack *s);
+
 
 #endif

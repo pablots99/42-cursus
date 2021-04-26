@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 14:49:29 by pablo             #+#    #+#             */
-/*   Updated: 2021/04/21 00:51:19 by pablo            ###   ########.fr       */
+/*   Updated: 2021/04/26 11:46:35 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,4 +147,16 @@ int stk_index(stack a, int num)
         a = a->next;
     }
     return -1; // error ocurred
+}
+void stk_free(stack *s)
+{
+	stack aux;
+	stack aux_1;
+	aux = *s;
+	while (aux != NULL)
+    {
+		aux_1 = aux;
+        aux = aux->next;
+		free(aux_1);
+    }
 }

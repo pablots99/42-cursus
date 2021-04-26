@@ -6,11 +6,11 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/20 17:57:30 by ptorres           #+#    #+#             */
-/*   Updated: 2021/04/21 23:00:39 by pablo            ###   ########.fr       */
+/*   Updated: 2021/04/26 11:24:07 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "../push_swap.h"
 
 void move_half(stack *a, stack *b, int *sorted, int len)
 {

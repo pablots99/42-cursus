@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 13:59:28 by ptorres           #+#    #+#             */
-/*   Updated: 2021/04/21 17:33:11 by pablo            ###   ########.fr       */
+/*   Updated: 2021/04/26 11:45:50 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include "../libft/libft.h"
-#include "stack.h"
+#include "stack/stack.h"
 
 #ifndef PUSH_SWAP_H
 #define PUSH_SWAP_H
@@ -45,5 +45,6 @@ int *sorted_stack_array(stack a);
 int *sorted_array(int *arr, int len);
 void algorithm_3(stack a, stack b);
 int ft_sqrt(int n);
+void algorithm_2(stack a, stack b);
 
 #endif

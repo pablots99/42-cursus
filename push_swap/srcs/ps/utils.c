@@ -6,11 +6,11 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/15 13:53:37 by ptorres           #+#    #+#             */
-/*   Updated: 2021/04/21 17:33:22 by pablo            ###   ########.fr       */
+/*   Updated: 2021/04/26 11:24:06 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "../push_swap.h"
 
 void ft_bidimensional_free(char **arr)
 {

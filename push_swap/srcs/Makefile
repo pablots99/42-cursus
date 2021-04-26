@@ -1,9 +1,10 @@
 NAME = pushswap.a
 
-SRC = stack.c \
-	  utils.c \
-	  operations.c  \
-	  algor1.c
+SRC = stack/stack.c \
+	  ps/utils.c \
+	  ps/operations.c  \
+	  ps/algor1.c		\
+	  ps/algo100.c	
 
 
 
@@ -21,7 +22,9 @@ $(NAME):$(OBJS)
 	ar rc $(NAME) $(OBJS)
 
 clean:
-	/bin/rm -f $(OBJS) 
+	/bin/rm -f   ps/*.o
+	/bin/rm -f   stack/*.o
+	/bin/rm -f  *.o
 
 
 fclean: clean

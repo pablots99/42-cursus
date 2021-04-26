@@ -32,24 +32,30 @@ fi
 
 error=0
 final[0]=""
+if  ! [[ $( ls | grep tests ) ]] ; then
+	mkdir tests 
+fi
+
 for i in $(seq 0 $2);
 do
 	printf "${Yellow}Loading:$i/$2\r$endColour"
 	start=$((0))
 	end=$(($1))
 	ARG=$(gshuf -i $start-$end -n $1) 
-	echo "${ARG[@]}" > list
-	./push_swap $ARG > a
-	checker=$(./checker $ARG < a)
+	echo "${ARG[@]}" > tests/list
+	valgrind --leak-check=full --track-origins=yes --log-file=./tests/lekas_ps ./push_swap $ARG > tests/ops
+	valgrind --leak-check=full --track-origins=yes --log-file=./tests/lekas_ch ./checker $ARG < tests/ops
+	checker=$(./checker $ARG < tests/ops)
 	aux="[OK]"
-	if [[ "$checker" != "$aux" ]]
+	if  [[ "$checker" != "$aux" ]]
 	then	
 		error=1
 		echo -e "\r${Red}error:BAD ALGORITHM RESULT!!! test_numner: $i: checker: $checker $endColour"; break 
 	fi
-	res=$(wc -l a)
+	res=$(wc -l tests/ops)
 	res=${res%??}
 	res="${res//[[:blank:]]/}"
+	res=${res%???????}
 	final[i]=$res
 done
 
@@ -82,3 +88,4 @@ media=$(( $media / ($2+1) ))
 echo "${Purple}Media movents:${endColour}${Blue} $media $endColou"
 
 rm -rf checker.dSYM
+rm -rf push_swap.dSYM
