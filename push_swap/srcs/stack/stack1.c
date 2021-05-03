@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 12:18:36 by pablo             #+#    #+#             */
-/*   Updated: 2021/04/26 12:41:47 by pablo            ###   ########.fr       */
+/*   Updated: 2021/04/26 19:29:03 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,13 @@ void	stk_print(t_stack s)
 	f = s;
 	if (!s)
 		return ;
+	printf("stack: ");
 	while (s->next)
 	{
-		printf("s:%d-", s->n);
+		printf(" %d ,", s->n);
 		s = s->next;
 	}
-	printf("s:%d\n", s->n);
+	printf("%d\n", s->n);
 }
 
 int	stk_index(t_stack a, int num)

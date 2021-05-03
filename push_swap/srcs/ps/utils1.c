@@ -6,32 +6,64 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 17:07:19 by pablo             #+#    #+#             */
-/*   Updated: 2021/04/26 17:41:06 by pablo            ###   ########.fr       */
+/*   Updated: 2021/05/03 21:16:32 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
-void	push_to_index(t_stack *a, t_stack *b, t_aux aux)
+int	*sorted_array(int *arr, int len)
 {
-	t_stack	bb;
-	t_stack	aa;
-	int		i;
+	int	i;
+	int	j;
+	int	aux;
 
 	i = 0;
-	while (i < aux.movements)
+	while (i < len - 1)
 	{
-		bb = *b;
-		aa = *a;
-		if (aux.ra)
+		j = i + 1;
+		while (j < len)
 		{
-			if (stk_len(bb) > 4 && bb->n < bb->next->n)
-				rr(a, b);
-			else
-				ra(a);
+			if (arr[i] >= arr[j])
+			{
+				aux = arr[i];
+				arr[i] = arr[j];
+				arr[j] = aux;
+			}
+			j++;
 		}
-		else
-			rra(a);
 		i++;
 	}
+	return (arr);
+}
+
+int	*sorted_stack_array(t_stack a)
+{
+	int	*arr;
+	int	i;
+	int	len;
+
+	i = 0;
+	len = stk_len(a);
+	if (len == 0)
+		return (NULL);
+	arr = malloc(len * sizeof(int));
+	while (a != NULL)
+	{
+		arr[i] = a->n;
+		i++;
+		a = a->next;
+	}
+	arr = sorted_array(arr, len);
+	return (arr);
+}
+
+int	ft_sqrt(int n)
+{
+	int	i;
+
+	i = 0;
+	while (i * i != n && i * i < n)
+		i++;
+	return (i);
 }

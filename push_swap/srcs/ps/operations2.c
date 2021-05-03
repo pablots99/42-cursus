@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 17:08:53 by pablo             #+#    #+#             */
-/*   Updated: 2021/04/26 17:10:26 by pablo            ###   ########.fr       */
+/*   Updated: 2021/05/03 21:14:56 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ void	ss(t_stack *a, t_stack *b)
 
 void	pa(t_stack *a, t_stack *b)
 {
+	if (!b || *b == NULL)
+		return ;
 	push_from_stack(a, b);
 	write(1, "pa\n", 3);
 }

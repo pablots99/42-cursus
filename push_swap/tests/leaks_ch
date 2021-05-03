@@ -1,34 +1,35 @@
-==13025== Memcheck, a memory error detector
-==13025== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==13025== Using Valgrind-3.17.0.GIT-lbmacos and LibVEX; rerun with -h for copyright info
-==13025== Command: ./checker 3 100 14 57 1 63 95 59 2 13 44 4 23 7 70 41 35 80 64 39 79 56 31 16 84 25 82 9 65 12 98 99 48 40 91 86 54 97 67 76 73 75 32 58 43 29 81 18 38 96 88 50 66 34 72 51 8 26 22 33 21 53 42 0 87 28 24 62 45 52 17 61 93 10 60 20 27 11 89 55 37 30 6 68 90 15 71 36 78 92 19 47 46 69 74 83 5 77 49 94
-==13025== Parent PID: 12825
-==13025== 
-==13025== 
-==13025== HEAP SUMMARY:
-==13025==     in use at exit: 13,896 bytes in 161 blocks
-==13025==   total heap usage: 5,396 allocs, 5,235 frees, 46,540 bytes allocated
-==13025== 
-==13025== 2,048 bytes in 1 blocks are definitely lost in loss record 34 of 36
-==13025==    at 0x100123545: malloc (in /usr/local/Cellar/valgrind/HEAD-adaae87/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==13025==    by 0x100701E95: class_setWeakIvarLayout (in /usr/lib/libobjc.A.dylib)
-==13025==    by 0x100701E26: class_setWeakIvarLayout (in /usr/lib/libobjc.A.dylib)
-==13025==    by 0x100705BF9: _objc_atfork_parent (in /usr/lib/libobjc.A.dylib)
-==13025==    by 0x1006F3742: property_copyAttributeList (in /usr/lib/libobjc.A.dylib)
-==13025==    by 0x1006E91E7: NXMapRemove (in /usr/lib/libobjc.A.dylib)
-==13025==    by 0x1006FBBD2: attachCategories(objc_class*, locstamped_category_t const*, unsigned int, int) (in /usr/lib/libobjc.A.dylib)
-==13025==    by 0x1006FB6C6: objc_class::mangledName() (in /usr/lib/libobjc.A.dylib)
-==13025==    by 0x1006FB69F: objc_class::mangledName() (in /usr/lib/libobjc.A.dylib)
-==13025==    by 0x1006FB69F: objc_class::mangledName() (in /usr/lib/libobjc.A.dylib)
-==13025==    by 0x1006FB69F: objc_class::mangledName() (in /usr/lib/libobjc.A.dylib)
-==13025==    by 0x1006E7406: objc_opt::objc_stringhash_t::getIndex(char const*) const (in /usr/lib/libobjc.A.dylib)
-==13025== 
-==13025== LEAK SUMMARY:
-==13025==    definitely lost: 2,048 bytes in 1 blocks
-==13025==    indirectly lost: 0 bytes in 0 blocks
-==13025==      possibly lost: 0 bytes in 0 blocks
-==13025==    still reachable: 0 bytes in 0 blocks
-==13025==         suppressed: 11,848 bytes in 160 blocks
-==13025== 
-==13025== For lists of detected and suppressed errors, rerun with: -s
-==13025== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 7 from 7)
+==99901== Memcheck, a memory error detector
+==99901== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==99901== Using Valgrind-3.17.0.GIT-lbmacos and LibVEX; rerun with -h for copyright info
+==99901== Command: ./checker 372 363 456 473 440 458 489 84 364 352 480 238 342 276 21 28 7 176 433 496 389 71 187 340 43 313 142 431 425 213 375 153 124 95 338 232 39 16 3 69 151 136 248 190 366 399 247 164 112 100 58 41 482 298 278 150 222 488 422 129 457 89 184 267 237 257 308 137 297 501 92 146 273 326 270 356 418 134 205 430 370 388 486 419 467 410 77 478 333 202 30 57 5 94 290 156 452 283 438 56 189 244 429 81 109 230 397 377 291 157 445 235 311 38 421 1 420 125 487 245 280 353 282 106 484 240 265 312 494 330 241 132 499 328 476 249 461 120 166 319 111 196 259 59 367 210 2 396 133 36 415 66 44 435 11 180 70 414 12 135 98 68 165 31 413 178 443 87 470 260 91 436 408 194 412 371 426 451 49 228 141 155 93 19 401 345 277 286 310 33 182 285 343 55 360 341 492 167 218 463 305 336 175 32 404 181 255 171 350 152 160 392 347 315 317 198 334 449 79 409 72 493 483 29 254 0 168 302 384 446 63 74 497 378 6 271 385 387 138 115 229 437 61 224 369 227 51 45 471 500 105 307 97 309 393 42 192 50 122 287 154 186 469 47 206 293 416 108 54 323 490 101 219 212 172 23 462 450 147 126 143 284 139 86 434 221 300 123 27 242 329 481 448 34 279 183 320 252 131 128 258 391 460 485 322 321 200 292 455 395 428 117 67 382 294 195 148 295 76 402 144 358 348 349 127 475 149 65 304 479 246 398 303 275 407 8 454 73 439 35 174 243 477 203 390 299 468 380 177 374 37 211 417 40 46 209 379 193 351 359 170 220 114 272 121 217 169 4 274 158 268 24 498 316 130 262 432 403 301 52 99 444 335 362 83 185 373 325 90 116 365 447 466 162 400 314 465 17 214 424 26 361 188 442 78 344 10 236 459 119 324 145 231 18 491 357 25 289 161 159 441 15 411 173 306 296 88 474 495 386 234 179 354 20 80 239 266 261 204 256 339 118 191 53 82 215 288 102 207 423 233 216 251 201 318 223 332 405 9 331 250 140 368 381 376 281 110 208 346 163 263 264 427 113 406 14 226 22 85 453 472 48 269 337 394 96 197 104 253 64 60 13 103 383 355 199 107 62 225 75 327
+==99901== Parent PID: 99788
+==99901== 
+--99901-- run: /usr/bin/dsymutil "./checker"
+==99901== 
+==99901== HEAP SUMMARY:
+==99901==     in use at exit: 13,860 bytes in 161 blocks
+==99901==   total heap usage: 48,791 allocs, 48,630 frees, 263,614 bytes allocated
+==99901== 
+==99901== 2,048 bytes in 1 blocks are definitely lost in loss record 34 of 36
+==99901==    at 0x100123545: malloc (in /usr/local/Cellar/valgrind/HEAD-adaae87/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==99901==    by 0x100701E95: class_setWeakIvarLayout (in /usr/lib/libobjc.A.dylib)
+==99901==    by 0x100701E26: class_setWeakIvarLayout (in /usr/lib/libobjc.A.dylib)
+==99901==    by 0x100705BF9: _objc_atfork_parent (in /usr/lib/libobjc.A.dylib)
+==99901==    by 0x1006F3742: property_copyAttributeList (in /usr/lib/libobjc.A.dylib)
+==99901==    by 0x1006E91E7: NXMapRemove (in /usr/lib/libobjc.A.dylib)
+==99901==    by 0x1006FBBD2: attachCategories(objc_class*, locstamped_category_t const*, unsigned int, int) (in /usr/lib/libobjc.A.dylib)
+==99901==    by 0x1006FB6C6: objc_class::mangledName() (in /usr/lib/libobjc.A.dylib)
+==99901==    by 0x1006FB69F: objc_class::mangledName() (in /usr/lib/libobjc.A.dylib)
+==99901==    by 0x1006FB69F: objc_class::mangledName() (in /usr/lib/libobjc.A.dylib)
+==99901==    by 0x1006FB69F: objc_class::mangledName() (in /usr/lib/libobjc.A.dylib)
+==99901==    by 0x1006E7406: objc_opt::objc_stringhash_t::getIndex(char const*) const (in /usr/lib/libobjc.A.dylib)
+==99901== 
+==99901== LEAK SUMMARY:
+==99901==    definitely lost: 2,048 bytes in 1 blocks
+==99901==    indirectly lost: 0 bytes in 0 blocks
+==99901==      possibly lost: 0 bytes in 0 blocks
+==99901==    still reachable: 0 bytes in 0 blocks
+==99901==         suppressed: 11,812 bytes in 160 blocks
+==99901== 
+==99901== For lists of detected and suppressed errors, rerun with: -s
+==99901== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 7 from 7)

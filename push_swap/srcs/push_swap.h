@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 13:59:28 by ptorres           #+#    #+#             */
-/*   Updated: 2021/04/26 17:38:58 by pablo            ###   ########.fr       */
+/*   Updated: 2021/05/03 21:18:39 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,13 @@ typedef struct s_aux
 	int	ra;
 	int	movements;
 }	t_aux;
+
+typedef struct s_qs
+{
+	t_stack	*a;
+	t_stack	*b;
+	char	*res;
+}	t_qs;
 
 void	ft_bidimensional_free(char **arr);
 void	swap_top(t_stack a);
@@ -46,6 +53,22 @@ int		*sorted_array(int *arr, int len);
 void	algorithm_3(t_stack a, t_stack b);
 int		ft_sqrt(int n);
 void	algorithm_2(t_stack a, t_stack b);
+void	algorithm_4(t_stack a, t_stack b);
 void	push_to_index(t_stack *a, t_stack *b, t_aux aux);
+void	alg1_aux(t_stack *a, t_stack *b, int *arr, int n);
+int		*sorted_array(int *arr, int len);
+int		*sorted_stack_array(t_stack a);
+void	print_nums(int *nums, int len);
+int		is_stack_order_desc(t_stack a, int len);
+void	algorithm_1(t_stack a, t_stack b);
+void	push_to_b(t_qs *info, int len, int cond);
+void	rra_n(t_stack *a, char **res);
+void	rrb_n(t_stack *b, char **res);
+void	rb_n(t_stack *b, char **res);
+void	pa_n(t_stack *a, t_stack *b, char **res);
+void	pb_n(t_stack *a, t_stack *b, char **res);
+void	ra_n(t_stack *a, char **res);
+int		stk_l_median(t_stack s, int len);
+void	push_to_aa(t_qs *info, int len);
 
 #endif

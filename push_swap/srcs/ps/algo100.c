@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/22 18:27:02 by ptorres           #+#    #+#             */
-/*   Updated: 2021/04/26 17:07:58 by pablo            ###   ########.fr       */
+/*   Updated: 2021/05/03 20:51:25 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,50 +21,28 @@ typedef struct s_alg2
 	int	chunk_size;
 }	t_alg2;
 
-int	*sorted_array(int *arr, int len)
+void	push_to_index(t_stack *a, t_stack *b, t_aux aux)
 {
-	int	i;
-	int	j;
-	int	aux;
+	t_stack	bb;
+	t_stack	aa;
+	int		i;
 
 	i = 0;
-	while (i < len - 1)
+	while (i < aux.movements)
 	{
-		j = i + 1;
-		while (j < len)
+		bb = *b;
+		aa = *a;
+		if (aux.ra)
 		{
-			if (arr[i] >= arr[j])
-			{
-				aux = arr[i];
-				arr[i] = arr[j];
-				arr[j] = aux;
-			}
-			j++;
+			if (stk_len(bb) > 2 && bb->n < bb->next->n)
+				rr(a, b);
+			else
+				ra(a);
 		}
+		else
+			rra(a);
 		i++;
 	}
-	return (arr);
-}
-
-int	*sorted_stack_array(t_stack a)
-{
-	int	*arr;
-	int	i;
-	int	len;
-
-	i = 0;
-	len = stk_len(a);
-	if (len == 0)
-		return (NULL);
-	arr = malloc(len * sizeof(int));
-	while (a != NULL)
-	{
-		arr[i] = a->n;
-		i++;
-		a = a->next;
-	}
-	arr = sorted_array(arr, len);
-	return (arr);
 }
 
 void	chunk_rotation(t_alg2 *p, t_stack *a, t_stack *b)
@@ -123,14 +101,14 @@ void	push_to_a(t_stack *a, t_stack *b, t_alg2 p, int *sort_2)
 
 void	algorithm_2(t_stack a, t_stack b)
 {
-	t_alg2	p;
-	int		*sort_2;
+	t_alg2		p;
+	int			*sort_2;
 
 	p.chunk = 0;
 	p.len = stk_len(a);
 	sort_2 = sorted_stack_array(a);
 	p.total_chunks = ft_sqrt(p.len) / 2;
-	while (a != NULL)
+	while (!(stk_len(a) == 0))
 	{
 		p.soted_arr = sorted_stack_array(a);
 		p.len = stk_len(a);
@@ -141,6 +119,7 @@ void	algorithm_2(t_stack a, t_stack b)
 		pb(&a, &b);
 		free(p.soted_arr);
 	}
+	p.soted_arr = sorted_stack_array(a);
 	push_to_a(&a, &b, p, sort_2);
 	free(sort_2);
 	stk_free(&a);

@@ -8,9 +8,11 @@ SRC = stack/stack.c 		\
 	  ps/operations.c  		\
 	  ps/operations1.c  		\
 	  ps/operations2.c  		\
-	  ps/algo100.c
-
-
+      ps/operations_qs.c  		\
+	  ps/operations_qs2.c  		\
+	  ps/algo100.c				\
+	  ps/algo_qs.c				\
+	  ps/algo_qs_aux.c
 
 OBJS =	$(SRC:.c=.o)
 

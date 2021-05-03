@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/15 13:53:37 by ptorres           #+#    #+#             */
-/*   Updated: 2021/04/26 17:08:27 by pablo            ###   ########.fr       */
+/*   Updated: 2021/05/03 21:16:01 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,28 @@ int	is_stack_order(t_stack a)
 	while (a != NULL)
 	{
 		if (aux > a->n)
+			return (0);
+		aux = a->n;
+		a = a->next;
+	}
+	return (1);
+}
+
+int	is_stack_order_desc(t_stack a, int len)
+{
+	int	aux;
+	int	i;
+
+	i = 0;
+	if (a == NULL)
+		return (-1);
+	if (stk_len(a) == 1)
+		return (1);
+	aux = a->n;
+	a = a->next;
+	while (i < len && a != NULL)
+	{
+		if (aux < a->n)
 			return (0);
 		aux = a->n;
 		a = a->next;
@@ -94,14 +116,4 @@ int	input_errors(t_stack s, char *input)
 		s = s->next;
 	}
 	return (0);
-}
-
-int	ft_sqrt(int n)
-{
-	int	i;
-
-	i = 0;
-	while (i * i != n && i * i < n)
-		i++;
-	return (i);
 }
