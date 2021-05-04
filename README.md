@@ -14,3 +14,7 @@ MINIRT        -> OK
 
 FT_SERVICES   -> OK
 
+PUSH_SWAP     -> OK
+
+libasm        -> IN PROCESS
+
