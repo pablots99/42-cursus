@@ -16,7 +16,7 @@ SRC = stack/stack.c 		\
 
 OBJS =	$(SRC:.c=.o)
 
-CFLAGS = -c -Wall -Wextra -Werror #-fsanitize=address
+CFLAGS = -c -Wall -Wextra -Werror  -g3 #-fsanitize=address
 
 CC = gcc
 

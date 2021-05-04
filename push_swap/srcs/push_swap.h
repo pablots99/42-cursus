@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 13:59:28 by ptorres           #+#    #+#             */
-/*   Updated: 2021/05/03 21:18:39 by pablo            ###   ########.fr       */
+/*   Updated: 2021/05/04 12:15:23 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,15 @@ typedef struct s_qs
 	t_stack	*b;
 	char	*res;
 }	t_qs;
+
+typedef struct s_alg2
+{
+	int	*soted_arr;
+	int	chunk;
+	int	total_chunks;
+	int	len;
+	int	chunk_size;
+}	t_alg2;
 
 void	ft_bidimensional_free(char **arr);
 void	swap_top(t_stack a);
@@ -68,7 +77,12 @@ void	rb_n(t_stack *b, char **res);
 void	pa_n(t_stack *a, t_stack *b, char **res);
 void	pb_n(t_stack *a, t_stack *b, char **res);
 void	ra_n(t_stack *a, char **res);
+void	sa_n(t_stack *a, char **res);
+void	sb_n(t_stack *b, char **res);
 int		stk_l_median(t_stack s, int len);
 void	push_to_aa(t_qs *info, int len);
+char	*ft_append(char **s1, char const *s2);
+void	push_to_a(t_stack *a, t_stack *b, int len, int *sort_2);
+int		pus_to_b_aux(t_qs *info, int len);
 
 #endif

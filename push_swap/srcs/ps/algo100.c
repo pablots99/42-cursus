@@ -6,20 +6,11 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/22 18:27:02 by ptorres           #+#    #+#             */
-/*   Updated: 2021/05/03 20:51:25 by pablo            ###   ########.fr       */
+/*   Updated: 2021/05/04 12:09:27 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
-
-typedef struct s_alg2
-{
-	int	*soted_arr;
-	int	chunk;
-	int	total_chunks;
-	int	len;
-	int	chunk_size;
-}	t_alg2;
 
 void	push_to_index(t_stack *a, t_stack *b, t_aux aux)
 {
@@ -71,23 +62,23 @@ void	chunk_rotation(t_alg2 *p, t_stack *a, t_stack *b)
 	free(indexes);
 }
 
-void	push_to_a(t_stack *a, t_stack *b, t_alg2 p, int *sort_2)
+void	push_to_a(t_stack *a, t_stack *b, int len, int *sort_2)
 {
 	int		cont;
 	int		index;
 	t_stack	bb;
 
 	cont = 0;
-	p.len = stk_len(*b);
-	while (p.len--)
+	len = stk_len(*b);
+	while (len--)
 	{
-		index = stk_index(*b, sort_2[p.len]);
-		if (index < p.len / 2)
+		index = stk_index(*b, sort_2[len]);
+		if (index < len / 2)
 			cont = 1;
 		else
 			cont = 0;
 		bb = *b;
-		while (bb->n != sort_2[p.len])
+		while (bb->n != sort_2[len])
 		{
 			if (!cont)
 				rrb(b);
@@ -120,7 +111,7 @@ void	algorithm_2(t_stack a, t_stack b)
 		free(p.soted_arr);
 	}
 	p.soted_arr = sorted_stack_array(a);
-	push_to_a(&a, &b, p, sort_2);
+	push_to_a(&a, &b, p.len, sort_2);
 	free(sort_2);
 	stk_free(&a);
 }

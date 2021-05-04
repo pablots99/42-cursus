@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/03 20:54:04 by pablo             #+#    #+#             */
-/*   Updated: 2021/05/03 21:00:37 by pablo            ###   ########.fr       */
+/*   Updated: 2021/05/04 12:14:47 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,24 +49,23 @@ void	push_to_aa(t_qs *info, int len)
 	int	moved;
 	int	median;
 
-	median = stk_l_median(*(info)->b, len);
-	moved = 0;
+	moved = 1;
 	i = 0;
-	if (is_stack_order_desc(*(info)->b, len) && len <= 2)
+	if (len == 2 && (*(info)->b)->n < (*(info)->b)->next->n)
+		sb_n(info->b, &info->res);
+	if (is_stack_order_desc(*(info)->b, len) || len <= 1)
 	{
 		while (len--)
 			pa_n(info->a, info->b, &info->res);
 		return ;
 	}
+	median = stk_l_median(*(info)->b, len);
 	while (i++ < len)
 	{
 		if ((*(info)->b)->n >= median)
 			pa_n(info->a, info->b, &info->res);
-		else
-		{
+		else if (moved++)
 			rb_n(info->b, &info->res);
-			moved++;
-		}
 	}
-	push_to_aa_aux(info, len, moved);
+	push_to_aa_aux(info, len, moved -1);
 }

@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 13:47:40 by ptorres           #+#    #+#             */
-/*   Updated: 2021/04/30 00:07:27 by pablo            ###   ########.fr       */
+/*   Updated: 2021/05/04 11:14:47 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	main(int argc, char **argv)
 	b = NULL;
 	input_err = save_input(&a, argv);
 	if (argc < 2)
-		input_err = 1;
+		return (0);
 	len = stk_len(a);
 	if (!input_err)
 		input_err = recive_commands(&a, &b);
