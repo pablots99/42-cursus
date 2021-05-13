@@ -6,7 +6,6 @@ _ft_strcpy:
 	cmp byte[rsi], 0
 	jz end
 	jmp copy
-
 copy:
 	mov r8b, byte[rsi + rax]
 	mov byte[rdi + rax], r8b
@@ -14,8 +13,6 @@ copy:
 	cmp byte[rsi + rax], 0
 	jz end
 	jmp copy
-
-
 end:
 	mov rax, rdi
 	ret
