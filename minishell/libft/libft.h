@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/30 17:27:09 by pablo             #+#    #+#             */
-/*   Updated: 2021/04/09 17:33:50 by pablo            ###   ########.fr       */
+/*   Updated: 2021/05/14 13:44:23 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,5 +119,9 @@ int		get_next_line(int fd, char **line);
 char	*gn_ft_strjoin(char const *s1, char const *s2);
 
 size_t	gn_ft_strcpy(char *dst, const char *src, size_t dstsize);
+
+void	ft_bi_free(char **arr);
+
+int		ft_bi_strlen(char **arr);
 
 #endif

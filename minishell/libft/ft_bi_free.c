@@ -1,32 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_bi_free.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/23 12:02:38 by pablo             #+#    #+#             */
-/*   Updated: 2021/05/14 13:55:56 by ptorres          ###   ########.fr       */
+/*   Created: 2021/05/14 13:36:55 by ptorres           #+#    #+#             */
+/*   Updated: 2021/05/14 13:44:16 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "srcs/minishell.h"
 
-int main(int argc,char **argv)
+#include "libft.h"
+
+
+void ft_bi_free(char **arr)
 {
-	t_data data;
-
-
-	data.cmd = "";
-	//write_cwd(data);
-	while (ft_strncmp(data.cmd, "exit", 4))
+	
+	int	i;
+	i = 0;
+	while (arr[i])
 	{
-		write_cwd(data);
-		recive_comands(&data.cmd);
-		//parse_comands
-		printf("%s> cmd: %s\n",data.path, data.cmd);
-		save_comands(&data);
-		free(data.cmd);
+		free(arr[i]);
+		i++;
 	}
-	return 0;
+	free(arr);
+}
+
+int ft_bi_strlen(char **arr)
+{
+	int i;
+
+	i = 0;
+	while(arr[i])
+		i++;
+	return i;
 }

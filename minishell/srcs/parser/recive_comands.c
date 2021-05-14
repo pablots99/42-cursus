@@ -1,32 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   recive_comands.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/23 12:02:38 by pablo             #+#    #+#             */
-/*   Updated: 2021/05/14 13:55:56 by ptorres          ###   ########.fr       */
+/*   Created: 2021/05/14 12:08:35 by ptorres           #+#    #+#             */
+/*   Updated: 2021/05/14 13:14:52 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "srcs/minishell.h"
+#include "../minishell.h"
 
-int main(int argc,char **argv)
+
+void write_cwd(t_data d)
 {
-	t_data data;
+	getcwd(d.path, sizeof(d.path));
+	ft_putstr_fd(d.path,1);
+	write(1," >> ",4);
+}
 
-
-	data.cmd = "";
-	//write_cwd(data);
-	while (ft_strncmp(data.cmd, "exit", 4))
-	{
-		write_cwd(data);
-		recive_comands(&data.cmd);
-		//parse_comands
-		printf("%s> cmd: %s\n",data.path, data.cmd);
-		save_comands(&data);
-		free(data.cmd);
-	}
-	return 0;
+int recive_comands(char **cmd)
+{
+	get_next_line(0,cmd);
+	return 1;
 }

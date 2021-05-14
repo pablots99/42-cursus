@@ -1,12 +1,15 @@
 NAME=minishell
 
-SRCS = minishell.c 
+SRCS =	minishell.c 					\
+		srcs/parser/recive_comands.c	\
+		srcs/parser/parse_comands.c	
+		
 
 OBJS = $(SRCS:.c=.o)
 
 CC = gcc
 
-LIBFLAGS = -L. libft/libft.a
+LIBFLAGS = -L. libft/libft.a -fsanitize=address
 
 FLAGS = -Wall -Wextra -Werror -o $(NAME)
 
