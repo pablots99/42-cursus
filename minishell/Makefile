@@ -9,9 +9,9 @@ OBJS = $(SRCS:.c=.o)
 
 CC = gcc
 
-LIBFLAGS = -L. libft/libft.a -fsanitize=address
+LIBFLAGS = -L. libft/libft.a   
 
-FLAGS = -Wall -Wextra -Werror -o $(NAME)
+FLAGS = -Wall -Wextra -Werror -g3   -o $(NAME)
 
 
 all:$(NAME)
