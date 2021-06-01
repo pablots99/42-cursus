@@ -1,9 +1,0 @@
-total 48
--rw-r--r--   1 ptorres  2019   383 May 14 12:11 Makefile
--rw-r--r--   1 ptorres  2019     0 May 14 13:34 a
--rw-r--r--   1 ptorres  2019     0 May 14 13:34 b
-drwxr-xr-x  95 ptorres  2019  3230 May 14 12:45 libft
--rwxr-xr-x   1 ptorres  2019  9356 May 14 12:45 minishell
--rw-r--r--   1 ptorres  2019  1195 May 14 12:40 minishell.c
--rw-r--r--   1 ptorres  2019  1220 May 14 12:45 minishell.o
-drwxr-xr-x   4 ptorres  2019   136 May 14 12:09 srcs
