@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   recive_comands.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 12:08:35 by ptorres           #+#    #+#             */
-/*   Updated: 2021/05/14 13:14:52 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/06/02 09:53:54 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,3 +25,6 @@ int recive_comands(char **cmd)
 	get_next_line(0,cmd);
 	return 1;
 }
+
+
+

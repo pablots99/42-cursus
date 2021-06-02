@@ -1,40 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bi_free.c                                       :+:      :+:    :+:   */
+/*   session_vars.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/14 13:36:55 by ptorres           #+#    #+#             */
-/*   Updated: 2021/06/02 00:49:50 by pablo            ###   ########.fr       */
+/*   Created: 2021/06/02 09:54:36 by pablo             #+#    #+#             */
+/*   Updated: 2021/06/02 10:53:20 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../minishell.h"
 
-#include "libft.h"
 
-
-void ft_bi_free(char **arr)
+t_session_v *new_session_var(char *name,char*value)
 {
-	int len;
-	int	i;
+	t_session_v *res;
 
-	len = ft_bi_strlen(arr);
-	i = 0;
-	while (len != 1 && arr[i])
-	{
-		free(arr[i]);
-		i++;
-	}
-	free(arr);
+	res = malloc(sizeof(t_session_v));
+	res->name = name;
+	res->value = value;
+	res->next = NULL;
 }
 
-int ft_bi_strlen(char **arr)
+void add_session_var(t_session_v *svars)
 {
 	int i;
 
 	i = 0;
-	while(arr[i])
-		i++;
-	return i;
 }
+
+
+void get_session_var()
+{
+
+}
+
+/*free*/
+void clean_session_var()
+{
+
+}
+

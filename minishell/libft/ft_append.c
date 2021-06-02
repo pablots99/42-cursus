@@ -1,40 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bi_free.c                                       :+:      :+:    :+:   */
+/*   ft_append.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/14 13:36:55 by ptorres           #+#    #+#             */
-/*   Updated: 2021/06/02 00:49:50 by pablo            ###   ########.fr       */
+/*   Created: 2021/06/01 20:05:18 by pablo             #+#    #+#             */
+/*   Updated: 2021/06/01 20:12:44 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "libft.h"
 
-
-void ft_bi_free(char **arr)
+//dst has to be memory allocated
+void ft_append(char **dst,char *str)
 {
-	int len;
-	int	i;
+	char *aux;
 
-	len = ft_bi_strlen(arr);
-	i = 0;
-	while (len != 1 && arr[i])
-	{
-		free(arr[i]);
-		i++;
-	}
-	free(arr);
-}
-
-int ft_bi_strlen(char **arr)
-{
-	int i;
-
-	i = 0;
-	while(arr[i])
-		i++;
-	return i;
+	aux = 	ft_strjoin(*dst,str);
+	free(*dst);
+	*dst = aux;
 }

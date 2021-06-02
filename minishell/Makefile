@@ -2,16 +2,17 @@ NAME=minishell
 
 SRCS =	minishell.c 					\
 		srcs/parser/recive_comands.c	\
-		srcs/parser/parse_comands.c	
-		
-
+		srcs/parser/parse_comands.c		\
+		srcs/parser/session_vars.c 		\
+		srcs/parser/global_vars.c 		\
+		srcs/execution/execute_command.c
 OBJS = $(SRCS:.c=.o)
 
-CC = gcc
+CC = gcc -g3
 
-LIBFLAGS = -L. libft/libft.a   
+LIBFLAGS = -L. libft/libft.a
 
-FLAGS = -Wall -Wextra -Werror -g3   -o $(NAME)
+FLAGS = -Wall -Wextra -Werror  -fsanitize=address   -o $(NAME)
 
 
 all:$(NAME)
@@ -23,7 +24,7 @@ $(NAME):$(OBJS)
 
 clean:
 	make clean -C libft
-	rm -f *.o
+	rm -f $(OBJS)
 
 fclean: clean
 	make fclean -C ./libft

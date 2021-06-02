@@ -1,40 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bi_free.c                                       :+:      :+:    :+:   */
+/*   ft_strpush.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/14 13:36:55 by ptorres           #+#    #+#             */
-/*   Updated: 2021/06/02 00:49:50 by pablo            ###   ########.fr       */
+/*   Created: 2021/06/02 00:20:43 by pablo             #+#    #+#             */
+/*   Updated: 2021/06/02 00:59:57 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "libft.h"
 
-
-void ft_bi_free(char **arr)
-{
-	int len;
-	int	i;
-
-	len = ft_bi_strlen(arr);
-	i = 0;
-	while (len != 1 && arr[i])
-	{
-		free(arr[i]);
-		i++;
-	}
-	free(arr);
-}
-
-int ft_bi_strlen(char **arr)
+void ft_strpush(char ***bstr, char *str)
 {
 	int i;
+	int len;
+	char **aux;
 
+	if(!*bstr)
+	{
+		*bstr = malloc(1*sizeof(char*));
+		*bstr[0] = ft_strdup(str);
+		return ;
+	}
+	len = ft_bi_strlen(*bstr);
 	i = 0;
-	while(arr[i])
+	printf("len:%d",len);
+
+	aux = malloc((len + 1)* sizeof(char*));
+	while(*bstr[i])
+	{
+		aux[i]=*bstr[i];
 		i++;
-	return i;
+	}
+	aux[i] = str;
+	ft_bi_free(*bstr);
+	*bstr = aux;
 }

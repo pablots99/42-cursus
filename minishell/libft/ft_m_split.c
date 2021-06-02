@@ -1,40 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bi_free.c                                       :+:      :+:    :+:   */
+/*   ft_m_split.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/14 13:36:55 by ptorres           #+#    #+#             */
-/*   Updated: 2021/06/02 00:49:50 by pablo            ###   ########.fr       */
+/*   Created: 2021/06/01 19:58:14 by pablo             #+#    #+#             */
+/*   Updated: 2021/06/02 11:39:53 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "libft.h"
 
-
-void ft_bi_free(char **arr)
-{
-	int len;
-	int	i;
-
-	len = ft_bi_strlen(arr);
-	i = 0;
-	while (len != 1 && arr[i])
-	{
-		free(arr[i]);
-		i++;
-	}
-	free(arr);
-}
-
-int ft_bi_strlen(char **arr)
+char **ft_set_split(char *str,char *set)
 {
 	int i;
+	char last;
+	int len;
 
-	i = 0;
-	while(arr[i])
-		i++;
-	return i;
+	i  =0;
+	len = ft_strlen(str);
+	last = set[ft_strlen(set) -1];
+	while(len--)
+	{
+		i=0;
+		while(set[i+1])
+		{
+			if(str[len] == set[i])
+				str[len] = last;
+			i++;
+		}
+	}
+	return ft_split(str,last);
 }

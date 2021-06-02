@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 12:03:32 by pablo             #+#    #+#             */
-/*   Updated: 2021/05/17 16:58:53 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/06/02 10:56:56 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,40 @@
 #include <unistd.h>
 #include <stdio.h>
 # include "../libft/libft.h"
-#include <sys/types.h>//fork , 
+#include <sys/types.h>//fork ,
 
+#define ENVIROMENT_PATH "~/.mini_bashrc"
 
-typedef struct s_cmds 
-{ 
+typedef struct s_session_v
+{
+	char *name;
+	char *value;
+	struct s_session_v *next;
+}	t_session_v;
+
+typedef struct s_cmds
+{
 	char *cmd;
-	char **args;
+	char **options;
+	int var_asign;
+	char **inputs;
+	char *output;
 	struct s_cmds *childs;
 	struct s_cmds *next;
-}	t_cmds; 
+}	t_cmds;
 
 
 typedef struct s_data
 {
 	char path[20000];
-	char *cmd;
+	char *raw_cmd;
+	int exit_code;
 	t_cmds *cmds;
+	t_session_v *session_v;
 }	t_data;
 
 
 int recive_comands(char **cmd);
 void write_cwd(t_data d);
 int parse_comands(t_data *d);
+void execute_commands(t_data *d);

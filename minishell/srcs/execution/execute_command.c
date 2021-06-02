@@ -1,40 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bi_free.c                                       :+:      :+:    :+:   */
+/*   execute_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/14 13:36:55 by ptorres           #+#    #+#             */
-/*   Updated: 2021/06/02 00:49:50 by pablo            ###   ########.fr       */
+/*   Created: 2021/06/01 19:48:22 by pablo             #+#    #+#             */
+/*   Updated: 2021/06/01 20:28:57 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../minishell.h"
 
-#include "libft.h"
-
-
-void ft_bi_free(char **arr)
+void execute_commands(t_data *d)
 {
-	int len;
-	int	i;
 
-	len = ft_bi_strlen(arr);
-	i = 0;
-	while (len != 1 && arr[i])
-	{
-		free(arr[i]);
-		i++;
-	}
-	free(arr);
-}
-
-int ft_bi_strlen(char **arr)
-{
-	int i;
-
-	i = 0;
-	while(arr[i])
-		i++;
-	return i;
 }
