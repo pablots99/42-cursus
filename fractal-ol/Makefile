@@ -3,7 +3,8 @@ NAME = fractaol
 LIBFT = libft/libft.a
 
 SRCS = fractal.c \
-	   srcs/utils/mlx_utils.c
+	   srcs/utils/mlx_utils.c \
+	   srcs/utils/colors.c
 
 
 OBJS = $(SRCS:.c=.o)
@@ -11,7 +12,7 @@ OBJS = $(SRCS:.c=.o)
 CC = gcc
 
 #-fsanitize=address
-CFLAGS = -g   -Wall -Wextra -Werror
+CFLAGS = -g   #-Wall -Wextra -Werror
 
 
 LFAGS = -L. ./libft/libft.a   libmlx.dylib -framework Metal -framework AppKit
