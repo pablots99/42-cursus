@@ -6,13 +6,13 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/02 23:08:38 by pablo             #+#    #+#             */
-/*   Updated: 2021/06/13 16:35:18 by pablo            ###   ########.fr       */
+/*   Updated: 2021/06/13 17:40:44 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "srcs/fractal.h"
 
-double resize_value(double value, t_range initial, t_range new)
+long double resize_value(double value, t_range initial, t_range new)
 {
 	double res;
 	double range1;
@@ -62,20 +62,22 @@ int create_fractal(void *f)
 			}	 //imaginary number
 				a1 = h1 - x1;						 //x1 real plane values
 				b1 = h2 - y1;						 //y1 imaginary plane values
-				if (fabs(a1 + b1) > param->f->win_width * 4)
+				if (fabs(a1 + b1) > param->f->win_width)
 					break;
 				z++;
 			}
 			//z /= 4;
 			//printf("z:%d\n",z);
-			my_mlx_pixel_put(&param->f->img, x, y, int_from_rgb(150, z, z));
+			if(z == param->f->precision)
+				z = 0;
+			z = resize_value(z,(t_range){0, param->f->precision},(t_range){0, 220});
+			my_mlx_pixel_put(&param->f->img, x, y, int_from_rgb(0, z, z));
 			x++;
 		}
 		y++;
 	}
 
 	aux_c = 0;
-	mlx_put_image_to_window(param->f->mlx_ptr, param->f->win_ptr, param->f->img.mlx_img, 0, 0);
 	return 1;
 }
 
@@ -100,13 +102,14 @@ int threads(t_fractal *c)
 	}
 	while (i-- > 0)
 		err = pthread_join(th[i], 0);
+			mlx_put_image_to_window(c->mlx_ptr, c->win_ptr, c->img.mlx_img, 0, 0);
+
 	return (1);
 }
 int detect_key(int keycode, t_fractal *c)
 {
 	while (c->zoom + c->zoom_value > 0)
 		c->zoom_value /= 10;
-
 	if (keycode == 125)
 		c->zoom -= c->zoom_value;
 	if (keycode == 126)
@@ -120,9 +123,9 @@ int detect_key(int keycode, t_fractal *c)
 	if (keycode == 0)
 		c->move_x -= c->zoom_value;
 	if (keycode == 30)
-		c->precision *=2;
+		c->precision +=100;
 	if (keycode == 44)
-		c->precision /=2;
+		c->precision -=100;
 	threads(c);
 	return 1;
 }
@@ -130,26 +133,10 @@ int detect_key(int keycode, t_fractal *c)
 int mouse_actions(int button, int x, int y, t_fractal *f)
 {
 
-
-	while (f->zoom + f->zoom_value > 0)
-		f->zoom_value /= 10;
-
 	if (button == 4)
-		f->zoom -= f->zoom_value;
-
+		detect_key(125,f);
 	if (button == 5)
-	{
-		f->zoom += f->zoom_value;
-		// if (x1 > f->move_x)
-		// 	f->move_x += f->zoom_value;
-		// if (x1 < f->move_x)
-		// 	f->move_x -= f->zoom_value;
-
-		// if (y1 > f->move_y)
-		// 	f->move_y += f->zoom_value;
-		// if (y1 < f->move_y)
-		// 	f->move_y -= f->zoom_value;
-	}
+		detect_key(126,f);
 	if (button == 1 && !f->is_julia)
 	{
 		mlx_mouse_get_pos(f->win_ptr, &x, &y);

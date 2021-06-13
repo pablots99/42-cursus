@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/02 23:05:01 by pablo             #+#    #+#             */
-/*   Updated: 2021/06/13 16:19:02 by pablo            ###   ########.fr       */
+/*   Updated: 2021/06/13 17:35:29 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../libft/libft.h"
 #include "../minilibx/mlx.h"
 #include <math.h>
-#define THREADS 4
+#define THREADS 80
 #define PRECISION 100
 
 typedef struct s_img
