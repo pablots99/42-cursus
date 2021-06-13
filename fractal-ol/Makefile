@@ -11,8 +11,8 @@ OBJS = $(SRCS:.c=.o)
 
 CC = gcc
 
-#-fsanitize=address
-CFLAGS = -g   #-Wall -Wextra -Werror
+#
+CFLAGS = -g -fsanitize=address  #-Wall -Wextra -Werror
 
 
 LFAGS = -L. ./libft/libft.a   libmlx.dylib -framework Metal -framework AppKit
