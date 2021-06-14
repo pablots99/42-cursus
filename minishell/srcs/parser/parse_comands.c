@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 12:41:03 by ptorres           #+#    #+#             */
-/*   Updated: 2021/06/02 11:50:33 by pablo            ###   ########.fr       */
+/*   Updated: 2021/06/09 19:16:07 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,12 @@ void add_child(t_cmds **cmds, t_cmds *cmd)
 		child->childs = cmd;
 	}
 }
-
+int is_valid_command(char *cmd)
+{
+	if(!ft_strncmp(cmd,"ls",ft_strlen(cmd)))
+		return 1;
+	return 0;
+}
 void print_cmds(t_cmds *cmds)
 {
 	int i;
@@ -172,7 +177,13 @@ int parse_comands(t_data *d)
 	splited = ft_split(d->raw_cmd, ';');
 	while (splited[i])
 	{
-		childs = ft_split(splited[i], '|');				  //separe comands all besides the first are childs
+		childs = ft_split(splited[i], '|');
+		if(!is_valid_command(childs[0]))
+		{
+			printf("%s is not a valid command\n",ft_clean_chars(childs[0]," "));
+			return (0);
+		}
+		//separe comands all besides the first are childs
 		add_cmd(&d->cmds, new_cmd(ft_strdup(childs[0]))); //add to the main list the command the null are the args
 		if (i == 0)
 			first = d->cmds;
@@ -188,5 +199,5 @@ int parse_comands(t_data *d)
 	}
 	d->cmds = first;
 	print_cmds(d->cmds);
-	return 0;
+	return 1;
 }

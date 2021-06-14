@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 12:02:38 by pablo             #+#    #+#             */
-/*   Updated: 2021/06/02 10:11:13 by pablo            ###   ########.fr       */
+/*   Updated: 2021/06/09 19:05:24 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,11 @@ int main(int argc,char **argv)
 		//save history
 
 		//parse_comands
-		parse_comands(&data);
+		if(ft_strlen(data.raw_cmd))
+		{
+			if(parse_comands(&data))
+				execute_commands(&data);
+		}
 		//execute comands
 		free(data.raw_cmd);
 	}

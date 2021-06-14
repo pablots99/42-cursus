@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/02 23:08:38 by pablo             #+#    #+#             */
-/*   Updated: 2021/06/13 17:40:44 by pablo            ###   ########.fr       */
+/*   Updated: 2021/06/13 19:19:08 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,27 +51,37 @@ int create_fractal(void *f)
 
 			double a1 = x1;
 			double b1 = y1;
-			while (z < param->f->precision)
+			while (z < param->f->precision && fabs(a1 + b1) < 30)
 			{
 				double h1 = ((a1 * a1) - (b1 * b1)); //real number
-				double h2 = (2 * a1 * b1);
-				if(param->f->is_julia)
-			{
-				x1 = param->f->julia->x;
-				y1 = param->f->julia->y;
-			}	 //imaginary number
-				a1 = h1 - x1;						 //x1 real plane values
-				b1 = h2 - y1;						 //y1 imaginary plane values
-				if (fabs(a1 + b1) > param->f->win_width)
-					break;
+				double h2 = (2 * a1 * b1);   //imaginary number
+				if (param->f->is_julia)
+				{
+					x1 = param->f->julia->x;
+					y1 = param->f->julia->y;
+				}
+				a1 = h1 - x1; //x1 real plane values
+				b1 = h2 - y1; //y1 imaginary plane values
+
 				z++;
 			}
-			//z /= 4;
-			//printf("z:%d\n",z);
-			if(z == param->f->precision)
+
+			t_hsv hsv;
+
+			hsv.h = (double)((double)255 * (double)z / (double)param->f->precision);
+			hsv.s = 1;
+			//z = resize_value(z,(t_range){0, param->f->precision},(t_range){0, 255});
+			if (z == param->f->precision)
 				z = 0;
-			z = resize_value(z,(t_range){0, param->f->precision},(t_range){0, 220});
-			my_mlx_pixel_put(&param->f->img, x, y, int_from_rgb(0, z, z));
+			else z = 255;
+			hsv.v = resize_value(z, (t_range){0, param->f->precision}, (t_range){0, 1});
+
+			t_rgb rgb = hsv2rgb(hsv);
+			rgb.r = resize_value(rgb.r, (t_range){0, 1}, (t_range){0, 255});
+			rgb.g = resize_value(rgb.g, (t_range){0, 1}, (t_range){0, 255});
+			rgb.b = resize_value(rgb.b, (t_range){0, 1}, (t_range){0, 255});
+			//printf("r: %f, g:%f, b:%f\n",rgb.r,rgb.g,rgb.b);
+			my_mlx_pixel_put(&param->f->img, x, y, int_from_rgb(rgb.r, rgb.g, rgb.b));
 			x++;
 		}
 		y++;
@@ -102,18 +112,27 @@ int threads(t_fractal *c)
 	}
 	while (i-- > 0)
 		err = pthread_join(th[i], 0);
-			mlx_put_image_to_window(c->mlx_ptr, c->win_ptr, c->img.mlx_img, 0, 0);
+	mlx_put_image_to_window(c->mlx_ptr, c->win_ptr, c->img.mlx_img, 0, 0);
 
 	return (1);
 }
 int detect_key(int keycode, t_fractal *c)
 {
-	while (c->zoom + c->zoom_value > 0)
-		c->zoom_value /= 10;
+
 	if (keycode == 125)
+	{
+		if (c->zoom_value < 0.5)
+			c->zoom_value *= 2;
 		c->zoom -= c->zoom_value;
+	}
 	if (keycode == 126)
+	{
+		if (c->zoom_value > 0.2)
+			c->zoom_value /= 2;
+		while (c->zoom + c->zoom_value > 0)
+			c->zoom_value /= 10;
 		c->zoom += c->zoom_value;
+	}
 	if (keycode == 13)
 		c->move_y += c->zoom_value;
 	if (keycode == 1)
@@ -123,9 +142,9 @@ int detect_key(int keycode, t_fractal *c)
 	if (keycode == 0)
 		c->move_x -= c->zoom_value;
 	if (keycode == 30)
-		c->precision +=100;
+		c->precision += 100;
 	if (keycode == 44)
-		c->precision -=100;
+		c->precision -= 100;
 	threads(c);
 	return 1;
 }
@@ -134,17 +153,17 @@ int mouse_actions(int button, int x, int y, t_fractal *f)
 {
 
 	if (button == 4)
-		detect_key(125,f);
+		detect_key(125, f);
 	if (button == 5)
-		detect_key(126,f);
+		detect_key(126, f);
 	if (button == 1 && !f->is_julia)
 	{
 		mlx_mouse_get_pos(f->win_ptr, &x, &y);
 		double x1 = resize_value(x, (t_range){0, f->win_width}, (t_range){-f->zoom + f->move_x, f->zoom + f->move_x});
 		double y1 = resize_value(y, (t_range){0, f->win_heigth}, (t_range){-f->zoom + f->move_y, f->zoom + f->move_y});
 		f->is_julia = 1;
-		f->julia->x  =x1;
-		f->julia->y  =y1;
+		f->julia->x = x1;
+		f->julia->y = y1;
 		f->julia->move_x = f->move_x;
 		f->julia->move_y = f->move_y;
 		f->julia->zoom = f->zoom;
@@ -159,7 +178,7 @@ int mouse_actions(int button, int x, int y, t_fractal *f)
 		f->is_julia = 0;
 		f->move_x = f->julia->move_x;
 		f->move_y = f->julia->move_y;
-		f->zoom = f->julia->zoom ;
+		f->zoom = f->julia->zoom;
 		f->zoom_value = f->julia->zoom_value;
 		f->julia->zoom_value = 0;
 		f->julia->move_y = 0;
@@ -206,7 +225,7 @@ int main()
 	f.move_y = 0;
 	ft_bzero(&f, sizeof(t_fractal));
 	ft_bzero(&jul, sizeof(t_julia));
-		f.julia = &jul;
+	f.julia = &jul;
 
 	f.win_heigth = 500;
 	f.win_width = 500;

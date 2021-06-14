@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 19:12:12 by pablo             #+#    #+#             */
-/*   Updated: 2021/06/01 19:45:50 by pablo            ###   ########.fr       */
+/*   Updated: 2021/06/09 19:11:14 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char* ft_clean_chars(char *str,char *set)
 
 	i = 0;
 	count = 0;
-	res = malloc((count_set(str,set) +1 )*sizeof(char));
+	res = malloc((count_set(str,set) +100 )*sizeof(char));
 	while(str[i])
 	{
 		j  = 0;

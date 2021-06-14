@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/02 23:05:01 by pablo             #+#    #+#             */
-/*   Updated: 2021/06/13 17:35:29 by pablo            ###   ########.fr       */
+/*   Updated: 2021/06/13 18:43:22 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../libft/libft.h"
 #include "../minilibx/mlx.h"
 #include <math.h>
-#define THREADS 80
+#define THREADS 500
 #define PRECISION 100
 
 typedef struct s_img
@@ -25,6 +25,18 @@ typedef struct s_img
 	int line_length;
 	int endian;
 } t_img;
+typedef struct s_rgb{
+    double r;       // a fraction between 0 and 1
+    double g;       // a fraction between 0 and 1
+    double b;       // a fraction between 0 and 1
+} t_rgb;
+
+typedef struct s_hsv{
+    double h;       // angle in degrees
+    double s;       // a fraction between 0 and 1
+    double v;       // a fraction between 0 and 1
+} t_hsv;
+
 typedef struct s_julia
 {
 	double x;
@@ -71,3 +83,4 @@ void my_mlx_pixel_put(t_img *data, int x, int y, int color);
 int exit_win(t_fractal *f);
 /*colors*/
 int int_from_rgb(int r, int g, int b);
+t_rgb hsv2rgb(t_hsv in);
