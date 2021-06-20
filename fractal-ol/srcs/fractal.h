@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/02 23:05:01 by pablo             #+#    #+#             */
-/*   Updated: 2021/06/13 18:43:22 by pablo            ###   ########.fr       */
+/*   Updated: 2021/06/20 02:10:12 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 #include "../libft/libft.h"
 #include "../minilibx/mlx.h"
 #include <math.h>
-#define THREADS 500
-#define PRECISION 100
+#define THREADS 50
+#define PRECISION 80
 
 typedef struct s_img
 {
@@ -47,6 +47,9 @@ typedef struct s_julia
 	long double zoom_value;
 } t_julia;
 
+typedef struct s_loop {
+
+} t_loop;
 
 typedef struct s_fractal
 {
@@ -59,6 +62,7 @@ typedef struct s_fractal
 	long double zoom;
 	long double zoom_value;
 	int 		is_julia;
+	int 		is_fullJulia;
 	int 		precision;
 	t_julia		*julia;
 	t_img img;
@@ -84,3 +88,12 @@ int exit_win(t_fractal *f);
 /*colors*/
 int int_from_rgb(int r, int g, int b);
 t_rgb hsv2rgb(t_hsv in);
+int get_color(t_fractal t, int z);
+long double resize_value(double value, t_range initial, t_range new);
+int mouse_actions(int button, int x, int y, t_fractal *f);
+int detect_key(int keycode, t_fractal *c);
+int threads(t_fractal *c);
+double norme_x1(t_fractal f,int x);
+double norme_y1(t_fractal f, int x);
+int help();
+int valid_parameters(char *p,t_fractal *f);

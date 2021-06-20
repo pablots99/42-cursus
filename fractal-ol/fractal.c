@@ -6,37 +6,47 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/02 23:08:38 by pablo             #+#    #+#             */
-/*   Updated: 2021/06/13 19:19:08 by pablo            ###   ########.fr       */
+/*   Updated: 2021/06/20 02:11:30 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "srcs/fractal.h"
 
-long double resize_value(double value, t_range initial, t_range new)
+int	calculate_z(t_fractal f, double x1, double y1)
 {
-	double res;
-	double range1;
-	double range2;
+	int		z;
+	double	h1;
+	double	h2;
+	double	a1;
+	double	b1;
 
-	res = 0;
-	range1 = initial.end - initial.start;
-	range2 = new.end - new.start;
-	res = new.start + (value - initial.start) * (range2) / (range1);
-	return res;
+	z = 0;
+	a1 = x1;
+	b1 = y1;
+	while (z < f.precision && fabs(a1 + b1) < 30)
+	{
+		h1 = ((a1 * a1) - (b1 * b1));
+		 h2 = (2 * a1 * b1);
+		if (f.is_julia || f.is_fullJulia)
+		{
+			x1 = f.julia->x;
+			y1 = f.julia->y;
+		}
+		a1 = h1 - x1;
+		b1 = h2 - y1;
+		z++;
+	}
+	return (z);
 }
 
-int create_fractal(void *f)
+int	create_fractal(void *f)
 {
-	int x;
-	int y;
-	int aux_c;
-	int z;
-	t_threads *param;
-	double x1;
-	double y1;
+	int			x;
+	int			y;
+	t_threads	*param;
+	double		x1;
+	double		y1;
 
-	x1 = 0;
-	y1 = 0;
 	param = (t_threads *)f;
 	y = (param->thread * (param->f->win_heigth / THREADS));
 	while (y < (int)((param->thread + 1) * (param->f->win_heigth / THREADS)))
@@ -44,59 +54,23 @@ int create_fractal(void *f)
 		x = 0;
 		while (x < param->f->win_width)
 		{
-			z = 0;
-			//printf("start\n->");89
-			x1 = resize_value(x, (t_range){0, param->f->win_width}, (t_range){-param->f->zoom + param->f->move_x, param->f->zoom + param->f->move_x});
-			y1 = resize_value(y, (t_range){0, param->f->win_heigth}, (t_range){-param->f->zoom + param->f->move_y, param->f->zoom + param->f->move_y});
-
-			double a1 = x1;
-			double b1 = y1;
-			while (z < param->f->precision && fabs(a1 + b1) < 30)
-			{
-				double h1 = ((a1 * a1) - (b1 * b1)); //real number
-				double h2 = (2 * a1 * b1);   //imaginary number
-				if (param->f->is_julia)
-				{
-					x1 = param->f->julia->x;
-					y1 = param->f->julia->y;
-				}
-				a1 = h1 - x1; //x1 real plane values
-				b1 = h2 - y1; //y1 imaginary plane values
-
-				z++;
-			}
-
-			t_hsv hsv;
-
-			hsv.h = (double)((double)255 * (double)z / (double)param->f->precision);
-			hsv.s = 1;
-			//z = resize_value(z,(t_range){0, param->f->precision},(t_range){0, 255});
-			if (z == param->f->precision)
-				z = 0;
-			else z = 255;
-			hsv.v = resize_value(z, (t_range){0, param->f->precision}, (t_range){0, 1});
-
-			t_rgb rgb = hsv2rgb(hsv);
-			rgb.r = resize_value(rgb.r, (t_range){0, 1}, (t_range){0, 255});
-			rgb.g = resize_value(rgb.g, (t_range){0, 1}, (t_range){0, 255});
-			rgb.b = resize_value(rgb.b, (t_range){0, 1}, (t_range){0, 255});
-			//printf("r: %f, g:%f, b:%f\n",rgb.r,rgb.g,rgb.b);
-			my_mlx_pixel_put(&param->f->img, x, y, int_from_rgb(rgb.r, rgb.g, rgb.b));
+			x1 = norme_x1(*param->f, x);
+			y1 = norme_y1(*param->f, y);
+			my_mlx_pixel_put(&param->f->img, x, y,
+				get_color(*param->f, calculate_z(*param->f, x1, y1)));
 			x++;
 		}
 		y++;
 	}
-
-	aux_c = 0;
-	return 1;
+	return (1);
 }
 
-int threads(t_fractal *c)
+int	threads(t_fractal *c)
 {
-	int i;
-	int err;
-	t_threads params[THREADS];
-	pthread_t th[THREADS];
+	int			i;
+	int			err;
+	t_threads	params[THREADS];
+	pthread_t	th[THREADS];
 
 	i = 0;
 	mlx_clear_window(c->mlx_ptr, c->win_ptr);
@@ -105,7 +79,7 @@ int threads(t_fractal *c)
 		params[i].thread = i;
 		params[i].f = c;
 		err = pthread_create(&th[i], 0,
-							 (void *)create_fractal, (void *)&(params[i]));
+				(void *)create_fractal, (void *)&(params[i]));
 		if (err)
 			return (printf("Thread Error: CAN NOT CREATE THREAD"));
 		i++;
@@ -113,124 +87,56 @@ int threads(t_fractal *c)
 	while (i-- > 0)
 		err = pthread_join(th[i], 0);
 	mlx_put_image_to_window(c->mlx_ptr, c->win_ptr, c->img.mlx_img, 0, 0);
-
 	return (1);
 }
-int detect_key(int keycode, t_fractal *c)
+
+int	init_window(t_fractal *f)
 {
-
-	if (keycode == 125)
-	{
-		if (c->zoom_value < 0.5)
-			c->zoom_value *= 2;
-		c->zoom -= c->zoom_value;
-	}
-	if (keycode == 126)
-	{
-		if (c->zoom_value > 0.2)
-			c->zoom_value /= 2;
-		while (c->zoom + c->zoom_value > 0)
-			c->zoom_value /= 10;
-		c->zoom += c->zoom_value;
-	}
-	if (keycode == 13)
-		c->move_y += c->zoom_value;
-	if (keycode == 1)
-		c->move_y -= c->zoom_value;
-	if (keycode == 2)
-		c->move_x += c->zoom_value;
-	if (keycode == 0)
-		c->move_x -= c->zoom_value;
-	if (keycode == 30)
-		c->precision += 100;
-	if (keycode == 44)
-		c->precision -= 100;
-	threads(c);
-	return 1;
-}
-
-int mouse_actions(int button, int x, int y, t_fractal *f)
-{
-
-	if (button == 4)
-		detect_key(125, f);
-	if (button == 5)
-		detect_key(126, f);
-	if (button == 1 && !f->is_julia)
-	{
-		mlx_mouse_get_pos(f->win_ptr, &x, &y);
-		double x1 = resize_value(x, (t_range){0, f->win_width}, (t_range){-f->zoom + f->move_x, f->zoom + f->move_x});
-		double y1 = resize_value(y, (t_range){0, f->win_heigth}, (t_range){-f->zoom + f->move_y, f->zoom + f->move_y});
-		f->is_julia = 1;
-		f->julia->x = x1;
-		f->julia->y = y1;
-		f->julia->move_x = f->move_x;
-		f->julia->move_y = f->move_y;
-		f->julia->zoom = f->zoom;
-		f->julia->zoom_value = f->zoom_value;
-		f->move_x = 0;
-		f->move_y = 0;
-		f->zoom = -1;
-		f->zoom_value = 0.1;
-	}
-	if (button == 2 && f->is_julia)
-	{
-		f->is_julia = 0;
-		f->move_x = f->julia->move_x;
-		f->move_y = f->julia->move_y;
-		f->zoom = f->julia->zoom;
-		f->zoom_value = f->julia->zoom_value;
-		f->julia->zoom_value = 0;
-		f->julia->move_y = 0;
-		f->julia->zoom = -1;
-		f->julia->zoom_value = 0.1;
-	}
-	threads(f);
-	return 1;
-}
-
-int init_window(t_fractal *f)
-{
-
-	printf("w:%d,h:%d\n", f->win_width, f->win_heigth);
-	if (!(f->mlx_ptr = mlx_init()))
-		return 1;
-	if (!(f->win_ptr = mlx_new_window(f->mlx_ptr, f->win_width, f->win_heigth, "fractal")))
-		return 1; //error
+	f->mlx_ptr = mlx_init();
+	if (!(f->mlx_ptr))
+		return (1);
+	f->win_ptr = mlx_new_window(f->mlx_ptr,
+			f->win_width, f->win_heigth, "fractal");
+	if (!(f->win_ptr))
+		return (1);
 	f->img.mlx_img = mlx_new_image(f->mlx_ptr, f->win_width, f->win_heigth);
-	f->img.address = mlx_get_data_addr(f->img.mlx_img, &f->img.bits_per_pixel, &f->img.line_length, &f->img.endian);
+	f->img.address = mlx_get_data_addr(f->img.mlx_img,
+			&f->img.bits_per_pixel, &f->img.line_length, &f->img.endian);
 	mlx_hook(f->win_ptr, 17, 1L << 2, exit_win, f);
 	f->zoom = -1;
 	f->zoom_value = 0.1;
 	f->is_julia = 0;
 	f->precision = PRECISION;
-	//fill image
 	threads(f);
 	mlx_hook(f->win_ptr, 2, 1L << 0, detect_key, f);
 	mlx_mouse_hook(f->win_ptr, mouse_actions, f);
 	mlx_loop_hook(f->win_ptr, threads, f);
 	mlx_loop(f->mlx_ptr);
-
 	return (0);
 }
 
-int main()
+int	main(int argc, char **argv)
 {
-	t_fractal f;
-	int err;
-	t_julia jul;
+	t_fractal	f;
+	int			err;
+	t_julia		jul;
 
+		ft_bzero(&f, sizeof(t_fractal));
+	ft_bzero(&jul, sizeof(t_julia));
+	f.julia = &jul;
+	if(argc < 2 || !valid_parameters(argv[1],&f))
+		return help();
 	err = 0;
 	f.move_x = 0;
 	f.move_y = 0;
-	ft_bzero(&f, sizeof(t_fractal));
-	ft_bzero(&jul, sizeof(t_julia));
-	f.julia = &jul;
 
-	f.win_heigth = 500;
-	f.win_width = 500;
+	f.win_heigth = 1000;
+	f.win_width = 1000;
 	err = init_window(&f);
 	if (err)
-		return printf("error creating window");
-	return 0;
+	{
+		printf("error creating window");
+		return (1);
+	}
+	return (0);
 }

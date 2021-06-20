@@ -2,16 +2,17 @@ NAME = fractaol
 
 LIBFT = libft/libft.a
 
-SRCS = fractal.c \
-	   srcs/utils/mlx_utils.c \
-	   srcs/utils/colors.c
+SRCS = 	fractal.c \
+	   	srcs/utils/mlx_utils.c \
+		srcs/utils/utils.c \
+		srcs/utils/keys.c \
+	   	srcs/utils/colors.c
 
 
 OBJS = $(SRCS:.c=.o)
 
 CC = gcc
 
-#
 CFLAGS = -g ##-fsanitize=address  #-Wall -Wextra -Werror
 
 

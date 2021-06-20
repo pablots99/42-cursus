@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/02 23:10:26 by pablo             #+#    #+#             */
-/*   Updated: 2021/06/02 23:33:30 by pablo            ###   ########.fr       */
+/*   Updated: 2021/06/20 01:04:51 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,16 @@ int exit_win( t_fractal *f)
 	exit(0);
 
 	return (0);
+}
+long double resize_value(double value, t_range initial, t_range new)
+{
+	double res;
+	double range1;
+	double range2;
+
+	res = 0;
+	range1 = initial.end - initial.start;
+	range2 = new.end - new.start;
+	res = new.start + (value - initial.start) * (range2) / (range1);
+	return res;
 }
