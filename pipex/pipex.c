@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/18 15:09:47 by pablo             #+#    #+#             */
-/*   Updated: 2021/06/28 01:00:34 by pablo            ###   ########.fr       */
+/*   Updated: 2021/06/28 22:45:25 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ int saveCmds(char **args, t_pipex *p)
 		splited[0] = get_cmd(p,aux);
 		if(!splited[0])
 			splited[0] = aux+1;
-		printf("cmd: %s\n", splited[0]);
 		free(aux);
 		p->cmds[i] = splited;
 		i++;
@@ -82,12 +81,31 @@ char **get_paths(char **env)
 	return paths;
 }
 
+void free_struct(t_pipex *p)
+{
+	int i;
+	int j;
+	i = 0;
+	while(p->cmds[i])
+	{
+		j = 0;
+		while(p->cmds[i][j])
+		{
+			free(p->cmds[i][j]);
+		}
+		free(p->cmds[i]);
+		i++;
+	}
+}
+
 int executeCommands(char **cmds, int argc,char **env)
 {
 	t_pipex pipex;
 	int pid;
 	int i;
 	int fd[argc - 4][2];
+	int fd1;
+
 
 	i = 0;
 	pipex.paths = get_paths(env);
@@ -97,6 +115,7 @@ int executeCommands(char **cmds, int argc,char **env)
 	pipex.outfile = cmds[argc];
 	pipex.argc = argc - 3;
 	saveCmds(cmds, &pipex);
+	printf("argc: %d\n",pipex.argc);
 	while (i < pipex.argc)
 	{
 		if(i != pipex.argc -1)
@@ -106,20 +125,41 @@ int executeCommands(char **cmds, int argc,char **env)
 		{
 			if(i==0)
 			{
-				dup2(fd[i][0],STDOUT_FILENO);
+				close(fd[i][0]);
+				// fd1 = open(cmds[1], O_RDONLY);
+				// if(fd1)
+				// {
+				// 	dup2(fd1,0);
+				// 	close(fd1);
+				// }
+				dup2(fd[i][1],1);
+				close(fd[i][1]);
+				
 			}
-			if(i == pipex.argc)
+			else if(i == pipex.argc -1)
 			{
-				dup2(fd[i][1],STDIN_FILENO);
+				dup2(fd[i - 1][0],0);
+				close(fd[i - 1][0]);
+				// fd1 = open(cmds[argc -1],  O_WRONLY | O_CREAT | O_TRUNC, 0644);
+				// dup2(fd1,1);
+				// close(fd1);
 			}
 			else
 			{
-				dup2(fd[i][1],STDOUT_FILENO);
-				dup2(fd[i][0],STDIN_FILENO);
+				dup2(fd[i - 1][0],0);
+				close(fd[i -1 ][0]);
+				dup2(fd[i][1],1);
+				close(fd[i][1]);
 			}
 			if (execve(pipex.cmds[i][0], pipex.cmds[i], NULL) == -1)
 				printf("Error Executing command or invalid command\n");
-
+		}
+		else
+		{
+			if(i > 0)
+				close(fd[i][1]);
+			if(i < pipex.argc -1)
+				close(fd[i][0]);
 		}
 		i++;
 	}
@@ -130,6 +170,7 @@ int executeCommands(char **cmds, int argc,char **env)
 		wait(NULL);
 		i++;
 	}
+	//free_struct(&pipex);
 	return (0);
 }
 
@@ -147,10 +188,6 @@ int main(int argc, char **argv, char **env)
 			write(1, "Command Error\n", ft_strlen("Command Error\n"));
 			return (1);
 		}
-		return (0);
 	}
-
-
-
-
+	return (0);
 }
