@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/02 23:08:38 by pablo             #+#    #+#             */
-/*   Updated: 2021/06/20 02:11:30 by pablo            ###   ########.fr       */
+/*   Updated: 2021/06/21 22:45:53 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,16 @@ int	calculate_z(t_fractal f, double x1, double y1)
 	z = 0;
 	a1 = x1;
 	b1 = y1;
-	while (z < f.precision && fabs(a1 + b1) < 30)
+	while (z < f.precision && fabs(a1 * a1  + b1 * b1) < 16)
 	{
 		h1 = ((a1 * a1) - (b1 * b1));
-		 h2 = (2 * a1 * b1);
+		h2 = (2 * a1 * b1);
 		if (f.is_julia || f.is_fullJulia)
 		{
 			x1 = f.julia->x;
 			y1 = f.julia->y;
 		}
-		a1 = h1 - x1;
+		a1 = h1  ;
 		b1 = h2 - y1;
 		z++;
 	}
@@ -121,17 +121,17 @@ int	main(int argc, char **argv)
 	int			err;
 	t_julia		jul;
 
-		ft_bzero(&f, sizeof(t_fractal));
+	ft_bzero(&f, sizeof(t_fractal));
 	ft_bzero(&jul, sizeof(t_julia));
 	f.julia = &jul;
-	if(argc < 2 || !valid_parameters(argv[1],&f))
-		return help();
+	argv[argc] = 0;
+	if (argc < 2 || !valid_parameters(&argv[1], &f))
+		return (help());
 	err = 0;
 	f.move_x = 0;
 	f.move_y = 0;
-
-	f.win_heigth = 1000;
-	f.win_width = 1000;
+	f.win_heigth = 500;
+	f.win_width = 500;
 	err = init_window(&f);
 	if (err)
 	{

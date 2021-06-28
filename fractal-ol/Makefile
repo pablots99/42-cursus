@@ -1,4 +1,4 @@
-NAME = fractaol
+NAME = fractol
 
 LIBFT = libft/libft.a
 
