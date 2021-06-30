@@ -5,10 +5,10 @@ SRCS =	pipex.c 					\
 		srcs/ft_split.c
 OBJS = $(SRCS:.c=.o)
 
-CC = gcc -g3
+CC = gcc -g
+#-fsanitize=address
 
-
-FLAGS = -Wall -Wextra -Werror     -o $(NAME)
+FLAGS = -Wall -Wextra -Werror    -o $(NAME)
 
 
 all:$(NAME)
