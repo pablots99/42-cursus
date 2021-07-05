@@ -6,14 +6,11 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/06 17:14:18 by pablo             #+#    #+#             */
-/*   Updated: 2021/06/22 01:32:20 by pablo            ###   ########.fr       */
+/*   Updated: 2021/07/05 11:30:02 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-#include <stdlib.h>
-#include <stdlib.h>
-
 
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {
@@ -36,7 +33,6 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 	dst[i] = '\0';
 	return (j);
 }
-
 
 unsigned int	parts(char const *s, char c)
 {

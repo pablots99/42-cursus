@@ -2,6 +2,8 @@ NAME=pipex
 
 SRCS =	pipex.c 					\
 		srcs/utils.c				\
+			srcs/utils2.c				\
+				srcs/utils3.c				\
 		srcs/ft_split.c
 OBJS = $(SRCS:.c=.o)
 
