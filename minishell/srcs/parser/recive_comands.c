@@ -21,4 +21,3 @@ void write_cwd(t_data d)
 }
 
 
-

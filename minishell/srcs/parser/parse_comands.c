@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 12:41:03 by ptorres           #+#    #+#             */
-/*   Updated: 2021/07/06 01:19:16 by pablo            ###   ########.fr       */
+/*   Updated: 2021/07/06 17:46:03 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,12 @@ char **parse_cmd(char *cmd, int *assign,char **new,char **paths)
 	char *ret;
 	int i;
 
-	splited = ft_split(cmd, ' ');
+	splited = ft_split_ms(cmd, ' ');
 	len = ft_bi_strlen(splited);
-	// if (len >= 2 && splited[1] == '=')
-	// 	*assign = 1;
-	// else
-	// 	*assign = 0;
+	if(is_asign(splited[0]))
+		*assign = 1;
+	else
+		*assign = 0;
 	if (len > 0)
 		ret = get_cmd_path(ft_strjoin("/",splited[0]),paths);
 	else
@@ -108,12 +108,14 @@ void print_cmds(t_cmds *cmds)
 	int spaces;
 	int spaces_aux;
 	int options;
+	int j;
 
 	i = 0;
+	j = 0;
 	printf("cmds:\n------------\n");
 	while (cmds)
 	{
-		printf("	cmd:%s\n", cmds->cmd);
+		printf("	cmd%d:%s\n",j, cmds->cmd);
 		options = 0;
 		while (cmds->options[options])
 		{
@@ -140,6 +142,7 @@ void print_cmds(t_cmds *cmds)
 			spaces++;
 		}
 		cmds = cmds->next;
+		j++;
 	}
 }
 
@@ -153,10 +156,10 @@ int parse_comands(t_data *d)
 	t_cmds *first;
 	d->cmds = NULL;
 	i = 0;
-	splited = ft_split(d->raw_cmd, ';');
+	splited = ft_split_ms(d->raw_cmd, ';');
 	while (splited[i])
 	{
-		childs = ft_split(splited[i], '|');
+		childs = ft_split_ms(splited[i], '|');
 		add_cmd(&d->cmds, new_cmd(ft_strdup(childs[0]),*d));
 		if (i == 0)
 			first = d->cmds;
@@ -173,9 +176,6 @@ int parse_comands(t_data *d)
 	}
 	ft_bi_free(splited);
 	d->cmds = first;
-
-
-	//si pongo esto se jode por que se cambian de sitio los hijos
 	//print_cmds(d->cmds);
 	return 1;
 }
