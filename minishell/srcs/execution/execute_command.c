@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 19:48:22 by pablo             #+#    #+#             */
-/*   Updated: 2021/07/06 13:30:11 by pablo            ###   ########.fr       */
+/*   Updated: 2021/07/06 18:59:02 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,10 @@ void execute(t_cmds *cmd,int fd[2],t_data *d)
 	else if (cmd->var_asign)
 	{
 		//si la cambio auqi y existe en el env hay que cambiarla tambien
+		print_session_env(d->session_env);
+		printf("-------------\n");
 		add_session_env(d,cmd->options[0]);
+		printf("-------------\n");
 		print_session_env(d->session_env);
 	}
 	else if (!ft_strncmp(cmd->options[0],"export",6) && ft_strlen(cmd->options[0]) == 6)

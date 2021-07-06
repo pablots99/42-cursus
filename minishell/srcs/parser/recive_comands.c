@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 12:08:35 by ptorres           #+#    #+#             */
-/*   Updated: 2021/07/06 00:44:52 by pablo            ###   ########.fr       */
+/*   Updated: 2021/07/06 18:23:23 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void write_cwd(t_data d)
 {
 	getcwd(d.path, sizeof(d.path));
 	ft_putstr_fd(d.path,1);
-
 }
 
 

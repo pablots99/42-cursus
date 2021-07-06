@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 12:41:03 by ptorres           #+#    #+#             */
-/*   Updated: 2021/07/06 17:46:03 by pablo            ###   ########.fr       */
+/*   Updated: 2021/07/06 18:24:17 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,27 @@ char *get_cmd_path(char *cmd,char **paths)
 	return (cmd);
 }
 
+//ver si hay variables
+char **clean_splited(char **splited)
+{
+	char **res;
+	int i;
+
+	res = malloc(ft_bi_strlen(splited) + 2 *sizeof(char *));
+	i = 0;
+	while(splited[i])
+	{
+		if(splited[i][0] == '"' || splited[i][0] == '\'')
+			res[i] = ft_substr(splited[i],1,ft_strlen(splited[i])-2);
+		else
+			res[i] = ft_strdup(splited[i]);
+		i++;
+	}
+	res[i] = NULL;
+	ft_bi_free(splited);
+	return res;
+}
+
 char **parse_cmd(char *cmd, int *assign,char **new,char **paths)
 {
 	char **splited;
@@ -44,8 +65,9 @@ char **parse_cmd(char *cmd, int *assign,char **new,char **paths)
 	int i;
 
 	splited = ft_split_ms(cmd, ' ');
+	splited = clean_splited(splited);
 	len = ft_bi_strlen(splited);
-	if(is_asign(splited[0]))
+	if(splited[0] && is_asign(splited[0]))
 		*assign = 1;
 	else
 		*assign = 0;

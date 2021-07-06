@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/09 18:35:04 by pablo             #+#    #+#             */
-/*   Updated: 2021/07/06 16:52:16 by pablo            ###   ########.fr       */
+/*   Updated: 2021/07/06 18:55:23 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,38 @@ int is_quote_closed(char *input)
 		return (0);
 	return (1);
 }
+size_t	ft_strlen(char *str)
+{
+	size_t	i;
+
+	i = 0;
+	if(!str)
+		return (0);
+	while (str[i])
+		i++;
+	return (i);
+}
+int ft_str_equal(char *s1, char *s2)
+{
+	int i;
+	int len1;
+	int len2;
+
+	len1 = ft_strlen(s1);
+	len2 = ft_strlen(s2);
+	if(len1 != len2)
+		return (0);
+	while(i < len1)
+	{
+		if(s1[i] != s2[i])
+			return (0);
+		i++;
+	}
+	return (1);
+}
 
 
 int main(int argc,char **ergv, char **env)
 {
-		char *str = "holasdkn ' '";
-		printf("res: %d\n",is_quote_closed(str));
+		printf("res; %d\n",ft_str_equal("h","h"));
 }

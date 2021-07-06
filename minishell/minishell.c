@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 12:02:38 by pablo             #+#    #+#             */
-/*   Updated: 2021/07/06 17:47:44 by pablo            ###   ########.fr       */
+/*   Updated: 2021/07/06 18:24:12 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ int main(int argc,char **argv,char **env)
 			if(parse_comands(&data))
 				execute_commands(&data);
 				// printf("xD\n");
+			//
 
 		}
 		free_command(&data);

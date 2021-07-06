@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 13:36:55 by ptorres           #+#    #+#             */
-/*   Updated: 2021/07/06 01:17:49 by pablo            ###   ########.fr       */
+/*   Updated: 2021/07/06 18:18:54 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void ft_bi_free(char **arr)
 	int	i;
 
 	i = 0;
-	while (arr[i])
+	while (arr[i] != NULL)
 	{
 		free(arr[i]);
 		i++;

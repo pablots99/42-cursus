@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 02:34:42 by pablo             #+#    #+#             */
-/*   Updated: 2021/07/06 14:19:35 by pablo            ###   ########.fr       */
+/*   Updated: 2021/07/06 18:51:05 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,30 +77,36 @@ void add_session_env(t_data *d, char *cmd)
 	t_session_v *aux;
 	char **spl;
 
-
-	printf("cmd:%s\n",cmd);
-	printf("-------------\n");
-	print_session_env(d->session_env);
 	spl = ft_split(cmd, '=');
 	new = malloc(sizeof(t_session_v));
 	new->name = ft_strdup(spl[0]);
 	new->value = ft_strdup(spl[1]);
 	new->next = NULL;
+	printf("name:%s,value:%s\n",new->name,new->value);
 	if (!d->session_env)
 	{
+		printf("1wedc\n");
 		d->session_env = new;
 	}
 	else
 	{
 		aux = d->session_env;
-		while (aux->next)
+		while (aux)
 		{
+			if(ft_str_equal(aux->name,new->name))
+			{
+				printf("aux:%s-%s\n",aux->name,new->name);
+				aux->value = new->value;
+				free(new);
+				ft_bi_free(spl);
+				return ;
+			}
+			if(!aux->next)
+				aux->next = new;
 			aux = aux->next;
 		}
-		aux->next = new;
 	}
 	ft_bi_free(spl);
-
 }
 
 char *get_session_env(t_data *d, char *name)
