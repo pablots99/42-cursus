@@ -6,17 +6,17 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 12:41:03 by ptorres           #+#    #+#             */
-/*   Updated: 2021/07/06 18:24:17 by pablo            ###   ########.fr       */
+/*   Updated: 2021/07/07 22:53:49 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char *get_cmd_path(char *cmd,char **paths)
+char *get_cmd_path(char *cmd, char **paths)
 {
-	int		i;
-	char	*aux;
-	int		fd;
+	int i;
+	char *aux;
+	int fd;
 
 	fd = 0;
 	i = 0;
@@ -37,19 +37,67 @@ char *get_cmd_path(char *cmd,char **paths)
 }
 
 //ver si hay variables
-char **clean_splited(char **splited)
+char *found_vars(char *str, int c, t_data *d)
+
+{
+	char *new;
+	char *var_value;
+	int i;
+	char *var_name;
+
+	if (c)
+		return (str);
+	new = malloc(1*sizeof(char));
+	new[0]=0;
+	while (str[i])
+	{
+		if (str[i] == '$')
+		{
+			var_name = malloc(1*sizeof(char));
+			var_name[0]=0;
+			i++;
+			while (str[i] && (str[i] != ' ' && str[i] != '"' && str[i] != '\''))
+			{
+				var_name = ft_append_char(var_name,str[i]);
+				i++;
+			}
+			var_value = get_session_env(d,var_name);
+			if(!var_value)
+				var_value = get_env_ms(d,var_name);
+			if(var_value)
+			{
+				ft_append(&new,var_value);
+				free(var_value);
+			}
+			free(var_name);
+			if(!(str[i]))
+				break ;
+		}
+		new = ft_append_char(new,str[i]);
+		i++;
+	}
+	new = ft_append_char(new,0);
+	free(str);
+	return new;
+}
+char **clean_splited(char **splited, t_data *d)
 {
 	char **res;
 	int i;
+	int no_vars;
 
-	res = malloc(ft_bi_strlen(splited) + 2 *sizeof(char *));
+	no_vars = 0;
+	res = malloc(ft_bi_strlen(splited) + 2 * sizeof(char *));
 	i = 0;
-	while(splited[i])
+	while (splited[i])
 	{
-		if(splited[i][0] == '"' || splited[i][0] == '\'')
-			res[i] = ft_substr(splited[i],1,ft_strlen(splited[i])-2);
+		if (splited[i][0] == '\'')
+			no_vars = 1;
+		if (splited[i][0] == '"' || splited[i][0] == '\'')
+			res[i] = ft_substr(splited[i], 1, ft_strlen(splited[i]) - 2);
 		else
 			res[i] = ft_strdup(splited[i]);
+		res[i] = found_vars(res[i], no_vars, d);
 		i++;
 	}
 	res[i] = NULL;
@@ -57,7 +105,7 @@ char **clean_splited(char **splited)
 	return res;
 }
 
-char **parse_cmd(char *cmd, int *assign,char **new,char **paths)
+char **parse_cmd(char *cmd, int *assign, char **new, char **paths, t_data *d)
 {
 	char **splited;
 	int len;
@@ -65,14 +113,14 @@ char **parse_cmd(char *cmd, int *assign,char **new,char **paths)
 	int i;
 
 	splited = ft_split_ms(cmd, ' ');
-	splited = clean_splited(splited);
+	splited = clean_splited(splited, d);
 	len = ft_bi_strlen(splited);
-	if(splited[0] && is_asign(splited[0]))
+	if (splited[0] && is_asign(splited[0]))
 		*assign = 1;
 	else
 		*assign = 0;
 	if (len > 0)
-		ret = get_cmd_path(ft_strjoin("/",splited[0]),paths);
+		ret = get_cmd_path(ft_strjoin("/", splited[0]), paths);
 	else
 		ret = NULL;
 	*new = ret;
@@ -80,11 +128,11 @@ char **parse_cmd(char *cmd, int *assign,char **new,char **paths)
 	return splited;
 }
 
-t_cmds *new_cmd(char *cmd,t_data data)
+t_cmds *new_cmd(char *cmd, t_data data)
 {
 	t_cmds *new;
 	new = malloc(sizeof(t_cmds));
-	new->options = parse_cmd(cmd, &new->var_asign,&new->cmd,data.paths);
+	new->options = parse_cmd(cmd, &new->var_asign, &new->cmd, data.paths, &data);
 	new->inputs = NULL;
 	new->output = NULL;
 	new->childs = NULL;
@@ -137,7 +185,7 @@ void print_cmds(t_cmds *cmds)
 	printf("cmds:\n------------\n");
 	while (cmds)
 	{
-		printf("	cmd%d:%s\n",j, cmds->cmd);
+		printf("	cmd%d:%s\n", j, cmds->cmd);
 		options = 0;
 		while (cmds->options[options])
 		{
@@ -182,7 +230,7 @@ int parse_comands(t_data *d)
 	while (splited[i])
 	{
 		childs = ft_split_ms(splited[i], '|');
-		add_cmd(&d->cmds, new_cmd(ft_strdup(childs[0]),*d));
+		add_cmd(&d->cmds, new_cmd(ft_strdup(childs[0]), *d));
 		if (i == 0)
 			first = d->cmds;
 		else
@@ -190,7 +238,7 @@ int parse_comands(t_data *d)
 		j = 1;
 		while (childs && childs[j])
 		{
-			add_child(&d->cmds->childs, new_cmd(ft_strdup(childs[j]),*d));
+			add_child(&d->cmds->childs, new_cmd(ft_strdup(childs[j]), *d));
 			j++;
 		}
 		ft_bi_free(childs);

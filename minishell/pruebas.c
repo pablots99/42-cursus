@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/09 18:35:04 by pablo             #+#    #+#             */
-/*   Updated: 2021/07/06 18:55:23 by pablo            ###   ########.fr       */
+/*   Updated: 2021/07/07 20:37:55 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ int ft_str_equal(char *s1, char *s2)
 
 	len1 = ft_strlen(s1);
 	len2 = ft_strlen(s2);
+	i = 0;
+	printf("len1:%d,len2:%d\n",len1,len2);
 	if(len1 != len2)
 		return (0);
 	while(i < len1)
@@ -84,5 +86,5 @@ int ft_str_equal(char *s1, char *s2)
 
 int main(int argc,char **ergv, char **env)
 {
-		printf("res; %d\n",ft_str_equal("h","h"));
+		printf("res; %d\n",ft_str_equal("LESS","hola"));
 }
