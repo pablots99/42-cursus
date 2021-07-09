@@ -3,9 +3,11 @@ NAME=minishell
 SRCS =	minishell.c 						\
 		srcs/parser/recive_comands.c		\
 		srcs/parser/parse_comands.c			\
-		srcs/parser/split_ms.c				\
+		srcs/parser/split_ms.c			\
 		srcs/execution/execute_command.c	\
-		srcs/execution/env.c				\
+		srcs/builtins/env.c				\
+		srcs/builtins/pwd.c				\
+		srcs/builtins/echo.c				\
 		srcs/utils/utils.c
 OBJS = $(SRCS:.c=.o)
 

@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 12:02:38 by pablo             #+#    #+#             */
-/*   Updated: 2021/07/07 22:47:46 by pablo            ###   ########.fr       */
+/*   Updated: 2021/07/08 19:45:04 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,22 +27,29 @@ void ft_bstrprint(char **bstr)
 void free_command(t_data *d)
 {
 	t_cmds *aux;
+	int i;
+
+	i = 0;
 	while (d->cmds)
 	{
 		while (d->cmds->childs)
 		{
 			free(d->cmds->childs->cmd);
+			if(d->cmds->childs->outputs)
+				ft_bi_free(d->cmds->childs->outputs);
 			ft_bi_free(d->cmds->childs->options);
 			aux = 	d->cmds->childs;
 			d->cmds->childs = d->cmds->childs->childs;
 			free(aux);
 		}
-		free(d->cmds->cmd);
+		if(d->cmds->outputs)
+			ft_bi_free(d->cmds->outputs);
 		ft_bi_free(d->cmds->options);
+		free(d->cmds->cmd);
 		aux = d->cmds;
 		d->cmds = d->cmds->next;
 		free(aux);
-
+		i++;
 	}
 
 }
@@ -86,7 +93,6 @@ int main(int argc,char **argv,char **env)
 		free(route);
 		free(data.raw_cmd);
 	}
-
 	return 0;
 }
 // if(!ft_strncmp(data.raw_cmd,"exit",4) && ft_strlen(data.raw_cmd) == 4)

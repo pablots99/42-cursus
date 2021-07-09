@@ -1,52 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bi_free.c                                       :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/14 13:36:55 by ptorres           #+#    #+#             */
-/*   Updated: 2021/07/08 16:33:50 by pablo            ###   ########.fr       */
+/*   Created: 2021/07/09 17:07:16 by pablo             #+#    #+#             */
+/*   Updated: 2021/07/09 17:22:40 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../minishell.h"
 
-#include "libft.h"
-
-
-void ft_bi_free(char **arr)
+void execute_pwd(t_data *d,int fd_out)
 {
-	int	i;
-
-	i = 0;
-	while (arr[i] && arr[i] != NULL)
-	{
-		free(arr[i]);
-		i++;
-	}
-	free(arr);
-}
-
-void ft_bi_free_debug(char **arr)
-{
-	int	i;
-
-	i = 0;
-	while (arr[i] && arr[i] != NULL)
-	{
-		printf("i:%d\n",i);
-		free(arr[i]);
-		i++;
-	}
-	free(arr);
-}
-
-int ft_bi_strlen(char **arr)
-{
-	int i;
-
-	i = 0;
-	while(arr[i])
-		i++;
-	return i;
+	if(!fd_out)
+		fd_out = 1;
+	ft_putstr_fd(d->path,fd_out);
+	ft_putchar_fd('\n',fd_out);
 }

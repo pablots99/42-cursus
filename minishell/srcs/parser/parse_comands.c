@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 12:41:03 by ptorres           #+#    #+#             */
-/*   Updated: 2021/07/07 22:53:49 by pablo            ###   ########.fr       */
+/*   Updated: 2021/07/08 19:53:49 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char *get_cmd_path(char *cmd, char **paths)
 }
 
 //ver si hay variables
-char *found_vars(char *str, int c, t_data *d)
+char *find_vars(char *str, int c, t_data *d)
 
 {
 	char *new;
@@ -87,7 +87,7 @@ char **clean_splited(char **splited, t_data *d)
 	int no_vars;
 
 	no_vars = 0;
-	res = malloc(ft_bi_strlen(splited) + 2 * sizeof(char *));
+	res = malloc((ft_bi_strlen(splited) + 1) * sizeof(char *));
 	i = 0;
 	while (splited[i])
 	{
@@ -97,7 +97,7 @@ char **clean_splited(char **splited, t_data *d)
 			res[i] = ft_substr(splited[i], 1, ft_strlen(splited[i]) - 2);
 		else
 			res[i] = ft_strdup(splited[i]);
-		res[i] = found_vars(res[i], no_vars, d);
+		res[i] = find_vars(res[i], no_vars, d);
 		i++;
 	}
 	res[i] = NULL;
@@ -105,7 +105,60 @@ char **clean_splited(char **splited, t_data *d)
 	return res;
 }
 
-char **parse_cmd(char *cmd, int *assign, char **new, char **paths, t_data *d)
+int count_redirections(char **s,t_cmds *cmd)
+{
+	int i;
+	int count;
+
+	count = 0;
+	i = 0;
+	while (s[i])
+	{
+		if((ft_str_equal(s[i],">") && s[i + 1]))
+			cmd->apppend = 0,count+=2;
+		else if((ft_str_equal(s[i],">>")  && s[i + 1]))
+			cmd->apppend = 1,count+=2;
+		i++;
+	}
+	return (count);
+}
+
+char **redirections(t_data *d,t_cmds *cmd,char **s)
+{
+	int i;
+	int j;
+	int k;
+	int red;
+	char **res;
+
+	i = 0;
+	j = 0;
+	k = 0;
+	red = count_redirections(s,cmd);
+	if(red)
+		cmd->outputs = malloc(((red/2 + red%2) + 1) *sizeof(char*));
+	res = malloc(((ft_bi_strlen(s) - (red)) + 1) * sizeof(char *));
+	while(s[i])
+	{
+		if(ft_str_equal(s[i],">") && s[i + 1])
+			cmd->outputs[j] = ft_strdup(s[i+1]),j++,i++;
+		else if(ft_str_equal(s[i],">>")  && s[i + 1])
+			cmd->outputs[j] = ft_strdup(s[i+1]),j++,i++;
+		else
+			res[k] = ft_strdup(s[i]), k++;
+		i++;
+	}
+	if(!red)
+		cmd->outputs = NULL;
+	else
+		cmd->outputs[j] = NULL;
+	res[k] = NULL;
+	ft_bi_free(s);
+	return (res);
+}
+
+
+char **parse_cmd(char *cmd,t_cmds *new, char **paths, t_data *d)
 {
 	char **splited;
 	int len;
@@ -114,16 +167,17 @@ char **parse_cmd(char *cmd, int *assign, char **new, char **paths, t_data *d)
 
 	splited = ft_split_ms(cmd, ' ');
 	splited = clean_splited(splited, d);
+	splited = redirections(d,new,splited);
 	len = ft_bi_strlen(splited);
 	if (splited[0] && is_asign(splited[0]))
-		*assign = 1;
+		new->var_asign = 1;
 	else
-		*assign = 0;
+		new->var_asign = 0;
 	if (len > 0)
 		ret = get_cmd_path(ft_strjoin("/", splited[0]), paths);
 	else
 		ret = NULL;
-	*new = ret;
+	new->cmd = ret;
 	free(cmd);
 	return splited;
 }
@@ -132,11 +186,12 @@ t_cmds *new_cmd(char *cmd, t_data data)
 {
 	t_cmds *new;
 	new = malloc(sizeof(t_cmds));
-	new->options = parse_cmd(cmd, &new->var_asign, &new->cmd, data.paths, &data);
+	new->apppend = -1;
+	new->options = parse_cmd(cmd,new, data.paths, &data);
 	new->inputs = NULL;
-	new->output = NULL;
 	new->childs = NULL;
 	new->next = NULL;
+	new->otput_fd = 0;
 	return new;
 }
 

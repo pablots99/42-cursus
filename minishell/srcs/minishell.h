@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 12:03:32 by pablo             #+#    #+#             */
-/*   Updated: 2021/07/07 22:52:28 by pablo            ###   ########.fr       */
+/*   Updated: 2021/07/09 17:16:38 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,34 +23,36 @@
 
 typedef struct s_session_v
 {
-	char *name;
-	char *value;
-	int exp;
-	struct s_session_v *next;
+	char				*name;
+	char				*value;
+	int					exp;
+	struct s_session_v	*next;
 }	t_session_v;
 
 typedef struct s_cmds
 {
-	char *cmd;
-	char **options;
-	int var_asign;
-	char *inputs;
-	char *output;
-	struct s_cmds *childs;
-	struct s_cmds *next;
+	char			*cmd;
+	char			**options;
+	int				var_asign;
+	char			*inputs;
+	char			**outputs;
+	int 			otput_fd;
+	int				apppend;
+	struct s_cmds	*childs;
+	struct s_cmds	*next;
 }	t_cmds;
 
 
 typedef struct s_data
 {
-	char path[20000];
-	char *raw_cmd;
-	char **paths;
-	char **env;
-	int first_env;
-	int exit_code;
-	t_cmds *cmds;
-	t_session_v *session_env;
+	char			path[20000];
+	char			*raw_cmd;
+	char			**paths;
+	char			**env;
+	int				first_env;
+	int				exit_code;
+	t_cmds			*cmds;
+	t_session_v		*session_env;
 }	t_data;
 
 
@@ -69,3 +71,6 @@ int is_quote_closed(char *input);
 char **ft_split_ms(char *s,char c);
 char *ft_append_char(char *str, char c);
 char *get_env_ms(t_data *d,char* name);
+void ft_bi_free_debug(char **arr);
+void create_outputs(t_cmds *cmd);
+void execute_pwd(t_data *d,int fd_out);

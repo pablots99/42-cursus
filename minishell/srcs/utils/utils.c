@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 03:21:03 by pablo             #+#    #+#             */
-/*   Updated: 2021/07/07 22:24:42 by pablo            ###   ########.fr       */
+/*   Updated: 2021/07/09 17:23:31 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,29 @@ char *ft_append_char(char *str, char c)
 	free(str);
 	return (res);
 
+}
+
+void create_outputs(t_cmds *cmd)
+{
+	int i;
+	int fd;
+	i = 0;
+	if(!cmd->outputs)
+		return ;
+	while (cmd->outputs[i])
+	{
+
+		if(cmd->apppend)
+			fd = open(cmd->outputs[i],O_WRONLY | O_CREAT  | O_APPEND, 0644);
+		else
+			fd = open(cmd->outputs[i],O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		printf("open:%s, fd:%d\n",cmd->outputs[i],fd);
+		if(cmd->outputs[i+1])
+		{
+			printf("closed:%s\n",cmd->outputs[i]);
+			close(fd);
+		}
+		i++;
+	}
+	cmd->otput_fd = fd;
 }
