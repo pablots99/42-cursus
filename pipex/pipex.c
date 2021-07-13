@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/18 15:09:47 by pablo             #+#    #+#             */
-/*   Updated: 2021/07/05 11:59:06 by pablo            ###   ########.fr       */
+/*   Updated: 2021/07/05 16:56:52 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,5 +102,6 @@ int	main(int argc, char **argv, char **env)
 			return (1);
 		}
 	}
+	// system("leaks pipex");
 	return (0);
 }

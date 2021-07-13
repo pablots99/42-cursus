@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 12:41:03 by ptorres           #+#    #+#             */
-/*   Updated: 2021/07/08 19:53:49 by pablo            ###   ########.fr       */
+/*   Updated: 2021/07/12 13:49:27 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,13 @@ char *find_vars(char *str, int c, t_data *d)
 				var_name = ft_append_char(var_name,str[i]);
 				i++;
 			}
-			var_value = get_session_env(d,var_name);
+			if(str[i-1] == '?' && str[i-2] == '$')
+			{
+				printf("vvar:%s\n",ft_itoa(1));
+				var_value = ft_itoa(d->status);
+			}
+			else
+				var_value = get_session_env(d,var_name);
 			if(!var_value)
 				var_value = get_env_ms(d,var_name);
 			if(var_value)

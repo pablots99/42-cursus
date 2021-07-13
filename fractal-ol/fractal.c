@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/02 23:08:38 by pablo             #+#    #+#             */
-/*   Updated: 2021/06/21 22:45:53 by pablo            ###   ########.fr       */
+/*   Updated: 2021/07/05 12:21:00 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	calculate_z(t_fractal f, double x1, double y1)
 	z = 0;
 	a1 = x1;
 	b1 = y1;
-	while (z < f.precision && fabs(a1 * a1  + b1 * b1) < 16)
+	while (z < f.precision && fabs(a1 * a1 + b1 * b1) < 16)
 	{
 		h1 = ((a1 * a1) - (b1 * b1));
 		h2 = (2 * a1 * b1);
@@ -32,7 +32,7 @@ int	calculate_z(t_fractal f, double x1, double y1)
 			x1 = f.julia->x;
 			y1 = f.julia->y;
 		}
-		a1 = h1  ;
+		a1 = h1 - x1;
 		b1 = h2 - y1;
 		z++;
 	}

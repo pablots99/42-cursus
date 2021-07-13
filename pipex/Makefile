@@ -10,7 +10,7 @@ OBJS = $(SRCS:.c=.o)
 CC = gcc -g
 #-fsanitize=address
 
-FLAGS = -Wall -Wextra -Werror    -o $(NAME)
+FLAGS = -Wall -Wextra -Werror  -fsanitize=address  -o $(NAME)
 
 
 all:$(NAME)

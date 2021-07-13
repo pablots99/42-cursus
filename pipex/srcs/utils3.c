@@ -18,7 +18,7 @@ char	**ft_sstr_dup(char **sstr)
 	int		i;
 
 	i = 0;
-	res = malloc(ft_bi_strlen(sstr) + 1 * sizeof(char *));
+	res = malloc(ft_bi_strlen(sstr) + 2 * sizeof(char *));
 	while (sstr[i])
 	{
 		res[i] = ft_strdup(sstr[i]);

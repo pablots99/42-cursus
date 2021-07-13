@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 12:03:32 by pablo             #+#    #+#             */
-/*   Updated: 2021/07/09 17:16:38 by pablo            ###   ########.fr       */
+/*   Updated: 2021/07/12 14:11:28 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,11 @@
 # include <sys/types.h>//fork ,
 # include <readline/readline.h>
 # include<readline/history.h>
+# include<readline/history.h>
+
 # include <fcntl.h>
+# include<signal.h>
+
 # define ENVIROMENT_PATH "~/.mini_bashrc"
 
 typedef struct s_session_v
@@ -53,6 +57,7 @@ typedef struct s_data
 	int				exit_code;
 	t_cmds			*cmds;
 	t_session_v		*session_env;
+	int				status;
 }	t_data;
 
 
@@ -74,3 +79,9 @@ char *get_env_ms(t_data *d,char* name);
 void ft_bi_free_debug(char **arr);
 void create_outputs(t_cmds *cmd);
 void execute_pwd(t_data *d,int fd_out);
+void execute_echo(t_cmds *cmd,int fd[2]);
+void execute_cd(t_cmds *cmd, int fd[2]);
+void unset_env(t_data *d,char *var_name);
+void print_env(t_data *d,int  fd[2]);
+void free_command(t_data *d);
+void handle_sigint(int sig);

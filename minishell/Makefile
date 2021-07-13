@@ -6,19 +6,22 @@ SRCS =	minishell.c 						\
 		srcs/parser/split_ms.c			\
 		srcs/execution/execute_command.c	\
 		srcs/builtins/env.c				\
-		srcs/builtins/pwd.c				\
+		srcs/builtins/pwd_cd.c				\
 		srcs/builtins/echo.c				\
 		srcs/utils/utils.c
 OBJS = $(SRCS:.c=.o)
 
-CC = gcc -g3
+CC = gcc -g
 
-LIBFLAGS = -L. libft/libft.a
+LIBFLAGS = -L. libft/libft.a -L/usr/local/opt/readline/lib -I/usr/local/opt/readline/include
 
-FLAGS = -Wall -Wextra -Werror -lreadline    -o $(NAME)
+FLAGS = -Wall -Wextra -Werror -lreadline   -o $(NAME)
 
 
 all:$(NAME)
+
+# export LDFLAGS="-L/usr/local/opt/readline/lib"
+#   	export CPPFLAGS="-I/usr/local/opt/readline/include"
 
 $(NAME):$(OBJS)
 	$(MAKE) bonus -C ./libft

@@ -6,11 +6,13 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 12:02:38 by pablo             #+#    #+#             */
-/*   Updated: 2021/07/08 19:45:04 by pablo            ###   ########.fr       */
+/*   Updated: 2021/07/12 14:14:19 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "srcs/minishell.h"
+
+
 
 
 void ft_bstrprint(char **bstr)
@@ -24,43 +26,28 @@ void ft_bstrprint(char **bstr)
 		i++;
 	}
 }
-void free_command(t_data *d)
+
+void handle_sigint(int sig)
 {
-	t_cmds *aux;
-	int i;
-
-	i = 0;
-	while (d->cmds)
+	if (sig == SIGINT)
 	{
-		while (d->cmds->childs)
-		{
-			free(d->cmds->childs->cmd);
-			if(d->cmds->childs->outputs)
-				ft_bi_free(d->cmds->childs->outputs);
-			ft_bi_free(d->cmds->childs->options);
-			aux = 	d->cmds->childs;
-			d->cmds->childs = d->cmds->childs->childs;
-			free(aux);
-		}
-		if(d->cmds->outputs)
-			ft_bi_free(d->cmds->outputs);
-		ft_bi_free(d->cmds->options);
-		free(d->cmds->cmd);
-		aux = d->cmds;
-		d->cmds = d->cmds->next;
-		free(aux);
-		i++;
+		printf("\n");
+		rl_replace_line("", 1);
+		rl_on_new_line();
+		rl_redisplay();
 	}
-
 }
+
 
 int main(int argc,char **argv,char **env)
 {
 	char *route;
 	t_data data;
 	char *aux;
+	int _signal;
 
 	data.raw_cmd = "";
+	data.status = 0;
 	data.env = env;
 	data.first_env = 1;
 	data.paths =  ft_split(getenv("PATH"),':');
@@ -68,11 +55,17 @@ int main(int argc,char **argv,char **env)
 	//write_cwd(data);
 	while (1)
 	{
+		//
 		data.cmds =  NULL;
 		route = ft_strjoin(getcwd(data.path, sizeof(data.path)), ">> ");
 		data.raw_cmd = readline(route);
 		//save history
 		//check open quotes
+		if(!data.raw_cmd)
+		{
+			printf("");
+			exit(0);
+		}
 		while (!is_quote_closed(data.raw_cmd))
 		{
 			aux =readline(">");
@@ -80,6 +73,7 @@ int main(int argc,char **argv,char **env)
 			free(aux);
 		}
 		add_history(data.raw_cmd);
+
 		//parse_comands
 		if(ft_strlen(data.raw_cmd))
 		{

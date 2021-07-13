@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 03:21:03 by pablo             #+#    #+#             */
-/*   Updated: 2021/07/09 17:23:31 by pablo            ###   ########.fr       */
+/*   Updated: 2021/07/09 20:34:32 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,4 +77,34 @@ void create_outputs(t_cmds *cmd)
 		i++;
 	}
 	cmd->otput_fd = fd;
+}
+
+void free_command(t_data *d)
+{
+	t_cmds *aux;
+	int i;
+
+	i = 0;
+	while (d->cmds)
+	{
+		while (d->cmds->childs)
+		{
+			free(d->cmds->childs->cmd);
+			if(d->cmds->childs->outputs)
+				ft_bi_free(d->cmds->childs->outputs);
+			ft_bi_free(d->cmds->childs->options);
+			aux = 	d->cmds->childs;
+			d->cmds->childs = d->cmds->childs->childs;
+			free(aux);
+		}
+		if(d->cmds->outputs)
+			ft_bi_free(d->cmds->outputs);
+		ft_bi_free(d->cmds->options);
+		free(d->cmds->cmd);
+		aux = d->cmds;
+		d->cmds = d->cmds->next;
+		free(aux);
+		i++;
+	}
+
 }
