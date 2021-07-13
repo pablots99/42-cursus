@@ -4,6 +4,7 @@ SRCS =	minishell.c 						\
 		srcs/parser/recive_comands.c		\
 		srcs/parser/parse_comands.c			\
 		srcs/parser/split_ms.c			\
+		srcs/parser/parse_redirections.c			\
 		srcs/execution/execute_command.c	\
 		srcs/builtins/env.c				\
 		srcs/builtins/pwd_cd.c				\
@@ -13,9 +14,14 @@ OBJS = $(SRCS:.c=.o)
 
 CC = gcc -g
 
-LIBFLAGS = -L. libft/libft.a -L/usr/local/opt/readline/lib -I/usr/local/opt/readline/include
+#campues
+# export LDFLAGS="-L/Users/ptorres/.brew/opt/readline/lib"
+#   export CPPFLAGS="-I/Users/ptorres/.brew/opt/readline/include"
+LIBFLAGS = -L. libft/libft.a -L/Users/ptorres/.brew/opt/readline/lib -I/Users/ptorres/.brew/opt/readline/include
 
-FLAGS = -Wall -Wextra -Werror -lreadline   -o $(NAME)
+#LIBFLAGS = -L. libft/libft.a -L/usr/local/opt/readline/lib -I/usr/local/opt/readline/include
+#-fsanitize=address
+FLAGS = -Wall -Wextra -Werror -lreadline    -o $(NAME)
 
 
 all:$(NAME)

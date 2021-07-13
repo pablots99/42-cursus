@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 12:03:32 by pablo             #+#    #+#             */
-/*   Updated: 2021/07/12 14:11:28 by pablo            ###   ########.fr       */
+/*   Updated: 2021/07/13 15:49:16 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,3 +85,5 @@ void unset_env(t_data *d,char *var_name);
 void print_env(t_data *d,int  fd[2]);
 void free_command(t_data *d);
 void handle_sigint(int sig);
+char **redirections_out(t_data *d,t_cmds *cmd,char **s);
+char **joined_redirections_out(t_data *d, t_cmds *cmd, char **s);

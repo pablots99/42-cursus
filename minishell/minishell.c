@@ -3,17 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 12:02:38 by pablo             #+#    #+#             */
-/*   Updated: 2021/07/12 14:14:19 by pablo            ###   ########.fr       */
+/*   Updated: 2021/07/13 16:37:01 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "srcs/minishell.h"
-
-
-
 
 void ft_bstrprint(char **bstr)
 {
@@ -37,7 +34,6 @@ void handle_sigint(int sig)
 		rl_redisplay();
 	}
 }
-
 
 int main(int argc,char **argv,char **env)
 {
@@ -79,7 +75,7 @@ int main(int argc,char **argv,char **env)
 		{
 			if(parse_comands(&data))
 				execute_commands(&data);
-				// printf("xD\n");
+				// ;
 			//
 
 		}

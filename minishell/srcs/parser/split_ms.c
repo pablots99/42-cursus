@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_ms.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 16:35:31 by pablo             #+#    #+#             */
-/*   Updated: 2021/07/06 17:45:50 by pablo            ###   ########.fr       */
+/*   Updated: 2021/07/13 16:18:37 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,10 +89,8 @@ int	len_part2_ms(char *s, int i, char c)
 			cond = 1;
 
 		}
-		else if(cond == 1 && s[i] == quote)
-		{
-			cond = 0;
-		}
+		// else if(cond == 1 && s[i] == quote)
+		// 	cond = 0;
 		i++;
 		j++;
 	}

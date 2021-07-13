@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_comands.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 12:41:03 by ptorres           #+#    #+#             */
-/*   Updated: 2021/07/12 13:49:27 by pablo            ###   ########.fr       */
+/*   Updated: 2021/07/13 16:41:17 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,7 @@ char *find_vars(char *str, int c, t_data *d)
 				i++;
 			}
 			if(str[i-1] == '?' && str[i-2] == '$')
-			{
-				printf("vvar:%s\n",ft_itoa(1));
-				var_value = ft_itoa(d->status);
-			}
+					var_value = ft_itoa(d->status);
 			else
 				var_value = get_session_env(d,var_name);
 			if(!var_value)
@@ -86,6 +83,8 @@ char *find_vars(char *str, int c, t_data *d)
 	free(str);
 	return new;
 }
+
+
 char **clean_splited(char **splited, t_data *d)
 {
 	char **res;
@@ -99,10 +98,7 @@ char **clean_splited(char **splited, t_data *d)
 	{
 		if (splited[i][0] == '\'')
 			no_vars = 1;
-		if (splited[i][0] == '"' || splited[i][0] == '\'')
-			res[i] = ft_substr(splited[i], 1, ft_strlen(splited[i]) - 2);
-		else
-			res[i] = ft_strdup(splited[i]);
+		res[i] = ft_clean_chars(splited[i],"\"\'");
 		res[i] = find_vars(res[i], no_vars, d);
 		i++;
 	}
@@ -110,59 +106,6 @@ char **clean_splited(char **splited, t_data *d)
 	ft_bi_free(splited);
 	return res;
 }
-
-int count_redirections(char **s,t_cmds *cmd)
-{
-	int i;
-	int count;
-
-	count = 0;
-	i = 0;
-	while (s[i])
-	{
-		if((ft_str_equal(s[i],">") && s[i + 1]))
-			cmd->apppend = 0,count+=2;
-		else if((ft_str_equal(s[i],">>")  && s[i + 1]))
-			cmd->apppend = 1,count+=2;
-		i++;
-	}
-	return (count);
-}
-
-char **redirections(t_data *d,t_cmds *cmd,char **s)
-{
-	int i;
-	int j;
-	int k;
-	int red;
-	char **res;
-
-	i = 0;
-	j = 0;
-	k = 0;
-	red = count_redirections(s,cmd);
-	if(red)
-		cmd->outputs = malloc(((red/2 + red%2) + 1) *sizeof(char*));
-	res = malloc(((ft_bi_strlen(s) - (red)) + 1) * sizeof(char *));
-	while(s[i])
-	{
-		if(ft_str_equal(s[i],">") && s[i + 1])
-			cmd->outputs[j] = ft_strdup(s[i+1]),j++,i++;
-		else if(ft_str_equal(s[i],">>")  && s[i + 1])
-			cmd->outputs[j] = ft_strdup(s[i+1]),j++,i++;
-		else
-			res[k] = ft_strdup(s[i]), k++;
-		i++;
-	}
-	if(!red)
-		cmd->outputs = NULL;
-	else
-		cmd->outputs[j] = NULL;
-	res[k] = NULL;
-	ft_bi_free(s);
-	return (res);
-}
-
 
 char **parse_cmd(char *cmd,t_cmds *new, char **paths, t_data *d)
 {
@@ -173,7 +116,10 @@ char **parse_cmd(char *cmd,t_cmds *new, char **paths, t_data *d)
 
 	splited = ft_split_ms(cmd, ' ');
 	splited = clean_splited(splited, d);
-	splited = redirections(d,new,splited);
+	splited = redirections_out(d,new,splited);
+	//splited = joined_redirections_out(d,new,splited); //joined redirections
+	//splited = redirections_in(d,new,splited);
+	//splited = joined_redirections_in
 	len = ft_bi_strlen(splited);
 	if (splited[0] && is_asign(splited[0]))
 		new->var_asign = 1;
@@ -217,6 +163,7 @@ void add_cmd(t_cmds **cmds, t_cmds *cmd)
 		aux->next = cmd;
 	}
 }
+
 void add_child(t_cmds **cmds, t_cmds *cmd)
 {
 	t_cmds *child;
@@ -233,6 +180,7 @@ void add_child(t_cmds **cmds, t_cmds *cmd)
 		child->childs = cmd;
 	}
 }
+
 void print_cmds(t_cmds *cmds)
 {
 	int i;
