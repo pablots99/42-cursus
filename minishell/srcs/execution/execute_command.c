@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 19:48:22 by pablo             #+#    #+#             */
-/*   Updated: 2021/07/12 14:27:03 by pablo            ###   ########.fr       */
+/*   Updated: 2021/07/15 14:10:49 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,10 @@ int execute_builtins(t_cmds *cmd, int fd[2], t_data *d)
 	int is;
 
 	is = 0;
+	if(cmd->otput_fd)
+		fd[1]  = cmd->otput_fd;
+	if (!cmd->options || !cmd->options[0])
+		return (0);
 	if (ft_str_equal(cmd->options[0], "cd"))
 		execute_cd(cmd, fd), is = 1;
 	else if (ft_str_equal(cmd->options[0], "env"))
@@ -37,6 +41,8 @@ int execute_builtins(t_cmds *cmd, int fd[2], t_data *d)
 		set_env_ms(d, cmd->options[1], 0), is = 1;
 	if (is)
 		d->status = 0;
+	if(cmd->otput_fd && is)
+		cmd->otput_fd = 0;
 	return (is);
 }
 
@@ -46,92 +52,54 @@ void execute_commands(t_data *d)
 	int fd[2];
 	int fd_in;
 	int i;
-	int cond;
-	t_cmds *aux;
 	t_cmds *first;
 
-	// input redirections aqui
+	i = 0;
 	first = d->cmds;
+	i = 0;
+	fd_in = 0;
+	fd[1]  = 1;
+	fd[0] = 0;
 	while (d->cmds)
 	{
-		i = 0;
-		fd_in = 0;
-		aux = d->cmds;
-		if (aux->childs)
-			cond = 1;
-		else
-			cond = 0;
-		while (aux != NULL && cond)
+
+		create_outputs(d->cmds);
+		if (!execute_builtins(d->cmds, fd, d) && d->cmds->options)
 		{
-			create_outputs(aux);
-			if (!execute_builtins(d->cmds, fd, d))
+			if (d->cmds->childs != NULL)
+				pipe(fd);
+			pid = fork();
+			if (pid == 0)
 			{
-				if (aux->childs != NULL)
-					pipe(fd);
-				pid = fork();
-				if (pid == 0)
+				dup2(fd_in, 0);
+				close(fd[0]);
+				if (d->cmds->childs != NULL) //si tiene hijos hace el dup2 del output
+					dup2(fd[1], 1);
+				if (d->cmds->otput_fd != 0) //si no  tiene hijos pero hay redireccion hace el dup2 del output
 				{
-					dup2(fd_in, 0);
-					close(fd[0]);
-					if (aux->childs != NULL) //si tiene hijos hace el dup2 del output
-						dup2(fd[1], 1);
-					if (aux->otput_fd && aux->childs == NULL) //si no  tiene hijos pero hay redireccion hace el dup2 del output
-					{
-						printf("output: %d\n",aux->otput_fd);
-						dup2(aux->otput_fd,1);
-					}
-					if (execve(aux->cmd, aux->options, d->env) == -1)
-					{
-						printf("Error Executing %s\n", aux->options[0]);
-						exit(1);
-					}
+					dup2(d->cmds->otput_fd, 1);
 				}
-				else
+				if (execve(d->cmds->cmd, d->cmds->options, d->env) == -1)
 				{
-					if (aux->otput_fd)
-						close(aux->otput_fd);
+					if (d->cmds->options && d->cmds->options[0])
+						printf("minishell: %s: command not found\n", d->cmds->cmd);
+					else
+						printf("minishell: : command not found\n");
+					exit(1);
+				}
+			}
+			else
+			{
+				if(d->cmds->otput_fd)
+					close(d->cmds->otput_fd), d->cmds->otput_fd = 0;
+				if(fd[1] != 1)
 					close(fd[1]);
-					fd_in = fd[0];
-					wait(&d->status);
-				}
-			}
-			aux = aux->childs;
-			i++;
-		}
-		//solo un comando funciona bien
-		if (i == 0 && d->cmds->childs == NULL)
-		{
-			create_outputs(d->cmds);
-			fd[0] = 0;
-			fd[1] = d->cmds->otput_fd;
-			if (!execute_builtins(d->cmds, fd, d))
-			{
-
-				pid = fork();
-				if (pid == 0)
-				{
-					if (d->cmds->otput_fd)
-					{
-						printf("output: %d\n", d->cmds->otput_fd);
-						dup2(d->cmds->otput_fd, 1);
-					}
-					if (execve(d->cmds->cmd, d->cmds->options, d->env) == -1)
-					{
-						printf("Error Executing %s\n", d->cmds->options[0]);
-						exit(1);
-					}
-				}
-				else
-				{
-					if (d->cmds->otput_fd)
-						close(d->cmds->otput_fd);
-					//signal(SIGINT, handle_sigint);
-
-					wait(&d->status);
-				}
+				fd_in = fd[0];
+				wait(&d->status);
 			}
 		}
-		d->cmds = d->cmds->next;
+		i++;
+		d->cmds = d->cmds->childs;
 	}
 	d->cmds = first;
 }

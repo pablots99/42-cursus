@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/09 17:07:23 by pablo             #+#    #+#             */
-/*   Updated: 2021/07/12 13:53:01 by pablo            ###   ########.fr       */
+/*   Updated: 2021/07/15 14:04:41 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,11 @@ void execute_echo(t_cmds *cmd,int fd[2])
 			n = 1;
 		else
 			ft_putstr_fd(cmd->options[i],fd[1]);
-		i++;
 		if(cmd->options[i] && !(n && i == 2))
 			ft_putchar_fd(' ',fd[1]);
+		i++;
 	}
 	if(!n)
 		ft_putchar_fd('\n',fd[1]);
+	close(fd[1]);
 }

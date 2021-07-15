@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/03 20:12:57 by pablo             #+#    #+#             */
-/*   Updated: 2021/07/05 20:47:34 by pablo            ###   ########.fr       */
+/*   Updated: 2021/07/13 22:48:27 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ size_t	ft_strlen(char *str)
 	size_t	i;
 
 	i = 0;
-	if(!str)
+	if(str == NULL)
 		return (0);
 	while (str[i])
 		i++;

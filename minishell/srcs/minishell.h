@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 12:03:32 by pablo             #+#    #+#             */
-/*   Updated: 2021/07/13 15:49:16 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/07/15 17:09:42 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,8 @@ typedef struct s_cmds
 	char			*inputs;
 	char			**outputs;
 	int 			otput_fd;
-	int				apppend;
+	char			*apppend;
 	struct s_cmds	*childs;
-	struct s_cmds	*next;
 }	t_cmds;
 
 
@@ -60,6 +59,24 @@ typedef struct s_data
 	int				status;
 }	t_data;
 
+
+typedef struct s_parse
+{
+	int s_quote;//single quote
+	int d_quote;//double quote
+	int skip;//is char a quote
+
+	int so_redir;//single output redirection
+	int do_redir;//double output redirection
+	int si_redir;//single input redirection
+	int di_redir;//double input redirection
+	int n_pipe;	 //is char pipe
+	int i;
+	int space;   //is separation between tokens
+	char *options;	//string to append to options(array of strings)
+	int var;
+	char *var_name;
+}	t_parse;
 
 int recive_comands(char **cmd);
 void write_cwd(t_data d);
@@ -87,3 +104,7 @@ void free_command(t_data *d);
 void handle_sigint(int sig);
 char **redirections_out(t_data *d,t_cmds *cmd,char **s);
 char **joined_redirections_out(t_data *d, t_cmds *cmd, char **s);
+void print_command(t_data *a);
+char **ft_append_string(char **str, char *s);
+char *ft_append_str(char *s1, char *s2);
+int is_pipe_closed(char *input);
