@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 02:34:42 by pablo             #+#    #+#             */
-/*   Updated: 2021/07/09 21:07:55 by pablo            ###   ########.fr       */
+/*   Updated: 2021/08/20 18:24:27 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,17 @@
 
 int is_asign(char *var)
 {
-	char **splited;
+	int i;
 
-	splited = ft_split(var, '=');
-	if (ft_bi_strlen(splited) != 2)
+	i = 0;
+
+	while (var[i])
 	{
-		ft_bi_free(splited);
-		return (0);
+		if(var[i] == '=' && i!=0)
+			return (1);
+		i++;
 	}
-	ft_bi_free(splited);
-	return (1);
+	return (0);
 }
 
 int _exists(char *var, char *env)
@@ -73,16 +74,18 @@ void unset_env(t_data *d,char *var_name)
 
 }
 
-void print_env(t_data *d,int  fd[2])
+void print_env(char **env,int  fd[2])
 {
 	int i;
 
 	i = 0;
 	if(!fd[1])
-		fd[1] = 1;
-	while (d->env[i])
 	{
-		ft_putstr_fd(d->env[i],fd[1]);
+		fd[1] = 1;
+	}
+	while (env[i])
+	{
+		ft_putstr_fd(env[i],fd[1]);
 		ft_putchar_fd('\n',fd[1]);
 		i++;
 	}
@@ -122,6 +125,7 @@ void set_env_ms(t_data *d, char *var,int env)
 	i = 0;
 	cond = 0;
 	exists = 0;
+
 	//export var from set
 	if (!is_asign(var))
 	{
@@ -182,7 +186,10 @@ void add_session_env(t_data *d, char *cmd,int exp)
 	spl = ft_split(cmd, '=');
 	new = malloc(sizeof(t_session_v));
 	new->name = ft_strdup(spl[0]);
-	new->value = ft_strdup(spl[1]);
+	if(spl[1])
+		new->value = ft_strdup(spl[1]);
+	else
+		new->value = ft_strdup("");
 	new->exp = exp;
 	new->next = NULL;
 	if (!d->session_env)

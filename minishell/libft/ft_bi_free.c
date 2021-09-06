@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 13:36:55 by ptorres           #+#    #+#             */
-/*   Updated: 2021/07/13 23:15:28 by pablo            ###   ########.fr       */
+/*   Updated: 2021/07/20 21:27:07 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void ft_bi_free_debug(char **arr)
 	i = 0;
 	while (arr[i] && arr[i] != NULL)
 	{
-		printf("i:%d\n",i);
 		free(arr[i]);
 		i++;
 	}

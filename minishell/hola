@@ -1,11 +1,8 @@
-LDFLAGS=-L/usr/local/opt/readline/lib
 TERM_PROGRAM=vscode
 TERM=xterm-256color
 SHELL=/bin/zsh
-CPPFLAGS=-I/usr/local/opt/readline/include
 TMPDIR=/var/folders/m3/f5pkmzd13xqdt357qx8lstjw0000gn/T/
-TERM_PROGRAM_VERSION=1.59.0
-OLDPWD=/Users/pablo/Desktop/42-cursus
+TERM_PROGRAM_VERSION=1.59.1
 ORIGINAL_XDG_CURRENT_DESKTOP=undefined
 ZSH=/Users/pablo/.oh-my-zsh
 USER=pablo
@@ -30,5 +27,24 @@ VSCODE_GIT_ASKPASS_NODE=/Applications/Visual Studio Code.app/Contents/Frameworks
 GIT_ASKPASS=/Applications/Visual Studio Code.app/Contents/Resources/app/extensions/git/dist/askpass.sh
 COLORTERM=truecolor
 _=./minishell
-[?2004h/Users/pablo/Desktop/42-cursus/minishell>> ^C[?2004l
+OLDPWD=/Users/pablo/Desktop/42-cursus
+[?2004h/Users/pablo/Desktop/42-cursus/minishell>> 
+[?2004l[?2004h/Users/pablo/Desktop/42-cursus/minishell>> 
+[?2004l[?2004h/Users/pablo/Desktop/42-cursus/minishell>> ls
+[?2004lMakefile
+a
+correccion_minishell_nueva.pdf
+help.txt
+hola
+libft
+minishell
+minishell.c
+srcs
+[?2004h/Users/pablo/Desktop/42-cursus/minishell>> 
+[?2004l[?2004h/Users/pablo/Desktop/42-cursus/minishell>> 
+[?2004l[?2004h/Users/pablo/Desktop/42-cursus/minishell>> 
+[?2004l[?2004h/Users/pablo/Desktop/42-cursus/minishell>> 
+[?2004l[?2004h/Users/pablo/Desktop/42-cursus/minishell>> ^C[?2004l
+/Users/pablo/Desktop/42-cursus/minishell>> [?2004h^C[?2004l
+/Users/pablo/Desktop/42-cursus/minishell>> [?2004h^C[?2004l
 /Users/pablo/Desktop/42-cursus/minishell>> [?2004h^Z[?2004l

@@ -6,11 +6,29 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 03:21:03 by pablo             #+#    #+#             */
-/*   Updated: 2021/07/15 17:20:11 by pablo            ###   ########.fr       */
+/*   Updated: 2021/08/20 13:41:05 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+
+char **dup_bi_string(char **str)
+{
+	int i;
+	char **res;
+
+	i = 0;
+	res = malloc((ft_bi_strlen(str)+1) * sizeof(char*));
+	while(str[i])
+	{
+		res[i] = ft_strdup(str[i]);
+		i++;
+	}
+	res[i] = NULL;
+	return (str);
+}
+
 
 int ft_str_equal(char *s1, char *s2)
 {
@@ -66,7 +84,7 @@ char **ft_append_string(char **str, char *s)
 		res[i] = ft_strdup(str[i]);
 		i++;
 	}
-	if(s)
+	if (s)
 		res[i] = ft_strdup(s);
 	else
 		res[i] = NULL;
@@ -76,27 +94,40 @@ char **ft_append_string(char **str, char *s)
 	return (res);
 }
 
-void create_outputs(t_cmds *cmd)
+void create_output(t_cmds *cmd, char *str, int s, int d)
 {
-	int i;
 	int fd;
 
-	i = 0;
-	if(!cmd->outputs )
-		return ;
-	while (cmd->outputs[i])
+	if (cmd->otput_fd != 0)
+		close(cmd->otput_fd);
+	if (d)
+		fd = open(str, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	else if (s)
+		fd = open(str, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	cmd->otput_fd = fd;
+	if (str && str[0] != 0)
+		free(str);
+}
+
+void read_inputs(t_cmds *cmd, char *str)
+{
+
+	int fd;
+
+	fd = 0;
+	if (cmd->input_fd != 0)
+		close(cmd->input_fd);
+	fd = open(str, O_RDWR);
+	if (fd == -1)
 	{
-		printf("ap: %c,name: %s\n",cmd->apppend[i],cmd->outputs[i]);
-		if(cmd->apppend[i] == '0')
-			fd = open(cmd->outputs[i],O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		else
-			fd = open(cmd->outputs[i],O_WRONLY | O_CREAT  | O_APPEND, 0644);
-		if(cmd->outputs[i+1])
-			close(fd);
-		else
-			cmd->otput_fd = fd;
-		i++;
+		ft_putstr_fd("minishell: ",2);
+		perror(str);
+		cmd->err = 1;
 	}
+	else
+		cmd->input_fd = fd;
+	if (str && str[0] != 0)
+		free(str);
 }
 
 void free_command(t_data *d)
@@ -106,8 +137,6 @@ void free_command(t_data *d)
 	while (d->cmds != NULL)
 	{
 		free(d->cmds->cmd);
-		if (d->cmds->outputs)
-			ft_bi_free(d->cmds->outputs);
 		ft_bi_free(d->cmds->options);
 		if (d->cmds->apppend)
 			free(d->cmds->apppend);
@@ -124,7 +153,7 @@ char *ft_append_str(char *s1, char *s2)
 	i = 0;
 	while (s2 && s2[i])
 	{
-		s1 = ft_append_char(s1,s2[i]);
+		s1 = ft_append_char(s1, s2[i]);
 		i++;
 	}
 	return s1;
@@ -142,16 +171,16 @@ int is_quote_closed(char *input)
 	quote = 0;
 	while (input[i])
 	{
-		if((input[i] == '"' || input[i] == '\'') && cond == 0)
+		if ((input[i] == '"' || input[i] == '\'') && cond == 0)
 		{
 			quote = input[i];
 			cond = 1;
 		}
-		else if(cond == 1 && input[i] == quote)
+		else if (cond == 1 && input[i] == quote)
 			cond = 0;
 		i++;
 	}
-	if(cond)
+	if (cond)
 		return (0);
 	return (1);
 }
@@ -165,11 +194,70 @@ int is_pipe_closed(char *input)
 	cond = 1;
 	while (input[i])
 	{
-		if(input[i] == '|')
+		if (input[i] == '|')
 			cond = 0;
-		else if(!cond && input[i] != ' ')
+		else if (!cond && input[i] != ' ')
 			cond = 1;
 		i++;
 	}
 	return (cond);
 }
+
+void save_double_redir(char *str, t_cmds *cmd, int c)
+{
+	char *aux;
+	int pid;
+	int fd;
+
+	if (cmd->input_fd)
+		close(cmd->input_fd);
+	if (c < 3)
+	{
+		fd = open("/tmp/minishelltmp", O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		aux = readline("> ");
+		while (!ft_str_equal(aux, str) || aux[ft_strlen(aux)] == '\04')
+		{
+			write(fd, aux, ft_strlen(aux));
+			write(fd, "\n", 1);
+			free(aux);
+			aux = readline("> ");
+		}
+		close(fd);
+		fd = open("/tmp/minishelltmp", O_RDONLY);
+		unlink("/tmp/minishelltmp");
+		cmd->input_fd = fd;
+		free(aux);
+	}
+	free(str);
+	str = NULL;
+}
+
+// void save_double_redir(char *str, t_cmds *cmd)
+// {
+// 	char *aux;
+// 	int pid;
+// 	int fd;
+
+// 	if (cmd->input_fd)
+// 		close(cmd->input_fd);
+// 	in_read = 1;
+// 	fd = open("/tmp/minishelltmp", O_WRONLY | O_CREAT | O_TRUNC, 0644);
+// 	write(1,"> ",2);
+// 	get_next_line_ms(1,&aux);
+// 	while (!ft_str_equal(aux, str))
+// 	{
+// 		printf("hola\n");
+// 		write(fd, aux, ft_strlen(aux));
+// 		write(fd, "\n", 1);
+// 		free(aux);
+// 		write(1,"> ",2);
+// 		get_next_line_ms(1,&aux);
+// 	}
+// 	close(fd);
+// 	fd = open("/tmp/minishelltmp", O_RDONLY);
+// 	unlink("/tmp/minishelltmp");
+// 	cmd->input_fd = fd;
+// 	free(aux);
+// 	free(str);
+// 	str = NULL;
+// }

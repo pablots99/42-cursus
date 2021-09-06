@@ -6,7 +6,9 @@ SRCS =	minishell.c 						\
 		srcs/builtins/env.c				\
 		srcs/builtins/pwd_cd.c				\
 		srcs/builtins/echo.c				\
-		srcs/utils/utils.c
+		srcs/builtins/export.c				\
+		srcs/utils/utils.c					\
+		srcs/utils/gnl_ms.c
 OBJS = $(SRCS:.c=.o)
 
 CC = gcc -g
@@ -18,13 +20,12 @@ CC = gcc -g
 
 LIBFLAGS = -L. libft/libft.a -L/usr/local/opt/readline/lib -I/usr/local/opt/readline/include
 #-fsanitize=address
-FLAGS = -Wall -Wextra -Werror   -lreadline  -o $(NAME)
+FLAGS = -Wall -Wextra -Werror  -lreadline  -o $(NAME)
 
 
 all:$(NAME)
 
-# export LDFLAGS="-L/usr/local/opt/readline/lib"
-#   	export CPPFLAGS="-I/usr/local/opt/readline/include"
+# export LDFLAGS="-L/usr/local/opt/readline/lib" ; export CPPFLAGS="-I/usr/local/opt/readline/include"
 
 $(NAME):$(OBJS)
 	$(MAKE) bonus -C ./libft

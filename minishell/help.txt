@@ -36,17 +36,15 @@
 	-> https://www.tutorialspoint.com/c_standard_library/c_function_getenv.htm
 
 
-CURSOR MOVEMENT
 
-Position the Cursor: \033[;H Or \033[L;Cf puts the cursor at line L and column C.
-Move the cursor up N lines: \033[NA
-Move the cursor down N lines: \033[NB
-Move the cursor forward N columns: \033[NC
-Move the cursor backward N columns: \033[ND
-Clear the screen, move to (0,0): \033[2J
-Erase to end of line: \033[K
-Save cursor position: \033[s
-Restore cursor position: \033[u
+TO DO:
+	update pwd and old pwd  in env
+	check status code values
+	env does not work with pipes
+	'ctrl + \' when is text writed in the prompt have to work like 'ctrl + d'
+	double redireccion ctrl c
+	builtins arguments
+LEAKS:
+	data.exportables -> son para cuando pones export normal
 
-
-CASES NOT WORKING > b ls > a |wc > b
+CASES NOT WORKING

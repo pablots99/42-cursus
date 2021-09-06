@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 12:03:32 by pablo             #+#    #+#             */
-/*   Updated: 2021/07/15 17:09:42 by pablo            ###   ########.fr       */
+/*   Updated: 2021/08/20 16:59:06 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <readline/readline.h>
 # include<readline/history.h>
 # include<readline/history.h>
-
+// #include <sys/ioctl.h>
 # include <fcntl.h>
 # include<signal.h>
 
@@ -38,10 +38,10 @@ typedef struct s_cmds
 	char			*cmd;
 	char			**options;
 	int				var_asign;
-	char			*inputs;
-	char			**outputs;
 	int 			otput_fd;
+	int				input_fd;
 	char			*apppend;
+	int 			err;
 	struct s_cmds	*childs;
 }	t_cmds;
 
@@ -52,6 +52,7 @@ typedef struct s_data
 	char			*raw_cmd;
 	char			**paths;
 	char			**env;
+	char			**exportables;
 	int				first_env;
 	int				exit_code;
 	t_cmds			*cmds;
@@ -59,13 +60,13 @@ typedef struct s_data
 	int				status;
 }	t_data;
 
+static int  in_read;
 
 typedef struct s_parse
 {
 	int s_quote;//single quote
 	int d_quote;//double quote
 	int skip;//is char a quote
-
 	int so_redir;//single output redirection
 	int do_redir;//double output redirection
 	int si_redir;//single input redirection
@@ -76,6 +77,7 @@ typedef struct s_parse
 	char *options;	//string to append to options(array of strings)
 	int var;
 	char *var_name;
+	int var_end;
 }	t_parse;
 
 int recive_comands(char **cmd);
@@ -94,12 +96,11 @@ char **ft_split_ms(char *s,char c);
 char *ft_append_char(char *str, char c);
 char *get_env_ms(t_data *d,char* name);
 void ft_bi_free_debug(char **arr);
-void create_outputs(t_cmds *cmd);
 void execute_pwd(t_data *d,int fd_out);
-void execute_echo(t_cmds *cmd,int fd[2]);
+void execute_echo(t_cmds *cmd);
 void execute_cd(t_cmds *cmd, int fd[2]);
 void unset_env(t_data *d,char *var_name);
-void print_env(t_data *d,int  fd[2]);
+void print_env(char **env,int  fd[2]);
 void free_command(t_data *d);
 void handle_sigint(int sig);
 char **redirections_out(t_data *d,t_cmds *cmd,char **s);
@@ -108,3 +109,11 @@ void print_command(t_data *a);
 char **ft_append_string(char **str, char *s);
 char *ft_append_str(char *s1, char *s2);
 int is_pipe_closed(char *input);
+void save_double_redir(char *str,t_cmds *cmd,int c);
+void create_output(t_cmds *cmd,char *str,int s,int d);
+void read_inputs(t_cmds *cmd,char *str);
+int		get_next_line_ms(int fd, char **line);
+char **dup_bi_string(char **str);
+char **save_exportables(char **env);
+void print_command(t_data *a);
+void handle_sigint(int sig);
