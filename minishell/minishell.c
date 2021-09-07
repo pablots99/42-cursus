@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 12:02:38 by pablo             #+#    #+#             */
-/*   Updated: 2021/08/23 15:37:49 by pablo            ###   ########.fr       */
+/*   Updated: 2021/09/06 16:20:42 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int main(int argc, char **argv, char **env)
 	data.raw_cmd = "";
 	data.status = 0;
 	data.env = env;
-	//data.exportables = save_exportables(dup_bi_string(env));
+	data.exportables = save_exportables(dup_bi_string(env));
 	data.first_env = 1;
 	in_read = 0;
 	data.paths = ft_split(getenv("PATH"), ':');

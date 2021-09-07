@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 03:21:03 by pablo             #+#    #+#             */
-/*   Updated: 2021/08/20 13:41:05 by pablo            ###   ########.fr       */
+/*   Updated: 2021/09/06 14:45:05 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
 
 char **dup_bi_string(char **str)
 {
@@ -19,8 +18,8 @@ char **dup_bi_string(char **str)
 	char **res;
 
 	i = 0;
-	res = malloc((ft_bi_strlen(str)+1) * sizeof(char*));
-	while(str[i])
+	res = malloc((ft_bi_strlen(str) + 1) * sizeof(char *));
+	while (str[i])
 	{
 		res[i] = ft_strdup(str[i]);
 		i++;
@@ -28,7 +27,6 @@ char **dup_bi_string(char **str)
 	res[i] = NULL;
 	return (str);
 }
-
 
 int ft_str_equal(char *s1, char *s2)
 {
@@ -120,7 +118,7 @@ void read_inputs(t_cmds *cmd, char *str)
 	fd = open(str, O_RDWR);
 	if (fd == -1)
 	{
-		ft_putstr_fd("minishell: ",2);
+		ft_putstr_fd("minishell: ", 2);
 		perror(str);
 		cmd->err = 1;
 	}
@@ -203,6 +201,19 @@ int is_pipe_closed(char *input)
 	return (cond);
 }
 
+void handle_sigint3(int sig)
+{
+	char *cwd;
+	int len;
+
+	len = 0;
+	cwd = getenv("PWD");;
+	len = ft_strlen(cwd);
+	while (len--)
+		write(1,"\b",1);
+	exit(0);
+}
+
 void save_double_redir(char *str, t_cmds *cmd, int c)
 {
 	char *aux;
@@ -213,51 +224,29 @@ void save_double_redir(char *str, t_cmds *cmd, int c)
 		close(cmd->input_fd);
 	if (c < 3)
 	{
-		fd = open("/tmp/minishelltmp", O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		aux = readline("> ");
-		while (!ft_str_equal(aux, str) || aux[ft_strlen(aux)] == '\04')
+		pid = fork();
+		if (pid == 0)
 		{
-			write(fd, aux, ft_strlen(aux));
-			write(fd, "\n", 1);
-			free(aux);
+			signal(SIGINT,handle_sigint3);
+			fd = open("/tmp/minishelltmp", O_WRONLY | O_CREAT | O_TRUNC, 0644);
 			aux = readline("> ");
+			while (!ft_str_equal(aux, str) || aux[ft_strlen(aux)] == '\04')
+			{
+				write(fd, aux, ft_strlen(aux));
+				write(fd, "\n", 1);
+				free(aux);
+				aux = readline("> ");
+			}
+			close(fd);
+			fd = open("/tmp/minishelltmp", O_RDONLY);
+			unlink("/tmp/minishelltmp");
+			cmd->input_fd = fd;
+			free(aux);
 		}
-		close(fd);
-		fd = open("/tmp/minishelltmp", O_RDONLY);
-		unlink("/tmp/minishelltmp");
-		cmd->input_fd = fd;
-		free(aux);
+		else{
+			wait(NULL);
+		}
 	}
 	free(str);
 	str = NULL;
 }
-
-// void save_double_redir(char *str, t_cmds *cmd)
-// {
-// 	char *aux;
-// 	int pid;
-// 	int fd;
-
-// 	if (cmd->input_fd)
-// 		close(cmd->input_fd);
-// 	in_read = 1;
-// 	fd = open("/tmp/minishelltmp", O_WRONLY | O_CREAT | O_TRUNC, 0644);
-// 	write(1,"> ",2);
-// 	get_next_line_ms(1,&aux);
-// 	while (!ft_str_equal(aux, str))
-// 	{
-// 		printf("hola\n");
-// 		write(fd, aux, ft_strlen(aux));
-// 		write(fd, "\n", 1);
-// 		free(aux);
-// 		write(1,"> ",2);
-// 		get_next_line_ms(1,&aux);
-// 	}
-// 	close(fd);
-// 	fd = open("/tmp/minishelltmp", O_RDONLY);
-// 	unlink("/tmp/minishelltmp");
-// 	cmd->input_fd = fd;
-// 	free(aux);
-// 	free(str);
-// 	str = NULL;
-// }

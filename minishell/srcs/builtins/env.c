@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 02:34:42 by pablo             #+#    #+#             */
-/*   Updated: 2021/08/20 18:24:27 by pablo            ###   ########.fr       */
+/*   Updated: 2021/09/07 14:10:26 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int _exists(char *var, char *env)
 	return (1);
 }
 
+
 void unset_env(t_data *d,char *var_name)
 {
 	char **new_env;
@@ -71,24 +72,22 @@ void unset_env(t_data *d,char *var_name)
 		d->first_env = 0;
 	else
 		ft_bi_free(aux);
-
+	exit(0);
 }
+
 
 void print_env(char **env,int  fd[2])
 {
 	int i;
 
 	i = 0;
-	if(!fd[1])
-	{
-		fd[1] = 1;
-	}
 	while (env[i])
 	{
-		ft_putstr_fd(env[i],fd[1]);
-		ft_putchar_fd('\n',fd[1]);
+		ft_putstr_fd(env[i],1);
+		ft_putchar_fd('\n',1);
 		i++;
 	}
+	exit(0);
 }
 
 
@@ -111,6 +110,47 @@ char *get_env_ms(t_data *d,char* name)
 	return (res);
 }
 
+
+int is_exportable(t_data *d,char *asignation)
+{
+	int i;
+	char **var_name;
+	char *aux;
+
+	var_name = ft_split(asignation,'=');
+	i = 0;
+	if(var_name)
+		aux = ft_strjoin("declare -x ", var_name[0]);
+	else 
+		aux = ft_strjoin("declare -x ", asignation);
+	while (d->exportables[i])
+	{
+		if(ft_str_equal(d->exportables[i],aux))
+			return 1;
+		i++;
+	}
+	free(aux);
+	ft_bi_free(var_name);
+	return (0);
+}
+
+void add_exportable_var(t_data *d, char *val)
+{	
+	char *new;
+	int i;
+	int cond;
+
+	i = 0;
+	cond = 0;
+
+	
+	new = ft_strjoin("declare -x ", val);
+	if(!is_exportable(d,val))
+		d->exportables = ft_append_string(d->exportables,  new);
+	else 
+		free(new);
+}
+
 void set_env_ms(t_data *d, char *var,int env)
 {
 	int len;
@@ -129,9 +169,10 @@ void set_env_ms(t_data *d, char *var,int env)
 	//export var from set
 	if (!is_asign(var))
 	{
-		var_aux =get_session_env(d,var);
+		var_aux = get_session_env(d,var);
 		if(!var_aux)
 		{
+			add_exportable_var(d,var);
 			free(var_aux);
 			return ;
 		}
@@ -145,7 +186,7 @@ void set_env_ms(t_data *d, char *var,int env)
 			free(var_aux);
 		}
 	}
-
+	add_exportable_var(d,var);
 	len = ft_bi_strlen(d->env);
 	new_env = malloc((len + 2) * sizeof(char *));
 	while (d->env[i])
@@ -182,7 +223,7 @@ void add_session_env(t_data *d, char *cmd,int exp)
 	t_session_v *new;
 	t_session_v *aux;
 	char **spl;
-
+	
 	spl = ft_split(cmd, '=');
 	new = malloc(sizeof(t_session_v));
 	new->name = ft_strdup(spl[0]);
@@ -197,7 +238,7 @@ void add_session_env(t_data *d, char *cmd,int exp)
 	else
 	{
 		aux = d->session_env;
-		while (aux->next)
+		while (aux)
 		{
 			if (ft_str_equal(aux->name, new->name))
 			{
@@ -214,20 +255,7 @@ void add_session_env(t_data *d, char *cmd,int exp)
 			}
 			aux = aux->next;
 		}
-		if (ft_str_equal(aux->name, new->name))
-		{
-			if(exp)
-				aux->exp = exp;
-			free(aux->value);
-			aux->value = new->value;
-			if(aux->exp)
-				set_env_ms(d,cmd,1);
-			free(new->name);
-			free(new);
-			ft_bi_free(spl);
-			return;
-		}
-		aux->next = new;
+		aux = new;
 	}
 	ft_bi_free(spl);
 }

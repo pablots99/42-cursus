@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 12:03:32 by pablo             #+#    #+#             */
-/*   Updated: 2021/08/20 16:59:06 by pablo            ###   ########.fr       */
+/*   Updated: 2021/09/07 13:40:37 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,8 +112,8 @@ int is_pipe_closed(char *input);
 void save_double_redir(char *str,t_cmds *cmd,int c);
 void create_output(t_cmds *cmd,char *str,int s,int d);
 void read_inputs(t_cmds *cmd,char *str);
-int		get_next_line_ms(int fd, char **line);
 char **dup_bi_string(char **str);
 char **save_exportables(char **env);
 void print_command(t_data *a);
 void handle_sigint(int sig);
+int is_exportable(t_data *d,char *asignation);

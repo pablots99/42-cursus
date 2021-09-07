@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/09 17:07:23 by pablo             #+#    #+#             */
-/*   Updated: 2021/08/14 20:00:27 by pablo            ###   ########.fr       */
+/*   Updated: 2021/09/06 13:04:24 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,5 @@ void execute_echo(t_cmds *cmd)
 		ft_putchar_fd('\n',fd);
 	if(cmd->otput_fd)
 		close(fd);
+	exit(0);
 }
