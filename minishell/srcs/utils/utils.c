@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 03:21:03 by pablo             #+#    #+#             */
-/*   Updated: 2021/09/06 14:45:05 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/09/07 17:10:56 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -249,4 +249,19 @@ void save_double_redir(char *str, t_cmds *cmd, int c)
 	}
 	free(str);
 	str = NULL;
+}
+
+int is_asign(char *var)
+{
+	int i;
+
+	i = 0;
+
+	while (var[i])
+	{
+		if(var[i] == '=' && i!=0)
+			return (1);
+		i++;
+	}
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 12:03:32 by pablo             #+#    #+#             */
-/*   Updated: 2021/09/07 13:40:37 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/09/07 17:13:13 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,6 @@ void free_command(t_data *d);
 void handle_sigint(int sig);
 char **redirections_out(t_data *d,t_cmds *cmd,char **s);
 char **joined_redirections_out(t_data *d, t_cmds *cmd, char **s);
-void print_command(t_data *a);
 char **ft_append_string(char **str, char *s);
 char *ft_append_str(char *s1, char *s2);
 int is_pipe_closed(char *input);
@@ -117,3 +116,5 @@ char **save_exportables(char **env);
 void print_command(t_data *a);
 void handle_sigint(int sig);
 int is_exportable(t_data *d,char *asignation);
+void add_exportable_var(t_data *d, char *val);
+int add_sesion_aux(t_session_v **s,t_session_v *new,int exp);

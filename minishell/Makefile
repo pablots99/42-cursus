@@ -9,7 +9,9 @@ SRCS =	minishell.c 						\
 		srcs/builtins/pwd_cd.c				\
 		srcs/builtins/echo.c				\
 		srcs/builtins/export.c				\
-		srcs/utils/utils.c					
+		srcs/builtins/unset.c				\
+		srcs/builtins/session_vars.c		\
+		srcs/utils/utils.c									
 OBJS = $(SRCS:.c=.o)
 
 CC = gcc -g
