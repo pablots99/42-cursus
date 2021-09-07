@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 02:34:42 by pablo             #+#    #+#             */
-/*   Updated: 2021/09/07 14:10:26 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/09/07 14:26:20 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ void unset_env(t_data *d,char *var_name)
 		d->first_env = 0;
 	else
 		ft_bi_free(aux);
-	exit(0);
 }
 
 
@@ -87,7 +86,6 @@ void print_env(char **env,int  fd[2])
 		ft_putchar_fd('\n',1);
 		i++;
 	}
-	exit(0);
 }
 
 
