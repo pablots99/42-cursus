@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 12:03:32 by pablo             #+#    #+#             */
-/*   Updated: 2021/09/08 11:58:37 by pablo            ###   ########.fr       */
+/*   Updated: 2021/09/08 12:30:14 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ char **joined_redirections_out(t_data *d, t_cmds *cmd, char **s);
 char **ft_append_string(char **str, char *s);
 char *ft_append_str(char *s1, char *s2);
 int is_pipe_closed(char *input);
-void save_double_redir(char *str,t_cmds *cmd,int c);
+int save_double_redir(char *str,t_cmds *cmd,int c);
 void create_output(t_cmds *cmd,char *str,int s,int d);
 void read_inputs(t_cmds *cmd,char *str);
 char **dup_bi_string(char **str);

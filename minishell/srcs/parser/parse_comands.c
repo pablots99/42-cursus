@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_comands.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 12:41:03 by ptorres           #+#    #+#             */
-/*   Updated: 2021/09/06 13:04:21 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/09/08 12:31:21 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,7 +234,7 @@ int parse_comands(t_data *d)
 				p.do_redir = 0;
 			}
 			else if ((p.di_redir) && d->raw_cmd[p.i] != '<')
-				save_double_redir(str, cmd, p.di_redir), p.di_redir = 0;
+				cmd->input_fd =	save_double_redir(str, cmd, p.di_redir), p.di_redir = 0;
 			else if ((p.si_redir) && d->raw_cmd[p.i] != '<')
 			{
 				read_inputs(cmd, str);
@@ -290,7 +290,7 @@ int parse_comands(t_data *d)
 		p.si_redir = 0;
 	}
 	else if ((p.di_redir) && d->raw_cmd[p.i] != '<')
-		save_double_redir(str, cmd, p.di_redir), p.di_redir = 0;
+		cmd->input_fd = save_double_redir(str, cmd, p.di_redir), p.di_redir = 0;
 	else if (!cmd->cmd)
 	{
 		cmd->cmd = get_cmd_path(str, d->paths);

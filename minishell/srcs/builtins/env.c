@@ -6,12 +6,11 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 02:34:42 by pablo             #+#    #+#             */
-/*   Updated: 2021/09/08 11:19:13 by pablo            ###   ########.fr       */
+/*   Updated: 2021/09/08 19:31:52 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
 
 int _exists(char *var, char *env)
 {
@@ -31,25 +30,20 @@ int _exists(char *var, char *env)
 	return (1);
 }
 
-
-
-
-
-void print_env(char **env,int  fd[2])
+void print_env(char **env, int fd[2])
 {
 	int i;
 
 	i = 0;
 	while (env[i])
 	{
-		ft_putstr_fd(env[i],1);
-		ft_putchar_fd('\n',1);
+		ft_putstr_fd(env[i], 1);
+		ft_putchar_fd('\n', 1);
 		i++;
 	}
 }
 
-
-char *get_env_ms(t_data *d,char* name)
+char *get_env_ms(t_data *d, char *name)
 {
 	char **splited;
 	char i;
@@ -59,8 +53,8 @@ char *get_env_ms(t_data *d,char* name)
 	i = 0;
 	while (d->env[i])
 	{
-		splited = ft_split(d->env[i],'=');
-		if(ft_str_equal(splited[0],name))
+		splited = ft_split(d->env[i], '=');
+		if (ft_str_equal(splited[0], name))
 			res = ft_strdup(splited[1]);
 		i++;
 		ft_bi_free(splited);
@@ -68,44 +62,42 @@ char *get_env_ms(t_data *d,char* name)
 	return (res);
 }
 
-void set_env_ms(t_data *d, char *var,int env)
+int no_asignation(t_data *d, char **var)
 {
-	int len;
-	char **new_env;
-	int i;
-	char **aux;
-	int exists;
 	char *var_aux;
 	char *var_aux2;
-	int cond;
 
-	i = 0;
-	cond = 0;
-	exists = 0;
-
-	//export var from set
-	if (!is_asign(var))
+	if (!is_asign(*var))
 	{
-		var_aux = get_session_env(d,var);
-		if(!var_aux)
+		var_aux = get_session_env(d, *var);
+		if (!var_aux)
 		{
-			add_exportable_var(d,var);
+			add_exportable_var(d, *var);
 			free(var_aux);
-			return ;
+			return (2);
 		}
 		else
 		{
-			cond = 1;
-			var = ft_strjoin(var,"=");
-			var_aux2 = var;
-			var = ft_strjoin(var_aux2,var_aux);
+			*var = ft_strjoin(*var, "=");
+			var_aux2 = *var;
+			*var = ft_strjoin(var_aux2, var_aux);
 			free(var_aux2);
 			free(var_aux);
+			return (1);
 		}
 	}
-	add_exportable_var(d,var);
-	len = ft_bi_strlen(d->env);
-	new_env = malloc((len + 2) * sizeof(char *));
+	return (0);
+}
+
+char **new_env(t_data *d,  char *var)
+{
+	int i;
+	int exists;
+	char **new_env;
+
+	new_env = malloc((ft_bi_strlen(d->env) + 2) * sizeof(char *));
+	exists = 0;
+	i = 0;
 	while (d->env[i])
 	{
 		if (!exists && _exists(var, d->env[i]))
@@ -123,16 +115,27 @@ void set_env_ms(t_data *d, char *var,int env)
 		new_env[i] = NULL;
 	i++;
 	new_env[i] = NULL;
+	return (new_env);
+}
+
+void set_env_ms(t_data *d, char *var, int env)
+{
+	char **aux;
+	int cond;
+
+
+	cond = no_asignation(d, &var);
+	if (cond == 2)
+		return ;
+	add_exportable_var(d, var);
 	aux = d->env;
-	d->env = new_env;
+	d->env = new_env(d, var);
 	if (d->first_env)
 		d->first_env = 0;
 	else
 		ft_bi_free(aux);
-	if(!env)
-		add_session_env(d,var,1);
-	if(cond)
+	if (!env)
+		add_session_env(d, var, 1);
+	if (cond == 1)
 		free(var);
 }
-
-

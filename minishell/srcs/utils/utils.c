@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 03:21:03 by pablo             #+#    #+#             */
-/*   Updated: 2021/09/07 17:10:56 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/09/08 15:01:25 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,13 @@ int ft_str_equal(char *s1, char *s2)
 	int len1;
 	int len2;
 
+
 	len1 = ft_strlen(s1);
 	len2 = ft_strlen(s2);
 	i = 0;
 	if (len1 != len2)
 		return (0);
-	while (i < len1)
+	while (i < len1 && i < len2)
 	{
 		if (s1[i] != s2[i])
 			return (0);
@@ -214,7 +215,7 @@ void handle_sigint3(int sig)
 	exit(0);
 }
 
-void save_double_redir(char *str, t_cmds *cmd, int c)
+int save_double_redir(char *str, t_cmds *cmd, int c)
 {
 	char *aux;
 	int pid;
@@ -240,8 +241,11 @@ void save_double_redir(char *str, t_cmds *cmd, int c)
 			close(fd);
 			fd = open("/tmp/minishelltmp", O_RDONLY);
 			unlink("/tmp/minishelltmp");
-			cmd->input_fd = fd;
+			// cmd->input_fd = fd;
 			free(aux);
+			exit(0);
+			printf("exited\n");
+			return fd;
 		}
 		else{
 			wait(NULL);
@@ -249,6 +253,7 @@ void save_double_redir(char *str, t_cmds *cmd, int c)
 	}
 	free(str);
 	str = NULL;
+	return 0;
 }
 
 int is_asign(char *var)

@@ -41,12 +41,10 @@ TO DO:
 	update pwd and old pwd  in env
 	check status code values
 	'ctrl + \' when is text writed in the prompt have to work like 'ctrl + d'
-	double redireccion ctrl c
 	builtins arguments
 
 
 LEAKS:
-	data.exportables -> son para cuando pones export normal
 
 CASES NOT WORKING
 	"echo hola > "shoud output "bash: syntax error near unexpected token `newline'"

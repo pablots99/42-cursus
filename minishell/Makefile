@@ -29,7 +29,7 @@ LIBFLAGS = -L. libft/libft.a -L/usr/local/opt/readline/lib -I/usr/local/opt/read
 #-fsanitize=address
 
 
-FLAGS = -Wall -Wextra -Werror -lreadline  -o $(NAME)
+FLAGS = -Wall -Wextra -Werror   -lreadline  -o $(NAME)
 
 
 all:$(NAME)
