@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/15 23:26:46 by pablo             #+#    #+#             */
-/*   Updated: 2021/09/07 17:08:40 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/09/08 11:42:52 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char **save_exportables(char **env2)
 }
 
 void add_exportable_var(t_data *d, char *val)
-{	
+{
 	char *new;
 	int i;
 	int cond;
@@ -64,8 +64,8 @@ void add_exportable_var(t_data *d, char *val)
 	i = 0;
 	cond = 0;
 	new = ft_strjoin("declare -x ", val);
-	if(!is_exportable(d,val))
-		d->exportables = ft_append_string(d->exportables,  new);
+	is_exportable(d,val);
+	d->exportables = ft_append_string(d->exportables,  new);
 
 	free(new);
 }
@@ -80,12 +80,14 @@ int is_exportable(t_data *d,char *asignation)
 	i = 0;
 	if(var_name)
 		aux = ft_strjoin("declare -x ", var_name[0]);
-	else 
+	else
 		aux = ft_strjoin("declare -x ", asignation);
 	while (d->exportables[i])
 	{
-		if(ft_str_equal(d->exportables[i],aux))
+		if(!ft_strncmp(d->exportables[i],aux,ft_strlen(aux)))
 		{
+			free(d->exportables[i]);
+			d->exportables[i]  = NULL;
 			ft_bi_free(var_name);
 			free(aux);
 			return 1;

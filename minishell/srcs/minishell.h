@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 12:03:32 by pablo             #+#    #+#             */
-/*   Updated: 2021/09/07 17:13:13 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/09/08 11:58:37 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,4 +117,4 @@ void print_command(t_data *a);
 void handle_sigint(int sig);
 int is_exportable(t_data *d,char *asignation);
 void add_exportable_var(t_data *d, char *val);
-int add_sesion_aux(t_session_v **s,t_session_v *new,int exp);
+int add_sesion_aux(t_session_v **s,t_session_v *new);
