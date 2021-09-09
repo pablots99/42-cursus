@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal__handler.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 14:18:19 by ptorres           #+#    #+#             */
-/*   Updated: 2021/09/09 21:30:50 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/09/10 01:33:37 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,11 @@ void handle_sigquit(int sig)
 	sig = 0;
 	rl_on_new_line();
 	return;
+}
+
+void handle_sigint3(int sig)
+{
+	printf("\b\b\b\b\b\b\b\b\b\b\b");
+	sig = 0;
+	exit(0);
 }

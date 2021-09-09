@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 12:02:38 by pablo             #+#    #+#             */
-/*   Updated: 2021/09/09 21:40:37 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/09/10 01:32:37 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void __init_vars(t_data *data,char **env)
 	data->exportables = save_exportables(env);
 	data->first_env = 1;
 	data->session_env = NULL;
+	getcwd(data->path,2000);
 }
 
 
@@ -41,7 +42,7 @@ int main(int argc, char **argv, char **env)
 		signal(SIGQUIT, handle_sigquit);
 		signal(SIGINT, handle_sigint);
 		data.cmds = NULL;
-		route = ft_strjoin(getcwd(data.path, sizeof(data.path)), ">> ");
+		route = "minishell$ ";
 		data.raw_cmd = readline(route);
 		if (!data.raw_cmd)
 		{
@@ -65,7 +66,6 @@ int main(int argc, char **argv, char **env)
 			data.paths = ft_split(path_aux, ':');
 		}
 		free_command(&data);
-		free(route);
 		free(data.raw_cmd);
 	}
 	return 0;

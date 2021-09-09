@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 12:03:32 by pablo             #+#    #+#             */
-/*   Updated: 2021/09/09 21:30:36 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/09/10 01:17:42 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,3 +138,4 @@ void unset(t_data *d, char *var_name);
 void exit_ms(t_data *d,t_cmds *cmd);
 void handle_sigint(int sig);
 void handle_sigquit(int sig);
+void handle_sigint3(int sig);

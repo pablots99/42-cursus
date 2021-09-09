@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 03:21:03 by pablo             #+#    #+#             */
-/*   Updated: 2021/09/09 21:55:30 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/09/10 01:27:39 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,26 +201,16 @@ int is_pipe_closed(char *input)
 	return (cond);
 }
 
-void handle_sigint3(int sig)
-{
-	sig = 0;
-	exit(0);
-}
 
 int save_double_redir(char *str, t_cmds *cmd, int c)
 {
 	char *aux;
-	int pid;
 	int fd;
 
 	if (cmd->input_fd)
 		close(cmd->input_fd);
 	if (c < 3)
 	{
-		pid = fork();
-		if (pid == 0)
-		{
-			signal(SIGINT,handle_sigint3);
 			fd = open("/tmp/minishelltmp", O_WRONLY | O_CREAT | O_TRUNC, 0644);
 			aux = readline("> ");
 			while (!ft_str_equal(aux, str) || aux[ft_strlen(aux)] == '\04')
@@ -233,15 +223,9 @@ int save_double_redir(char *str, t_cmds *cmd, int c)
 			close(fd);
 			fd = open("/tmp/minishelltmp", O_RDONLY);
 			unlink("/tmp/minishelltmp");
-			// cmd->input_fd = fd;
+			cmd->input_fd = fd;
 			free(aux);
-			exit(0);
-			printf("exited\n");
 			return fd;
-		}
-		else{
-			wait(NULL);
-		}
 	}
 	free(str);
 	str = NULL;

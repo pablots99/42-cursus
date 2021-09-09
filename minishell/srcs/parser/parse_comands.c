@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_comands.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 12:41:03 by ptorres           #+#    #+#             */
-/*   Updated: 2021/09/09 21:23:23 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/09/10 01:41:07 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	find_tokens(char *str, t_parse *p, t_cmds *cmd)
 		if (!find_redir_in(str, p))
 			find_parse_vars(str, p);
 	if (str[p->i] && str[p->i] == '|' && !p->d_quote && !p->s_quote)
-	{	
+	{
 		p->n_pipe = 1;
 		p->space = 1;
 	}
