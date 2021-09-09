@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 19:48:22 by pablo             #+#    #+#             */
-/*   Updated: 2021/09/08 16:50:36 by pablo            ###   ########.fr       */
+/*   Updated: 2021/09/08 20:59:24 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,74 +68,80 @@ void handle_sigint2(int sig)
 	write(1, "\b\b", 2);
 }
 
-void execute_commands(t_data *d)
+void init_vars(t_data *d, t_cmds **first)
+{
+	*first = d->cmds;
+	d->fd[1] = 1;
+	d->fd[0] = 0;
+	d->fd_in = 0;
+	d->status = 0;
+}
+
+void execute_child(t_data *d, int fd[2])
+{
+	dup2(d->fd_in, 0);
+	if (d->cmds->childs != NULL)
+		dup2(d->fd[1], 1);
+	if (d->cmds->otput_fd != 0)
+		dup2(d->cmds->otput_fd, 1);
+	if (execute_builtins(d->cmds, d->fd, d))
+		exit(0);
+	else if (execve(d->cmds->cmd, d->cmds->options, d->env) == -1)
+	{
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(d->cmds->cmd, 2);
+		ft_putstr_fd(": command not found\n", 2);
+		exit(127);
+	}
+}
+
+void execute_command(t_data *d, int fd[2])
 {
 	int pid;
-	int fd[2];
-	int fd_in;
+
+	if (d->cmds->childs != NULL)
+		pipe(d->fd);
+	pid = fork();
+	signal(SIGINT, handle_sigint2);
+	signal(SIGQUIT, handle_sigint2);
+	if (pid == 0)
+		execute_child(d, d->fd);
+	else
+	{
+		if (d->cmds->otput_fd)
+			close(d->cmds->otput_fd), d->cmds->otput_fd = 0;
+		if (d->fd[1] != 1)
+			close(d->fd[1]);
+		if (d->fd_in)
+			close(d->fd_in);
+		d->fd_in = d->fd[0];
+	}
+}
+
+void execute_commands(t_data *d)
+{
 	int i;
 	t_cmds *first;
 
 	i = 0;
-	first = d->cmds;
-	i = 0;
-	fd[1] = 1;
-	fd[0] = 0;
-	fd_in = 0;
-	d->status = 0;
+	init_vars(d, &first);
 	while (d->cmds)
 	{
 		if (d->cmds->err)
 			break;
 		if (d->cmds->input_fd)
-			fd_in = d->cmds->input_fd;
-		if (d->cmds->options && !execute_asignations(d->cmds, fd, d))
-		{
-			if (d->cmds->childs != NULL)
-				pipe(fd);
-			pid = fork();
-			signal(SIGINT, handle_sigint2);
-			signal(SIGQUIT, handle_sigint2);
-			if (pid == 0)
-			{
-
-				dup2(fd_in, 0);
-				if (d->cmds->childs != NULL)
-					dup2(fd[1], 1);
-				if (d->cmds->otput_fd != 0)
-					dup2(d->cmds->otput_fd, 1);
-				if (execute_builtins(d->cmds, fd, d))
-					exit(0);
-				else if (execve(d->cmds->cmd, d->cmds->options, d->env) == -1)
-				{
-					ft_putstr_fd("minishell: ", 2);
-					ft_putstr_fd(d->cmds->cmd, 2);
-					ft_putstr_fd(": command not found\n", 2);
-					exit(127);
-				}
-			}
-			else
-			{
-				if (d->cmds->otput_fd)
-					close(d->cmds->otput_fd), d->cmds->otput_fd = 0;
-				if (fd[1] != 1)
-					close(fd[1]);
-				if (fd_in)
-					close(fd_in);
-				fd_in = fd[0];
-			}
-		}
+			d->fd_in = d->cmds->input_fd;
+		if (d->cmds->options && !execute_asignations(d->cmds, d->fd, d))
+			execute_command(d,d->fd);
 		i++;
 		d->cmds = d->cmds->childs;
 	}
-	int j = 0;
-	while (j < i)
+	i++;
+	while (i--)
 	{
 		wait(&d->status);
 		if (d->status != 0)
 			d->status /= 256;
-		j++;
 	}
-
 	d->cmds = first;
 }

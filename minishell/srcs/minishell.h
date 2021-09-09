@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 12:03:32 by pablo             #+#    #+#             */
-/*   Updated: 2021/09/08 12:30:14 by pablo            ###   ########.fr       */
+/*   Updated: 2021/09/08 21:23:42 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ typedef struct s_data
 	t_cmds			*cmds;
 	t_session_v		*session_env;
 	int				status;
+	int				fd_in;
+	int				fd[2];
 }	t_data;
 
 static int  in_read;
@@ -118,3 +120,7 @@ void handle_sigint(int sig);
 int is_exportable(t_data *d,char *asignation);
 void add_exportable_var(t_data *d, char *val);
 int add_sesion_aux(t_session_v **s,t_session_v *new);
+void find_quotes(char *str, t_parse *p);
+int find_redir_out(char *str,t_parse *p,t_cmds *cmd);
+int find_redir_in(char *str,t_parse *p,t_cmds *cmd);
+int find_parse_vars(char *str,t_parse *p,t_cmds *cmd);
