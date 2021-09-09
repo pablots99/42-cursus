@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/15 23:26:46 by pablo             #+#    #+#             */
-/*   Updated: 2021/09/08 11:42:52 by pablo            ###   ########.fr       */
+/*   Updated: 2021/09/09 15:58:10 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char **add_declare(char **str)
+char	**add_declare(char **str)
 {
-	int i;
-	char *aux;
-	char **res;
+	int		i;
+	char	*aux;
+	char	**res;
 
 	i = 0;
-	res = malloc((ft_bi_strlen(str) +1)*sizeof(char*));
+	res = malloc((ft_bi_strlen(str) + 1) * sizeof(char *));
 	while (str[i])
 	{
 		res[i] = ft_strjoin("declare -x ", str[i]);
@@ -29,11 +29,11 @@ char **add_declare(char **str)
 	return (res);
 }
 
-char **save_exportables(char **env2)
+char	**save_exportables(char **env2)
 {
-	char *aux;
-	int i;
-	int j;
+	char	*aux;
+	int		i;
+	int		j;
 
 	i = 0;
 	while (env2[i])
@@ -41,7 +41,7 @@ char **save_exportables(char **env2)
 		j = i + 1;
 		while (env2[j])
 		{
-			if (ft_strncmp(env2[i], env2[j],ft_strlen(env2[i])) > 0)
+			if (ft_strncmp(env2[i], env2[j], ft_strlen(env2[i])) > 0)
 			{
 				aux = env2[i];
 				env2[i] = env2[j];
@@ -55,42 +55,41 @@ char **save_exportables(char **env2)
 	return (env2);
 }
 
-void add_exportable_var(t_data *d, char *val)
+void	add_exportable_var(t_data *d, char *val)
 {
-	char *new;
-	int i;
-	int cond;
+	char	*new;
+	int		i;
+	int		cond;
 
 	i = 0;
 	cond = 0;
 	new = ft_strjoin("declare -x ", val);
-	is_exportable(d,val);
-	d->exportables = ft_append_string(d->exportables,  new);
-
+	is_exportable(d, val);
+	d->exportables = ft_append_string(d->exportables, new);
 	free(new);
 }
 
-int is_exportable(t_data *d,char *asignation)
+int	is_exportable(t_data *d, char *asignation)
 {
-	int i;
-	char **var_name;
-	char *aux;
+	int		i;
+	char	**var_name;
+	char	*aux;
 
-	var_name = ft_split(asignation,'=');
+	var_name = ft_split(asignation, '=');
 	i = 0;
-	if(var_name)
+	if (var_name)
 		aux = ft_strjoin("declare -x ", var_name[0]);
 	else
 		aux = ft_strjoin("declare -x ", asignation);
 	while (d->exportables[i])
 	{
-		if(!ft_strncmp(d->exportables[i],aux,ft_strlen(aux)))
+		if (!ft_strncmp(d->exportables[i], aux, ft_strlen(aux)))
 		{
 			free(d->exportables[i]);
-			d->exportables[i]  = NULL;
+			d->exportables[i] = NULL;
 			ft_bi_free(var_name);
 			free(aux);
-			return 1;
+			return (1);
 		}
 		i++;
 	}

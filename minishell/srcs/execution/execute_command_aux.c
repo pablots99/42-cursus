@@ -1,18 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal__handler.c                                  :+:      :+:    :+:   */
+/*   execute_command_aux.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/07 14:18:19 by ptorres           #+#    #+#             */
-/*   Updated: 2021/09/09 15:50:14 by ptorres          ###   ########.fr       */
+/*   Created: 2021/09/09 13:52:48 by ptorres           #+#    #+#             */
+/*   Updated: 2021/09/09 15:48:40 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	handle_sigint2(int sig)
+void	init_vars(t_data *d, t_cmds **first)
 {
-	write(1, "\b\b", 2);
+	*first = d->cmds;
+	d->fd[1] = 1;
+	d->fd[0] = 0;
+	d->fd_in = 0;
+	d->status = 0;
 }

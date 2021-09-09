@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 02:34:42 by pablo             #+#    #+#             */
-/*   Updated: 2021/09/08 19:31:52 by pablo            ###   ########.fr       */
+/*   Updated: 2021/09/09 15:56:52 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int no_asignation(t_data *d, char **var)
 	return (0);
 }
 
-char **new_env(t_data *d,  char *var)
+char **new_env(t_data *d, char *var)
 {
 	int i;
 	int exists;
@@ -123,10 +123,9 @@ void set_env_ms(t_data *d, char *var, int env)
 	char **aux;
 	int cond;
 
-
 	cond = no_asignation(d, &var);
 	if (cond == 2)
-		return ;
+		return;
 	add_exportable_var(d, var);
 	aux = d->env;
 	d->env = new_env(d, var);

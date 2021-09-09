@@ -3,25 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   execute_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 19:48:22 by pablo             #+#    #+#             */
-/*   Updated: 2021/09/08 20:59:24 by pablo            ###   ########.fr       */
+/*   Updated: 2021/09/09 16:10:24 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int execute_asignations(t_cmds *cmd, int fd[2], t_data *d)
+int	execute_asignations(t_cmds *cmd, int fd[2], t_data *d)
 {
-	int is;
+	int	is;
 
 	is = 0;
 	if (cmd->otput_fd)
 		fd[1] = cmd->otput_fd;
 	if (!cmd->options || !cmd->options[0])
 		return (0);
-	if (ft_str_equal(cmd->options[0], "unset"))
+	if (ft_str_equal(cmd->options[0], "cd"))
+		execute_cd(cmd, fd, d), is = 1;
+	else if (ft_str_equal(cmd->options[0], "unset"))
 		unset_env(d, cmd->options[1]), is = 1;
 	else if (cmd->var_asign)
 		add_session_env(d, cmd->options[0], 0), is = 1;
@@ -34,18 +36,16 @@ int execute_asignations(t_cmds *cmd, int fd[2], t_data *d)
 	return (is);
 }
 
-int execute_builtins(t_cmds *cmd, int fd[2], t_data *d)
+int	execute_builtins(t_cmds *cmd, int fd[2], t_data *d)
 {
-	int is;
+	int	is;
 
 	is = 0;
 	if (cmd->otput_fd)
 		fd[1] = cmd->otput_fd;
 	if (!cmd->options || !cmd->options[0])
 		return (0);
-	if (ft_str_equal(cmd->options[0], "cd"))
-		execute_cd(cmd, fd), is = 1;
-	else if (ft_str_equal(cmd->options[0], "env"))
+	if (ft_str_equal(cmd->options[0], "env"))
 		print_env(d->env, fd), is = 1;
 	else if (ft_str_equal(cmd->options[0], "echo"))
 		execute_echo(cmd), is = 1;
@@ -63,21 +63,7 @@ int execute_builtins(t_cmds *cmd, int fd[2], t_data *d)
 	return (is);
 }
 
-void handle_sigint2(int sig)
-{
-	write(1, "\b\b", 2);
-}
-
-void init_vars(t_data *d, t_cmds **first)
-{
-	*first = d->cmds;
-	d->fd[1] = 1;
-	d->fd[0] = 0;
-	d->fd_in = 0;
-	d->status = 0;
-}
-
-void execute_child(t_data *d, int fd[2])
+void	execute_child(t_data *d, int fd[2])
 {
 	dup2(d->fd_in, 0);
 	if (d->cmds->childs != NULL)
@@ -95,9 +81,9 @@ void execute_child(t_data *d, int fd[2])
 	}
 }
 
-void execute_command(t_data *d, int fd[2])
+void	execute_command(t_data *d, int fd[2])
 {
-	int pid;
+	int	pid;
 
 	if (d->cmds->childs != NULL)
 		pipe(d->fd);
@@ -118,21 +104,21 @@ void execute_command(t_data *d, int fd[2])
 	}
 }
 
-void execute_commands(t_data *d)
+void	execute_commands(t_data *d)
 {
-	int i;
-	t_cmds *first;
+	int		i;
+	t_cmds	*first;
 
 	i = 0;
 	init_vars(d, &first);
 	while (d->cmds)
 	{
 		if (d->cmds->err)
-			break;
+			break ;
 		if (d->cmds->input_fd)
 			d->fd_in = d->cmds->input_fd;
 		if (d->cmds->options && !execute_asignations(d->cmds, d->fd, d))
-			execute_command(d,d->fd);
+			execute_command(d, d->fd);
 		i++;
 		d->cmds = d->cmds->childs;
 	}

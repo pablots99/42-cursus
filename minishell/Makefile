@@ -3,7 +3,10 @@ NAME=minishell
 SRCS =	minishell.c 						\
 		srcs/parser/parse_comands.c			\
 		srcs/parser/tokens.c				\
+		srcs/parser/parse_aux.c				\
+		srcs/parser/parse_aux2.c				\
 		srcs/execution/execute_command.c	\
+		srcs/execution/execute_command_aux.c	\
 		srcs/execution/signal__handler.c 	\
 		srcs/builtins/env.c					\
 		srcs/builtins/pwd_cd.c				\
@@ -18,12 +21,12 @@ CC = gcc -g
 
 #campues
 # export LDFLAGS="-L/Users/ptorres/.brew/opt/readline/lib"; export CPPFLAGS="-I/Users/ptorres/.brew/opt/readline/include"
-#LIBFLAGS = -L. libft/libft.a -L/Users/ptorres/.brew/opt/readline/lib -I/Users/ptorres/.brew/opt/readline/include
+LIBFLAGS = -L. libft/libft.a -L/Users/ptorres/.brew/opt/readline/lib -I/Users/ptorres/.brew/opt/readline/include
 
 
 #mac
 # export LDFLAGS="-L/usr/local/opt/readline/lib" ; export CPPFLAGS="-I/usr/local/opt/readline/include"
-LIBFLAGS = -L. libft/libft.a -L/usr/local/opt/readline/lib -I/usr/local/opt/readline/include
+#LIBFLAGS = -L. libft/libft.a -L/usr/local/opt/readline/lib -I/usr/local/opt/readline/include
 
 
 #-fsanitize=address

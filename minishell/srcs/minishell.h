@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 12:03:32 by pablo             #+#    #+#             */
-/*   Updated: 2021/09/08 21:23:42 by pablo            ###   ########.fr       */
+/*   Updated: 2021/09/09 16:05:04 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ typedef struct s_parse
 
 int recive_comands(char **cmd);
 void write_cwd(t_data d);
-int parse_comands(t_data *d);
 void execute_commands(t_data *d);
 void ft_bstrprint(char **bstr);
 void set_env_ms(t_data *d,char *var,int env);
@@ -100,7 +99,7 @@ char *get_env_ms(t_data *d,char* name);
 void ft_bi_free_debug(char **arr);
 void execute_pwd(t_data *d,int fd_out);
 void execute_echo(t_cmds *cmd);
-void execute_cd(t_cmds *cmd, int fd[2]);
+void execute_cd(t_cmds *cmd, int fd[2],t_data *d);
 void unset_env(t_data *d,char *var_name);
 void print_env(char **env,int  fd[2]);
 void free_command(t_data *d);
@@ -124,3 +123,16 @@ void find_quotes(char *str, t_parse *p);
 int find_redir_out(char *str,t_parse *p,t_cmds *cmd);
 int find_redir_in(char *str,t_parse *p,t_cmds *cmd);
 int find_parse_vars(char *str,t_parse *p,t_cmds *cmd);
+int is_data_redir(char *cmd);
+int is_sintax_error(t_data *d, t_cmds *cmd);
+char *find_vars(char *str, t_data *d);
+t_parse init_parse();
+int parse_comands(t_data *d);
+void save_data(t_data *d, t_parse *p,t_cmds *cmd,char **str);
+char *get_cmd_path(char *cmd, char **paths);
+void handle_sigint2(int sig);
+void init_vars(t_data *d, t_cmds **first);
+t_cmds	*new_cmd(void);
+void save_first_cmd(t_data *d, char **str, t_cmds **cmd);
+void save_pipe(t_data *d, t_cmds **cmd, t_parse *p);
+void add_child(t_cmds **cmds, t_cmds *cmd);
