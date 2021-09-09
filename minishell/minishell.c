@@ -6,14 +6,14 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 12:02:38 by pablo             #+#    #+#             */
-/*   Updated: 2021/09/09 21:32:24 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/09/09 21:40:37 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "srcs/minishell.h"
 
 
-void _init_vars(t_data *data,char **env)
+void __init_vars(t_data *data,char **env)
 {
 	data->raw_cmd = "";
 	data->status = 0;
@@ -33,7 +33,7 @@ int main(int argc, char **argv, char **env)
 
 	argc = 0;
 	argv = NULL;
-	_init_vars(&data,env);
+	__init_vars(&data,env);
 	path_aux = get_env_ms(&data, "PATH");
 	data.paths = ft_split(path_aux, ':');
 	while (1)

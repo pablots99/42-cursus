@@ -38,7 +38,6 @@
 
 
 TO DO:
-	update pwd and old pwd  in env
 	check status code values
 	'ctrl + \' when is text writed in the prompt have to work like 'ctrl + d'
 	builtins arguments
@@ -47,7 +46,5 @@ TO DO:
 LEAKS:
 
 CASES NOT WORKING
-	"echo hola > "shoud output "bash: syntax error near unexpected token `newline'"
-//////
 
 

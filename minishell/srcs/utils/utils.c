@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 03:21:03 by pablo             #+#    #+#             */
-/*   Updated: 2021/09/09 20:53:49 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/09/09 21:55:30 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,15 +203,7 @@ int is_pipe_closed(char *input)
 
 void handle_sigint3(int sig)
 {
-	char *cwd;
-	int len;
-
-	len = 0;
 	sig = 0;
-	cwd = getenv("PWD");;
-	len = ft_strlen(cwd);
-	while (len--)
-		write(1,"\b",1);
 	exit(0);
 }
 
