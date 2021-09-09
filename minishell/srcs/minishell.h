@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 12:03:32 by pablo             #+#    #+#             */
-/*   Updated: 2021/09/09 16:05:04 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/09/09 21:30:36 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,6 @@ typedef struct s_data
 	int				fd[2];
 }	t_data;
 
-static int  in_read;
-
 typedef struct s_parse
 {
 	int s_quote;//single quote
@@ -97,11 +95,11 @@ char **ft_split_ms(char *s,char c);
 char *ft_append_char(char *str, char c);
 char *get_env_ms(t_data *d,char* name);
 void ft_bi_free_debug(char **arr);
-void execute_pwd(t_data *d,int fd_out);
+void execute_pwd(t_data *d);
 void execute_echo(t_cmds *cmd);
-void execute_cd(t_cmds *cmd, int fd[2],t_data *d);
+void execute_cd(t_cmds *cmd,t_data *d);
 void unset_env(t_data *d,char *var_name);
-void print_env(char **env,int  fd[2]);
+void print_env(char **env);
 void free_command(t_data *d);
 void handle_sigint(int sig);
 char **redirections_out(t_data *d,t_cmds *cmd,char **s);
@@ -121,8 +119,8 @@ void add_exportable_var(t_data *d, char *val);
 int add_sesion_aux(t_session_v **s,t_session_v *new);
 void find_quotes(char *str, t_parse *p);
 int find_redir_out(char *str,t_parse *p,t_cmds *cmd);
-int find_redir_in(char *str,t_parse *p,t_cmds *cmd);
-int find_parse_vars(char *str,t_parse *p,t_cmds *cmd);
+int find_redir_in(char *str,t_parse *p);
+int find_parse_vars(char *str,t_parse *p);
 int is_data_redir(char *cmd);
 int is_sintax_error(t_data *d, t_cmds *cmd);
 char *find_vars(char *str, t_data *d);
@@ -136,3 +134,7 @@ t_cmds	*new_cmd(void);
 void save_first_cmd(t_data *d, char **str, t_cmds **cmd);
 void save_pipe(t_data *d, t_cmds **cmd, t_parse *p);
 void add_child(t_cmds **cmds, t_cmds *cmd);
+void unset(t_data *d, char *var_name);
+void exit_ms(t_data *d,t_cmds *cmd);
+void handle_sigint(int sig);
+void handle_sigquit(int sig);

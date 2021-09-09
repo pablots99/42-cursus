@@ -6,20 +6,20 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/09 17:07:16 by pablo             #+#    #+#             */
-/*   Updated: 2021/09/09 16:48:29 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/09/09 17:56:53 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void execute_pwd(t_data *d, int fd_out)
+void execute_pwd(t_data *d)
 {
 	ft_putstr_fd(d->path, 1);
 	ft_putchar_fd('\n', 1);
 	exit(0);
 }
 
-void execute_cd(t_cmds *cmd, int fd[2],t_data *d)
+void execute_cd(t_cmds *cmd,t_data *d)
 {
 	int err;
 	char *old_pwd;
@@ -46,7 +46,7 @@ void execute_cd(t_cmds *cmd, int fd[2],t_data *d)
 	{
 		new_pwd = ft_strjoin("PWD=",getcwd(d->path, sizeof(d->path)));
 		set_env_ms(d,new_pwd,0);
-		// set_env_ms(d,old_pwd,0);
+		set_env_ms(d,old_pwd,0);
 		free(old_pwd);
 		free(new_pwd);
 	}

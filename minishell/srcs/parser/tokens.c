@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 12:30:19 by ptorres           #+#    #+#             */
-/*   Updated: 2021/09/09 15:47:33 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/09/09 17:53:43 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	find_redir_out(char *str, t_parse *p, t_cmds *cmd)
 	return (cond);
 }
 
-int	find_redir_in(char *str, t_parse *p, t_cmds *cmd)
+int	find_redir_in(char *str, t_parse *p)
 {
 	int	cond;
 
@@ -74,7 +74,7 @@ int	find_redir_in(char *str, t_parse *p, t_cmds *cmd)
 	return (cond);
 }
 
-int	find_parse_vars(char *str, t_parse *p, t_cmds *cmd)
+int	find_parse_vars(char *str, t_parse *p)
 {
 	int	cond;
 

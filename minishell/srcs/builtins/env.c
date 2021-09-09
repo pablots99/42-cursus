@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 02:34:42 by pablo             #+#    #+#             */
-/*   Updated: 2021/09/09 15:56:52 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/09/09 19:36:58 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int _exists(char *var, char *env)
 	return (1);
 }
 
-void print_env(char **env, int fd[2])
+void print_env(char **env)
 {
 	int i;
 
@@ -46,7 +46,7 @@ void print_env(char **env, int fd[2])
 char *get_env_ms(t_data *d, char *name)
 {
 	char **splited;
-	char i;
+	int i;
 	char *res;
 
 	res = NULL;

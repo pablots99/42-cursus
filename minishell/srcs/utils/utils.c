@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 03:21:03 by pablo             #+#    #+#             */
-/*   Updated: 2021/09/09 13:15:03 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/09/09 20:53:49 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ int ft_str_equal(char *s1, char *s2)
 
 char *ft_append_char(char *str, char c)
 {
-	int len;
 	char *res;
 	int i;
 
@@ -72,7 +71,6 @@ char *ft_append_char(char *str, char c)
 
 char **ft_append_string(char **str, char *s)
 {
-	int len;
 	char **res;
 	int i;
 
@@ -97,6 +95,7 @@ void create_output(t_cmds *cmd, char *str, int s, int d)
 {
 	int fd;
 
+	fd = 0;
 	if (cmd->otput_fd != 0)
 		close(cmd->otput_fd);
 	if (d)
@@ -208,6 +207,7 @@ void handle_sigint3(int sig)
 	int len;
 
 	len = 0;
+	sig = 0;
 	cwd = getenv("PWD");;
 	len = ft_strlen(cwd);
 	while (len--)

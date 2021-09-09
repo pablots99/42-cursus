@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   session_vars.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 17:09:52 by ptorres           #+#    #+#             */
-/*   Updated: 2021/09/08 14:56:24 by pablo            ###   ########.fr       */
+/*   Updated: 2021/09/09 19:34:17 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ int add_sesion_aux(t_session_v **s, t_session_v *new)
 		{
 			free(list->value);
 			free(new->name);
-			free(new);
 			list->value = new->value;
+			free(new);
 			if (list->exp)
 				return (1);
 			return (0);

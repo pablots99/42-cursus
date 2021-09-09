@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/15 23:26:46 by pablo             #+#    #+#             */
-/*   Updated: 2021/09/09 15:58:10 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/09/09 17:57:09 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 char	**add_declare(char **str)
 {
 	int		i;
-	char	*aux;
 	char	**res;
 
 	i = 0;
@@ -64,8 +63,8 @@ void	add_exportable_var(t_data *d, char *val)
 	i = 0;
 	cond = 0;
 	new = ft_strjoin("declare -x ", val);
-	is_exportable(d, val);
-	d->exportables = ft_append_string(d->exportables, new);
+	if(!is_exportable(d, val))
+		d->exportables = ft_append_string(d->exportables, new);
 	free(new);
 }
 
@@ -86,14 +85,13 @@ int	is_exportable(t_data *d, char *asignation)
 		if (!ft_strncmp(d->exportables[i], aux, ft_strlen(aux)))
 		{
 			free(d->exportables[i]);
-			d->exportables[i] = NULL;
-			ft_bi_free(var_name);
 			free(aux);
+			d->exportables[i] = ft_strjoin("declare -x ", asignation);
+			ft_bi_free(var_name);
 			return (1);
 		}
 		i++;
 	}
-	free(aux);
-	ft_bi_free(var_name);
+	free(aux), ft_bi_free(var_name);
 	return (0);
 }

@@ -12,12 +12,13 @@ SRCS =	minishell.c 						\
 		srcs/builtins/pwd_cd.c				\
 		srcs/builtins/echo.c				\
 		srcs/builtins/export.c				\
+		srcs/builtins/exit.c				\
 		srcs/builtins/unset.c				\
 		srcs/builtins/session_vars.c		\
 		srcs/utils/utils.c
 OBJS = $(SRCS:.c=.o)
 
-CC = gcc -g
+CC = gcc -Wall -Werror -Wextra -g
 
 #campues
 # export LDFLAGS="-L/Users/ptorres/.brew/opt/readline/lib"; export CPPFLAGS="-I/Users/ptorres/.brew/opt/readline/include"
@@ -32,7 +33,7 @@ LIBFLAGS = -L. libft/libft.a -L/Users/ptorres/.brew/opt/readline/lib -I/Users/pt
 #-fsanitize=address
 
 
-FLAGS = -Wall -Wextra -Werror   -lreadline  -o $(NAME)
+FLAGS = -lreadline   -o $(NAME)
 
 
 all:$(NAME)

@@ -6,35 +6,21 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 12:02:38 by pablo             #+#    #+#             */
-/*   Updated: 2021/09/07 14:25:13 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/09/09 21:32:24 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "srcs/minishell.h"
 
-void ft_bstrprint(char **bstr)
-{
-	int i;
 
-	i = 0;
-	while (bstr && bstr[i])
-	{
-		printf("%s\n", bstr[i]);
-		i++;
-	}
-}
-
-void handle_sigint(int sig)
+void _init_vars(t_data *data,char **env)
 {
-	write(1, "\n", 1);
-	rl_replace_line("", 0);
-	rl_on_new_line();
-	rl_redisplay();
-}
-void handle_sigquit(int sig)
-{
-	rl_on_new_line();
-	return ;
+	data->raw_cmd = "";
+	data->status = 0;
+	data->env = env;
+	data->exportables = save_exportables(env);
+	data->first_env = 1;
+	data->session_env = NULL;
 }
 
 
@@ -43,20 +29,17 @@ int main(int argc, char **argv, char **env)
 	char *route;
 	t_data data;
 	char *aux;
-	int _signal;
+	char *path_aux;
 
-	data.raw_cmd = "";
-	data.status = 0;
-	data.env = env;
-	data.exportables = save_exportables(env);
-	data.first_env = 1;
-	in_read = 0;
-	data.paths = ft_split(getenv("PATH"), ':');
-	data.session_env = NULL;
+	argc = 0;
+	argv = NULL;
+	_init_vars(&data,env);
+	path_aux = get_env_ms(&data, "PATH");
+	data.paths = ft_split(path_aux, ':');
 	while (1)
 	{
-		signal(SIGQUIT,handle_sigquit);
-		signal(SIGINT,handle_sigint);
+		signal(SIGQUIT, handle_sigquit);
+		signal(SIGINT, handle_sigint);
 		data.cmds = NULL;
 		route = ft_strjoin(getcwd(data.path, sizeof(data.path)), ">> ");
 		data.raw_cmd = readline(route);
@@ -76,6 +59,10 @@ int main(int argc, char **argv, char **env)
 		{
 			if (parse_comands(&data))
 				execute_commands(&data);
+			ft_bi_free(data.paths);
+			free(path_aux);
+			path_aux = get_env_ms(&data, "PATH");
+			data.paths = ft_split(path_aux, ':');
 		}
 		free_command(&data);
 		free(route);

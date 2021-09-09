@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 19:48:22 by pablo             #+#    #+#             */
-/*   Updated: 2021/09/09 16:10:24 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/09/09 21:15:38 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,15 @@ int	execute_asignations(t_cmds *cmd, int fd[2], t_data *d)
 	if (!cmd->options || !cmd->options[0])
 		return (0);
 	if (ft_str_equal(cmd->options[0], "cd"))
-		execute_cd(cmd, fd, d), is = 1;
+		execute_cd(cmd, d), is = 1;
 	else if (ft_str_equal(cmd->options[0], "unset"))
-		unset_env(d, cmd->options[1]), is = 1;
+		is = 1, unset(d, cmd->options[1]);
 	else if (cmd->var_asign)
 		add_session_env(d, cmd->options[0], 0), is = 1;
 	else if (ft_str_equal("export", cmd->options[0]) && cmd->options[1])
 		set_env_ms(d, cmd->options[1], 0), is = 1;
 	else if (ft_str_equal(cmd->options[0], "exit"))
-		free_command(d), exit(0);
+		exit_ms(d,cmd), is = 1;
 	if (cmd->otput_fd && is)
 		cmd->otput_fd = 0;
 	return (is);
@@ -46,16 +46,16 @@ int	execute_builtins(t_cmds *cmd, int fd[2], t_data *d)
 	if (!cmd->options || !cmd->options[0])
 		return (0);
 	if (ft_str_equal(cmd->options[0], "env"))
-		print_env(d->env, fd), is = 1;
+		print_env(d->env), is = 1;
 	else if (ft_str_equal(cmd->options[0], "echo"))
 		execute_echo(cmd), is = 1;
 	else if (ft_str_equal(cmd->options[0], "pwd"))
-		execute_pwd(d, fd[1]), is = 1;
+		execute_pwd(d), is = 1;
 	else if (ft_str_equal(cmd->options[0], "set"))
 		print_session_env(d->session_env), is = 1;
 	else if (ft_str_equal("export", cmd->options[0]) && !cmd->options[1])
 	{
-		print_env(d->exportables, fd);
+		print_env(d->exportables);
 		is = 1;
 	}
 	if (cmd->otput_fd && is)
@@ -63,7 +63,7 @@ int	execute_builtins(t_cmds *cmd, int fd[2], t_data *d)
 	return (is);
 }
 
-void	execute_child(t_data *d, int fd[2])
+void	execute_child(t_data *d)
 {
 	dup2(d->fd_in, 0);
 	if (d->cmds->childs != NULL)
@@ -81,7 +81,7 @@ void	execute_child(t_data *d, int fd[2])
 	}
 }
 
-void	execute_command(t_data *d, int fd[2])
+void	execute_command(t_data *d)
 {
 	int	pid;
 
@@ -91,7 +91,7 @@ void	execute_command(t_data *d, int fd[2])
 	signal(SIGINT, handle_sigint2);
 	signal(SIGQUIT, handle_sigint2);
 	if (pid == 0)
-		execute_child(d, d->fd);
+		execute_child(d);
 	else
 	{
 		if (d->cmds->otput_fd)
@@ -118,7 +118,7 @@ void	execute_commands(t_data *d)
 		if (d->cmds->input_fd)
 			d->fd_in = d->cmds->input_fd;
 		if (d->cmds->options && !execute_asignations(d->cmds, d->fd, d))
-			execute_command(d, d->fd);
+			execute_command(d);
 		i++;
 		d->cmds = d->cmds->childs;
 	}
