@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 12:30:19 by ptorres           #+#    #+#             */
-/*   Updated: 2021/09/09 17:53:43 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/09/10 17:07:48 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,12 @@ char	*find_vars(char *str, t_data *d)
 {
 	char	*var_value;
 
-	if (str[0] == '?' && !str[1])
+	if (str[0] == '?')
+	{
 		var_value = ft_itoa(d->status);
+		if(str[1])
+			var_value = ft_append_str(var_value,&str[1]);
+	}
 	else
 		var_value = get_session_env(d, str);
 	if (!var_value)

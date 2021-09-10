@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 12:41:03 by ptorres           #+#    #+#             */
-/*   Updated: 2021/09/10 01:41:07 by pablo            ###   ########.fr       */
+/*   Updated: 2021/09/10 16:04:31 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	find_tokens(char *str, t_parse *p, t_cmds *cmd)
 			p->s_quote = 1;
 		p->skip = 1;
 	}
-	if (str[p->i] == '\\' && !p->d_quote && !p->s_quote)
+	if (str[p->i] == '\\' && !p->d_quote && !p->s_quote && str[p->i - 1] != '\\')
 		p->skip = 1;
 	find_quotes(str, p);
 	if (!find_redir_out(str, p, cmd))
@@ -108,9 +108,9 @@ void	save_no_space(t_data *d, t_parse p, t_cmds *cmd, char **str)
 	if ((p.do_redir || p.so_redir) && *str != NULL)
 		create_output(cmd, *str, p.do_redir, p.so_redir);
 	else if ((p.si_redir) && d->raw_cmd[p.i] != '<')
-		read_inputs(cmd, *str), p.si_redir = 0;
+		add_fd_in(*str,cmd,'0',1), p.si_redir = 0;//read_inputs(cmd, *str)
 	else if ((p.di_redir) && d->raw_cmd[p.i] != '<')
-		cmd->input_fd = save_double_redir(*str, cmd, p.di_redir);
+		add_fd_in(*str,cmd,'1',p.di_redir);// ,cmd->input_fd = save_double_redir(*str, cmd, p.di_redir);
 	else if (!cmd->cmd)
 		save_first_cmd(d, str, &cmd);
 	else if (*str)

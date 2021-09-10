@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/09 20:54:25 by ptorres           #+#    #+#             */
-/*   Updated: 2021/09/09 21:11:16 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/09/10 16:30:06 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void exit_ms(t_data *d,t_cmds *cmd)
 {
 	int exit_code;
 	int i;
-	
+
 	i = 0;
 	exit_code = 1;
 	ft_putstr_fd("exit\n",1);

@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 03:21:03 by pablo             #+#    #+#             */
-/*   Updated: 2021/09/10 01:27:39 by pablo            ###   ########.fr       */
+/*   Updated: 2021/09/10 16:50:15 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int ft_str_equal(char *s1, char *s2)
 	int i;
 	int len1;
 	int len2;
-
 
 	len1 = ft_strlen(s1);
 	len2 = ft_strlen(s2);
@@ -121,6 +120,7 @@ void read_inputs(t_cmds *cmd, char *str)
 		ft_putstr_fd("minishell: ", 2);
 		perror(str);
 		cmd->err = 1;
+		exit(1);
 	}
 	else
 		cmd->input_fd = fd;
@@ -138,8 +138,14 @@ void free_command(t_data *d)
 		ft_bi_free(d->cmds->options);
 		if (d->cmds->apppend)
 			free(d->cmds->apppend);
+		if (d->cmds->input_type)
+			free(d->cmds->input_type);
+		if (d->cmds->input_fds)
+			ft_bi_free(d->cmds->input_fds);
 		aux = d->cmds;
+
 		d->cmds = d->cmds->childs;
+
 		free(aux);
 	}
 }
@@ -201,32 +207,30 @@ int is_pipe_closed(char *input)
 	return (cond);
 }
 
-
-int save_double_redir(char *str, t_cmds *cmd, int c)
+int save_double_redir(char *str, t_cmds *cmd)
 {
 	char *aux;
 	int fd;
 
 	if (cmd->input_fd)
 		close(cmd->input_fd);
-	if (c < 3)
+	fd = open("/tmp/minishelltmp", O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	aux = readline("> ");
+	while (!ft_str_equal(aux, str) || aux[ft_strlen(aux)] == '\04')
 	{
-			fd = open("/tmp/minishelltmp", O_WRONLY | O_CREAT | O_TRUNC, 0644);
-			aux = readline("> ");
-			while (!ft_str_equal(aux, str) || aux[ft_strlen(aux)] == '\04')
-			{
-				write(fd, aux, ft_strlen(aux));
-				write(fd, "\n", 1);
-				free(aux);
-				aux = readline("> ");
-			}
-			close(fd);
-			fd = open("/tmp/minishelltmp", O_RDONLY);
-			unlink("/tmp/minishelltmp");
-			cmd->input_fd = fd;
-			free(aux);
-			return fd;
+		if(aux == 0)
+			exit(0);
+		write(fd, aux, ft_strlen(aux));
+		write(fd, "\n", 1);
+		free(aux);
+		aux = readline("> ");
 	}
+	close(fd);
+	fd = open("/tmp/minishelltmp", O_RDONLY);
+	unlink("/tmp/minishelltmp");
+	cmd->input_fd = fd;
+	free(aux);
+	return fd;
 	free(str);
 	str = NULL;
 	return 0;
@@ -240,9 +244,68 @@ int is_asign(char *var)
 
 	while (var[i])
 	{
-		if(var[i] == '=' && i!=0)
+		if (var[i] == '=' && i != 0)
 			return (1);
 		i++;
 	}
+	return (0);
+}
+
+void add_fd_in(char *str, t_cmds *cmd, char d, int c)
+{
+	if (!(c < 3))
+	{
+		free(str);
+		return;
+	}
+	cmd->input_fds = ft_append_string(cmd->input_fds, str);
+	cmd->input_type = ft_append_char(cmd->input_type, d);
+	free(str);
+}
+
+void fd_inputs(t_cmds *cmd)
+{
+	int i;
+
+	i = 0;
+	while (cmd->input_type && cmd->input_type[i])
+	{
+		if (cmd->input_type[i] == '1')
+		{
+			cmd->exit_cond = 1;
+			signal(SIGINT, handle_sigint3);
+			cmd->input_fd = save_double_redir(cmd->input_fds[i], cmd);
+		}
+		else
+			read_inputs(cmd, cmd->input_fds[i]);
+		i++;
+	}
+}
+
+int	is_exportable(t_data *d, char *asignation)
+{
+	int		i;
+	char	**var_name;
+	char	*aux;
+
+	var_name = ft_split(asignation, '=');
+	i = 0;
+	if (var_name)
+		aux = ft_strjoin("declare -x ", var_name[0]);
+	else
+		aux = ft_strjoin("declare -x ", asignation);
+	while (d->exportables[i])
+	{
+		if (!ft_strncmp(d->exportables[i], aux, ft_strlen(aux)))
+		{
+			free(d->exportables[i]);
+			free(aux);
+			d->exportables[i] = ft_strjoin("declare -x ", asignation);
+			ft_bi_free(var_name);
+			return (1);
+		}
+		i++;
+	}
+	free(aux), ft_bi_free(var_name);
 	return (0);
 }

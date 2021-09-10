@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 02:34:42 by pablo             #+#    #+#             */
-/*   Updated: 2021/09/10 01:12:02 by pablo            ###   ########.fr       */
+/*   Updated: 2021/09/10 16:49:56 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void print_env(char **env)
 		ft_putchar_fd('\n', 1);
 		i++;
 	}
+	exit(0);
 }
 
 char *get_env_ms(t_data *d, char *name)

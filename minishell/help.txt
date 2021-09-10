@@ -39,8 +39,11 @@
 
 TO DO:
 	check status code values
-	'ctrl + \' when is text writed in the prompt have to work like 'ctrl + d'
+	statust code de los procesos ejecutados en el padre
 	builtins arguments
+	bloquear optiones en builtins
+	bloquear argumentos en builtins
+	\ revisar parso barral
 
 
 LEAKS:

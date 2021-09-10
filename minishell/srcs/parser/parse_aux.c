@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_aux.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 21:25:58 by pablo             #+#    #+#             */
-/*   Updated: 2021/09/09 17:10:23 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/09/10 02:57:17 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,12 @@ void	save_data(t_data *d, t_parse *p, t_cmds *cmd, char **str)
 	}
 	else if ((p->di_redir) && d->raw_cmd[p->i] != '<')
 	{
-		cmd->input_fd = save_double_redir(*str, cmd, p->di_redir);
+		add_fd_in(*str,cmd,'1',p->di_redir);
+		//md->input_fd = save_double_redir(*str, cmd, p->di_redir);
 		p->di_redir = 0;
 	}
 	else if ((p->si_redir) && d->raw_cmd[p->i] != '<')
-		read_inputs(cmd, *str), p->si_redir = 0;
+		add_fd_in(*str,cmd,'0',1);//read_inputs(cmd, *str), p->si_redir = 0;
 	else if (!cmd->cmd)
 		save_first_cmd(d, str, &cmd);
 	else
@@ -102,5 +103,8 @@ t_cmds	*new_cmd(void)
 	new->otput_fd = 0;
 	new->input_fd = 0;
 	new->var_asign = 0;
+	new->input_fds = NULL;
+	new->input_type = NULL;
+	new->exit_cond = 0;
 	return (new);
 }

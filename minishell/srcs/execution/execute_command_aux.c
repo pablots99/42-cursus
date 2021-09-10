@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_command_aux.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/09 13:52:48 by ptorres           #+#    #+#             */
-/*   Updated: 2021/09/09 15:48:40 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/09/10 16:06:09 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,5 +18,4 @@ void	init_vars(t_data *d, t_cmds **first)
 	d->fd[1] = 1;
 	d->fd[0] = 0;
 	d->fd_in = 0;
-	d->status = 0;
 }

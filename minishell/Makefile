@@ -33,7 +33,7 @@ LIBFLAGS = -L. libft/libft.a -L/usr/local/opt/readline/lib -I/usr/local/opt/read
 #-fsanitize=address
 
 
-FLAGS = -lreadline   -o $(NAME)
+FLAGS = -lreadline -fsanitize=address   -o $(NAME)
 
 
 all:$(NAME)

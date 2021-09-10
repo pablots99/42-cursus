@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/15 23:26:46 by pablo             #+#    #+#             */
-/*   Updated: 2021/09/09 17:57:09 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/09/10 16:52:18 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,30 +68,14 @@ void	add_exportable_var(t_data *d, char *val)
 	free(new);
 }
 
-int	is_exportable(t_data *d, char *asignation)
+void export_exec(t_data *d, char **options)
 {
-	int		i;
-	char	**var_name;
-	char	*aux;
+	int i;
 
-	var_name = ft_split(asignation, '=');
-	i = 0;
-	if (var_name)
-		aux = ft_strjoin("declare -x ", var_name[0]);
-	else
-		aux = ft_strjoin("declare -x ", asignation);
-	while (d->exportables[i])
+	i  = 0;
+	while(options[i])
 	{
-		if (!ft_strncmp(d->exportables[i], aux, ft_strlen(aux)))
-		{
-			free(d->exportables[i]);
-			free(aux);
-			d->exportables[i] = ft_strjoin("declare -x ", asignation);
-			ft_bi_free(var_name);
-			return (1);
-		}
+		set_env_ms(d,options[i],0);
 		i++;
 	}
-	free(aux), ft_bi_free(var_name);
-	return (0);
 }

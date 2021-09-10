@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 12:03:32 by pablo             #+#    #+#             */
-/*   Updated: 2021/09/10 01:17:42 by pablo            ###   ########.fr       */
+/*   Updated: 2021/09/10 17:18:19 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@
 # include <fcntl.h>
 # include<signal.h>
 
-# define ENVIROMENT_PATH "~/.mini_bashrc"
+int status;
+
 
 typedef struct s_session_v
 {
@@ -40,9 +41,12 @@ typedef struct s_cmds
 	int				var_asign;
 	int 			otput_fd;
 	int				input_fd;
+	char			**input_fds;
+	char			*input_type;
 	char			*apppend;
 	int 			err;
 	struct s_cmds	*childs;
+	int				exit_cond;
 }	t_cmds;
 
 
@@ -61,6 +65,7 @@ typedef struct s_data
 	int				fd_in;
 	int				fd[2];
 }	t_data;
+
 
 typedef struct s_parse
 {
@@ -107,7 +112,7 @@ char **joined_redirections_out(t_data *d, t_cmds *cmd, char **s);
 char **ft_append_string(char **str, char *s);
 char *ft_append_str(char *s1, char *s2);
 int is_pipe_closed(char *input);
-int save_double_redir(char *str,t_cmds *cmd,int c);
+int save_double_redir(char *str,t_cmds *cmd);
 void create_output(t_cmds *cmd,char *str,int s,int d);
 void read_inputs(t_cmds *cmd,char *str);
 char **dup_bi_string(char **str);
@@ -134,8 +139,11 @@ t_cmds	*new_cmd(void);
 void save_first_cmd(t_data *d, char **str, t_cmds **cmd);
 void save_pipe(t_data *d, t_cmds **cmd, t_parse *p);
 void add_child(t_cmds **cmds, t_cmds *cmd);
-void unset(t_data *d, char *var_name);
+void unset(t_data *d, char **var_name);
 void exit_ms(t_data *d,t_cmds *cmd);
 void handle_sigint(int sig);
 void handle_sigquit(int sig);
 void handle_sigint3(int sig);
+void add_fd_in(char *str, t_cmds *cmd,char d,int c);
+void fd_inputs(t_cmds *cmd);
+void export_exec(t_data *d, char **options);
