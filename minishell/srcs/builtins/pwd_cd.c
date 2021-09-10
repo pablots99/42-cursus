@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd_cd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/09 17:07:16 by pablo             #+#    #+#             */
-/*   Updated: 2021/09/10 16:38:27 by pablo            ###   ########.fr       */
+/*   Updated: 2021/09/10 19:48:37 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void execute_pwd(t_data *d)
 	exit(0);
 }
 
-void execute_cd(t_cmds *cmd,t_data *d)
+void execute_cd(t_cmds *cmd,t_data *d,int x)
 {
 	int err;
 	char *old_pwd;
@@ -37,6 +37,8 @@ void execute_cd(t_cmds *cmd,t_data *d)
 		ft_putstr_fd(strerror(errno),2);
 		ft_putchar_fd('\n',2);
 		d->status = 1;
+		if(x)
+			exit(1);
 		free(old_pwd);
 		return ;
 	}
@@ -49,4 +51,6 @@ void execute_cd(t_cmds *cmd,t_data *d)
 		free(new_pwd);
 		d->status = 0;
 	}
+	if(x)
+		exit(0);
 }

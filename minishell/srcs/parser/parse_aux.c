@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_aux.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 21:25:58 by pablo             #+#    #+#             */
-/*   Updated: 2021/09/10 02:57:17 by pablo            ###   ########.fr       */
+/*   Updated: 2021/09/10 23:40:48 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,26 @@ int	is_data_redir(char *cmd)
 
 int	is_sintax_error(t_data *d, t_cmds *cmd)
 {
-	if (!is_quote_closed(d->raw_cmd) || !is_data_redir(d->raw_cmd))
+	if(!is_pipe_closed(d->raw_cmd))
+	{
+		ft_putstr_fd(
+			"minishell: syntax error near unexpected token `|'\n",
+			2);
+		cmd->cmd = ft_strdup(d->raw_cmd);
+		d->cmds = cmd;
+		return(1);
+	}
+	
+	if (!is_quote_closed(d->raw_cmd))
+	{
+		ft_putstr_fd(
+			"minishell: syntax error quotes not closed\n",
+			2);
+		cmd->cmd = ft_strdup(d->raw_cmd);
+		d->cmds = cmd;
+		return (1);
+	}
+	if(!is_data_redir(d->raw_cmd))
 	{
 		ft_putstr_fd(
 			"minishell: syntax error near unexpected token `newline'\n",

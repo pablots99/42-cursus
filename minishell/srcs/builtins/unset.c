@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 17:06:27 by ptorres           #+#    #+#             */
-/*   Updated: 2021/09/10 17:37:19 by pablo            ###   ########.fr       */
+/*   Updated: 2021/09/10 19:50:08 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void unset_session(t_data *d, char *var_name)
 	t_session_v *ses;
 	t_session_v *aux;
 	int i;
-	;
 
 	i = 0;
 	aux = NULL;
@@ -123,7 +122,7 @@ void unset_env(t_data *d, char *var_name)
 	free(exists);
 }
 
-void unset(t_data *d, char **var_name)
+void unset(t_data *d, char **var_name, int x)
 {
 	int i;
 
@@ -138,13 +137,17 @@ void unset(t_data *d, char **var_name)
 			ft_putstr_fd("minishell: unset: '", 2);
 			ft_putstr_fd(var_name[i], 2);
 			ft_putstr_fd("': not a valid identifier\n", 2);
+			if(x)
+				exit(1);
 			d->status = 1;
-			return;
+			return ;
 		}
 		unset_env(d, var_name[i]);
 		unset_export(d, var_name[i]);
 		unset_session(d, var_name[i]);
-		d->status = 0;
 		i++;
 	}
+	d->status = 0;
+	if(x)
+		exit(0);
 }

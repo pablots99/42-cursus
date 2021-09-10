@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_comands.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 12:41:03 by ptorres           #+#    #+#             */
-/*   Updated: 2021/09/10 16:04:31 by pablo            ###   ########.fr       */
+/*   Updated: 2021/09/10 23:50:23 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*get_cmd_path(char *cmd, char **paths)
 
 	fd = 0;
 	i = 0;
-	if(!paths)
+	if(!paths || is_builtin(cmd))
 		return cmd;
 	cmd2 = ft_strjoin("/", cmd);
 	while (paths[i])
@@ -106,7 +106,7 @@ void	save_no_space(t_data *d, t_parse p, t_cmds *cmd, char **str)
 		p.var_name = NULL;
 	}
 	if ((p.do_redir || p.so_redir) && *str != NULL)
-		create_output(cmd, *str, p.do_redir, p.so_redir);
+		add_outpput(cmd, *str, p.do_redir, p.so_redir);
 	else if ((p.si_redir) && d->raw_cmd[p.i] != '<')
 		add_fd_in(*str,cmd,'0',1), p.si_redir = 0;//read_inputs(cmd, *str)
 	else if ((p.di_redir) && d->raw_cmd[p.i] != '<')

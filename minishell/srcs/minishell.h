@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 12:03:32 by pablo             #+#    #+#             */
-/*   Updated: 2021/09/10 17:18:19 by pablo            ###   ########.fr       */
+/*   Updated: 2021/09/10 23:50:30 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ char *get_env_ms(t_data *d,char* name);
 void ft_bi_free_debug(char **arr);
 void execute_pwd(t_data *d);
 void execute_echo(t_cmds *cmd);
-void execute_cd(t_cmds *cmd,t_data *d);
+void execute_cd(t_cmds *cmd,t_data *d,int x);
 void unset_env(t_data *d,char *var_name);
 void print_env(char **env);
 void free_command(t_data *d);
@@ -139,7 +139,7 @@ t_cmds	*new_cmd(void);
 void save_first_cmd(t_data *d, char **str, t_cmds **cmd);
 void save_pipe(t_data *d, t_cmds **cmd, t_parse *p);
 void add_child(t_cmds **cmds, t_cmds *cmd);
-void unset(t_data *d, char **var_name);
+void unset(t_data *d, char **var_name, int x);
 void exit_ms(t_data *d,t_cmds *cmd);
 void handle_sigint(int sig);
 void handle_sigquit(int sig);
@@ -147,3 +147,5 @@ void handle_sigint3(int sig);
 void add_fd_in(char *str, t_cmds *cmd,char d,int c);
 void fd_inputs(t_cmds *cmd);
 void export_exec(t_data *d, char **options);
+int is_builtin(char *cmd);
+void add_outpput(t_cmds *cmd, char *str, int s, int d);

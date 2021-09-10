@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 12:02:38 by pablo             #+#    #+#             */
-/*   Updated: 2021/09/10 16:04:39 by pablo            ###   ########.fr       */
+/*   Updated: 2021/09/10 21:14:31 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ int main(int argc, char **argv, char **env)
 {
 	char *route;
 	t_data data;
-	char *aux;
 	char *path_aux;
 
 	argc = 0;
@@ -66,12 +65,6 @@ int main(int argc, char **argv, char **env)
 		{
 			printf("");
 			exit(0);
-		}
-		while (!is_pipe_closed(data.raw_cmd))
-		{
-			aux = readline("> ");
-			ft_append(&data.raw_cmd, aux);
-			free(aux);
 		}
 		add_history(data.raw_cmd);
 		if (ft_strlen(data.raw_cmd) > 0)

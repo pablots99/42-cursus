@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 03:21:03 by pablo             #+#    #+#             */
-/*   Updated: 2021/09/10 16:50:15 by pablo            ###   ########.fr       */
+/*   Updated: 2021/09/11 00:12:24 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,14 @@ char **ft_append_string(char **str, char *s)
 	res[i] = NULL;
 	ft_bi_free(str);
 	return (res);
+}
+
+void add_outpput(t_cmds *cmd, char *str, int s, int d)
+{
+	if(s)
+		add_fd_in(str,cmd,'2',1);
+	if(d)
+		add_fd_in(str,cmd,'3',1);
 }
 
 void create_output(t_cmds *cmd, char *str, int s, int d)
@@ -192,19 +200,30 @@ int is_quote_closed(char *input)
 int is_pipe_closed(char *input)
 {
 	int i;
-	int cond;
+	int open;
+	int data;
 
+
+	data = 0;
 	i = 0;
-	cond = 1;
+	open = 0;
 	while (input[i])
 	{
-		if (input[i] == '|')
-			cond = 0;
-		else if (!cond && input[i] != ' ')
-			cond = 1;
+		if(input[i] == '|')
+		{
+			open = 1;
+			if(!data)
+				return (0);
+			data = 0;
+			
+		}
+		else if(input[i] != ' ' && input[i] != '	')
+			data = 1;
 		i++;
 	}
-	return (cond);
+	if(open && !data)
+		return (0);
+	return (1);
 }
 
 int save_double_redir(char *str, t_cmds *cmd)
@@ -231,9 +250,6 @@ int save_double_redir(char *str, t_cmds *cmd)
 	cmd->input_fd = fd;
 	free(aux);
 	return fd;
-	free(str);
-	str = NULL;
-	return 0;
 }
 
 int is_asign(char *var)
@@ -266,18 +282,30 @@ void add_fd_in(char *str, t_cmds *cmd, char d, int c)
 void fd_inputs(t_cmds *cmd)
 {
 	int i;
+	int aux;
 
 	i = 0;
+	aux = 0;
 	while (cmd->input_type && cmd->input_type[i])
 	{
 		if (cmd->input_type[i] == '1')
 		{
+			aux = i;
 			cmd->exit_cond = 1;
 			signal(SIGINT, handle_sigint3);
 			cmd->input_fd = save_double_redir(cmd->input_fds[i], cmd);
 		}
-		else
-			read_inputs(cmd, cmd->input_fds[i]);
+		i++;
+	}
+	i = 0;
+	while (cmd->input_type && cmd->input_type[i])
+	{
+		if(cmd->input_type[i] == '1' && i >= aux)
+			read_inputs(cmd,cmd->input_fds[i]);
+		if(cmd->input_type[i] == '2' && i >= aux)
+			create_output(cmd,cmd->input_fds[i],1,0);
+		if(cmd->input_type[i] == '3' && i >= aux)
+			create_output(cmd,cmd->input_fds[i],0,1);
 		i++;
 	}
 }
@@ -307,5 +335,27 @@ int	is_exportable(t_data *d, char *asignation)
 		i++;
 	}
 	free(aux), ft_bi_free(var_name);
+	return (0);
+}
+
+
+int is_builtin(char *cmd)
+{
+	if(ft_str_equal(cmd, "cd"))
+		return (1);
+	if(ft_str_equal(cmd, "exit"))
+		return (1);
+	if(ft_str_equal(cmd, "export"))
+		return (1);
+	if(ft_str_equal(cmd, "unset"))
+		return (1);
+	if(ft_str_equal(cmd, "echo"))
+		return (1);
+	if(ft_str_equal(cmd, "pwd"))
+		return (1);
+	if(ft_str_equal(cmd, "set"))
+		return (1);
+	if(ft_str_equal(cmd, "export"))
+		return (1);
 	return (0);
 }
