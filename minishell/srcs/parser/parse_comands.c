@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_comands.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 12:41:03 by ptorres           #+#    #+#             */
-/*   Updated: 2021/09/10 23:50:23 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/09/11 14:49:41 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	find_tokens(char *str, t_parse *p, t_cmds *cmd)
 	}
 	if (str[p->i] == '\\' && !p->d_quote && !p->s_quote && str[p->i - 1] != '\\')
 		p->skip = 1;
-	find_quotes(str, p);
+	find_quotes(str, p,cmd);
 	if (!find_redir_out(str, p, cmd))
 		if (!find_redir_in(str, p))
 			find_parse_vars(str, p);
@@ -133,7 +133,10 @@ int	parse_comands(t_data *d)
 	str = NULL;
 	var = NULL;
 	if (is_sintax_error(d, cmd))
-		return (1);
+	{
+		d->status = 258;
+		return  (0);
+	}
 	while (d->raw_cmd[p.i])
 	{
 		find_tokens(d->raw_cmd, &p, cmd);

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   tokens.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 12:30:19 by ptorres           #+#    #+#             */
-/*   Updated: 2021/09/10 19:48:16 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/09/11 14:47:22 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	find_quotes(char *str, t_parse *p)
+void	find_quotes(char *str, t_parse *p,t_cmds *cmd)
 {
 	if (str[p->i] == '"' && !p->s_quote)
 	{
@@ -20,6 +20,7 @@ void	find_quotes(char *str, t_parse *p)
 		{
 			p->d_quote = 0;
 			p->space = 1;
+			cmd->comillas = 1;
 		}
 		else
 			p->d_quote = 1;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_aux.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 21:25:58 by pablo             #+#    #+#             */
-/*   Updated: 2021/09/10 23:40:48 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/09/11 14:22:00 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,42 @@ int	is_data_redir(char *cmd)
 {
 	int	i;
 	int	is_redir;
+	int count;
 
 	i = 0;
+	count = 0;
 	is_redir = 0;
 	while (cmd[i])
 	{
-		if (cmd[i] == '>' || cmd[i] == '<')
-			is_redir = 1;
-		else if (cmd[i] != ' ' && cmd[i] != '	' && is_redir == 1)
-			return (1);
+		count = 0;
+		if ((cmd[i] == '>' || cmd[i] == '<') && !is_redir)
+		{
+			is_redir = cmd[i];
+			i++;
+			while (cmd[i] && cmd[i] == is_redir)
+			{
+				i++;
+				count++;
+			}
+			if(count > 1)
+				return is_redir;
+			while (cmd[i] && (cmd[i] == ' ' || cmd[i] == '	'))
+				i++;
+			count = 0;
+			while(cmd[i] && cmd[i] != is_redir && cmd[i] != ' ' && cmd[i] != '	'
+					&& cmd[i] != '<' && cmd[i] != '>')
+			{
+				count++;
+				i++;
+			}
+			if(!count)
+				return cmd[i];
+			else
+				is_redir = 0;
+		}
 		i++;
 	}
-	if (!is_redir)
-		return (1);
-	return (0);
+	return (-1);
 }
 
 int	is_sintax_error(t_data *d, t_cmds *cmd)
@@ -43,7 +65,10 @@ int	is_sintax_error(t_data *d, t_cmds *cmd)
 		d->cmds = cmd;
 		return(1);
 	}
-	
+
+	char token;
+
+	token = 0;
 	if (!is_quote_closed(d->raw_cmd))
 	{
 		ft_putstr_fd(
@@ -53,11 +78,15 @@ int	is_sintax_error(t_data *d, t_cmds *cmd)
 		d->cmds = cmd;
 		return (1);
 	}
-	if(!is_data_redir(d->raw_cmd))
+	token = is_data_redir(d->raw_cmd);
+	if(token != -1)
 	{
-		ft_putstr_fd(
-			"minishell: syntax error near unexpected token `newline'\n",
-			2);
+		ft_putstr_fd("minishell: syntax error near unexpected token \'",2);
+		if(!token)
+			ft_putstr_fd("newline",2);
+		else
+			ft_putchar_fd(token,2);
+		ft_putstr_fd("\'\n",2);
 		cmd->cmd = ft_strdup(d->raw_cmd);
 		d->cmds = cmd;
 		return (1);
@@ -94,11 +123,10 @@ void	save_data(t_data *d, t_parse *p, t_cmds *cmd, char **str)
 	else if ((p->di_redir) && d->raw_cmd[p->i] != '<')
 	{
 		add_fd_in(*str,cmd,'1',p->di_redir);
-		//md->input_fd = save_double_redir(*str, cmd, p->di_redir);
 		p->di_redir = 0;
 	}
 	else if ((p->si_redir) && d->raw_cmd[p->i] != '<')
-		add_fd_in(*str,cmd,'0',1);//read_inputs(cmd, *str), p->si_redir = 0;
+		add_fd_in(*str,cmd,'0',1);
 	else if (!cmd->cmd)
 		save_first_cmd(d, str, &cmd);
 	else

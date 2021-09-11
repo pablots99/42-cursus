@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 03:21:03 by pablo             #+#    #+#             */
-/*   Updated: 2021/09/11 00:12:24 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/09/11 14:32:33 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,7 +215,7 @@ int is_pipe_closed(char *input)
 			if(!data)
 				return (0);
 			data = 0;
-			
+
 		}
 		else if(input[i] != ' ' && input[i] != '	')
 			data = 1;
@@ -283,6 +283,7 @@ void fd_inputs(t_cmds *cmd)
 {
 	int i;
 	int aux;
+	int aux_fd;
 
 	i = 0;
 	aux = 0;
@@ -298,14 +299,17 @@ void fd_inputs(t_cmds *cmd)
 		i++;
 	}
 	i = 0;
+	aux_fd = cmd->input_fd;;
 	while (cmd->input_type && cmd->input_type[i])
 	{
-		if(cmd->input_type[i] == '1' && i >= aux)
+		if(cmd->input_type[i] == '0')
 			read_inputs(cmd,cmd->input_fds[i]);
-		if(cmd->input_type[i] == '2' && i >= aux)
+		if(cmd->input_type[i] == '2')
 			create_output(cmd,cmd->input_fds[i],1,0);
-		if(cmd->input_type[i] == '3' && i >= aux)
+		if(cmd->input_type[i] == '3')
 			create_output(cmd,cmd->input_fds[i],0,1);
+		if(!( i >= aux))
+			cmd->input_fd = aux_fd;
 		i++;
 	}
 }

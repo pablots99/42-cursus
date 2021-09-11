@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 12:03:32 by pablo             #+#    #+#             */
-/*   Updated: 2021/09/10 23:50:30 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/09/11 14:47:37 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct s_cmds
 	char			*apppend;
 	int 			err;
 	struct s_cmds	*childs;
+	int				comillas;
 	int				exit_cond;
 }	t_cmds;
 
@@ -122,7 +123,7 @@ void handle_sigint(int sig);
 int is_exportable(t_data *d,char *asignation);
 void add_exportable_var(t_data *d, char *val);
 int add_sesion_aux(t_session_v **s,t_session_v *new);
-void find_quotes(char *str, t_parse *p);
+void	find_quotes(char *str, t_parse *p,t_cmds *cmd);
 int find_redir_out(char *str,t_parse *p,t_cmds *cmd);
 int find_redir_in(char *str,t_parse *p);
 int find_parse_vars(char *str,t_parse *p);
@@ -139,7 +140,7 @@ t_cmds	*new_cmd(void);
 void save_first_cmd(t_data *d, char **str, t_cmds **cmd);
 void save_pipe(t_data *d, t_cmds **cmd, t_parse *p);
 void add_child(t_cmds **cmds, t_cmds *cmd);
-void unset(t_data *d, char **var_name, int x);
+void unset(t_data *d, char **var_name,int x);
 void exit_ms(t_data *d,t_cmds *cmd);
 void handle_sigint(int sig);
 void handle_sigquit(int sig);

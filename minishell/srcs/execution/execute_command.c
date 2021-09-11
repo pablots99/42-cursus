@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 19:48:22 by pablo             #+#    #+#             */
-/*   Updated: 2021/09/10 23:45:34 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/09/11 14:49:27 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,15 @@ void execute_child(t_data *d)
 {
 	fd_inputs(d->cmds);
 	if(!d->cmds->cmd)
-		exit(0);
+	{
+		if(!d->cmds->comillas)
+			exit(0);
+		else
+		{
+			ft_putstr_fd("minishell: : command not found\n", 2);
+			exit(127);
+		}
+	}
 	if (d->cmds->input_fd)
 		d->fd_in = d->cmds->input_fd;
 	dup2(d->fd_in, 0);
