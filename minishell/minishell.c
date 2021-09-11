@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 12:02:38 by pablo             #+#    #+#             */
-/*   Updated: 2021/09/10 21:14:31 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/09/11 22:28:08 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void __init_vars(t_data *data,char **env)
 	{
 		if(execve(tty[0],tty,env) == -1)
 		{
-			perror(NULL);
+			perror("minishell: ");
 			exit(127);
 		}
 	}

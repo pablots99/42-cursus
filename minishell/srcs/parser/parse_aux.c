@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_aux.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 21:25:58 by pablo             #+#    #+#             */
-/*   Updated: 2021/09/11 14:22:00 by pablo            ###   ########.fr       */
+/*   Updated: 2021/09/11 19:35:08 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	is_data_redir(char *cmd)
 	int count;
 
 	i = 0;
-	count = 0;
 	is_redir = 0;
 	while (cmd[i])
 	{
@@ -54,64 +53,7 @@ int	is_data_redir(char *cmd)
 	return (-1);
 }
 
-int	is_sintax_error(t_data *d, t_cmds *cmd)
-{
-	if(!is_pipe_closed(d->raw_cmd))
-	{
-		ft_putstr_fd(
-			"minishell: syntax error near unexpected token `|'\n",
-			2);
-		cmd->cmd = ft_strdup(d->raw_cmd);
-		d->cmds = cmd;
-		return(1);
-	}
 
-	char token;
-
-	token = 0;
-	if (!is_quote_closed(d->raw_cmd))
-	{
-		ft_putstr_fd(
-			"minishell: syntax error quotes not closed\n",
-			2);
-		cmd->cmd = ft_strdup(d->raw_cmd);
-		d->cmds = cmd;
-		return (1);
-	}
-	token = is_data_redir(d->raw_cmd);
-	if(token != -1)
-	{
-		ft_putstr_fd("minishell: syntax error near unexpected token \'",2);
-		if(!token)
-			ft_putstr_fd("newline",2);
-		else
-			ft_putchar_fd(token,2);
-		ft_putstr_fd("\'\n",2);
-		cmd->cmd = ft_strdup(d->raw_cmd);
-		d->cmds = cmd;
-		return (1);
-	}
-	return (0);
-}
-
-t_parse	init_parse(void)
-{
-	t_parse	res;
-
-	res.d_quote = 0;
-	res.s_quote = 0;
-	res.i = 0;
-	res.n_pipe = 0;
-	res.space = 0;
-	res.do_redir = 0;
-	res.so_redir = 0;
-	res.si_redir = 0;
-	res.di_redir = 0;
-	res.var = 0;
-	res.var_name = NULL;
-	res.var_end = 0;
-	return (res);
-}
 
 void	save_data(t_data *d, t_parse *p, t_cmds *cmd, char **str)
 {
@@ -137,21 +79,3 @@ void	save_data(t_data *d, t_parse *p, t_cmds *cmd, char **str)
 	}
 }
 
-t_cmds	*new_cmd(void)
-{
-	t_cmds	*new;
-
-	new = malloc(sizeof(t_cmds));
-	new->apppend = NULL;
-	new->options = NULL;
-	new->childs = NULL;
-	new->cmd = NULL;
-	new->err = 0;
-	new->otput_fd = 0;
-	new->input_fd = 0;
-	new->var_asign = 0;
-	new->input_fds = NULL;
-	new->input_type = NULL;
-	new->exit_cond = 0;
-	return (new);
-}

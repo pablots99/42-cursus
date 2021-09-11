@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/03 20:21:06 by pablo             #+#    #+#             */
-/*   Updated: 2021/04/09 15:53:40 by pablo            ###   ########.fr       */
+/*   Updated: 2021/09/11 19:07:26 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 long int	ft_atoi(const char *str)
 {
-	int	i;
-	int	cont;
-	long int num;
+	int			i;
+	int			cont;
+	long int	num;
 
 	num = 0;
 	i = 0;

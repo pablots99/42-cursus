@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 12:30:19 by ptorres           #+#    #+#             */
-/*   Updated: 2021/09/11 14:47:22 by pablo            ###   ########.fr       */
+/*   Updated: 2021/09/12 00:05:28 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,12 @@ void	find_quotes(char *str, t_parse *p,t_cmds *cmd)
 			p->d_quote = 1;
 		p->skip = 1;
 	}
-	if (p->var && (str[p->i] == ' ' || str[p->i] == '"' || str[p->i] == '\''))
+	if(p->var && str[p->i] == '$')
+	{
+		p->i--;
+		p->var_end = 1;
+	}
+	else if (p->var && (str[p->i] == ' ' || str[p->i] == '"' || str[p->i] == '\''))
 		p->var_end = 1;
 }
 
@@ -80,9 +85,10 @@ int	find_parse_vars(char *str, t_parse *p)
 	int	cond;
 
 	cond = 0;
-	if (str[p->i] == '$' && !p->s_quote
+	if (!p->var && str[p->i] == '$' && !p->s_quote
 		&& str[p->i + 1] && str[p->i + 1] != ' ')
 	{
+		
 		p->var = 1;
 		p->skip = 1;
 		p->i++;

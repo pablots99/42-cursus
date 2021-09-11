@@ -6,17 +6,17 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 17:06:27 by ptorres           #+#    #+#             */
-/*   Updated: 2021/09/10 19:50:08 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/09/12 00:53:55 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void unset_session(t_data *d, char *var_name)
+void	unset_session(t_data *d, char *var_name)
 {
-	t_session_v *ses;
-	t_session_v *aux;
-	int i;
+	t_session_v	*ses;
+	t_session_v	*aux;
+	int			i;
 
 	i = 0;
 	aux = NULL;
@@ -40,16 +40,18 @@ void unset_session(t_data *d, char *var_name)
 	i++;
 }
 
-int exists_export(char **exportables, char *name)
+int	exists_export(char **exportables, char *name)
 {
-	int i;
-	char *exp;
+	int		i;
+	char	*exp;
 
 	i = 0;
 	exp = ft_strjoin("declare -x ", name);
 	while (exportables[i])
 	{
-		if (ft_strncmp(exportables[i], exp, ft_strlen(exp)) == 0 && (exportables[i][ft_strlen(exp)] == 0 || exportables[i][ft_strlen(exp)] == '='))
+		if (ft_strncmp(exportables[i], exp, ft_strlen(exp)) == 0
+			&& (exportables[i][ft_strlen(exp)] == 0
+			|| exportables[i][ft_strlen(exp)] == '='))
 		{
 			free(exp);
 			return (i);
@@ -60,17 +62,17 @@ int exists_export(char **exportables, char *name)
 	return (-1);
 }
 
-void unset_export(t_data *d, char *var_name)
+void	unset_export(t_data *d, char *var_name)
 {
-	int i;
-	int j;
-	char **new;
-	char **aux;
-	int exists;
+	int		i;
+	int		j;
+	char	**new;
+	char	**aux;
+	int		exists;
 
 	exists = exists_export(d->exportables, var_name);
 	if (exists < 0)
-		return;
+		return ;
 	i = 0;
 	j = 0;
 	new = malloc(ft_bi_strlen(d->exportables) * sizeof(char *));
@@ -89,19 +91,19 @@ void unset_export(t_data *d, char *var_name)
 	ft_bi_free(aux);
 }
 
-void unset_env(t_data *d, char *var_name)
+void	unset_env(t_data *d, char *var_name)
 {
-	char *exists;
-	char **new;
-	int i;
-	int j;
-	char **aux;
+	char	*exists;
+	char	**new;
+	int		i;
+	int		j;
+	char	**aux;
 
 	j = 0;
 	i = 0;
 	exists = get_env_ms(d, var_name);
 	if (!exists)
-		return;
+		return ;
 	new = malloc((ft_bi_strlen(d->env) * sizeof(char *)));
 	while (d->env[i])
 	{
@@ -114,40 +116,40 @@ void unset_env(t_data *d, char *var_name)
 		ft_bi_free(aux);
 		i++;
 	}
+	// aux_unsetenv(&new, j, d), 
 	new[j] = NULL;
 	aux = d->env;
 	d->env = new;
 	if (!d->first_env)
 		ft_bi_free(aux);
+	
 	free(exists);
 }
 
-void unset(t_data *d, char **var_name, int x)
+void	unset(t_data *d, char **var_name, int x)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (var_name[i])
 	{
-
 		if (!var_name[i])
-			return;
-		if (is_asign(var_name[i]))
+			return ;
+		if (is_asign(var_name[i]) || !ft_is_stralphanum(var_name[i]))
 		{
 			ft_putstr_fd("minishell: unset: '", 2);
 			ft_putstr_fd(var_name[i], 2);
 			ft_putstr_fd("': not a valid identifier\n", 2);
-			if(x)
+			if (x)
 				exit(1);
 			d->status = 1;
 			return ;
 		}
-		unset_env(d, var_name[i]);
-		unset_export(d, var_name[i]);
+		unset_env(d, var_name[i]), unset_export(d, var_name[i]);
 		unset_session(d, var_name[i]);
 		i++;
 	}
 	d->status = 0;
-	if(x)
+	if (x)
 		exit(0);
 }

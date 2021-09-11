@@ -51,3 +51,13 @@ LEAKS:
 CASES NOT WORKING
 
 
+//barra
+if (str[p->i] == '\'' && !p->d_quote)
+	{
+		p->var = 0;
+		if (p->s_quote)
+			p->s_quote = 0;
+		else
+			p->s_quote = 1;
+		p->skip = 1;
+	}

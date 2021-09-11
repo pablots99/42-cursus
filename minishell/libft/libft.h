@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/30 17:27:09 by pablo             #+#    #+#             */
-/*   Updated: 2021/06/02 00:46:49 by pablo            ###   ########.fr       */
+/*   Updated: 2021/09/11 19:01:41 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char			*ft_strnstr(const char *haystack,
 
 int				ft_strncmp(const char *s1, const char *s2, size_t n);
 
-long int				ft_atoi(const char *str);
+long int		ft_atoi(const char *str);
 
 int				ft_isalpha(int c);
 
@@ -112,24 +112,22 @@ void			ft_lstclear(t_list **lst, void (*del)(void *));
 t_list			*ft_lstmap(t_list *lst,
 					void *(*f)(void *), void (*del)(void *));
 
-size_t	gn_ft_strlen(const char *s);
+size_t			gn_ft_strlen(const char *s);
 
-int		get_next_line(int fd, char **line);
+int				get_next_line(int fd, char **line);
 
-char	*gn_ft_strjoin(char const *s1, char const *s2);
+char			*gn_ft_strjoin(char const *s1, char const *s2);
 
-size_t	gn_ft_strcpy(char *dst, const char *src, size_t dstsize);
+size_t			gn_ft_strcpy(char *dst, const char *src, size_t dstsize);
 
-void	ft_bi_free(char **arr);
+void			ft_bi_free(char **arr);
 
-int		ft_bi_strlen(char **arr);
+int				ft_bi_strlen(char **arr);
 
-char*	ft_clean_chars(char *str,char *set);
+char			*ft_clean_chars(char *str, char *set);
 
-void	ft_append(char **dst,char *str);
+void			ft_append(char **dst, char *str);
 
-char	**ft_set_split(char *str,char *set);
-
-void	ft_strpush(char ***bstr, char *str);
+char			**ft_set_split(char *str, char *set);
 
 #endif

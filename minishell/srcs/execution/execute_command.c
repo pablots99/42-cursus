@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   execute_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 19:48:22 by pablo             #+#    #+#             */
-/*   Updated: 2021/09/11 14:49:27 by pablo            ###   ########.fr       */
+/*   Updated: 2021/09/12 01:09:48 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int execute_asignations(t_cmds *cmd, int fd[2], t_data *d,int x)
+int	execute_asignations(t_cmds *cmd, int fd[2], t_data *d, int x)
 {
-	int is;
+	int	is;
 
 	is = 0;
 	if (cmd->otput_fd)
@@ -22,25 +22,25 @@ int execute_asignations(t_cmds *cmd, int fd[2], t_data *d,int x)
 	if (!cmd->options || !cmd->options[0])
 		return (0);
 	if (ft_str_equal(cmd->options[0], "cd"))
-		execute_cd(cmd, d,x), is = 1;
+		execute_cd(cmd, d, x), is = 1;
 	else if (ft_str_equal(cmd->options[0], "unset"))
-		is = 1, unset(d, &cmd->options[1],x);
+		is = 1, unset(d, &cmd->options[1], x);
 	else if (cmd->var_asign)
 		add_session_env(d, cmd->options[0], 0), is = 1;
 	else if (ft_str_equal("export", cmd->options[0]) && cmd->options[1])
-		export_exec(d, &cmd->options[1]), is = 1;
+		export_exec(d, &cmd->options[1], x), is = 1;
 	else if (ft_str_equal(cmd->options[0], "exit"))
 		exit_ms(d, cmd), is = 1;
 	if (cmd->otput_fd && is)
 		cmd->otput_fd = 0;
-	if(x && is)
+	if (x && is)
 		exit(0);
 	return (is);
 }
 
-int execute_builtins(t_cmds *cmd, int fd[2], t_data *d)
+int	execute_builtins(t_cmds *cmd, int fd[2], t_data *d)
 {
-	int is;
+	int	is;
 
 	is = 0;
 	if (cmd->otput_fd)
@@ -65,19 +65,9 @@ int execute_builtins(t_cmds *cmd, int fd[2], t_data *d)
 	return (is);
 }
 
-void execute_child(t_data *d)
+void	execute_child(t_data *d)
 {
 	fd_inputs(d->cmds);
-	if(!d->cmds->cmd)
-	{
-		if(!d->cmds->comillas)
-			exit(0);
-		else
-		{
-			ft_putstr_fd("minishell: : command not found\n", 2);
-			exit(127);
-		}
-	}
 	if (d->cmds->input_fd)
 		d->fd_in = d->cmds->input_fd;
 	dup2(d->fd_in, 0);
@@ -85,30 +75,30 @@ void execute_child(t_data *d)
 		dup2(d->fd[1], 1);
 	if (d->cmds->otput_fd != 0)
 		dup2(d->cmds->otput_fd, 1);
-	if (execute_builtins(d->cmds, d->fd, d) || execute_asignations(d->cmds, d->fd, d,1))
+	if (execute_builtins(d->cmds, d->fd, d)
+		|| execute_asignations(d->cmds, d->fd, d, 1))
 		return ;
 	else if ((d->cmds->cmd == NULL && !d->cmds->exit_cond)
 		|| (execve(d->cmds->cmd, d->cmds->options, d->env) == -1
-			&&d->cmds->options && d->cmds->options[0]))
+			&& d->cmds->options && d->cmds->options[0]))
 	{
-		ft_putstr_fd("minishell: ", 2);
-		ft_putstr_fd(d->cmds->cmd, 2);
+		ft_putstr_fd("minishell: ", 2), ft_putstr_fd(d->cmds->cmd, 2);
 		ft_putstr_fd(": command not found\n", 2);
 		exit(127);
 	}
 }
 
-void execute_command(t_data *d)
+void	execute_command(t_data *d)
 {
-	int pid;
+	int	pid;
 
 	if (d->cmds->childs != NULL)
 		pipe(d->fd);
 	pid = fork();
 	if (pid == 0)
-			execute_child(d);
+		execute_child(d);
 	else
-	 {
+	{
 		if (d->cmds->otput_fd)
 			close(d->cmds->otput_fd), d->cmds->otput_fd = 0;
 		if (d->fd[1] != 1)
@@ -119,11 +109,11 @@ void execute_command(t_data *d)
 	}
 }
 
-void execute_commands(t_data *d)
+void	execute_commands(t_data *d)
 {
-	int i;
-	t_cmds *first;
-	int ch;
+	int		i;
+	t_cmds	*first;
+	int		ch;
 
 	i = 0;
 	d->status = 1;
@@ -131,21 +121,18 @@ void execute_commands(t_data *d)
 	init_vars(d, &first);
 	signal(SIGQUIT, handle_sigint2);
 	signal(SIGINT, handle_sigint2);
-	if(d->cmds->childs == NULL)
+	if (d->cmds->childs == NULL)
 		ch = 0;
 	while (d->cmds)
 	{
 		if (d->cmds->err)
 			break ;
-		if(ch || !execute_asignations(d->cmds,d->fd,d,ch))
+		if (ch || !execute_asignations(d->cmds, d->fd, d, ch))
 			execute_command(d), ch = 1;
 		i++;
 		d->cmds = d->cmds->childs;
 	}
 	while (ch && i--)
-	{
 		wait(&d->status), d->status /= 256;
-	}
-	i++;
 	d->cmds = first;
 }

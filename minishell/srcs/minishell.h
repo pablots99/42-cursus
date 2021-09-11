@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 12:03:32 by pablo             #+#    #+#             */
-/*   Updated: 2021/09/11 14:47:37 by pablo            ###   ########.fr       */
+/*   Updated: 2021/09/12 00:55:54 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,11 @@ void handle_sigquit(int sig);
 void handle_sigint3(int sig);
 void add_fd_in(char *str, t_cmds *cmd,char d,int c);
 void fd_inputs(t_cmds *cmd);
-void export_exec(t_data *d, char **options);
+void	export_exec(t_data *d, char **options,int x);
 int is_builtin(char *cmd);
 void add_outpput(t_cmds *cmd, char *str, int s, int d);
+int	no_asignation(t_data *d, char **var);
+void aux_unsetenv(char ***new, int j, t_data *d);
+char *add_export_aux(char *var);
+int	is_in_str(char *s1,char *s2);
+int ft_is_stralphanum(char *str);

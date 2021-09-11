@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/09 15:25:36 by ptorres           #+#    #+#             */
-/*   Updated: 2021/09/09 15:36:01 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/09/12 00:58:51 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	save_pipe(t_data *d, t_cmds **cmd, t_parse *p)
 	int	aux;
 
 	(*cmd)->var_asign = 0;
-	if ((*cmd)->cmd && is_asign((*cmd)->cmd))
+	if ((*cmd)->cmd && is_asign((*cmd)->cmd) && ft_is_stralphanum((*cmd)->cmd))
 		(*cmd)->var_asign = 1;
 	add_child(&d->cmds, *cmd), *cmd = new_cmd();
 	aux = p->i;

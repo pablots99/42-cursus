@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/15 23:26:46 by pablo             #+#    #+#             */
-/*   Updated: 2021/09/10 16:52:18 by pablo            ###   ########.fr       */
+/*   Updated: 2021/09/12 01:09:21 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	**add_declare(char **str)
 	res = malloc((ft_bi_strlen(str) + 1) * sizeof(char *));
 	while (str[i])
 	{
-		res[i] = ft_strjoin("declare -x ", str[i]);
+		res[i] = add_export_aux(str[i]);
 		i++;
 	}
 	res[i] = NULL;
@@ -62,20 +62,30 @@ void	add_exportable_var(t_data *d, char *val)
 
 	i = 0;
 	cond = 0;
-	new = ft_strjoin("declare -x ", val);
-	if(!is_exportable(d, val))
+	new = add_export_aux(val);
+	if (!is_exportable(d, val))
 		d->exportables = ft_append_string(d->exportables, new);
 	free(new);
 }
 
-void export_exec(t_data *d, char **options)
+void	export_exec(t_data *d, char **options,int x)
 {
-	int i;
-
-	i  = 0;
-	while(options[i])
+	int	i;
+		
+	i = 0;
+	while (options[i])
 	{
-		set_env_ms(d,options[i],0);
+		if (!ft_is_stralphanum(options[i]))
+		{
+			ft_putstr_fd("minishell: export: '", 2);
+			ft_putstr_fd(options[i], 2);
+			ft_putstr_fd("': not a valid identifier\n", 2);
+			if (x)
+				exit(1);
+			d->status = 1;
+			return ;
+		}
+		set_env_ms(d, options[i], 0);
 		i++;
 	}
 }

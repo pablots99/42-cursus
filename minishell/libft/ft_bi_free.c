@@ -3,23 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bi_free.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 13:36:55 by ptorres           #+#    #+#             */
-/*   Updated: 2021/07/20 21:27:07 by pablo            ###   ########.fr       */
+/*   Updated: 2021/09/11 19:06:38 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "libft.h"
 
-
-void ft_bi_free(char **arr)
+void	ft_bi_free(char **arr)
 {
 	int	i;
 
 	i = 0;
-	if(!arr)
+	if (!arr)
 		return ;
 	while (arr[i] && arr[i] != NULL)
 	{
@@ -29,7 +27,7 @@ void ft_bi_free(char **arr)
 	free(arr);
 }
 
-void ft_bi_free_debug(char **arr)
+void	ft_bi_free_debug(char **arr)
 {
 	int	i;
 
@@ -42,14 +40,14 @@ void ft_bi_free_debug(char **arr)
 	free(arr);
 }
 
-int ft_bi_strlen(char **arr)
+int	ft_bi_strlen(char **arr)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	if(!arr)
+	if (!arr)
 		return (0);
-	while(arr[i])
+	while (arr[i])
 		i++;
-	return i;
+	return (i);
 }

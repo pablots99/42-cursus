@@ -3,21 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   ft_append.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 20:05:18 by pablo             #+#    #+#             */
-/*   Updated: 2021/07/14 02:42:06 by pablo            ###   ########.fr       */
+/*   Updated: 2021/09/11 19:07:05 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-//dst has to be memory allocated
-void ft_append(char **dst,char *str)
+void	ft_append(char **dst, char *str)
 {
-	char *aux;
+	char	*aux;
 
-	aux = 	ft_strjoin(*dst,str);
+	aux = ft_strjoin(*dst, str);
 	free(*dst);
 	*dst = aux;
 }
