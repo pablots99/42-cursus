@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 18:51:18 by ptorres           #+#    #+#             */
-/*   Updated: 2021/09/12 01:14:46 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/09/12 12:47:07 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,25 +32,26 @@ void	add_fd_in(char *str, t_cmds *cmd, char d, int c)
 	free(str);
 }
 
-void	read_inputs(t_cmds *cmd, char *str)
+int	read_inputs(t_cmds *cmd, char *str)
 {
 	int	fd;
 
 	fd = 0;
 	if (cmd->input_fd != 0)
-		close(cmd->input_fd);
+		close_fd(cmd->input_fd);
 	fd = open(str, O_RDWR);
 	if (fd == -1)
 	{
 		ft_putstr_fd("minishell: ", 2);
 		perror(str);
 		cmd->err = 1;
-		exit(1);
+		return (1);
 	}
 	else
 		cmd->input_fd = fd;
 	if (str && str[0] != 0)
 		free(str);
+	return (0);
 }
 
 int	is_quote_closed(char *input)

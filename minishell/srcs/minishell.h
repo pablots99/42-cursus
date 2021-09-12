@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 12:03:32 by pablo             #+#    #+#             */
-/*   Updated: 2021/09/12 00:55:54 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/09/12 12:42:19 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ char *ft_append_str(char *s1, char *s2);
 int is_pipe_closed(char *input);
 int save_double_redir(char *str,t_cmds *cmd);
 void create_output(t_cmds *cmd,char *str,int s,int d);
-void read_inputs(t_cmds *cmd,char *str);
+int	read_inputs(t_cmds *cmd, char *str);
 char **dup_bi_string(char **str);
 char **save_exportables(char **env);
 void print_command(t_data *a);
@@ -155,3 +155,4 @@ void aux_unsetenv(char ***new, int j, t_data *d);
 char *add_export_aux(char *var);
 int	is_in_str(char *s1,char *s2);
 int ft_is_stralphanum(char *str);
+void close_fd(int fd);

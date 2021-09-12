@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 19:48:22 by pablo             #+#    #+#             */
-/*   Updated: 2021/09/12 01:09:48 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/09/12 12:38:21 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,11 +100,11 @@ void	execute_command(t_data *d)
 	else
 	{
 		if (d->cmds->otput_fd)
-			close(d->cmds->otput_fd), d->cmds->otput_fd = 0;
+			close_fd(d->cmds->otput_fd), d->cmds->otput_fd = 0;
 		if (d->fd[1] != 1)
-			close(d->fd[1]);
+			close_fd(d->fd[1]);
 		if (d->fd_in)
-			close(d->fd_in);
+			close_fd(d->fd_in);
 		d->fd_in = d->fd[0];
 	}
 }

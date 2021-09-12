@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/09 17:07:23 by pablo             #+#    #+#             */
-/*   Updated: 2021/09/10 16:28:33 by pablo            ###   ########.fr       */
+/*   Updated: 2021/09/12 12:37:47 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,6 @@ void	execute_echo(t_cmds *cmd)
 	if (!n)
 		ft_putchar_fd('\n', fd);
 	if (cmd->otput_fd)
-		close(fd);
+		close_fd(fd);
 	exit(0);
 }

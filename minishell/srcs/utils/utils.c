@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 03:21:03 by pablo             #+#    #+#             */
-/*   Updated: 2021/09/12 01:15:55 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/09/12 12:49:44 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	save_double_redir(char *str, t_cmds *cmd)
 	int		fd;
 
 	if (cmd->input_fd)
-		close(cmd->input_fd);
+		close_fd(cmd->input_fd);
 	fd = open("/tmp/minishelltmp", O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	aux = readline("> ");
 	while (!ft_str_equal(aux, str) || aux[ft_strlen(aux)] == '\04')
@@ -30,7 +30,7 @@ int	save_double_redir(char *str, t_cmds *cmd)
 		free(aux);
 		aux = readline("> ");
 	}
-	close(fd);
+	close_fd(fd);
 	fd = open("/tmp/minishelltmp", O_RDONLY);
 	unlink("/tmp/minishelltmp");
 	cmd->input_fd = fd;
@@ -58,7 +58,7 @@ void	double_redir(t_cmds *cmd, int *aux)
 
 void	is_empty(t_cmds *d, int i)
 {
-	if ( !d->cmd|| i)
+	if ( !d->cmd || i)
 	{
 		if (!d->comillas)
 			exit(0);
@@ -75,23 +75,26 @@ void	fd_inputs(t_cmds *cmd)
 	int	i;
 	int	aux;
 	int	aux_fd;
+	int	err;
 
 	i = 0;
 	aux = 0;
+	err = 0;
 	double_redir(cmd, &aux);
 	aux_fd = cmd->input_fd;
 	while (cmd->input_type && cmd->input_type[i])
 	{
 		if (cmd->input_type[i] == '0')
-			read_inputs(cmd, cmd->input_fds[i]);
-		if (cmd->input_type[i] == '2')
+			err = read_inputs(cmd, cmd->input_fds[i]);
+		if (cmd->input_type[i] == '2' && !err)
 			create_output(cmd, cmd->input_fds[i], 1, 0);
-		if (cmd->input_type[i] == '3')
+		if (cmd->input_type[i] == '3' && !err)
 			create_output(cmd, cmd->input_fds[i], 0, 1);
-		if (!(i >= aux))
+		if (!(i >= aux) && !err)
 			cmd->input_fd = aux_fd;
-		printf("i:%d\n",i);
 		i++;
 	}
+	if(err)
+		exit(1);
 	is_empty(cmd,i);
 }
