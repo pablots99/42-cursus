@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 03:21:03 by pablo             #+#    #+#             */
-/*   Updated: 2021/09/12 12:49:44 by pablo            ###   ########.fr       */
+/*   Updated: 2021/09/12 20:44:48 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	double_redir(t_cmds *cmd, int *aux)
 
 void	is_empty(t_cmds *d, int i)
 {
-	if ( !d->cmd || i)
+	if (!d->cmd || (i && !d->cmd))
 	{
 		if (!d->comillas)
 			exit(0);
@@ -86,15 +86,15 @@ void	fd_inputs(t_cmds *cmd)
 	{
 		if (cmd->input_type[i] == '0')
 			err = read_inputs(cmd, cmd->input_fds[i]);
-		if (cmd->input_type[i] == '2' && !err)
+		else if (cmd->input_type[i] == '2' && !err)
 			create_output(cmd, cmd->input_fds[i], 1, 0);
-		if (cmd->input_type[i] == '3' && !err)
+		else if (cmd->input_type[i] == '3' && !err)
 			create_output(cmd, cmd->input_fds[i], 0, 1);
 		if (!(i >= aux) && !err)
 			cmd->input_fd = aux_fd;
 		i++;
+		if (err)
+			exit(1);
 	}
-	if(err)
-		exit(1);
-	is_empty(cmd,i);
+	is_empty(cmd, i);
 }

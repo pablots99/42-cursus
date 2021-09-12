@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 18:37:58 by ptorres           #+#    #+#             */
-/*   Updated: 2021/09/12 00:43:45 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/09/12 19:10:25 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	is_exportable(t_data *d, char *asignation)
 	aux = add_export_aux(asignation);
 	while (d->exportables[i])
 	{
-		if (is_in_str(d->exportables[i],aux))
+		if (is_in_str(d->exportables[i], aux))
 		{
 			free(d->exportables[i]);
 			d->exportables[i] = ft_strdup(aux);

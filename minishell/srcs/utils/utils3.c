@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 18:51:18 by ptorres           #+#    #+#             */
-/*   Updated: 2021/09/12 12:47:07 by pablo            ###   ########.fr       */
+/*   Updated: 2021/09/12 20:52:01 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	read_inputs(t_cmds *cmd, char *str)
 	if (cmd->input_fd != 0)
 		close_fd(cmd->input_fd);
 	fd = open(str, O_RDWR);
-	if (fd == -1)
+	if (fd < 0)
 	{
 		ft_putstr_fd("minishell: ", 2);
 		perror(str);

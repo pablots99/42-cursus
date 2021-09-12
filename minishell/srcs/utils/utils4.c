@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 19:18:57 by ptorres           #+#    #+#             */
-/*   Updated: 2021/09/12 00:34:23 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/09/12 19:11:30 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,10 @@ int	no_asignation(t_data *d, char **var)
 	return (0);
 }
 
-void aux_unsetenv(char ***new, int j, t_data *d)
+void	aux_unsetenv(char ***new, int j, t_data *d)
 {
 	char	**aux;
-	
+
 	*new[j] = NULL;
 	aux = d->env;
 	d->env = *new;
@@ -89,14 +89,14 @@ void aux_unsetenv(char ***new, int j, t_data *d)
 		ft_bi_free(aux);
 }
 
-char *add_export_aux(char *var)
+char	*add_export_aux(char *var)
 {
 	char	**spl;
 	char	*res;
-	
+
 	res = NULL;
 	spl = ft_split(var, '=');
-	if(spl[0] && spl[1])
+	if (spl[0] && spl[1])
 	{
 		res = ft_append_str(ft_strdup("declare -x "), spl[0]);
 		res = ft_append_str(res, "=\"");
@@ -105,7 +105,8 @@ char *add_export_aux(char *var)
 		ft_bi_free(spl);
 		return (res);
 	}
-	else{
+	else
+	{
 		res = ft_strjoin("declare -x ", var);
 	}
 	ft_bi_free(spl);

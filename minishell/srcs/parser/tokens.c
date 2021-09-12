@@ -6,14 +6,35 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 12:30:19 by ptorres           #+#    #+#             */
-/*   Updated: 2021/09/12 00:05:28 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/09/12 20:44:10 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	find_quotes(char *str, t_parse *p,t_cmds *cmd)
+void	find_quotes_aux(char *str, t_parse *p)
 {
+	if (p->var && (str[p->i] == '$' || str[p->i] == '"' || str[p->i] == '\''))
+	{
+		p->i--;
+		p->var_end = 1;
+	}
+	else if (p->var && (str[p->i] == ' '))
+		p->var_end = 1;
+}
+
+void	find_quotes(char *str, t_parse *p, t_cmds *cmd)
+{
+	find_quotes_aux(str, p);
+	if (str[p->i] == '\'' && !p->d_quote)
+	{
+		p->var = 0;
+		if (p->s_quote)
+			p->s_quote = 0;
+		else
+			p->s_quote = 1;
+		p->skip = 1;
+	}
 	if (str[p->i] == '"' && !p->s_quote)
 	{
 		if (p->d_quote)
@@ -26,38 +47,6 @@ void	find_quotes(char *str, t_parse *p,t_cmds *cmd)
 			p->d_quote = 1;
 		p->skip = 1;
 	}
-	if(p->var && str[p->i] == '$')
-	{
-		p->i--;
-		p->var_end = 1;
-	}
-	else if (p->var && (str[p->i] == ' ' || str[p->i] == '"' || str[p->i] == '\''))
-		p->var_end = 1;
-}
-
-int	find_redir_out(char *str, t_parse *p, t_cmds *cmd)
-{
-	int	cond;
-
-	cond = 0;
-	if (str[p->i] == '>' && !p->d_quote && !p->s_quote)
-	{
-		if (str[p->i + 1] != '>' && str[p->i - 1] != '>')
-		{
-			p->so_redir = 1;
-			p->space = 1;
-			cmd->apppend = ft_append_char(cmd->apppend, '0');
-		}
-		else
-		{
-			p->do_redir++;
-			p->space = 1;
-			p->so_redir = 0;
-			cmd->apppend = ft_append_char(cmd->apppend, '1');
-		}
-		cond = 1;
-	}
-	return (cond);
 }
 
 int	find_redir_in(char *str, t_parse *p)
@@ -87,8 +76,7 @@ int	find_parse_vars(char *str, t_parse *p)
 	cond = 0;
 	if (!p->var && str[p->i] == '$' && !p->s_quote
 		&& str[p->i + 1] && str[p->i + 1] != ' ')
-	{
-		
+	{	
 		p->var = 1;
 		p->skip = 1;
 		p->i++;
@@ -109,8 +97,13 @@ char	*find_vars(char *str, t_data *d)
 	if (str[0] == '?')
 	{
 		var_value = ft_itoa(d->status);
-		if(str[1])
-			var_value = ft_append_str(var_value,&str[1]);
+		if (g_status == 130)
+		{
+			free(var_value);
+			var_value = ft_strdup("130");
+		}
+		if (str[1])
+			var_value = ft_append_str(var_value, &str[1]);
 	}
 	else
 		var_value = get_session_env(d, str);

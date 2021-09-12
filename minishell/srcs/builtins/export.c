@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/15 23:26:46 by pablo             #+#    #+#             */
-/*   Updated: 2021/09/12 01:09:21 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/09/12 19:21:28 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,10 @@ void	add_exportable_var(t_data *d, char *val)
 	free(new);
 }
 
-void	export_exec(t_data *d, char **options,int x)
+void	export_exec(t_data *d, char **options, int x)
 {
 	int	i;
-		
+
 	i = 0;
 	while (options[i])
 	{

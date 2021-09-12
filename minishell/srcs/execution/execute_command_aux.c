@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_command_aux.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/09 13:52:48 by ptorres           #+#    #+#             */
-/*   Updated: 2021/09/12 12:48:22 by pablo            ###   ########.fr       */
+/*   Updated: 2021/09/12 18:40:07 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void	init_vars(t_data *d, t_cmds **first)
 	d->fd_in = 0;
 }
 
-void close_fd(int fd)
+void	close_fd(int fd)
 {
-	if(fd != -1)
-		close_fd(fd);
+	if (fd != -1)
+		close(fd);
 }

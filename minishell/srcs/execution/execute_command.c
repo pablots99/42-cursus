@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 19:48:22 by pablo             #+#    #+#             */
-/*   Updated: 2021/09/12 12:38:21 by pablo            ###   ########.fr       */
+/*   Updated: 2021/09/12 20:05:26 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,11 @@ void	execute_command(t_data *d)
 		pipe(d->fd);
 	pid = fork();
 	if (pid == 0)
+	{
+		g_status = 1;
+		signal(SIGINT, handle_sigint2);
 		execute_child(d);
+	}
 	else
 	{
 		if (d->cmds->otput_fd)
@@ -117,10 +121,7 @@ void	execute_commands(t_data *d)
 
 	i = 0;
 	d->status = 1;
-	ch = 1;
-	init_vars(d, &first);
-	signal(SIGQUIT, handle_sigint2);
-	signal(SIGINT, handle_sigint2);
+	ch = 1, init_vars(d, &first);
 	if (d->cmds->childs == NULL)
 		ch = 0;
 	while (d->cmds)
@@ -132,7 +133,9 @@ void	execute_commands(t_data *d)
 		i++;
 		d->cmds = d->cmds->childs;
 	}
+	i--;
 	while (ch && i--)
-		wait(&d->status), d->status /= 256;
+		wait(NULL);
+	wait(&d->status), d->status /= 256;
 	d->cmds = first;
 }

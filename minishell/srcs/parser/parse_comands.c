@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_comands.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 12:41:03 by ptorres           #+#    #+#             */
-/*   Updated: 2021/09/12 12:47:52 by pablo            ###   ########.fr       */
+/*   Updated: 2021/09/12 18:31:31 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*get_cmd_path(char *cmd, char **paths)
 	{
 		aux = ft_strjoin(paths[i], cmd2);
 		fd = open(aux, O_RDONLY);
-		if (fd == -1)
+		if (!(fd < 0))
 		{
 			close_fd(fd), free(cmd2), free(cmd);
 			return (aux);
