@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 19:48:22 by pablo             #+#    #+#             */
-/*   Updated: 2021/09/12 20:05:26 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/09/27 12:25:28 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	execute_asignations(t_cmds *cmd, int fd[2], t_data *d, int x)
 		cmd->otput_fd = 0;
 	if (x && is)
 		exit(0);
+	d->asignation = is;
 	return (is);
 }
 
@@ -79,8 +80,7 @@ void	execute_child(t_data *d)
 		|| execute_asignations(d->cmds, d->fd, d, 1))
 		return ;
 	else if ((d->cmds->cmd == NULL && !d->cmds->exit_cond)
-		|| (execve(d->cmds->cmd, d->cmds->options, d->env) == -1
-			&& d->cmds->options && d->cmds->options[0]))
+		|| (execve(d->cmds->cmd, d->cmds->options, d->env) == -1))
 	{
 		ft_putstr_fd("minishell: ", 2), ft_putstr_fd(d->cmds->cmd, 2);
 		ft_putstr_fd(": command not found\n", 2);
@@ -90,17 +90,14 @@ void	execute_child(t_data *d)
 
 void	execute_command(t_data *d)
 {
-	int	pid;
+	int		pid;
+	// char	*aux;
 
 	if (d->cmds->childs != NULL)
 		pipe(d->fd);
 	pid = fork();
 	if (pid == 0)
-	{
-		g_status = 1;
-		signal(SIGINT, handle_sigint2);
 		execute_child(d);
-	}
 	else
 	{
 		if (d->cmds->otput_fd)
@@ -110,6 +107,9 @@ void	execute_command(t_data *d)
 		if (d->fd_in)
 			close_fd(d->fd_in);
 		d->fd_in = d->fd[0];
+		// aux = ft_itoa(pid);
+		// d->pids = ft_append_string(d->pids, aux);
+		// free(aux);
 	}
 }
 
@@ -120,12 +120,14 @@ void	execute_commands(t_data *d)
 	int		ch;
 
 	i = 0;
-	d->status = 1;
+	d->status = 0;
 	ch = 1, init_vars(d, &first);
 	if (d->cmds->childs == NULL)
 		ch = 0;
+	d->pids = NULL;
 	while (d->cmds)
 	{
+		init_status(d->cmds);
 		if (d->cmds->err)
 			break ;
 		if (ch || !execute_asignations(d->cmds, d->fd, d, ch))
@@ -133,9 +135,8 @@ void	execute_commands(t_data *d)
 		i++;
 		d->cmds = d->cmds->childs;
 	}
-	i--;
 	while (ch && i--)
-		wait(NULL);
-	wait(&d->status), d->status /= 256;
+		wait(&d->status), d->status = WEXITSTATUS(d->status);
+	d->asignation = 0;
 	d->cmds = first;
 }

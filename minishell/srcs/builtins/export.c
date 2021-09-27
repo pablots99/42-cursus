@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/15 23:26:46 by pablo             #+#    #+#             */
-/*   Updated: 2021/09/12 19:21:28 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/09/13 15:59:28 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,20 @@ void	add_exportable_var(t_data *d, char *val)
 	free(new);
 }
 
+int	invalid_export(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '=' && i == 0)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 void	export_exec(t_data *d, char **options, int x)
 {
 	int	i;
@@ -75,7 +89,7 @@ void	export_exec(t_data *d, char **options, int x)
 	i = 0;
 	while (options[i])
 	{
-		if (!ft_is_stralphanum(options[i]))
+		if (!ft_is_stralphanum(options[i]) || invalid_export(options[i]))
 		{
 			ft_putstr_fd("minishell: export: '", 2);
 			ft_putstr_fd(options[i], 2);

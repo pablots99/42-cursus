@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 19:18:57 by ptorres           #+#    #+#             */
-/*   Updated: 2021/09/12 19:11:30 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/09/13 15:48:26 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,10 @@ int	no_asignation(t_data *d, char **var)
 void	aux_unsetenv(char ***new, int j, t_data *d)
 {
 	char	**aux;
+	int		n;
 
-	*new[j] = NULL;
+	n = j;
+	j = n;
 	aux = d->env;
 	d->env = *new;
 	if (!d->first_env)
@@ -95,7 +97,7 @@ char	*add_export_aux(char *var)
 	char	*res;
 
 	res = NULL;
-	spl = ft_split(var, '=');
+	spl = split_asign(var);
 	if (spl[0] && spl[1])
 	{
 		res = ft_append_str(ft_strdup("declare -x "), spl[0]);

@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/09 15:25:36 by ptorres           #+#    #+#             */
-/*   Updated: 2021/09/12 20:55:45 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/09/12 23:02:54 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ void	save_first_cmd(t_data *d, char **str, t_cmds **cmd)
 	char	*aux;
 
 	i = 0;
-	if(!*str)
-		*str = ft_strdup("");
+	if (!*str)
+		return ;
 	if (!(*cmd)->comillas && *str[i] < 0)
 	{
 		i++;

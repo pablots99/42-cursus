@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 12:30:19 by ptorres           #+#    #+#             */
-/*   Updated: 2021/09/12 20:44:10 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/09/13 14:51:19 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,14 @@ void	find_quotes(char *str, t_parse *p, t_cmds *cmd)
 	}
 	if (str[p->i] == '"' && !p->s_quote)
 	{
-		if (p->d_quote)
+		if (p->d_quote && str[p->i - 1] && str[p->i - 1] != '\"')
 		{
 			p->d_quote = 0;
 			p->space = 1;
 			cmd->comillas = 1;
 		}
+		else if (p->d_quote && str[p->i - 1] && str[p->i - 1] == '\"')
+			cmd->comillas = 1;
 		else
 			p->d_quote = 1;
 		p->skip = 1;
@@ -75,8 +77,9 @@ int	find_parse_vars(char *str, t_parse *p)
 
 	cond = 0;
 	if (!p->var && str[p->i] == '$' && !p->s_quote
-		&& str[p->i + 1] && str[p->i + 1] != ' ')
-	{	
+		&& str[p->i + 1] && str[p->i + 1] != ' ' && str[p->i + 1] != '\''
+		&& str[p->i + 1] != '\"' )
+	{
 		p->var = 1;
 		p->skip = 1;
 		p->i++;
@@ -98,10 +101,9 @@ char	*find_vars(char *str, t_data *d)
 	{
 		var_value = ft_itoa(d->status);
 		if (g_status == 130)
-		{
-			free(var_value);
-			var_value = ft_strdup("130");
-		}
+			free(var_value), var_value = ft_strdup("130");
+		if (g_status == -1)
+			free(var_value), var_value = ft_strdup("1");
 		if (str[1])
 			var_value = ft_append_str(var_value, &str[1]);
 	}

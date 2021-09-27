@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 12:41:03 by ptorres           #+#    #+#             */
-/*   Updated: 2021/09/12 18:31:31 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/09/12 22:57:41 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*get_cmd_path(char *cmd, char **paths)
 
 	fd = 0;
 	i = 0;
-	if (!paths || is_builtin(cmd))
+	if (!paths || is_builtin(cmd) || !cmd)
 		return (cmd);
 	cmd2 = ft_strjoin("/", cmd);
 	while (paths[i])

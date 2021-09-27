@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 17:09:52 by ptorres           #+#    #+#             */
-/*   Updated: 2021/09/12 00:41:48 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/09/13 15:48:44 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	add_session_env(t_data *d, char *cmd, int exp)
 	t_session_v	*new;
 	char		**spl;
 
-	spl = ft_split(cmd, '=');
+	spl = split_asign(cmd);
 	new = malloc(sizeof(t_session_v));
 	new->name = ft_strdup(spl[0]);
 	if (spl[1])

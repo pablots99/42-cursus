@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/09 17:07:16 by pablo             #+#    #+#             */
-/*   Updated: 2021/09/12 20:06:53 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/09/13 17:16:28 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,20 +55,19 @@ void	execute_cd(t_cmds *cmd, t_data *d, int x)
 	err = 0;
 	old_pwd = ft_strjoin("OLDPWD=", getcwd(d->path, sizeof(d->path)));
 	if (!cmd->options[1] || ft_str_equal(cmd->options[1], "~"))
-	{	
+	{
 		aux = get_env_ms(d, "HOME");
-		printf("aux:%s\n", aux);
 		err = chdir(aux), free(aux);
 	}
 	else if (is_err(cmd, &err))
 	{
 		d->status = 1;
+		free(old_pwd);
 		if (x)
 			exit(1);
-		free(old_pwd);
+		return ;
 	}
-	else
-		aux_cd(&new_pwd, &old_pwd, d);
+	aux_cd(&new_pwd, &old_pwd, d);
 	if (x)
 		exit(0);
 }

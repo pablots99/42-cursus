@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 12:03:32 by pablo             #+#    #+#             */
-/*   Updated: 2021/09/12 19:54:52 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/09/13 21:05:42 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include<readline/history.h>
 # include <fcntl.h>
 # include<signal.h>
+# include <sys/wait.h>
 
 int	g_status;
 
@@ -63,8 +64,11 @@ typedef struct s_data
 	t_cmds			*cmds;
 	t_session_v		*session_env;
 	int				status;
+	int				asignation;
 	int				fd_in;
 	int				fd[2];
+	int				last_pid;
+	char			**pids;
 }	t_data;
 
 typedef struct s_parse
@@ -226,5 +230,17 @@ int		ft_is_stralphanum(char *str);
 void	close_fd(int fd);
 
 void	handle_sigquit2(int sig);
+
+int		_exists(char *var, char *env);
+
+int		exists_env(t_data *d, char *var);
+
+void	handle_sigquit3(int sig);
+
+void	init_status(t_cmds *cmd);
+
+char	**split_asign(char *str);
+
+void	wait_pids(t_data *d);
 
 #endif

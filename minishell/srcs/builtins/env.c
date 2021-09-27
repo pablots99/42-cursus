@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 02:34:42 by pablo             #+#    #+#             */
-/*   Updated: 2021/09/11 22:07:26 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/09/13 15:48:52 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ int	_exists(char *var, char *env)
 	char	**splited;
 	char	**splited2;
 
-	splited = ft_split(env, '=');
-	splited2 = ft_split(var, '=');
+	splited = split_asign(env);
+	splited2 = split_asign(var);
 	if (!ft_str_equal(splited[0], splited2[0]))
 	{
 		ft_bi_free(splited);
@@ -54,7 +54,7 @@ char	*get_env_ms(t_data *d, char *name)
 	i = 0;
 	while (d->env[i])
 	{
-		splited = ft_split(d->env[i], '=');
+		splited = split_asign(d->env[i]);
 		if (ft_str_equal(splited[0], name))
 			res = ft_strdup(splited[1]);
 		i++;

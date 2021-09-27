@@ -27,19 +27,20 @@ OBJS = $(SRCS:.c=.o)
 CC = gcc -Wall -Werror -Wextra -g3
 
 #campues
-# export LDFLAGS="-L/Users/ptorres/.brew/opt/readline/lib"; export CPPFLAGS="-I/Users/ptorres/.brew/opt/readline/include"
-LIBFLAGS = -L. libft/libft.a -L/Users/ptorres/.brew/opt/readline/lib -I/Users/ptorres/.brew/opt/readline/include
-
+# LIBFLAGS = -L. libft/libft.a -L/Users/ptorres/.brew/opt/readline/lib -I/Users/ptorres/.brew/opt/readline/include
+# export LDFLAGS="-L/Users/ptorres/.brew/opt/readline/lib"
+# export CPPFLAGS="-I/Users/ptorres/.brew/opt/readline/include"
 
 #mac
-# export LDFLAGS="-L/usr/local/opt/readline/lib" ; export CPPFLAGS="-I/usr/local/opt/readline/include"
-#LIBFLAGS = -L. libft/libft.a -L/usr/local/opt/readline/lib -I/usr/local/opt/readline/include
+export LDFLAGS="-L/usr/local/opt/readline/lib"
+export CPPFLAGS="-I/usr/local/opt/readline/include"
+LIBFLAGS = -L. libft/libft.a -L/usr/local/opt/readline/lib -I/usr/local/opt/readline/include
 
 
 #-fsanitize=address
 
 
-FLAGS = -lreadline -o $(NAME)
+FLAGS = -lreadline  -o $(NAME)
 
 
 all:$(NAME)
@@ -47,7 +48,6 @@ all:$(NAME)
 
 $(NAME):$(OBJS)
 	stty -echoctl
-	export LDFLAGS="-L/Users/ptorres/.brew/opt/readline/lib"; export CPPFLAGS="-I/Users/ptorres/.brew/opt/readline/include"
 	$(MAKE) bonus -C ./libft
 	$(CC) $(FLAGS) $(LIBFLAGS) $(OBJS)
 

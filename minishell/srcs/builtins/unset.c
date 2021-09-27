@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 17:06:27 by ptorres           #+#    #+#             */
-/*   Updated: 2021/09/12 16:09:50 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/09/13 19:55:54 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	unset_export(t_data *d, char *var_name)
 
 void	unset_env(t_data *d, char *var_name)
 {
-	char	*exists;
+	int		exists;
 	char	**new;
 	int		i;
 	int		j;
@@ -101,13 +101,13 @@ void	unset_env(t_data *d, char *var_name)
 
 	j = 0;
 	i = 0;
-	exists = get_env_ms(d, var_name);
+	exists = exists_env(d, var_name);
 	if (!exists)
 		return ;
 	new = malloc((ft_bi_strlen(d->env) * sizeof(char *)));
 	while (d->env[i])
 	{
-		aux = ft_split(d->env[i], '=');
+		aux = split_asign(d->env[i]);
 		if (!ft_str_equal(aux[0], var_name))
 		{
 			new[j] = ft_strdup(d->env[i]);
@@ -117,7 +117,6 @@ void	unset_env(t_data *d, char *var_name)
 		i++;
 	}
 	aux_unsetenv(&new, j, d), new[j] = NULL;
-	free(exists);
 }
 
 void	unset(t_data *d, char **var_name, int x)
@@ -127,9 +126,10 @@ void	unset(t_data *d, char **var_name, int x)
 	i = 0;
 	while (var_name[i])
 	{
-		if (!var_name[i])
+		if (!var_name[i] || !var_name)
 			return ;
-		if (is_asign(var_name[i]) || !ft_is_stralphanum(var_name[i]))
+		if (is_asign(var_name[i]) || !ft_is_stralphanum(var_name[i])
+			|| var_name[i][0] == '=')
 		{
 			ft_putstr_fd("minishell: unset: '", 2);
 			ft_putstr_fd(var_name[i], 2);

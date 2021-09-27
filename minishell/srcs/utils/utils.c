@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 03:21:03 by pablo             #+#    #+#             */
-/*   Updated: 2021/09/12 20:44:48 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/09/13 21:05:34 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int	save_double_redir(char *str, t_cmds *cmd)
 	char	*aux;
 	int		fd;
 
+	signal(SIGQUIT, handle_sigquit);
 	if (cmd->input_fd)
 		close_fd(cmd->input_fd);
 	fd = open("/tmp/minishelltmp", O_WRONLY | O_CREAT | O_TRUNC, 0644);
@@ -80,10 +81,10 @@ void	fd_inputs(t_cmds *cmd)
 	i = 0;
 	aux = 0;
 	err = 0;
-	double_redir(cmd, &aux);
-	aux_fd = cmd->input_fd;
+	double_redir(cmd, &aux), aux_fd = cmd->input_fd;
 	while (cmd->input_type && cmd->input_type[i])
 	{
+		cmd->comillas = 0;
 		if (cmd->input_type[i] == '0')
 			err = read_inputs(cmd, cmd->input_fds[i]);
 		else if (cmd->input_type[i] == '2' && !err)
@@ -98,3 +99,20 @@ void	fd_inputs(t_cmds *cmd)
 	}
 	is_empty(cmd, i);
 }
+
+// void	wait_pids(t_data *d)
+// {
+// 	int	i;
+
+// 	i = ft_bi_strlen(d->pids) - 1;
+// 	while (i >= 0)
+// 	{
+// 		waitpid(ft_atoi(d->pids[i]), &d->status, WCONTINUED);
+// 		if (WIFSIGNALED(d->status))
+// 			break ;
+// 		d->status = WEXITSTATUS(d->status);
+// 		i--;
+// 	}
+// 	ft_bi_free(d->pids);
+// 	d->pids = NULL;
+// }
