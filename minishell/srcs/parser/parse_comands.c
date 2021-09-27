@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_comands.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 12:41:03 by ptorres           #+#    #+#             */
-/*   Updated: 2021/09/12 22:57:41 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/09/27 15:35:05 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ void	save_parsed_str(t_data *d, t_parse *p, t_cmds **cmd, char **str)
 		free(var), p->var = 0;
 		free(p->var_name), p->var_name = NULL;
 		p->var_end = 0;
+		if (p->space)
+			p->i--;
 	}
 }
 

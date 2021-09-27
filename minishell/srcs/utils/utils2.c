@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 18:37:40 by ptorres           #+#    #+#             */
-/*   Updated: 2021/09/27 14:04:19 by pablo            ###   ########.fr       */
+/*   Updated: 2021/09/27 14:40:39 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void	create_output(t_cmds *cmd, char *str, int s, int d)
 
 	fd = 0;
 	if (cmd->otput_fd != 0)
-		mak_fd(cmd->otput_fd);
+		close_fd(cmd->otput_fd);
 	if (d)
 		fd = open(str, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else if (s)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 12:30:19 by ptorres           #+#    #+#             */
-/*   Updated: 2021/09/13 14:51:19 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/09/27 15:35:10 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void	find_quotes_aux(char *str, t_parse *p)
 {
-	if (p->var && (str[p->i] == '$' || str[p->i] == '"' || str[p->i] == '\''))
+	if (p->var && (str[p->i] == '$' || str[p->i] == '"' || str[p->i] == '\''
+			|| (!ft_isalnum(str[p->i]) && str[p->i] != '_')))
 	{
 		p->i--;
 		p->var_end = 1;

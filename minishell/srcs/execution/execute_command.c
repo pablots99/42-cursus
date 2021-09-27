@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 19:48:22 by pablo             #+#    #+#             */
-/*   Updated: 2021/09/27 12:25:28 by pablo            ###   ########.fr       */
+/*   Updated: 2021/09/27 14:34:52 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ void	execute_child(t_data *d)
 void	execute_command(t_data *d)
 {
 	int		pid;
-	// char	*aux;
 
 	if (d->cmds->childs != NULL)
 		pipe(d->fd);
@@ -107,9 +106,6 @@ void	execute_command(t_data *d)
 		if (d->fd_in)
 			close_fd(d->fd_in);
 		d->fd_in = d->fd[0];
-		// aux = ft_itoa(pid);
-		// d->pids = ft_append_string(d->pids, aux);
-		// free(aux);
 	}
 }
 

@@ -1,8 +1,6 @@
 NOT WORKING
 
 		1 ->	ls | ls asdasd -> exit code must be 1
-		2 -> 	echo $USER asd -> joins the var value eth the rest
-		3 ->
 
 /bin/ls
 /bin/ls -l
