@@ -36,6 +36,7 @@ export LDFLAGS="-L/usr/local/opt/readline/lib"
 export CPPFLAGS="-I/usr/local/opt/readline/include"
 LIBFLAGS = -L. libft/libft.a -L/usr/local/opt/readline/lib -I/usr/local/opt/readline/include
 
+#
 
 #-fsanitize=address
 
@@ -45,14 +46,13 @@ FLAGS = -lreadline  -o $(NAME)
 
 all:$(NAME)
 
-
 $(NAME):$(OBJS)
-	stty -echoctl
 	$(MAKE) bonus -C ./libft
 	$(CC) $(FLAGS) $(LIBFLAGS) $(OBJS)
 
 
 clean:
+	$(stty -echoctlexp)
 	make clean -C libft
 	rm -f $(OBJS)
 

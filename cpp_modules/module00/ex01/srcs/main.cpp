@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/20 13:35:18 by pablo             #+#    #+#             */
-/*   Updated: 2021/09/21 12:18:48 by pablo            ###   ########.fr       */
+/*   Updated: 2021/11/08 18:59:40 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,14 @@
 #include "phonebook.class.hpp"
 
 
-using  namespace std;
 
 int main()
 {
 	Phonebook agenda;
-	string buff;
+	std::string buff;
 	while (1)
 	{
-		cout << ">> ";
+		std::cout << ">> ";
 		getline(cin, buff);
 		if(buff == "EXIT")
 			break ;

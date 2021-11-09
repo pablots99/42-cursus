@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/20 13:45:32 by pablo             #+#    #+#             */
-/*   Updated: 2021/09/21 13:34:45 by pablo            ###   ########.fr       */
+/*   Updated: 2021/11/02 16:32:07 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,6 @@
 
 #include <iomanip>
 #include <iostream>
-
-
-using namespace std;
 
 class Contact {
 public:

@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/20 13:35:18 by pablo             #+#    #+#             */
-/*   Updated: 2021/09/21 13:42:51 by pablo            ###   ########.fr       */
+/*   Updated: 2021/11/01 21:15:21 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include <iostream>
 #include "phonebook.class.hpp"
 
-using  namespace std;
 
 
 Phonebook::Phonebook()
@@ -41,19 +40,19 @@ void Phonebook::printContacts()
 {
 	string  index;
 
-	cout << "     index|" << "first name|" << " last name|" << "  nickname|" << endl;
+	std::cout << "     index|" << "first name|" << " last name|" << "  nickname|" << std::endl;
 	for (size_t i = 0; i < 8; i++)
 	{
 		this->contacts[i].printTableContact(i);
 	}
-	cout << "Index of the desired entry: ";
+	std::cout << "Index of the desired entry: ";
 	getline(cin,index);
 	if(index.empty())
 		return ;
 	while(!isNumber(index) || stoi(index) >= 8)
 	{
-		cout << "Incorrect value" << endl;
-		cout << "Index of the desired entry: ";
+		std::cout << "Incorrect value" << std::endl;
+		std::cout << "Index of the desired entry: ";
 		getline(cin,index);
 	}
 	this->contacts[stoi(index)].printContact();

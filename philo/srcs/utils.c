@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/25 22:23:18 by pablo             #+#    #+#             */
-/*   Updated: 2021/08/26 00:41:50 by pablo            ###   ########.fr       */
+/*   Updated: 2021/10/26 11:38:08 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ long int get_time(struct timeval start)
 	struct timeval now;
 
 	gettimeofday(&now, NULL);
-	return (now.tv_sec - start.tv_sec) * 100;
+	return (((now.tv_sec * 1000) + (now.tv_usec / 1000) ) - ((start.tv_sec * 1000) + (now.tv_usec / 1000)));
 }
 
 long int ft_atoi(const char *str)

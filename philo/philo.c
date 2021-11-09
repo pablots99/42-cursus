@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/25 14:22:51 by pablo             #+#    #+#             */
-/*   Updated: 2021/09/06 13:51:47 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/10/26 11:27:51 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,14 +85,7 @@ void create_forks(t_data *d)
 	}
 }
 
-void ft_sleep(int n)
-{
-	int i;
 
-	i = 0;
-	while (i < n)
-		i++;
-}
 
 void dead_loop(void *data)
 {
@@ -106,8 +99,6 @@ void dead_loop(void *data)
 	printf("%ld %d  died\n",get_time(d->d.time_start), d->philo.n);
 	exit(1);
 }
-
-
 void wait_left_fork(void *data)
 {
 	t_thread_data *d;
@@ -144,16 +135,14 @@ void loop_of_life(void *data)
 		{
 			d->philo.dying = d->d.t_die;
 			printf("%ld %d  is eating\n",get_time(d->d.time_start), d->philo.n);
-			usleep(d->d.t_eat * 1000);
-			printf("%ld %d  is sleeping\n",get_time(d->d.time_start), d->philo.n);
-			usleep(d->d.t_sleep * 1000);
-			printf("%ld %d  is thinking\n",get_time(d->d.time_start), d->philo.n);
 			d->philo.n_fork = 0;
+			usleep(d->d.t_eat * 1000);
 			pthread_mutex_unlock(&d->philo.l_fork->mutex);
 			pthread_mutex_unlock(&d->philo.r_fork->mutex);
 		}
-		// printf("philo:%d, r_F:%d, l_f:%d\n",d->philo.n,d->philo.r_fork->state, d->philo.l_fork->state);
-		// usleep(3000000);
+		printf("%ld %d  is sleeping\n",get_time(d->d.time_start), d->philo.n);
+		usleep(d->d.t_sleep * 1000);
+		printf("%ld %d  is thinking\n",get_time(d->d.time_start), d->philo.n);
 	}
 }
 
@@ -164,8 +153,6 @@ void create_threads(t_data *d)
 	t_thread_data th_data[d->n_philo];
 	pthread_mutex_t mutex;
 	int err;
-
-
 	gettimeofday(&d->time_start, NULL);
 	err = 0;
 	i = 0;
