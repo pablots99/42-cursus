@@ -3,14 +3,14 @@
 #                                                         :::      ::::::::    #
 #    parse_stl.py                                       :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+         #
+#    By: pablo <pablo@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/07 20:39:23 by pablo             #+#    #+#              #
-#    Updated: 2021/02/16 17:15:17 by ptorres          ###   ########.fr        #
+#    Updated: 2021/11/23 13:24:45 by pablo            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-  
+
 import sys
 import struct
 
@@ -43,7 +43,7 @@ def readVec3(f):
     z = readFloat(f)
 
     return STLVec3(x, y, z)
-    
+
 def readUnsignedInt(f):
     uint_bytes = f.read(4)
     return struct.unpack('I', uint_bytes)[0]
@@ -96,7 +96,7 @@ for triangle in stlData.tris:
     f.write(' 40,20,100 1 1')
     f.write('\n')
 
-    
-   
-   
+
+
+
 
