@@ -1,13 +1,11 @@
-NAME = megaphone
+NAME = clapTrap
 
-SRCS = megaphone.cpp
+SRCS = main.cpp ClapTrap.cpp
 
 OBJS = $(SRCS:.cpp=.o)
-
-
 CC = clang++
 
-FLAGS = -Wall -Werror -Wextra
+FLAGS = -Wall -Werror -Wextra -std=c++98 -fsanitize=address
 
 all:	$(NAME)
 

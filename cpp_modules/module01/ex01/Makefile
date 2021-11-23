@@ -19,9 +19,9 @@ $(NAME):	$(OBJS)
 clean:
 	rm -r $(OBJS)
 
-fclean:	clean
+fclean:
 	rm -f $(NAME)
+	rm -r $(OBJS)
 
-re:	fclean
-	$(NAME)
+re:	fclean all
 

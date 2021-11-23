@@ -1,7 +1,8 @@
 
 all
-	fix make re
-	check if cna declare functions on hpp
+	fix make re??
+
+	check if cna define functions on hpp
 cpp00
 	ex02
 		-> timestamp??
@@ -10,3 +11,6 @@ cpp01
 	ex00
 	EX03
 		REFERENCE VS POINTER
+
+cpp02
+	ex03 -> finish function point inside a triangle
