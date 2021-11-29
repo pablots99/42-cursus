@@ -6,26 +6,26 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/25 22:23:18 by pablo             #+#    #+#             */
-/*   Updated: 2021/10/26 11:38:08 by pablo            ###   ########.fr       */
+/*   Updated: 2021/11/29 21:12:42 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-
-long int get_time(struct timeval start)
+long int	get_time(struct timeval start)
 {
-	struct timeval now;
+	struct timeval	now;
 
 	gettimeofday(&now, NULL);
-	return (((now.tv_sec * 1000) + (now.tv_usec / 1000) ) - ((start.tv_sec * 1000) + (now.tv_usec / 1000)));
+	return (((now.tv_sec * 1000) + (now.tv_usec / 1000))
+		- ((start.tv_sec * 1000) + (start.tv_usec / 1000)));
 }
 
-long int ft_atoi(const char *str)
+long int	ft_atoi(const char *str)
 {
-	int i;
-	int cont;
-	long int num;
+	int			i;
+	int			cont;
+	long int	num;
 
 	num = 0;
 	i = 0;
@@ -48,10 +48,9 @@ long int ft_atoi(const char *str)
 	return (num);
 }
 
-int is_char_num(char *num)
+int	is_char_num(char *num)
 {
-
-	int i;
+	int	i;
 
 	i = 0;
 	while (num[i])
@@ -66,18 +65,18 @@ int is_char_num(char *num)
 	return (1);
 }
 
-void print_state(t_data *d)
+void	ft_sleep(int n)
 {
-	int i;
-	t_philo *ph;
+	struct timeval	now;
 
-	ph = d->philos;
-	i = 0;
-	printf("PHILOSOPHERS\n");
-	while (i < d->n_philo)
-	{
-		printf("num:%d, r_f:%d, l_f:%d\n", ph[i].n, ph[i].r_fork->n, ph[i].l_fork->n);
-		i++;
-	}
-	printf("--------------------------------\n");
+	gettimeofday(&now, NULL);
+	while (get_time(now) < n)
+		usleep(1);
+}
+
+void	mutex_print(long int timestamp, int n_philo, char *mesage, t_data *d)
+{
+	pthread_mutex_lock(&d->mutex_write);
+	printf("%ld %d %s\n", timestamp, n_philo, mesage);
+	pthread_mutex_unlock(&d->mutex_write);
 }

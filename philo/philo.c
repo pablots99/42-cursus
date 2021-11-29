@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/25 14:22:51 by pablo             #+#    #+#             */
-/*   Updated: 2021/10/26 11:27:51 by pablo            ###   ########.fr       */
+/*   Updated: 2021/11/29 22:02:03 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,18 @@ int is_valid_args(int argc, char **argv)
 
 	i = 1;
 	argc--;
-	if (argc < 4 || argc > 5)
+	if (argc < 4 || argc > 6)
 		return (0);
-	while (i <= argc)
+	while (argv[i])
 	{
 		if (!is_char_num(argv[i]))
 			return (0);
-		argc--;
+		i++;
 	}
 	//check if is one or more philosophers
-	//check if times are grater than 0?
+	if(ft_atoi(argv[1]) < 2)
+		return (0);
+	//check if times are grater than 0??????
 	return (1);
 }
 
@@ -39,11 +41,15 @@ t_data save_data(char **argv, int argc)
 	d.t_die = ft_atoi(argv[2]);
 	d.t_eat = ft_atoi(argv[3]);
 	d.t_sleep = ft_atoi(argv[4]);
-	d.forks = NULL;
-	if (argc == 6)
-		d.n_eats = ft_atoi(argv[5]);
+	d.t_think = ft_atoi(argv[5]);
+	if(argv[6])
+		d.n_eats = ft_atoi(argv[6]);
 	else
-		d.n_eats = 0;
+		d.n_eats = -1;
+	pthread_mutex_init(&d.mutex_dead,0);
+	pthread_mutex_init(&d.mutex_write,0);
+	d.init_cond = 0;
+	d.forks = NULL;
 	return d;
 }
 
@@ -87,35 +93,33 @@ void create_forks(t_data *d)
 
 
 
-void dead_loop(void *data)
+void death_loop(void *data)
 {
 	t_thread_data *d;
+	int a;
 
 	d = (t_thread_data *)data;
-	while (d->philo.dying--)
-	{
-		usleep(1000);
-	}
-	printf("%ld %d  died\n",get_time(d->d.time_start), d->philo.n);
+	//while true si la ultima vez que comio
+	while (get_time(d->philo.dying) < d->d->t_die)
+		usleep(1);
+	pthread_mutex_lock(&d->d->mutex_dead);
+	pthread_mutex_lock(&d->d->mutex_write);
+	printf("%ld %d  died\n",get_time(d->d->time_start), d->philo.n);
 	exit(1);
 }
-void wait_left_fork(void *data)
+void wait_left_fork(t_thread_data *d)
 {
-	t_thread_data *d;
-	d = (t_thread_data *)data;
 	pthread_mutex_lock(&d->philo.l_fork->mutex);
-	d->philo.n_fork++;
-	printf("%ld %d  Has taken left fork\n",get_time(d->d.time_start), d->philo.n);
+	printf("%ld %d  Has taken left fork\n",get_time(d->d->time_start), d->philo.n);
+	// mutex_print(get_time(d->d->time_start), d->philo.n,"Has taken left fork",d->d);
 
 }
 
-void wait_right_fork(void *data)
+void wait_right_fork(t_thread_data *d)
 {
-	t_thread_data *d;
-	d = (t_thread_data *)data;
 	pthread_mutex_lock(&d->philo.r_fork->mutex);
-	d->philo.n_fork++;
-	printf("%ld %d  Has taken right fork\n",get_time(d->d.time_start), d->philo.n);
+	// mutex_print(get_time(d->d->time_start), d->philo.n,"Has taken right fork",d->d);
+	printf("%ld %d  Has taken right fork\n",get_time(d->d->time_start), d->philo.n);
 }
 
 void loop_of_life(void *data)
@@ -124,26 +128,39 @@ void loop_of_life(void *data)
 	pthread_t thread;
 
 	d = (t_thread_data *)data;
-	pthread_create(&thread, 0, (void *)dead_loop, (void *)(d));
+	gettimeofday(&d->philo.dying,NULL);
+	pthread_create(&thread, 0, (void *)death_loop, (void *)(d));
+	if(!(d->philo.n % 2))
+		ft_sleep(15);
 	while (1)
 	{
-		pthread_create(&d->th_l_fork, 0, (void *)wait_left_fork, (void *)(d));
-		pthread_create(&d->th_r_fork, 0, (void *)wait_right_fork, (void *)(d));
-		pthread_join(d->th_l_fork, 0);
-		pthread_join(d->th_r_fork, 0);
-		if (d->philo.n_fork == 2)
-		{
-			d->philo.dying = d->d.t_die;
-			printf("%ld %d  is eating\n",get_time(d->d.time_start), d->philo.n);
-			d->philo.n_fork = 0;
-			usleep(d->d.t_eat * 1000);
-			pthread_mutex_unlock(&d->philo.l_fork->mutex);
-			pthread_mutex_unlock(&d->philo.r_fork->mutex);
-		}
-		printf("%ld %d  is sleeping\n",get_time(d->d.time_start), d->philo.n);
-		usleep(d->d.t_sleep * 1000);
-		printf("%ld %d  is thinking\n",get_time(d->d.time_start), d->philo.n);
+		if(d->philo.n_eat == d->d->n_eats)
+			break ;
+		wait_left_fork(d);
+		wait_right_fork(d);
+		//eat
+		d->philo.n_eat++;
+		// mutex_print(get_time(d->d->time_start), d->philo.n,"is eating",d->d);
+		printf("%ld %d  is eating\n",get_time(d->d->time_start), d->philo.n);
+
+
+		gettimeofday(&d->philo.dying,NULL);
+		ft_sleep(d->d->t_eat);
+		pthread_mutex_unlock(&d->philo.l_fork->mutex);
+		pthread_mutex_unlock(&d->philo.r_fork->mutex);
+
+		//sleep
+		// mutex_print(get_time(d->d->time_start), d->philo.n,"is sleeping",d->d);
+		printf("%ld %d  is sleeping\n",get_time(d->d->time_start), d->philo.n);
+		ft_sleep(d->d->t_sleep);
+
+
+		//think
+		// mutex_print(get_time(d->d->time_start), d->philo.n,"is thinking",d->d);
+		printf("%ld %d  is thinking\n",get_time(d->d->time_start), d->philo.n);
+		ft_sleep(d->d->t_think);
 	}
+	gettimeofday(&d->philo.dying,NULL);
 }
 
 void create_threads(t_data *d)
@@ -153,16 +170,16 @@ void create_threads(t_data *d)
 	t_thread_data th_data[d->n_philo];
 	pthread_mutex_t mutex;
 	int err;
-	gettimeofday(&d->time_start, NULL);
 	err = 0;
 	i = 0;
+	gettimeofday(&d->time_start, NULL);
 	while (i < d->n_philo)
 	{
 		th_data[i].philo = d->philos[i];
 		th_data[i].th = &threads[i];
 		th_data[i].forks = d->forks;
 		th_data[i].n = i;
-		th_data[i].d = *d;
+		th_data[i].d = d;
 		err = pthread_create(&threads[i], 0, (void *)loop_of_life, (void *)&(th_data[i]));
 		if (err)
 		{
@@ -173,15 +190,16 @@ void create_threads(t_data *d)
 	}
 	while (i-- > 0)
 		err = pthread_join(threads[i], 0);
+	printf("everyone is full\n");
 }
 
 t_philo *create_philosophers(t_data *d)
 {
-	//gestionar cuando solo es un filosofo
 	t_philo *ph;
 	int i;
 	t_fork *f = d->forks;
 	t_fork *l_f = NULL;
+
 	i = 0;
 	ph = malloc((d->n_philo + 2) * sizeof(t_philo));
 	while (i < d->n_philo)
@@ -189,7 +207,8 @@ t_philo *create_philosophers(t_data *d)
 		ph[i].n = i + 1;
 		ph[i].r_fork = f;
 		ph[i].n_fork = 0;
-		ph[i].dying = d->t_die;
+		ph[i].n_eat = 0;
+		gettimeofday(&ph[i].dying, NULL);
 		if (i != 0)
 			ph[i].l_fork = l_f;
 		if (i == d->n_philo - 1)
@@ -214,7 +233,6 @@ int main(int argc, char **argv)
 	printf("t_die: %d\n", d.t_die);
 	create_forks(&d);
 	d.philos = create_philosophers(&d);
-	print_state(&d);
 	create_threads(&d);
 	return (0);
 }
