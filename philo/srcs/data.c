@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 13:23:29 by ptorres           #+#    #+#             */
-/*   Updated: 2021/12/09 13:42:13 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/12/09 15:59:28 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,42 +41,23 @@ t_data	save_data(char **argv, int argc)
 		d.n_eats = ft_atoi(argv[5]);
 	else
 		d.n_eats = -1;
-	pthread_mutex_init(&d.mutex_dead, 0);
+	// pthread_mutex_init(&d.mutex_dead, 0);
+	pthread_mutex_init(&d.mutex_write, 0);
 	d.forks = NULL;
 	return (d);
 }
 
-void	add_fork(t_fork **lst, t_fork *new)
-{
-	t_fork	*curr;
-
-	if (!lst || !new)
-		return ;
-	if (*lst)
-	{
-		curr = *lst;
-		while (curr->next)
-			curr = curr->next;
-		curr->next = new;
-	}
-	else
-		*lst = new;
-}
 
 void	create_forks(t_data *d)
 {
 	int		i;
-	t_fork	*fork;
 
 	i = 0;
+	d->forks = malloc(d->n_philo * sizeof(t_fork));
 	while (i < d->n_philo)
 	{
-		fork = malloc(sizeof(t_fork));
-		pthread_mutex_init(&fork->mutex, 0);
-		fork->n = i + 1;
-		fork->next = NULL;
-		add_fork(&d->forks, fork);
-		fork = NULL;
+		pthread_mutex_init(&(d->forks[i].mutex), 0);
+		d->forks[i].n = i + 1;
 		i++;
 	}
 }

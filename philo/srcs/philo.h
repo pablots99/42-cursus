@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/25 14:23:32 by pablo             #+#    #+#             */
-/*   Updated: 2021/12/09 13:40:20 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/12/09 16:11:08 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ typedef struct s_fork
 {
 	int				n;
 	pthread_mutex_t	mutex;
-	struct s_fork	*next;
 }					t_fork;
 
 typedef struct s_data
@@ -44,7 +43,7 @@ typedef struct s_data
 	int				t_think;
 	int				t_sleep;
 	int				n_eats;
-	pthread_mutex_t	mutex_dead;
+	pthread_mutex_t	mutex_write;
 	t_fork			*forks;
 	t_philo			*philos;
 	struct timeval	time_start;
@@ -58,6 +57,7 @@ typedef struct s_thread_data
 	pthread_t	*th;
 	pthread_t	th_dead;
 	t_data		*d;
+	pthread_mutex_t *mutex_write;
 }			t_thread_data;
 
 long int	ft_atoi(const char *str);

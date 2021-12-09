@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 13:39:09 by ptorres           #+#    #+#             */
-/*   Updated: 2021/12/09 13:41:35 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/12/09 16:12:12 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ void	death_loop(void *data)
 
 	d = (t_thread_data *)data;
 	while (get_time(d->philo.dying) <= d->d->t_die)
-		usleep(10);
-	pthread_mutex_lock(&d->d->mutex_dead);
+		usleep(60);
+	pthread_mutex_lock(d->mutex_write);
 	printf("%ld %d  died\n", get_time(d->d->time_start), d->philo.n);
 	exit(1);
 }
@@ -47,7 +47,7 @@ void	loop_of_life(void *data)
 	d = (t_thread_data *)data;
 	gettimeofday(&d->philo.dying, NULL);
 	pthread_create(&thread, 0, (void *)death_loop, (void *)(d));
-	if (!(d->philo.n % 2))
+	if (d->philo.n % 2)
 		ft_sleep(15);
 	while (1)
 	{
