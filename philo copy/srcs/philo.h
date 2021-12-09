@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/25 14:23:32 by pablo             #+#    #+#             */
-/*   Updated: 2021/12/08 23:47:05 by pablo            ###   ########.fr       */
+/*   Updated: 2021/12/09 13:40:20 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,11 @@ long int	get_time(struct timeval start);
 void		mutex_print(long int timestamp,
 				int n_philo, char *mesage, t_data *d);
 void		ft_sleep(int n);
+int			is_valid_args(int argc, char **argv);
+void		create_forks(t_data *d);
+void		add_fork(t_fork **lst, t_fork *new);
+void		create_forks(t_data *d);
+t_data		save_data(char **argv, int argc);
+void		loop_of_life(void *data);
 
 #endif

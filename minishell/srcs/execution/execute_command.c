@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 19:48:22 by pablo             #+#    #+#             */
-/*   Updated: 2021/11/27 19:10:03 by pablo            ###   ########.fr       */
+/*   Updated: 2021/12/09 12:59:16 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,9 +128,7 @@ void	execute_commands(t_data *d)
 		i++;
 		d->cmds = d->cmds->childs;
 	}
-	waitpid(d->last_pid, &d->status, WUNTRACED), i--;
-	while (ch && i--)
-		wait(NULL);
+	waitpid(d->last_pid, &d->status, WUNTRACED);
 	d->status = WEXITSTATUS(d->status);
 	d->asignation = 0;
 	d->cmds = first;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/25 14:23:32 by pablo             #+#    #+#             */
-/*   Updated: 2021/11/29 19:47:55 by pablo            ###   ########.fr       */
+/*   Updated: 2021/12/09 13:40:20 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,7 @@ typedef struct s_data
 	int				t_think;
 	int				t_sleep;
 	int				n_eats;
-	int				init_cond;
 	pthread_mutex_t	mutex_dead;
-	pthread_mutex_t	mutex_write;
 	t_fork			*forks;
 	t_philo			*philos;
 	struct timeval	time_start;
@@ -58,8 +56,6 @@ typedef struct s_thread_data
 	t_fork		*forks;
 	int			n;
 	pthread_t	*th;
-	pthread_t	th_l_fork;
-	pthread_t	th_r_fork;
 	pthread_t	th_dead;
 	t_data		*d;
 }			t_thread_data;
@@ -71,5 +67,11 @@ long int	get_time(struct timeval start);
 void		mutex_print(long int timestamp,
 				int n_philo, char *mesage, t_data *d);
 void		ft_sleep(int n);
+int			is_valid_args(int argc, char **argv);
+void		create_forks(t_data *d);
+void		add_fork(t_fork **lst, t_fork *new);
+void		create_forks(t_data *d);
+t_data		save_data(char **argv, int argc);
+void		loop_of_life(void *data);
 
 #endif
