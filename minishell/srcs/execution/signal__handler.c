@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal__handler.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 14:18:19 by ptorres           #+#    #+#             */
-/*   Updated: 2021/09/13 15:59:45 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/11/22 16:46:56 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,14 @@ void	handle_sigint3(int sig)
 
 void	handle_sigint(int sig)
 {
-	if (g_status)
+	write(1, "\n", 1);
+	if (g_status && g_status != 130)
 	{
+		sig = 0;
 		g_status = 130;
 		return ;
 	}
 	sig = 0;
-	write(1, "\n", 1);
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
@@ -58,7 +59,7 @@ void	handle_sigquit2(int sig)
 	if (g_status == 1)
 	{
 		g_status = 130;
-		printf("^\\Quit: 3\n");
+		printf("Quit: 3\n");
 		return ;
 	}
 	rl_on_new_line();

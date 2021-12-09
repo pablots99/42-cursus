@@ -5,7 +5,7 @@
 
 
 function price = main(km,iter,theta,alpha)
- 
+
 data = dlmread ("data.csv",",",1,0);
 s  = size(data);
 
@@ -27,7 +27,7 @@ end
 
 theta1 = (pinv(X1'*X1))*X1'*y
 theta2 = (pinv(X'*X))*X'*y
-theta 
+theta
 
 figure(1); plot(J_history)
 figure(2);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 03:21:03 by pablo             #+#    #+#             */
-/*   Updated: 2021/09/13 21:05:34 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/11/22 17:16:13 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,20 +99,3 @@ void	fd_inputs(t_cmds *cmd)
 	}
 	is_empty(cmd, i);
 }
-
-// void	wait_pids(t_data *d)
-// {
-// 	int	i;
-
-// 	i = ft_bi_strlen(d->pids) - 1;
-// 	while (i >= 0)
-// 	{
-// 		waitpid(ft_atoi(d->pids[i]), &d->status, WCONTINUED);
-// 		if (WIFSIGNALED(d->status))
-// 			break ;
-// 		d->status = WEXITSTATUS(d->status);
-// 		i--;
-// 	}
-// 	ft_bi_free(d->pids);
-// 	d->pids = NULL;
-// }

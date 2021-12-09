@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/25 14:22:51 by pablo             #+#    #+#             */
-/*   Updated: 2021/12/08 23:45:47 by pablo            ###   ########.fr       */
+/*   Updated: 2021/12/08 23:53:20 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,8 @@ int is_valid_args(int argc, char **argv)
 			return (0);
 		i++;
 	}
-	//check if is one or more philosophers
-	if(ft_atoi(argv[1]) < 2)
-		return (0);
+	// if(ft_atoi(argv[1]) < 2)
+	// 	return (0);
 	//check if times are grater than 0??????
 	return (1);
 }
@@ -46,8 +45,6 @@ t_data save_data(char **argv, int argc)
 	else
 		d.n_eats = -1;
 	pthread_mutex_init(&d.mutex_dead,0);
-	pthread_mutex_init(&d.mutex_write,0);
-	d.init_cond = 0;
 	d.forks = NULL;
 	return d;
 }
@@ -76,8 +73,6 @@ void create_forks(t_data *d)
 	t_fork *fork;
 
 	i = 0;
-	if (d->n_philo == 1)
-		i--;
 	while (i < d->n_philo)
 	{
 		fork = malloc(sizeof(t_fork));
@@ -102,7 +97,6 @@ void death_loop(void *data)
 	while (get_time(d->philo.dying) <= d->d->t_die)
 		usleep(10);
 	pthread_mutex_lock(&d->d->mutex_dead);
-	pthread_mutex_lock(&d->d->mutex_write);
 	printf("%ld %d  died\n",get_time(d->d->time_start), d->philo.n);
 	exit(1);
 }
@@ -138,8 +132,6 @@ void loop_of_life(void *data)
 		//eat
 		d->philo.n_eat++;
 		mutex_print(get_time(d->d->time_start), d->philo.n,"is eating",d->d);
-
-
 		gettimeofday(&d->philo.dying,NULL);
 		ft_sleep(d->d->t_eat);
 		pthread_mutex_unlock(&d->philo.l_fork->mutex);
@@ -191,7 +183,7 @@ t_philo *create_philosophers(t_data *d)
 	t_fork *l_f = NULL;
 
 	i = 0;
-	ph = malloc((d->n_philo + 2) * sizeof(t_philo));
+	ph = malloc((d->n_philo) * sizeof(t_philo));
 	while (i < d->n_philo)
 	{
 		ph[i].n = i + 1;

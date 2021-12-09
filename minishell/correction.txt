@@ -1,2 +1,1 @@
-1 ->	ls | ls asdasd -> exit code must be 1
-revisar señales y ejecucion de pipes
+

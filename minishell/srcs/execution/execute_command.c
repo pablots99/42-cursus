@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 19:48:22 by pablo             #+#    #+#             */
-/*   Updated: 2021/09/27 14:34:52 by pablo            ###   ########.fr       */
+/*   Updated: 2021/11/27 19:10:03 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,12 +90,10 @@ void	execute_child(t_data *d)
 
 void	execute_command(t_data *d)
 {
-	int		pid;
-
 	if (d->cmds->childs != NULL)
 		pipe(d->fd);
-	pid = fork();
-	if (pid == 0)
+	d->last_pid = fork();
+	if (d->last_pid == 0)
 		execute_child(d);
 	else
 	{
@@ -120,7 +118,6 @@ void	execute_commands(t_data *d)
 	ch = 1, init_vars(d, &first);
 	if (d->cmds->childs == NULL)
 		ch = 0;
-	d->pids = NULL;
 	while (d->cmds)
 	{
 		init_status(d->cmds);
@@ -131,8 +128,10 @@ void	execute_commands(t_data *d)
 		i++;
 		d->cmds = d->cmds->childs;
 	}
+	waitpid(d->last_pid, &d->status, WUNTRACED), i--;
 	while (ch && i--)
-		wait(&d->status), d->status = WEXITSTATUS(d->status);
+		wait(NULL);
+	d->status = WEXITSTATUS(d->status);
 	d->asignation = 0;
 	d->cmds = first;
 }
