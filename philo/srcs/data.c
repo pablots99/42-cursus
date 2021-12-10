@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 13:23:29 by ptorres           #+#    #+#             */
-/*   Updated: 2021/12/09 15:59:28 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/12/10 13:58:32 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,10 @@ t_data	save_data(char **argv, int argc)
 		d.n_eats = ft_atoi(argv[5]);
 	else
 		d.n_eats = -1;
-	// pthread_mutex_init(&d.mutex_dead, 0);
 	pthread_mutex_init(&d.mutex_write, 0);
 	d.forks = NULL;
 	return (d);
 }
-
 
 void	create_forks(t_data *d)
 {

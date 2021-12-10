@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/25 22:23:18 by pablo             #+#    #+#             */
-/*   Updated: 2021/12/09 16:09:29 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/12/10 13:55:59 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,7 @@ void	ft_sleep(int n)
 
 	gettimeofday(&now, NULL);
 	while (get_time(now) < n)
-	{
-		// if(get_time(d->philo.dying) <= d->d->t_die)
-		// {
-		// 	printf("%ld %d  died\n", get_time(d->d->time_start), d->philo.n);
-		// }
-		usleep(100);
-	}
+		usleep(50);
 }
 
 void	mutex_print(long int timestamp, int n_philo, char *mesage, t_data *d)

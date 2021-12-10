@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/25 14:23:32 by pablo             #+#    #+#             */
-/*   Updated: 2021/12/09 16:11:08 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/12/10 14:15:57 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_data
 	int				t_sleep;
 	int				n_eats;
 	pthread_mutex_t	mutex_write;
+	pthread_mutex_t	mutex_start;
 	t_fork			*forks;
 	t_philo			*philos;
 	struct timeval	time_start;
@@ -51,13 +52,13 @@ typedef struct s_data
 
 typedef struct s_thread_data
 {
-	t_philo		philo;
-	t_fork		*forks;
-	int			n;
-	pthread_t	*th;
-	pthread_t	th_dead;
-	t_data		*d;
-	pthread_mutex_t *mutex_write;
+	t_philo			*philo;
+	t_fork			*forks;
+	int				n;
+	pthread_t		*th;
+	pthread_t		th_dead;
+	t_data			*d;
+	pthread_mutex_t	*mutex_write;
 }			t_thread_data;
 
 long int	ft_atoi(const char *str);
