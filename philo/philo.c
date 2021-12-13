@@ -6,43 +6,22 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/25 14:22:51 by pablo             #+#    #+#             */
-/*   Updated: 2021/12/10 15:18:36 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/12/13 18:31:00 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./srcs/philo.h"
 
-void	death_loop(void *d)
+void	wait_threads(pthread_t *th, t_thread_data *th_d, int i)
 {
-	t_thread_data	*th_data;
-	t_data			*data;
-	int				i;
-	int				neats;
-	int				total_eats;
-
-	total_eats = 0;
-	th_data = (t_thread_data *)d;
-	data = th_data[0].d;
-	neats = data->n_eats;
-	while (1)
+	while (i > 0)
 	{
-		i = 0;
-		while (i < data->n_philo - 1)
-		{	
-			if (total_eats == data->n_philo)
-				return ;
-			if ((get_time(th_data[i].philo->dying) > data->t_die) && th_data[i].philo->n_eat != neats)
-			{
-				total_eats++;
-				pthread_mutex_lock(&data->mutex_write);
-				printf("time: %ld eats: %d n_eats: %d\n",get_time(th_data[i].philo->dying),th_data[i].philo->n_eat,data->n_eats);
-				printf("%ld %d  died\n", get_time(data->time_start),
-					th_data[i].philo->n);
-				exit(1);
-			}
-			i++;
-		}
+		pthread_join(th[i], 0);
+		i--;
 	}
+	pthread_detach(th[i]);
+	free(th);
+	free(th_d);
 }
 
 void	create_threads(t_data *d)
@@ -50,12 +29,10 @@ void	create_threads(t_data *d)
 	int				i;
 	pthread_t		*threads;
 	t_thread_data	*th_data;
-	pthread_mutex_t	mutex;
-	int				err;
 
 	i = 0;
-	threads = malloc((d->n_philo + 3) * sizeof(pthread_t));
-	th_data = malloc((d->n_philo + 1) * sizeof(t_thread_data));
+	threads = malloc((d->n_philo + 2) * sizeof(pthread_t));
+	th_data = malloc((d->n_philo) * sizeof(t_thread_data));
 	gettimeofday(&d->time_start, NULL);
 	while (i < d->n_philo)
 	{
@@ -70,16 +47,13 @@ void	create_threads(t_data *d)
 		i++;
 	}
 	pthread_create(&threads[i], 0, (void *)death_loop, (void *)(th_data));
-	pthread_detach(threads[i]);
-	while (i-- > 0)
-		pthread_join(threads[i], 0);
+	wait_threads(threads, th_data, i);
 }
 
 t_philo	*create_philosophers(t_data *d)
 {
 	t_philo	*ph;
 	int		i;
-	t_fork	aux;
 
 	i = 0;
 	ph = malloc((d->n_philo) * sizeof(t_philo));
@@ -111,10 +85,9 @@ int	main(int argc, char **argv)
 		printf("Arguments Error\n");
 		return (1);
 	}
-	d = save_data(argv, argc);
+	d = save_data(argv);
 	create_forks(&d);
 	d.philos = create_philosophers(&d);
 	create_threads(&d);
-	printf("mmmmm!!\n");
 	return (0);
 }

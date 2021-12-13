@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/25 22:23:18 by pablo             #+#    #+#             */
-/*   Updated: 2021/12/10 13:55:59 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/12/13 18:59:51 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,7 @@ int	is_char_num(char *num)
 	while (num[i])
 	{
 		if (num[i] > '9' || num[i] < '0')
-		{
-			printf("char:%c\n", num[i]);
 			return (0);
-		}
 		i++;
 	}
 	return (1);
@@ -71,12 +68,13 @@ void	ft_sleep(int n)
 
 	gettimeofday(&now, NULL);
 	while (get_time(now) < n)
-		usleep(50);
+		usleep(0);
 }
 
 void	mutex_print(long int timestamp, int n_philo, char *mesage, t_data *d)
 {
 	pthread_mutex_lock(&d->mutex_write);
-	printf("%ld %d %s\n", timestamp, n_philo, mesage);
+	if (!d->deaths && !d->finish_eating)
+		printf("%ld %d %s\n", timestamp, n_philo, mesage);
 	pthread_mutex_unlock(&d->mutex_write);
 }

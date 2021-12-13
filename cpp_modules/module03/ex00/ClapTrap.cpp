@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ClapTrap.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 16:10:35 by pablo             #+#    #+#             */
-/*   Updated: 2021/11/20 12:47:27 by pablo            ###   ########.fr       */
+/*   Updated: 2021/12/13 14:43:13 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void ClapTrap::takeDamage(unsigned int amount){
 }
 void ClapTrap::beRepaired(unsigned int amount){
 	Hitpoints += amount;
-	std::cout << Name << "rapairs "<< amount << " hitpoints! current: " << Hitpoints  << std::endl;
+	std::cout << Name << " rapairs "<< amount << " hitpoints! current: " << Hitpoints  << std::endl;
 }
 ClapTrap::~ClapTrap(){
 	std::cout << "ClapTrap destructor called" << std::endl;

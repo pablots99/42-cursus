@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 13:23:29 by ptorres           #+#    #+#             */
-/*   Updated: 2021/12/10 13:58:32 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/12/13 18:48:31 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	is_valid_args(int argc, char **argv)
 	return (1);
 }
 
-t_data	save_data(char **argv, int argc)
+t_data	save_data(char **argv)
 {
 	t_data	d;
 
@@ -37,11 +37,14 @@ t_data	save_data(char **argv, int argc)
 	d.t_die = ft_atoi(argv[2]);
 	d.t_eat = ft_atoi(argv[3]);
 	d.t_sleep = ft_atoi(argv[4]);
+	d.deaths = 0;
+	d.finish_eating = 0;
 	if (argv[5])
 		d.n_eats = ft_atoi(argv[5]);
 	else
 		d.n_eats = -1;
 	pthread_mutex_init(&d.mutex_write, 0);
+	pthread_mutex_init(&d.mutex_eat, 0);
 	d.forks = NULL;
 	return (d);
 }

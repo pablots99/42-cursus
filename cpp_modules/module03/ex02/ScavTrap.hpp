@@ -1,28 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   ScavTrap.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/20 12:36:43 by pablo             #+#    #+#             */
-/*   Updated: 2021/12/13 16:29:20 by ptorres          ###   ########.fr       */
+/*   Created: 2021/11/20 12:53:54 by pablo             #+#    #+#             */
+/*   Updated: 2021/12/13 16:44:41 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ScavTrap.hpp"
+#include <iostream>
+#include "ClapTrap.hpp"
 
 
-int main() {
+class ScavTrap : public ClapTrap {
+public:
+	ScavTrap();
+	void guardGate();
+	ScavTrap(std::string name);
+	void attack(std::string const & target);
+	~ScavTrap();
+};
 
-	ScavTrap p("Pablo");
-	ScavTrap p1("Pablo1");
-	ScavTrap j("Pablo");
-	ScavTrap cp(p);
-	p.attack("juan");
-	p = p1;
-	p.attack("alberto");
-	p.beRepaired(10);
-	p.takeDamage(10);
-	p.guardGate();
-}
+
+

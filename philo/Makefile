@@ -7,9 +7,9 @@ SRCS = philo.c \
 
 OBJS = $(SRCS:.c=.o)
 
-CC = gcc -g3
+CC = gcc -g3 -Wall -Wextra -Werror -o $(NAME)
 
-FLAGS = -Wall -Wextra -Werror -fsanitize=address  -o $(NAME)
+FLAGS = 
 
 
 all:$(NAME)
