@@ -15,6 +15,14 @@ endColour='\033[0m'
 
 leaks=0
 
+gshuf= 
+
+if [["${which gshuf}" -e "gshuf not found"]]
+then
+	brew install gshuf
+fi
+
+
 if [[ "$1" == "-h" ]] || [[ "$1" == "-help" ]] || [[ "$1" == "--help" ]] || [[ "$1" == "help" ]]
 then
 		echo "${Yellow}Flag -l or -leaks ejecute the program with valgrind.å VALGRIND MUST BE INSTALLED!"

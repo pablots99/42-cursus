@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 13:39:09 by ptorres           #+#    #+#             */
-/*   Updated: 2021/12/13 18:59:57 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/12/20 13:55:20 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	loop_of_life(void *data)
 	t_thread_data	*d;
 
 	d = (t_thread_data *)data;
+	pthread_mutex_lock(&(d->philo->mutex_start));
 	gettimeofday(&d->philo->dying, NULL);
 	while (1 && !d->d->deaths && !d->d->finish_eating)
 	{
@@ -40,15 +41,17 @@ void	loop_of_life(void *data)
 			wait_left_fork(d), wait_right_fork(d);
 		d->philo->n_eat++;
 		mutex_print(get_time(d->d->time_start), d->philo->n, "is eating", d->d);
-		gettimeofday(&d->philo->dying, NULL), ft_sleep(d->d->t_eat);
+		gettimeofday(&d->philo->dying, NULL);
+		ft_sleep(d->d->t_eat, d->d->t_wait);
 		pthread_mutex_unlock(&d->philo->l_fork->mutex);
 		pthread_mutex_unlock(&d->philo->r_fork->mutex);
 		mutex_print(get_time(d->d->time_start), d->philo->n,
 			"is sleeping", d->d);
-		ft_sleep(d->d->t_sleep);
+		ft_sleep(d->d->t_sleep, d->d->t_wait);
 		mutex_print(get_time(d->d->time_start), d->philo->n,
 			"is thinking", d->d);
 	}
+	pthread_mutex_destroy(&(d->philo->mutex_start));
 }
 
 int	check_death(t_data *data, t_thread_data *th_data, int i, int total_eats)
@@ -94,6 +97,6 @@ void	death_loop(void *d)
 		}
 		if (l.data->deaths || l.data->finish_eating)
 			break ;
-		usleep(0);
+		usleep(l.data->t_wait);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 16:10:35 by pablo             #+#    #+#             */
-/*   Updated: 2021/12/13 16:28:28 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/12/14 13:41:47 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ ClapTrap::ClapTrap(std::string Name, int Hitpoints, int Energy_points, int Attac
 	this->Hitpoints = Hitpoints;
 	this->Energy_points = Energy_points;
 	this->Attack_damage = Attack_damage;
+	std::cout << "ClapTrap contructor called" << std::endl;
 }
 
 ClapTrap & ClapTrap::operator=(ClapTrap &c) {

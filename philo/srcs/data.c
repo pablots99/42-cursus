@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 13:23:29 by ptorres           #+#    #+#             */
-/*   Updated: 2021/12/13 18:48:31 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/12/20 14:12:45 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,9 @@ t_data	save_data(char **argv)
 	d.t_die = ft_atoi(argv[2]);
 	d.t_eat = ft_atoi(argv[3]);
 	d.t_sleep = ft_atoi(argv[4]);
+	d.t_wait = 100;
+	if (((d.t_sleep + d.t_eat) / 50) % 2 >= 1)
+		d.t_wait = 25;
 	d.deaths = 0;
 	d.finish_eating = 0;
 	if (argv[5])

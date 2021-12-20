@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/25 14:23:32 by pablo             #+#    #+#             */
-/*   Updated: 2021/12/13 18:33:29 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/12/20 14:12:59 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef struct s_philo
 	struct s_fork	*r_fork;
 	int				n_fork;
 	int				n_eat;
+	pthread_mutex_t	mutex_start;
 	struct timeval	dying;
 }					t_philo;
 
@@ -49,6 +50,7 @@ typedef struct s_data
 	pthread_mutex_t	mutex_eat;
 	t_fork			*forks;
 	t_philo			*philos;
+	int				t_wait;
 	struct timeval	time_start;
 }			t_data;
 
@@ -78,7 +80,7 @@ void		print_state(t_data *d);
 long int	get_time(struct timeval start);
 void		mutex_print(long int timestamp,
 				int n_philo, char *mesage, t_data *d);
-void		ft_sleep(int n);
+void		ft_sleep(int n, int t);
 int			is_valid_args(int argc, char **argv);
 void		create_forks(t_data *d);
 void		add_fork(t_fork **lst, t_fork *new);

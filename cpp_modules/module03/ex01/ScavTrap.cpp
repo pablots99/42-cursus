@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 12:53:49 by pablo             #+#    #+#             */
-/*   Updated: 2021/12/13 16:34:54 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/12/14 13:34:55 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void ScavTrap::guardGate() {
 	std::cout << "ScavTrap have enterred in Gate keeper mode." << std::endl;
 }
 
-ScavTrap::ScavTrap() {
+ScavTrap::ScavTrap(): ClapTrap() {
 	this->Hitpoints = 100;
 	this->Energy_points = 50;
 	this->Attack_damage = 20;
