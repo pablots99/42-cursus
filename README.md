@@ -17,3 +17,5 @@ FT_SERVICES   -> OK
 PUSH_SWAP     -> OK
 
 FRACT_OL      -> OK
+
+MINISHELL     -> OK
