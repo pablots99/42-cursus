@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/25 14:22:51 by pablo             #+#    #+#             */
-/*   Updated: 2021/12/20 14:11:42 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/12/20 18:02:22 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	create_threads(t_data *d)
 	t_thread_data	*th_data;
 
 	i = 0;
+	gettimeofday(&d->time_start, NULL);
 	threads = malloc((d->n_philo + 2) * sizeof(pthread_t));
 	th_data = malloc((d->n_philo) * sizeof(t_thread_data));
 	while (i < d->n_philo)
@@ -82,6 +83,7 @@ t_philo	*create_philosophers(t_data *d)
 		pthread_mutex_init(&ph[i].mutex_start, 0);
 		pthread_mutex_lock(&ph[i].mutex_start);
 		ph[i].n = i + 1;
+		ph[i].finish_eating = 0;
 		ph[i].n_fork = 0;
 		ph[i].n_eat = 0;
 		if (i == 0)

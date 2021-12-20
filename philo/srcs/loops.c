@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 13:39:09 by ptorres           #+#    #+#             */
-/*   Updated: 2021/12/20 13:55:20 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/12/20 18:19:27 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,18 +36,18 @@ void	loop_of_life(void *data)
 	while (1 && !d->d->deaths && !d->d->finish_eating)
 	{
 		if (d->philo->n % 2)
-			wait_right_fork(d), wait_left_fork(d);
-		else
 			wait_left_fork(d), wait_right_fork(d);
+		else
+			wait_right_fork(d), wait_left_fork(d);
 		d->philo->n_eat++;
 		mutex_print(get_time(d->d->time_start), d->philo->n, "is eating", d->d);
 		gettimeofday(&d->philo->dying, NULL);
-		ft_sleep(d->d->t_eat, d->d->t_wait);
+		ft_sleep(d->d->t_eat, d->d);
 		pthread_mutex_unlock(&d->philo->l_fork->mutex);
 		pthread_mutex_unlock(&d->philo->r_fork->mutex);
 		mutex_print(get_time(d->d->time_start), d->philo->n,
 			"is sleeping", d->d);
-		ft_sleep(d->d->t_sleep, d->d->t_wait);
+		ft_sleep(d->d->t_sleep, d->d);
 		mutex_print(get_time(d->d->time_start), d->philo->n,
 			"is thinking", d->d);
 	}
@@ -89,8 +89,9 @@ void	death_loop(void *d)
 		l.i = 0;
 		while (l.i < l.data->n_philo)
 		{	
-			if (l.th_data[l.i].philo->n_eat == l.neats)
-				l.total_eats++;
+			if (l.th_data[l.i].philo->n_eat == l.neats
+				&& !l.th_data[l.i].philo->finish_eating)
+				l.total_eats++, l.th_data[l.i].philo->finish_eating = 1;
 			if (check_death(l.data, l.th_data, l.i, l.total_eats))
 				break ;
 			l.i++;

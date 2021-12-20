@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/25 22:23:18 by pablo             #+#    #+#             */
-/*   Updated: 2021/12/20 13:06:17 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/12/20 18:10:52 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,13 @@ int	is_char_num(char *num)
 	return (1);
 }
 
-void	ft_sleep(int n, int t)
+void	ft_sleep(int n, t_data *d)
 {
 	struct timeval	now;
 
 	gettimeofday(&now, NULL);
-	while (get_time(now) < n)
-		usleep(t);
+	while (get_time(now) < n && !d->finish_eating && !d->deaths)
+		usleep(d->t_wait);
 }
 
 void	mutex_print(long int timestamp, int n_philo, char *mesage, t_data *d)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   megaphone.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/20 12:03:47 by pablo             #+#    #+#             */
-/*   Updated: 2021/10/31 16:32:52 by pablo            ###   ########.fr       */
+/*   Updated: 2021/12/20 14:33:41 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ int main(int argc, char **argv )
 {
 	int i = 1;
 	int j;
-	while(argv[i])
+
+	while(argv[i] && argc)
 	{
 		j = 0;
 		while(argv[i][j])

@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 13:23:29 by ptorres           #+#    #+#             */
-/*   Updated: 2021/12/20 14:12:45 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/12/20 17:57:48 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ t_data	save_data(char **argv)
 	else
 		d.n_eats = -1;
 	pthread_mutex_init(&d.mutex_write, 0);
-	pthread_mutex_init(&d.mutex_eat, 0);
 	d.forks = NULL;
 	return (d);
 }

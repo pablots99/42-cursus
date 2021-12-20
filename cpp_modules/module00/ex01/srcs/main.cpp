@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/20 13:35:18 by pablo             #+#    #+#             */
-/*   Updated: 2021/11/08 18:59:40 by pablo            ###   ########.fr       */
+/*   Updated: 2021/12/20 16:20:50 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int main()
 	while (1)
 	{
 		std::cout << ">> ";
-		getline(cin, buff);
+		getline(std::cin, buff);
 		if(buff == "EXIT")
 			break ;
 		else if(buff == "ADD")

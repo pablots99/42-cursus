@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   phonebook.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/20 13:35:18 by pablo             #+#    #+#             */
-/*   Updated: 2021/11/01 21:15:21 by pablo            ###   ########.fr       */
+/*   Updated: 2021/12/20 14:36:21 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ Phonebook::~Phonebook()
 
 }
 
-bool isNumber(string str)
+bool isNumber(std::string str)
 {
 
    	for (size_t i = 0; i < str.length(); i++)
@@ -38,7 +38,7 @@ bool isNumber(string str)
 
 void Phonebook::printContacts()
 {
-	string  index;
+	std::string  index;
 
 	std::cout << "     index|" << "first name|" << " last name|" << "  nickname|" << std::endl;
 	for (size_t i = 0; i < 8; i++)
@@ -46,14 +46,14 @@ void Phonebook::printContacts()
 		this->contacts[i].printTableContact(i);
 	}
 	std::cout << "Index of the desired entry: ";
-	getline(cin,index);
+	getline(std::cin,index);
 	if(index.empty())
 		return ;
 	while(!isNumber(index) || stoi(index) >= 8)
 	{
 		std::cout << "Incorrect value" << std::endl;
 		std::cout << "Index of the desired entry: ";
-		getline(cin,index);
+		getline(std::cin,index);
 	}
 	this->contacts[stoi(index)].printContact();
 }
@@ -66,7 +66,7 @@ void Phonebook::add_contact()
 	if((this->count >= 8))
 	{
 		this->count = 7;
-		for (size_t i = 0; i < this->count; i++)
+		for (int i = 0; i < this->count; i++)
 		{
 			aux = this->contacts[i];
 			this->contacts[i] = this->contacts[i + 1];
