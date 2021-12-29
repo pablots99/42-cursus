@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   phonebook.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/20 13:35:18 by pablo             #+#    #+#             */
-/*   Updated: 2021/12/20 14:36:21 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/12/27 17:51:59 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,14 @@ void Phonebook::printContacts()
 	}
 	std::cout << "Index of the desired entry: ";
 	getline(std::cin,index);
-	if(index.empty())
-		return ;
-	while(!isNumber(index) || stoi(index) >= 8)
+	while(!index.empty() && (!isNumber(index) || stoi(index) >= 8))
 	{
 		std::cout << "Incorrect value" << std::endl;
 		std::cout << "Index of the desired entry: ";
 		getline(std::cin,index);
 	}
+	if(index.empty())
+		return ;
 	this->contacts[stoi(index)].printContact();
 }
 

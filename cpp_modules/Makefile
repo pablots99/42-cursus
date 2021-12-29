@@ -1,8 +1,6 @@
-NAME = Moarbrainz
+NAME = megaphone
 
-SRCS = main.cpp \
-		./srcs/Zombie.cpp \
-		./srcs/ZombieHorde.cpp
+SRCS = megaphone.cpp
 
 OBJ = $(SRCS:.cpp=.o)
 CPP = clang++

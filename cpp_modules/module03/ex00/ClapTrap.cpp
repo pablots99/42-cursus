@@ -3,27 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ClapTrap.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 16:10:35 by pablo             #+#    #+#             */
-/*   Updated: 2021/12/13 14:43:13 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/12/28 18:46:56 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ClapTrap.hpp"
 
-ClapTrap::ClapTrap() {
-	Name = "";
-	Hitpoints = 10;
-	Energy_points  = 10;
-	Attack_damage  = 0;
+ClapTrap::ClapTrap():Name(""),Hitpoints(10),Energy_points(10),Attack_damage(0) {
 	std::cout << "ClapTrap contructor called" << std::endl;
 }
-ClapTrap::ClapTrap(std::string _Name){
-	Name = _Name;
-	Hitpoints = 10;
-	Energy_points  = 10;
-	Attack_damage  = 0;
+ClapTrap::ClapTrap(std::string _Name): Name(_Name),Hitpoints(10),Energy_points(10),Attack_damage(0){
 	std::cout << "ClapTrap name contructor called" << std::endl;
 }
 

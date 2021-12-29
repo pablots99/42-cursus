@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 18:18:44 by pablo             #+#    #+#             */
-/*   Updated: 2021/11/02 18:25:26 by pablo            ###   ########.fr       */
+/*   Updated: 2021/12/28 14:35:05 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,5 @@ int main(){
 	std::cout << "ref: 			" << &stringREF<< std::endl;
 	std::cout << "disp pointer:		" << *stringPTR<< std::endl;
 	std::cout << "disp ref:		" << stringREF<< std::endl;
-
 
 }

@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 16:31:31 by pablo             #+#    #+#             */
-/*   Updated: 2021/11/02 18:11:22 by pablo            ###   ########.fr       */
+/*   Updated: 2021/12/28 14:33:59 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,12 @@
 
 Zombie::Zombie(std::string name){
 	this->_name = name;
-	this->announce();
+	std::cout << this->_name << " Created" << std::endl;
 }
+
+
 Zombie::Zombie(){
+	std::cout << "Zombie Created" << std::endl;
 }
 
 

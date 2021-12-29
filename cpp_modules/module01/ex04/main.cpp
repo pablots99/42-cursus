@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 18:45:21 by pablo             #+#    #+#             */
-/*   Updated: 2021/11/08 19:38:46 by pablo            ###   ########.fr       */
+/*   Updated: 2021/12/28 18:17:32 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,10 @@ std::string replace_str(std::string str, std::string s1, std::string s2)
 	for (size_t i = 0; i < str.length(); i++)
 	{
 		int j = 0;
-		while(str[i + j] == s1[j] && j < s1.length()) {
+		while(str[i + j] == s1[j] && j < (int)s1.length()) {
 			j++;
 		}
-		if(j == s1.length())
+		if(j == (int)s1.length())
 		{
 			std::string aux;
 			aux.append(str.substr(0,i));
