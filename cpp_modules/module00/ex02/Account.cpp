@@ -6,13 +6,15 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:46:52 by pablo             #+#    #+#             */
-/*   Updated: 2021/11/01 22:44:08 by pablo            ###   ########.fr       */
+/*   Updated: 2021/12/28 13:46:13 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Account.hpp"
 #include <iomanip>
 #include <iostream>
+#include <ctime>
+
 
 int Account::_nbAccounts = 0;
 int Account::_totalAmount = 0;
@@ -20,7 +22,6 @@ int Account::_totalNbDeposits = 0;
 int Account::_totalNbWithdrawals = 0;
 
 Account::~Account( void ){
-	//[19920104_091532] index:7;amount:8942;closed
 	Account::_displayTimestamp();
 	std::cout << "index:" << this->_accountIndex << ";amount:" << this->_amount << ";closed" << std::endl;
 
@@ -47,7 +48,6 @@ void	Account::displayAccountsInfos( void ) {
 }
 
 void	Account::displayStatus( void ) const{
-	//[19920104_091532] index:0;amount:42;deposits:0;withdrawals:0
 	Account::_displayTimestamp();
 	std::cout << "index:" <<  this->_accountIndex;
 	std::cout << ";amount:" <<  this->_amount;
@@ -73,7 +73,6 @@ int	Account::getNbWithdrawals( void ) {
 
 
 void	Account::makeDeposit( int deposit ) {
-	//[19920104_091532] index:0;p_amount:42;deposit:5;amount:47;nb_deposits:1
 	int p_amount  = this->_amount;
 	this->_amount += deposit;
 	this->_nbDeposits++;
@@ -91,10 +90,7 @@ bool	Account::makeWithdrawal( int withdrawal ) {
 	Account::_displayTimestamp();
 	std::cout << "index:" <<  this->_accountIndex;
 	std::cout << ";p_amount:" <<  this->_amount;
-
-	//[19920104_091532] index:1;p_amount:819;withdrawal:34;amount:785;nb_withdrawals:1
 	if(this->_amount < withdrawal) {
-		//> [19920104_091532] index:0;p_amount:47;withdrawal:refused
 		std::cout << ";withdrawal:refused" << std::endl;
 		return false;
 	}
@@ -113,8 +109,28 @@ int		Account::checkAmount( void )  const{
 }
 
 
-
+std::string fill_zero(int num)
+{
+	std::string str =  std::to_string(num);
+	std::string res = "0";
+	if(str.length() == 1)
+		return res.append(str);
+	else if (str.length() == 0)
+		return res.append("0");
+	return (str);
+}
 void	Account::_displayTimestamp( void ){
-	std::cout << "[19920104_091532] ";
+
+	time_t now = time(0);
+	tm *ltm = localtime(&now);
+
+
+  	std::cout << "[" << ltm->tm_year + 1900  <<
+	  	fill_zero(ltm->tm_mon)  <<
+		fill_zero(ltm->tm_mday) <<
+		"_" <<
+		fill_zero(ltm->tm_hour) <<
+		fill_zero(ltm->tm_min)  <<
+		fill_zero(ltm->tm_sec)  << "]";
 }
 

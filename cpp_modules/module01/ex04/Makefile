@@ -2,23 +2,22 @@ NAME = replace
 
 SRCS = main.cpp
 
-OBJS = $(SRCS:.cpp=.o)
+OBJ = $(SRCS:.cpp=.o)
+CPP = clang++
+CPP_FLAGS = -Wall -Wextra -Werror --std=c++98
 
+all: $(NAME)
 
-CC = clang++
+%.o: %.cpp
+	$(CPP) $(CPP_FLAGS) -c $< -o $@
 
-FLAGS = -Wall -Werror -Wextra -std=c++98 -fsanitize=address
-
-all:	$(NAME)
-
-$(NAME):	$(OBJS)
-		$(CC) $(FLAGS) -o $(NAME) $(OBJS)
+$(NAME): $(OBJ)
+	$(CPP) $(OBJ) -o $(NAME)
 
 clean:
-	rm -r $(OBJS)
+	rm -f $(OBJ)
 
-fclean:
+fclean: clean
 	rm -f $(NAME)
-	rm -r $(OBJS)
 
-re:	fclean all
+re: fclean all

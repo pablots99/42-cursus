@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   contact.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/20 13:45:30 by pablo             #+#    #+#             */
-/*   Updated: 2021/12/20 16:20:05 by ptorres          ###   ########.fr       */
+/*   Updated: 2021/12/27 14:34:40 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ void Contact::setContact()
 
 	std::cout << "LAST NAME:";
 	getline(std::cin, this->_lastName);
-	while(this->_lastName.empty() || !_isAlpha(this->_firstName))
+	while(this->_lastName.empty() || !_isAlpha(this->_lastName))
 	{
 		std::cout << "Last name incorrect value" << std::endl;
 		std::cout << "LAST NAME:";
@@ -117,7 +117,7 @@ void Contact::setContact()
 
 	std::cout << "NICK NAME:";
 	getline(std::cin, this->_nickName);
-	while(this->_nickName.empty() || !_isAlnum(this->_firstName))
+	while(this->_nickName.empty() || !_isAlnum(this->_nickName))
 	{
 		std::cout << "Nick name incorrect value" << std::endl;
 		std::cout << "NICK NAME:";
@@ -132,7 +132,7 @@ void Contact::setContact()
 		std::cout << "PHONE NUMBER:";
 		getline(std::cin, this->_phone);
 	}
-	
+
 	std::cout << "DARKEST SECRET:";
 	getline(std::cin, this->_secret);
 	while(this->_secret.empty())

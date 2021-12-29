@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 16:31:27 by pablo             #+#    #+#             */
-/*   Updated: 2021/11/02 17:54:54 by pablo            ###   ########.fr       */
+/*   Updated: 2021/12/28 14:18:28 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,4 +14,5 @@
 
 void randomChump( std::string name ) {
 	Zombie z(name);
+	z.announce();
 }
