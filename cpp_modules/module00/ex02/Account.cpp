@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Account.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:46:52 by pablo             #+#    #+#             */
-/*   Updated: 2021/12/28 13:46:13 by pablo            ###   ########.fr       */
+/*   Updated: 2022/01/04 17:21:40 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,9 @@ int Account::_totalNbDeposits = 0;
 int Account::_totalNbWithdrawals = 0;
 
 Account::~Account( void ){
+	this->_nbAccounts--;
 	Account::_displayTimestamp();
 	std::cout << "index:" << this->_accountIndex << ";amount:" << this->_amount << ";closed" << std::endl;
-
-
 }
 Account::Account( int initial_deposit ) {
 	this->_accountIndex = Account::_nbAccounts;
@@ -109,11 +108,13 @@ int		Account::checkAmount( void )  const{
 }
 
 
-std::string fill_zero(int num)
+std::string fill_zero(int num,bool date)
 {
 	std::string str =  std::to_string(num);
 	std::string res = "0";
-	if(str.length() == 1)
+	if(str.length() == 1 && str[0] == '0'  && date)
+		return "01";
+	else if(str.length() == 1)
 		return res.append(str);
 	else if (str.length() == 0)
 		return res.append("0");
@@ -123,14 +124,12 @@ void	Account::_displayTimestamp( void ){
 
 	time_t now = time(0);
 	tm *ltm = localtime(&now);
-
-
   	std::cout << "[" << ltm->tm_year + 1900  <<
-	  	fill_zero(ltm->tm_mon)  <<
-		fill_zero(ltm->tm_mday) <<
+	  	fill_zero(ltm->tm_mon, 1)  <<
+		fill_zero(ltm->tm_mday, 1) <<
 		"_" <<
-		fill_zero(ltm->tm_hour) <<
-		fill_zero(ltm->tm_min)  <<
-		fill_zero(ltm->tm_sec)  << "]";
+		fill_zero(ltm->tm_hour, 0) <<
+		fill_zero(ltm->tm_min, 0)  <<
+		fill_zero(ltm->tm_sec, 0)  << "] ";
 }
 

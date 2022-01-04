@@ -14,7 +14,7 @@ all: $(NAME)
 	$(CPP) $(CPP_FLAGS) -c $< -o $@
 
 $(NAME): $(OBJ)
-	$(CPP) $(OBJ) -o $(NAME)
+	$(CPP) $(CPP_FLAGS) $(OBJ) -o $(NAME)
 
 clean:
 	rm -f $(OBJ)
