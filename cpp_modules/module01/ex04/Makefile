@@ -4,7 +4,7 @@ SRCS = main.cpp
 
 OBJ = $(SRCS:.cpp=.o)
 CPP = clang++
-CPP_FLAGS = -Wall -Wextra -Werror --std=c++98
+CPP_FLAGS = -Wall -Wextra -Werror  --std=c++98
 
 all: $(NAME)
 
@@ -19,5 +19,6 @@ clean:
 
 fclean: clean
 	rm -f $(NAME)
+	rm -rf *.replace
 
 re: fclean all

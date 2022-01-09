@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 16:31:34 by pablo             #+#    #+#             */
-/*   Updated: 2021/12/28 14:20:07 by pablo            ###   ########.fr       */
+/*   Updated: 2022/01/09 20:57:17 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,11 @@ class Zombie
 private:
 	std::string _name;
 public:
+	Zombie();
 	Zombie(std::string name);
 	void announce( void );
+	void setName(std::string name);
+	std::string getName();
 	~Zombie();
 };
 Zombie* newZombie( std::string name );

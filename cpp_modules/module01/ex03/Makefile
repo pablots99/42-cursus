@@ -1,4 +1,4 @@
-NAME = WEAPON
+NAME = UnnecessaryViolence
 
 SRCS = main.cpp \
 		srcs/Weapon.cpp \

@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 16:40:30 by pablo             #+#    #+#             */
-/*   Updated: 2021/12/28 14:34:58 by pablo            ###   ########.fr       */
+/*   Updated: 2022/01/09 21:03:56 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ int main() {
 	Zombie *z = zombieHorde(num,"ZOMBIE!");
 	for(int i = 0; i< num; i++)
 	{
-		std::cout << i << " ";
 		z[i].announce();
 	}
 	delete [] z;

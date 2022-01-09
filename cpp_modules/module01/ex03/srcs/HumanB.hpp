@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 17:12:51 by pablo             #+#    #+#             */
-/*   Updated: 2021/11/08 18:32:43 by pablo            ###   ########.fr       */
+/*   Updated: 2022/01/09 21:15:53 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ public:
 	void attack();
 	~HumanB();
 private:
-	std::string name;
+	const std::string name;
 	Weapon *weapon;
 };
 

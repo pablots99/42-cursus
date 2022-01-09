@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 17:12:51 by pablo             #+#    #+#             */
-/*   Updated: 2021/12/28 18:01:42 by pablo            ###   ########.fr       */
+/*   Updated: 2022/01/09 21:15:13 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ public:
 	~HumanA();
 private:
 	HumanA();
-	std::string name;
+	const std::string name;
 	Weapon &weapon;
 };
 

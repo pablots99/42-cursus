@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 19:52:38 by pablo             #+#    #+#             */
-/*   Updated: 2021/11/09 21:04:33 by pablo            ###   ########.fr       */
+/*   Updated: 2022/01/09 21:58:33 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,4 @@ int main() {
 	karen.complain("INFO");
 	karen.complain("WARNING");
 	karen.complain("ERROR");
-
 }

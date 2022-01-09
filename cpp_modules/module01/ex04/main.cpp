@@ -6,27 +6,21 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 18:45:21 by pablo             #+#    #+#             */
-/*   Updated: 2021/12/28 18:17:32 by pablo            ###   ########.fr       */
+/*   Updated: 2022/01/09 21:55:27 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
 #include <fstream>
-
-
-
-void get_initial_data(std::string *name,std::string *s1,std::string *s2) {
-	std::cout << "input filename: ";
-	std::getline(std::cin, *name);
-	std::cout << "input s1: ";
-	std::getline(std::cin, *s1);
-	std::cout << "input s2: ";
-	std::getline(std::cin, *s2);
-
-}
+#include <stdio.h>
 
 void read_file(std::string name,std::string *buff){
 	std::ifstream file_in(name);
+	if(!file_in)
+	{
+		std::cout << "no file wit name: " << name << std::endl;
+		return ;
+	}
 	std::string aux;
 	while(getline(file_in,aux))
 		buff->append(aux + "\n");
@@ -58,12 +52,20 @@ std::string replace_str(std::string str, std::string s1, std::string s2)
 }
 
 
-int main() {
-	std::string s1,s2,name,buff;
-	get_initial_data(&name,&s1,&s2);
+int main(int argc, char **argv) {
+	if (argc != 4)
+	{
+		std::cout << "Arguments error" << std::endl;
+		return (1);
+	}
+	std::string buff;
+	std::string name(argv[1]);
+	std::string s1(argv[2]);
+	std::string s2(argv[3]);
 	read_file(name,&buff);
 	buff = replace_str(buff,s1,s2);
 	std::ofstream myfile(name.append(".replace"));
 	myfile << buff;
 	myfile.close();
+	return (0);
 }
