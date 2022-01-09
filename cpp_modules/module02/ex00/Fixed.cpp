@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 20:50:26 by pablo             #+#    #+#             */
-/*   Updated: 2021/11/11 19:12:06 by pablo            ###   ########.fr       */
+/*   Updated: 2022/01/09 23:50:00 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,10 @@ Fixed::Fixed(){
 	return;
 }
 
-Fixed::Fixed(const int num){
 
+Fixed::Fixed(const int num) {
+	std::cout << "Int constructor called" << std::endl;
+	this->point_value = num << this->fraction_bits;
 }
 
 Fixed::Fixed(const Fixed &f){
@@ -39,7 +41,7 @@ void Fixed::setRawBits(int const raw ){
 }
 
 Fixed &Fixed::operator=(const Fixed &f) {
-	std::cout << "Asign operator Called" << std::endl;
+	std::cout << "Assignation operator Called" << std::endl;
 	this->point_value = f.getRawBits();
 	return *this;
 }

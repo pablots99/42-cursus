@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 20:50:26 by pablo             #+#    #+#             */
-/*   Updated: 2021/11/17 19:54:00 by pablo            ###   ########.fr       */
+/*   Updated: 2022/01/10 00:16:37 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ float Fixed::toFloat() const{
 
 
 int  Fixed::getRawBits() const{
-	// std::cout << "getRawBits member function called" << std::endl;
 	return this->point_value;
 }
 
@@ -51,10 +50,11 @@ void Fixed::setRawBits(int const raw ){
 }
 
 Fixed &Fixed::operator=(const Fixed &f) {
-	// std::cout << "Asign operator Called" << std::endl;
 	this->point_value = f.getRawBits();
 	return *this;
 }
+
+
 
 
 bool Fixed::operator == (const Fixed &f) {
@@ -81,6 +81,8 @@ bool Fixed::operator <= (const Fixed &f) {
 bool Fixed::operator < (const Fixed &f) {
 	return this->getRawBits() < f.getRawBits();
 }
+
+
 
 
 float Fixed::operator + (const Fixed &f) {

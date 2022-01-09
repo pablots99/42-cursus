@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 20:50:13 by pablo             #+#    #+#             */
-/*   Updated: 2021/11/17 19:51:50 by pablo            ###   ########.fr       */
+/*   Updated: 2022/01/10 00:25:32 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,21 @@ int main()
 	std::cout << a << std::endl;
 	std::cout << b << std::endl;
 	std::cout << Fixed::max(a, b) << std::endl;
-
-
-	// float af = 1;
-	// std::cout << "af++"<< af++ << std::endl;
-	// std::cout << "af "<< af << std::endl;
-
-	// std::cout<< "a   " << a << std::endl;
-	// std::cout<< "++a " << ++a << std::endl;
-	// std::cout<< "a   " << a << std::endl;
-	// std::cout<< "a++ " << a++ << std::endl;
-	// std::cout<< "a   " << a << std::endl;
-	// std::cout<< "b   " << b << std::endl;
-
+	std::cout <<  Fixed::min(a, b) << std::endl;
+	std::cout << "----------------------" << std::endl;
+	a = 1.1f;
+	Fixed c(1.1f);
+	std::cout << (a == c) << std::endl;
+	std::cout << (a != c) << std::endl;
+	std::cout << (a <= c) << std::endl;
+	std::cout << (a >= c) << std::endl;
+	c = -1;
+	std::cout << (a < c) << std::endl;
+	std::cout << (a > c) << std::endl;
+	c = 2;
+	std::cout << a / c << std::endl;
+	std::cout << a * c << std::endl;
+	std::cout << a - c << std::endl;
+	std::cout << a + c << std::endl;
 	return (0);
 }
