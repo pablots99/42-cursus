@@ -6,17 +6,17 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 16:10:35 by pablo             #+#    #+#             */
-/*   Updated: 2022/01/10 19:58:12 by ptorres          ###   ########.fr       */
+/*   Updated: 2022/01/11 16:51:36 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ClapTrap.hpp"
 
 ClapTrap::ClapTrap(std::string _Name): 
-	Name(_Name),
 	Hitpoints(10),
 	Energy_points(10),
-	Attack_damage(0) {
+	Attack_damage(0){
+	this->Name = _Name;
 	std::cout << "ClapTrap " << this->Name << " Initialized" << 
 		" HP:" << this->Hitpoints <<
 		" EP:" << this->Energy_points << 
@@ -42,8 +42,17 @@ void ClapTrap::attack(std::string const &target){
 	{
 		std::cout << "ClapTrap " << Name;
 		std::cout << " cannot attack " << target;
+		std::cout << ", is offline"    << std::endl;
 		return ;
 	}
+	if(Energy_points - Attack_damage < 0)
+	{
+		std::cout << "ClapTrap " << Name;
+		std::cout << " cannot attack " << target;
+		std::cout << ", not enought Energy points. Ep: " << Energy_points << std::endl;
+		return ;
+	}
+	Energy_points -= Attack_damage;
 	std::cout << "ClapTrap " << Name;
 	std::cout << " attack " << target;
 	std::cout << " causing " << Attack_damage << " points of damage!" << std::endl;
