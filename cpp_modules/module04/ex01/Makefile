@@ -1,6 +1,6 @@
-NAME = Polymorphism
+NAME = Main
 
-SRCS = Dog.cpp Animal.cpp main.cpp WrongAnimal.cpp WrongCat.cpp Cat.cpp
+SRCS = Brain.cpp main.cpp Dog.cpp Cat.cpp
 
 OBJ = $(SRCS:.cpp=.o)
 CPP = c++
