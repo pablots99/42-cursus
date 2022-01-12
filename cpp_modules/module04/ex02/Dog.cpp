@@ -1,32 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Brain.hpp                                          :+:      :+:    :+:   */
+/*   dog.cpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/11 21:06:02 by ptorres           #+#    #+#             */
-/*   Updated: 2022/01/12 14:58:21 by ptorres          ###   ########.fr       */
+/*   Created: 2022/01/11 18:29:50 by ptorres           #+#    #+#             */
+/*   Updated: 2022/01/11 19:34:26 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <iostream>
+#include "Dog.hpp"
 
 
-#ifndef BRAIN_HPP
-#define BRAIN_HPP
+Dog::Dog(){
+    this->_type = "Dog";
+    std::cout << "Dog contructor called" << std::endl;
+}
 
-class Brain
+Dog::Dog(Dog &dog)
 {
-protected:
-    std::string *_ideas;
-public:
-    Brain();
-    Brain(Brain &brain);
-    std::string *getIdeas();
-    void setIdeas(std::string ideas);
-    Brain &operator=(Brain &brain);
-    ~Brain();
-};
+    *this = dog;
+}
 
-#endif
+Dog &Dog::operator=(Dog &animal)
+{
+    this->_type = animal._type;
+    return *this;
+}
+
+
+
+void Dog::makeSound(){
+    std::cout << "The dog makes wrauff " << std::endl;
+}
+
+Dog::~Dog(){
+    std::cout << "Dog destructoor called" << std::endl;
+}

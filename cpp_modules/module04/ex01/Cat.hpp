@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 18:39:38 by ptorres           #+#    #+#             */
-/*   Updated: 2022/01/11 21:16:36 by ptorres          ###   ########.fr       */
+/*   Updated: 2022/01/12 15:44:10 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,13 @@
 class Cat: public Animal
 {
 private:
-    Brain *_brain;
+    
 public:
     Cat();
     Cat(Cat &cat);
     Cat &operator=(Cat &animal);
     void makeSound();
+    Brain *brain;
     ~Cat();
 };
 

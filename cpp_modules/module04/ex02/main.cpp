@@ -1,32 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Brain.hpp                                          :+:      :+:    :+:   */
+/*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/11 21:06:02 by ptorres           #+#    #+#             */
-/*   Updated: 2022/01/12 14:58:21 by ptorres          ###   ########.fr       */
+/*   Created: 2022/01/12 15:50:23 by ptorres           #+#    #+#             */
+/*   Updated: 2022/01/12 16:36:00 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <iostream>
+#include "Cat.hpp"
+#include "Dog.hpp"
 
 
-#ifndef BRAIN_HPP
-#define BRAIN_HPP
-
-class Brain
-{
-protected:
-    std::string *_ideas;
-public:
-    Brain();
-    Brain(Brain &brain);
-    std::string *getIdeas();
-    void setIdeas(std::string ideas);
-    Brain &operator=(Brain &brain);
-    ~Brain();
-};
-
-#endif
+int main() { 
+    Animal *d = new Dog();
+    Animal *c = new Cat();;
+    c->makeSound();
+    d->makeSound();
+    delete c;
+    delete d;
+    return 0;
+}

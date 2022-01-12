@@ -1,32 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Brain.hpp                                          :+:      :+:    :+:   */
+/*   dog.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/11 21:06:02 by ptorres           #+#    #+#             */
-/*   Updated: 2022/01/12 14:58:21 by ptorres          ###   ########.fr       */
+/*   Created: 2022/01/11 17:42:49 by ptorres           #+#    #+#             */
+/*   Updated: 2022/01/11 19:34:39 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
+#ifndef DOG_HPP
+#define DOG_HPP
+
+
 #include <iostream>
+#include "Animal.hpp"
 
-
-#ifndef BRAIN_HPP
-#define BRAIN_HPP
-
-class Brain
+class Dog: public Animal 
 {
-protected:
-    std::string *_ideas;
-public:
-    Brain();
-    Brain(Brain &brain);
-    std::string *getIdeas();
-    void setIdeas(std::string ideas);
-    Brain &operator=(Brain &brain);
-    ~Brain();
+    public:
+        Dog();
+        Dog(Dog &dog);
+        Dog &operator=(Dog &animal);
+        void makeSound();
+        ~Dog();
 };
 
 #endif

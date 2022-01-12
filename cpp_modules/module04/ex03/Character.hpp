@@ -1,32 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Brain.hpp                                          :+:      :+:    :+:   */
+/*   Character.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/11 21:06:02 by ptorres           #+#    #+#             */
-/*   Updated: 2022/01/12 14:58:21 by ptorres          ###   ########.fr       */
+/*   Created: 2022/01/12 17:58:13 by ptorres           #+#    #+#             */
+/*   Updated: 2022/01/12 18:08:10 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <iostream>
 
+#ifndef CHARACTER_HPP
+#define CHARACTER_HPP
+#include "ICharacter.hpp"
 
-#ifndef BRAIN_HPP
-#define BRAIN_HPP
-
-class Brain
+class Character: ICharacter
 {
-protected:
-    std::string *_ideas;
+private:
+    std::string name;
+    AMateria *materia[4];
 public:
-    Brain();
-    Brain(Brain &brain);
-    std::string *getIdeas();
-    void setIdeas(std::string ideas);
-    Brain &operator=(Brain &brain);
-    ~Brain();
+    Character(std::string name);
+    Character(Character *obj);
+    Character &operator=(Character *obj);
+    ~Character();
 };
 
+
+
 #endif
+

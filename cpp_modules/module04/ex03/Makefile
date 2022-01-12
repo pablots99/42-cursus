@@ -1,6 +1,6 @@
 NAME = Main
 
-SRCS = Brain.cpp main.cpp Dog.cpp Cat.cpp Animal.cpp
+SRCS = AMateria.cpp Character.cpp Cure.cpp Ice.cpp  main.cpp
 
 OBJ = $(SRCS:.cpp=.o)
 CPP = c++

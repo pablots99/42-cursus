@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 17:39:39 by ptorres           #+#    #+#             */
-/*   Updated: 2022/01/11 19:42:06 by ptorres          ###   ########.fr       */
+/*   Updated: 2022/01/12 16:36:22 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ std::string Animal::getType(){
 }
 
 Animal::~Animal() { 
-    std::cout << "animal destructor called" << std::endl;
+    std::cout << "Animal destructor called" << std::endl;
 }
 
 Animal &Animal::operator=(Animal &animal) {
