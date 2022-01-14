@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Cure.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 17:25:49 by ptorres           #+#    #+#             */
-/*   Updated: 2022/01/12 17:56:06 by ptorres          ###   ########.fr       */
+/*   Updated: 2022/01/14 00:02:43 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ AMateria* Cure::clone() const
     AMateria *cure = new Cure();
     return cure;
 }
-void use(ICharacter& target)
+void Cure::use(ICharacter& target)
 {
-    std::cout << "*heals " << target.getName() << " wounds*";
+    std::cout << "*heals " << target.getName() << " wounds*" << std::endl;
 }
 
 Cure::~Cure()

@@ -3,17 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   ICharacter.hpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 16:51:27 by ptorres           #+#    #+#             */
-/*   Updated: 2022/01/12 18:03:55 by ptorres          ###   ########.fr       */
+/*   Updated: 2022/01/13 22:05:30 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ICHARACTER_HPP
 #define ICHARACTER_HPP
-#include <iostream>
-#include "AMateria.hpp"
+
+class ICharacter;
+
+
+# include "AMateria.hpp"
 
 
 class ICharacter

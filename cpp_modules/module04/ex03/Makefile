@@ -1,6 +1,6 @@
 NAME = Main
 
-SRCS = AMateria.cpp Character.cpp Cure.cpp Ice.cpp  main.cpp
+SRCS = AMateria.cpp Character.cpp Cure.cpp Ice.cpp MateriaSource.cpp main.cpp
 
 OBJ = $(SRCS:.cpp=.o)
 CPP = c++
