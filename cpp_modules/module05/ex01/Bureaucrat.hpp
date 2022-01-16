@@ -6,25 +6,21 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 03:08:25 by pablo             #+#    #+#             */
-/*   Updated: 2022/01/14 13:35:29 by pablo            ###   ########.fr       */
+/*   Updated: 2022/01/15 18:34:03 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUREAUCRAT_HPP
 #define BUREAUCRAT_HPP
 
+class Bureaucrat;
+
 #include <iostream>
 #include <ostream>
+#include "Form.hpp"
 
 
 
-
-//fixostream and how to initialize const variable!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//fixostream and how to initialize const variable!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//fixostream and how to initialize const variable!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//fixostream and how to initialize const variable!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//fixostream and how to initialize const variable!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//fixostream and how to initialize const variable!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 class Bureaucrat
 {
 
@@ -56,6 +52,7 @@ public:
 	int getGrade() const;
 	void incremetGrade();
 	void decrementGrade();
+	void signForm(Form &form);
 };
 std::ostream &operator<<(std::ostream &os,Bureaucrat const &b);
 

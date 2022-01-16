@@ -1,9 +1,9 @@
-NAME = megaphone
+NAME = main
 
-SRCS = megaphone.cpp
+SRCS = main.cpp Bureaucrat.cpp Form.cpp ShrubberyCreationForm.cpp RobotomyRequestForm.cpp PresidentialPardonForm.cpp
 
 OBJ = $(SRCS:.cpp=.o)
-CPP = clang++
+CPP = c++
 CPP_FLAGS = -Wall -Wextra -Werror --std=c++98
 
 all: $(NAME)
