@@ -5,27 +5,40 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/18 19:30:44 by ptorres           #+#    #+#             */
-/*   Updated: 2022/01/19 16:09:50 by ptorres          ###   ########.fr       */
+/*   Created: 2022/01/19 16:16:34 by ptorres           #+#    #+#             */
+/*   Updated: 2022/01/19 17:23:31 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "whatever.hpp"
+// #include "eayfind.hpp"
 
-int main() 
+#include <iostream>
+#include <list>
+#include <vector>
+
+int main()
 {
-    int a = 2;
-    int b = 3;
-    ::swap( a, b );
-    std::cout << "a = " << a << ", b = " << b << std::endl;
-    std::cout << "min( a, b ) = " << ::min( a, b ) << std::endl;
-    std::cout << "max( a, b ) = " << ::max( a, b ) << std::endl;
-    std::string c = "chaine1";
-    std::string d = "chaine2";
-    ::swap(c, d);
-    std::cout << "c = " << c << ", d = " << d << std::endl;
-    std::cout << "min( c, d ) = " << ::min( c, d ) << std::endl;
-    std::cout << "max( c, d ) = " << ::max( c, d ) << std::endl;
-    return 0;
+    std::list<int> l;
+    std::vector<int> v;
+
+    l.push_back(1);
+    l.push_back(2);
+    l.push_back(3);
+    l.push_back(4);
+
+    v.push_back(1);
+    v.push_back(2);
+    v.push_back(3);
+    v.push_back(4);
+
+    std::list<int>::iterator it;
+
+    for (it = l.begin(); it != l.end(); ++it)
+    {
+        std::cout << *it << std::endl;
+    }
+    
+
+
 
 }

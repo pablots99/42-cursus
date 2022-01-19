@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 13:24:04 by ptorres           #+#    #+#             */
-/*   Updated: 2022/01/19 15:42:15 by ptorres          ###   ########.fr       */
+/*   Updated: 2022/01/19 16:11:20 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int main(int, char**)
     std::cout << "Last: " << numbers[MAX_VAL - 1] << std::endl;
     std::cout << "complex type" << "-------------------" << std::endl;
     Array<std::string> s(10);
+    Array<std::string> s2(10);
     for (int i = 0; i < s.size(); i++)
     {
         s[i] = std::to_string(i) + " hola";
@@ -66,6 +67,16 @@ int main(int, char**)
     for (int i = 0; i < s.size(); i++)
     {
         std::cout << s[i] << std::endl;
+    }
+    std::cout << s[9] << std::endl;
+    s2 = s;
+    std::cout << "change last element of array" << std::endl;
+    s[9] = "aaaaaaaaa";
+    std::cout << s[9] << std::endl;
+    std::cout << "Deep copy " << std::endl;
+    for (int i = 0; i < s2.size(); i++)
+    {
+        std::cout << s2[i] << std::endl;
     }
     delete [] mirror;
     return 0;

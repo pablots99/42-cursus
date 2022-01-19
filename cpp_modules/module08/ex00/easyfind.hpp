@@ -1,31 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   easyfind.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/18 21:07:05 by ptorres           #+#    #+#             */
-/*   Updated: 2022/01/19 13:22:50 by ptorres          ###   ########.fr       */
+/*   Created: 2022/01/19 16:16:47 by ptorres           #+#    #+#             */
+/*   Updated: 2022/01/19 16:22:04 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "iter.hpp"
-#include <iostream>
-#include <ostream>
 
+#ifndef EASY_HPP
+#define EASY_HPP
+#include "iostream"
 
-template< typename T > 
-void print( T const & num ) 
-{ 
-    std::cout << num << std::endl; 
+template<typename T>
+void easyfind(T c, int n)
+{
+    
 }
 
 
 
-int main() { 
-    int nums[] = { 0,1,2,3,4,6,7,8,9,10 };
-    iter( nums, 10, print ); 
 
-    return 0; 
-}
+#endif

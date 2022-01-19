@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 13:24:32 by ptorres           #+#    #+#             */
-/*   Updated: 2022/01/19 15:38:11 by ptorres          ###   ########.fr       */
+/*   Updated: 2022/01/19 16:09:39 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,14 @@ class Array
                 throw OutOfIndexException();
             _arr = new T[n];
         }
-        Array(Array *obj):_arr(new T[obj->_length]){copy(this,obj);}
-        Array & operator=(Array &obj){copy(this,obj); return *this;}
+        Array(Array *obj):_arr(new T[obj->_length])
+        {
+            copy(*this,obj,this->_length);
+        }
+        Array & operator=(Array &obj){
+            copy(*this,obj,this->_length);
+            return *this;
+        }
         int size() const  { return _length;}
         T & operator[](int i){ 
             if ( i > _length -1 || i < 0 )
