@@ -1,3 +1,14 @@
+/bin/ls
+
+build.sh
+leaks.res
+micro
+microshell
+microshell.c
+microshell.dSYM
+out.res
+test.sh
+/bin/cat microshell.c
 /*
 	EXAM RANK 04
 	made by ptorres
@@ -6,8 +17,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <stdlib.h>
-#include <stdio.h>
-#include <errno.h>
+
 
 typedef struct s_fd {
 	int fd_in;
@@ -32,7 +42,6 @@ void fd_putstr(int fd, char *str){
 
 void error()
 {
-	printf("ERRNO: %d, %d\n",errno,errno == EBUSY);
 	fd_putstr(2,"error: fatal\n");
 	exit(1);
 }
@@ -40,8 +49,6 @@ void error()
 int execute_command(t_fd *fd, char **cmd, char **env,int cmd_count)
 {
 	int ret = 0;
-	if(!*cmd)
-		return 0;
 	if(!fd->is_last){
 		if(pipe(fd->fd) == -1)
 			error();
@@ -51,11 +58,11 @@ int execute_command(t_fd *fd, char **cmd, char **env,int cmd_count)
 		error();
 	if(fd->pid == 0)
 	{
-		if(!fd->is_last && dup2(fd->fd[1],1) ==  -1)
+		if(!fd->is_last && dup2(fd->fd[1],1) < 0)
 			error();
-		if(dup2(fd->fd_in,0) == -1)
+		if(cmd_count != 0 && dup2(fd->fd_in,0) < 0)
 			error();
-		if((ret = execve(cmd[0],cmd,env)) ==  -1)
+		if((ret = execve(cmd[0],cmd,env)) < 0)
 		{
 			fd_putstr(2,"error: cannot execute ");
 			fd_putstr(2,cmd[0]);
@@ -72,6 +79,10 @@ int execute_command(t_fd *fd, char **cmd, char **env,int cmd_count)
 		{
 			close(fd->fd[1]);
 			fd->fd_in = fd->fd[0];
+		}
+		else
+		{
+			close(fd->fd[0]);
 		}
 	}
 	return WEXITSTATUS(ret);
@@ -91,15 +102,17 @@ int execute_commands(t_fd *fd, char **argv,char **env){
 		{
 			argv[i] = NULL;
 			ret = execute_command(fd, argv + start,env,cmd_count);
-			cmd_count++;
 			start  = i + 1;
 		}
 		if(fd->is_last)
 			cmd_count = 0;
+		else
+			cmd_count++;
 		i++;
 	}
-	fd->is_last  = 1;
-	ret = execute_command(fd, argv + start,env,cmd_count);
+	if(cmd_count)
+		fd->is_last  = 1;
+		ret = execute_command(fd, argv + start,env,cmd_count);
 	return ret;
 }
 
@@ -114,3 +127,10 @@ int main(int argc, char **argv,char **env)
 	fd.fd_in = 0;
 	return execute_commands(&fd,argv + 1, env);
 }
+
+/bin/ls microshell.c
+microshell.c
+
+/bin/ls salut
+
+;
