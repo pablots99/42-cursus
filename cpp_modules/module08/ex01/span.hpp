@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   span.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 13:31:56 by ptorres           #+#    #+#             */
-/*   Updated: 2022/01/21 00:17:39 by pablo            ###   ########.fr       */
+/*   Updated: 2022/01/21 11:50:10 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ class Span {
 		Span &operator=(Span &obj);
 		~Span();
 		void addNumber(unsigned const int n);
+		void addRange(std::vector<int>::iterator t1,std::vector<int>::iterator t2);
 		int getN();
 		int shortestSpan();
 		int longestSpan();

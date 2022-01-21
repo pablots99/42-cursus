@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   easyfind.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 16:16:47 by ptorres           #+#    #+#             */
-/*   Updated: 2022/01/20 23:00:52 by pablo            ###   ########.fr       */
+/*   Updated: 2022/01/21 12:16:55 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ class NoIteratorException : public std::exception
 {
 		char const * what() const throw()
 		{
-			return "No iterator found";
+			return "Can not find number";
 		}
 };
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 16:16:34 by ptorres           #+#    #+#             */
-/*   Updated: 2022/01/20 23:02:01 by pablo            ###   ########.fr       */
+/*   Updated: 2022/01/21 12:17:08 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int main()
         std::cout << *it << std::endl;
     }
 
-	std::cout << "search iterator..." << std::endl;
+	std::cout << "search number..." << std::endl;
 	try
 	{
 		std::cout << *easyfind(l,10) << std::endl;

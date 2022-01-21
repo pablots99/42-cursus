@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   span.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 13:31:52 by ptorres           #+#    #+#             */
-/*   Updated: 2022/01/21 00:31:28 by pablo            ###   ########.fr       */
+/*   Updated: 2022/01/21 14:29:02 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "span.hpp"
-
 
 Span::Span(unsigned int n):_N(n)
 {
@@ -47,6 +46,18 @@ Span::~Span(){
 
 }
 
+void Span::addRange(std::vector<int>::iterator t1,std::vector<int>::iterator t2)
+{
+	while(t1 != t2)
+	{
+		if(_nums.size() > _N -1)
+			throw OutOfIndexException();
+		else 
+			_nums.push_back(*t1);
+		t1++;
+	}
+}
+
 int Span::longestSpan() {
 
 	if (_nums.empty() || _nums.size() < 2 )
@@ -59,15 +70,12 @@ int Span::longestSpan() {
 int Span::shortestSpan() {
 	if (_nums.empty() || _nums.size() < 2 )
 		throw NoPosibleSpanException();
-	std::vector<int>::iterator it = _nums.begin();
+	std::vector<int> aux  = _nums;
+	std::vector<int>::iterator it = aux.begin();
+	std::sort(aux.begin(), aux.end());
 	int res = abs(*it - *(it+1));
-	it += 2;
-	for (it = _nums.begin() + 2; it != _nums.end(); ++it)
-	{
-		if(abs(*it - *(it+1)) < res)
-			res = abs(*it - *(it+1));
-	}
+	for (it = aux.begin() + 2; it != aux.end(); ++it)
+	 		res = std::min(res,abs(*it - *(it+1)));
 	return res;
 }
-
 
