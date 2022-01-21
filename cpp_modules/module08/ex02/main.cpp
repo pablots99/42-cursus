@@ -5,21 +5,35 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/20 13:30:54 by ptorres           #+#    #+#             */
-/*   Updated: 2022/01/21 00:23:00 by pablo            ###   ########.fr       */
+/*   Created: 2022/01/21 00:43:12 by pablo             #+#    #+#             */
+/*   Updated: 2022/01/21 01:28:14 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "span.hpp"
-
+#include "mutantstack.hpp"
+#include <list>
 int main()
 {
-	Span sp = Span(5);
-	sp.addNumber(5);
-	sp.addNumber(3);
-	sp.addNumber(17);
-	sp.addNumber(9);
-	sp.addNumber(11);
-	std::cout << sp.shortestSpan() << std::endl;
-	std::cout << sp.longestSpan() << std::endl;
+	std::cout << "mutant -----------------"<< std::endl;
+	MutantStack<int> mstack;
+	mstack.push(5);
+	mstack.push(17);
+	std::cout << "top" << mstack.top() << std::endl;
+	mstack.pop();
+	std::cout <<  "size" << mstack.size() << std::endl;
+	mstack.push(3);
+	mstack.push(5);
+	mstack.push(737);
+	mstack.push(0);
+	MutantStack<int>::iterator it = mstack.begin();
+	MutantStack<int>::iterator ite = mstack.end();
+	++it;
+	--it;
+	while (it != ite)
+	{
+		std::cout << *it << std::endl;
+		++it;
+	}
+
+	return 0;
 }

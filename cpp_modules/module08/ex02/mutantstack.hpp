@@ -1,25 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   mutantstack.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/20 13:30:54 by ptorres           #+#    #+#             */
-/*   Updated: 2022/01/21 00:23:00 by pablo            ###   ########.fr       */
+/*   Created: 2022/01/21 00:43:33 by pablo             #+#    #+#             */
+/*   Updated: 2022/01/21 01:29:46 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "span.hpp"
+#ifndef MUTANT_HPP
+#define MUTANT_HPP
 
-int main()
+#include <iostream>
+#include <stack>
+
+
+template<typename T>
+class MutantStack: public std::stack<T>
 {
-	Span sp = Span(5);
-	sp.addNumber(5);
-	sp.addNumber(3);
-	sp.addNumber(17);
-	sp.addNumber(9);
-	sp.addNumber(11);
-	std::cout << sp.shortestSpan() << std::endl;
-	std::cout << sp.longestSpan() << std::endl;
-}
+public:
+	typedef	T*	iterator;
+	T *end() {return	&this->top() + 1;}
+	T *begin(){return ((&this->top() + 1) - this->size());}
+};
+
+#endif
+
