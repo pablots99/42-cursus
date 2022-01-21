@@ -6,15 +6,15 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 13:34:36 by ptorres           #+#    #+#             */
-/*   Updated: 2022/01/21 13:55:49 by ptorres          ###   ########.fr       */
+/*   Updated: 2022/01/21 16:15:54 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include <iostream>
-#include <map>
-#include <vector>
-#include <stack>
+#include "./srcs/map.hpp"
+#include "./srcs/vector.hpp"
+#include <./srcs/stack.hpp>
 
 int main()
 {
