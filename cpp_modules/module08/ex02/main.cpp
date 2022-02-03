@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 00:43:12 by pablo             #+#    #+#             */
-/*   Updated: 2022/01/21 01:28:14 by pablo            ###   ########.fr       */
+/*   Updated: 2022/01/21 12:11:21 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,33 @@ int main()
 		std::cout << *it << std::endl;
 		++it;
 	}
-
+	std::cout << "long stack test!" << std::endl;
+	MutantStack<int> stk;
+	for (size_t i = 0; i < 1000; i++)
+	{	
+		stk.push(i);
+	}
+	it = stk.begin();
+	ite = stk.end();
+	while (it != ite)
+	{
+		std::cout << *it << ", ";
+		++it;
+	}
+	std::cout<< std::endl << "----------------------------------" << std::endl;
+	std::cout<< "pop half" << std::endl;
+	std::cout<< std::endl << "----------------------------------" << std::endl;
+	for (size_t i = 0; i < 500; i++)
+	{	
+		stk.top();
+		stk.pop();
+	}
+	it = stk.begin();
+	ite = stk.end();
+	while (it != ite)
+	{
+		std::cout << *it << ", ";
+		++it;
+	}
 	return 0;
 }

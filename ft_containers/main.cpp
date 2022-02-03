@@ -1,35 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mutantstack.hpp                                    :+:      :+:    :+:   */
+/*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/21 00:43:33 by pablo             #+#    #+#             */
-/*   Updated: 2022/01/21 13:04:13 by ptorres          ###   ########.fr       */
+/*   Created: 2022/01/21 13:34:36 by ptorres           #+#    #+#             */
+/*   Updated: 2022/01/21 16:15:54 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MUTANT_HPP
-#define MUTANT_HPP
 
 #include <iostream>
-#include <stack>
+#include "./srcs/map.hpp"
+#include "./srcs/vector.hpp"
+#include <./srcs/stack.hpp>
 
-
-template<typename T>
-class MutantStack: public std::stack<T>
+int main()
 {
-public:
-	MutantStack():std::stack<T>(){}
-	MutantStack(MutantStack &obj){
-		*this = obj;
-	}
-	~MutantStack(){}
-	typedef	T*	iterator;
-	T *end() {return	&this->top() + 1;}
-	T *begin(){return ((&this->top() + 1) - this->size());}
-};
+    std::map<int,std::string> a;
 
-#endif
-
+    ft::map<int,int> a;
+}
