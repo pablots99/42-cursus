@@ -1,30 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   bidireccional_iterator.hpp                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/21 13:34:36 by ptorres           #+#    #+#             */
-/*   Updated: 2022/02/04 15:45:49 by ptorres          ###   ########.fr       */
+/*   Created: 2022/02/04 15:50:54 by ptorres           #+#    #+#             */
+/*   Updated: 2022/02/04 16:31:46 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
-#include <iostream>
-#include <map>
-#include <vector>
-// #include "./srcs/map.hpp"
-// #include "./srcs/vector.hpp"
-// #include <./srcs/stack.hpp>
 
-int main()
-{ 
+#ifndef bidirectional_iterator_hpp
+#define bidirectional_iterator_hpp
 
-    std::vector<std::string> v;
+namespace ft {
 
-    std::vector<std::string>::iterator iter;
 
-    // std::cout << << std::endl;
+};
 
-}
+
+#endif

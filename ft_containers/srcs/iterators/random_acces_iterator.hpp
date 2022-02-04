@@ -1,30 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   random_acces_iterator.hpp                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/21 13:34:36 by ptorres           #+#    #+#             */
-/*   Updated: 2022/02/04 15:45:49 by ptorres          ###   ########.fr       */
+/*   Created: 2022/02/04 14:17:31 by ptorres           #+#    #+#             */
+/*   Updated: 2022/02/04 17:05:09 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
-#include <iostream>
-#include <map>
-#include <vector>
-// #include "./srcs/map.hpp"
-// #include "./srcs/vector.hpp"
-// #include <./srcs/stack.hpp>
+#ifndef random_iterator_hpp
+#define random_iterator_hpp
 
-int main()
-{ 
+#include "iterator.hpp"
 
-    std::vector<std::string> v;
+namespace ft {
 
-    std::vector<std::string>::iterator iter;
 
-    // std::cout << << std::endl;
 
-}
+};
+
+
+#endif

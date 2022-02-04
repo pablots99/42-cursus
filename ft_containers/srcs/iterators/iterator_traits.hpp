@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   iter.hpp                                           :+:      :+:    :+:   */
+/*   iterator_traits.hpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 17:30:41 by ptorres           #+#    #+#             */
-/*   Updated: 2022/02/01 20:05:24 by ptorres          ###   ########.fr       */
+/*   Updated: 2022/02/04 17:15:56 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,38 +14,53 @@
 #define ITERATORS_HPP
 
 #include <iostream>
-#include <iterator>
+#include "iterator.hpp"
+
 
 namespace ft {
 
 template <class Iterator>
-  struct iterator_traits {
-    typedef typename Iterator::iterator_category iterator_category;
-    typedef typename Iterator::value_type        value_type;
-    typedef typename Iterator::difference_type   difference_type;
-    typedef typename Iterator::pointer           pointer;
-    typedef typename Iterator::reference         reference;
+struct iterator_traits {
+    /*iterator category*/
+    typedef typename ft::Iterator::iterator_category iterator_category;
+
+    /*Type of the element where iterator point*/
+    typedef typename ft::iterator::value_type        value_type;
+
+    /*
+    A signed integral type used to represent the distance from
+    one iterator to another, or the number of elements in a range.
+    */
+    typedef typename ft::iterator::difference_type   difference_type;
+
+    /*Iterator's pointer type: a pointer to its value type.*/
+    typedef typename ft::iterator::pointer           pointer;
+
+    /*Iterator's reference type: a reference to its value type.*/
+    typedef typename ft::iterator::reference         reference;
 };
 
+
+/*pointer implemntation */
 template <class T>
 struct iterator_traits<T*> {
-    typedef random_access_iterator_tag iterator_category;
+    typedef T iterator_category;
     typedef T                          value_type;
     typedef ptrdiff_t                  difference_type;
     typedef T*                         pointer;
     typedef T&                         reference;
-  };
+};
+
+
 template <class T>
 struct iterator_traits<const T*> {
-    typedef const random_access_iterator_tag iterator_category;
+    typedef  T iterator_category;
     typedef const T                          value_type;
-    typedef const ptrdiff_t                  difference_type;
-    typedef const T*                         pointer;
-    typedef const T&                         reference;
+    typedef  ptrdiff_t                  difference_type;
+    typedef  T*                         pointer;
+    typedef  T&                         reference;
   };
 
-
 };
-//falta const
 
 #endif
