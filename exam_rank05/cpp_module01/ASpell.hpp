@@ -8,9 +8,11 @@
 
 #include <iostream>
 
+#include "ATarget.hpp"
+
 class ASpell { 
 
-	private:
+	protected:
 		const std::string _name;
 		const std::string _effects;
 	public:
@@ -22,6 +24,9 @@ class ASpell {
 		const std::string &getName() const;
 		const std::string &getEffects() const;
 		virtual Aspell *clone() const = 0;
+		void launch(ATarget const  &ref) const;
+
+
 }
 
 

@@ -8,11 +8,11 @@
 
 #include "Fwoosh.hpp"
 
-Fwoosh::Fwoosh(): ATarget("Target Practice Dummy"){
+Fwoosh::Fwoosh(): Aspell("Fwoosh", "fwooshed"){
 
 }
 
-Fwoosh::Fwoosh(Fwoosh &obj): ATarget(obj)
+Fwoosh::Fwoosh(Fwoosh &obj): ASepell(obj)
 {
 
 }
@@ -25,7 +25,7 @@ Fwoosh & Fwoosh::operator=(Fwoosh &obj)
 }
 
 
-ATarget * Fwoosh::clone(){
+ASpell * Fwoosh::clone(){
 
 	return new Fwoosh(*this);
 }	

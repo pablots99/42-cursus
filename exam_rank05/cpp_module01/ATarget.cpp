@@ -1,4 +1,4 @@
-/*
+ynta*
 
 
 
@@ -6,19 +6,20 @@
 
 
 
-#include "CLASS.hpp"
+#include "ATarget.hpp"
 
-CLASS::CLASS(){
+ATarget::ATarget(std::string const type):_type(type){
 
 	
 }
 
-CLASS::CLASS(CLASS &obj)
+
+ATarget::ATarget(ATarget &obj)
 {
 	*this = obj;
 }
 
-CLASS & CLASS::operator=(CLASS &obj)
+ATarget & ATarget::operator=(ATarget &obj)
 {
 	(void)obj;
 	//FILL HERE
@@ -26,7 +27,19 @@ CLASS & CLASS::operator=(CLASS &obj)
 }
 
 
+const std::string &ATarget::getType() const {
+	return _type;
+}
+void ATarger::getHitByspell(ASpell const &ref)
+{
 
-CLASS:~CLASS(){
+	std::cout << _type << " has been " << _effects <<"!" << std::endl;
+
+}
+
+
+
+
+ATarget:~ATarget(){
 
 }

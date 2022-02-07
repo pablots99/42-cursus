@@ -34,6 +34,12 @@ const std::string getEffects() const {
 	return _effects;
 }
 
+
+void ASpell::launch(ATarget const & ref) const {
+	res->getHitBySpell(this);
+}
+
+
 ASpell:~ASpell(){
 
 }

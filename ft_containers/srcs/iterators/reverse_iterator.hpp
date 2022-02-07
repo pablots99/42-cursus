@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:06:32 by ptorres           #+#    #+#             */
-/*   Updated: 2022/02/07 20:44:52 by ptorres          ###   ########.fr       */
+/*   Updated: 2022/02/07 20:46:59 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ namespace ft {
             reverse_iterator  operator--(int) {reverse_iterator tmp(*this); ++current; return tmp;}
             
 
-            //difference type instead iter? 
+            //difference_type instead iter? 
             reverse_iterator& operator+=(Iter i) {current-= i; return *this;}
             reverse_iterator& operator-=(Iter i) {current+= i; return *this;}
             reverse_iterator& operator-(Iter i) {return reverse_iterator(current + i);}

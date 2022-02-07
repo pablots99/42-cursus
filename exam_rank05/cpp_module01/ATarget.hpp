@@ -3,19 +3,25 @@
 
 */
 
-#ifndef CLASS_HPP
-#define CLASS_HPP
+#ifndef ATarget_HPP
+#define ATarget_HPP
 
 
-class CLASS { 
+#include <iostream>
+#include "ASpell.hpp"
 
+class ATarget { 
+
+	protected:
+			std::string const _type;
 	public:
-		//text here
-	private:
-		CLASS();
-		CLASSS(CLASS &obj);
-		CLASS &operator=(CLASS &obj);
-		~CLASS();
+		ATarget(std::string const type);
+		ATargetS(Atarget &obj);
+		ATarget &operator=(Atarget &obj);
+		virtual ~ATarget();
+		const std::string &getType() const;
+		virtual *ATarget clone() const = 0;
+		void getHitBySpell(ASpell const & ref);
 }
 
 
