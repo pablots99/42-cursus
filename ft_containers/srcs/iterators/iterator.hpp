@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 16:43:34 by ptorres           #+#    #+#             */
-/*   Updated: 2022/02/04 17:48:58 by ptorres          ###   ########.fr       */
+/*   Updated: 2022/02/07 18:12:41 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 namespace ft
 {
 
-    /*Iterator categorys tags*/
+    /*Iterator categorys tags is not ideal to use it*/
     struct input_iterator_tag { };
 
     struct output_iterator_tag { };
@@ -33,22 +33,21 @@ namespace ft
     /*Base iterator class
         http://www.cplusplus.com/reference/iterator/iterator/
     */
-    template <class Category, class T,
-              class Distance = ptrdiff_t,
-              class Pointer = T *,
-              class Reference = T &>
-    struct iterator
-    {
-        typedef T value_type;
-        typedef Distance difference_type;
-        typedef Pointer pointer;
-        typedef Reference reference;
-        typedef Category iterator_category;
-    };
+
+ 
+  template <class Category, class T, class Distance = ptrdiff_t,
+          class Pointer = T*, class Reference = T&>
+  struct iterator {
+    typedef T         value_type;
+    typedef Distance  difference_type;
+    typedef Pointer   pointer;
+    typedef Reference reference;
+    typedef Category  iterator_category;
+  };
 
     /*Input iterator */
      
-
+ 
     /*Forward iterator*/
 
 
