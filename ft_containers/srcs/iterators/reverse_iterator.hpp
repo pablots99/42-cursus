@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:06:32 by ptorres           #+#    #+#             */
-/*   Updated: 2022/02/07 19:55:28 by ptorres          ###   ########.fr       */
+/*   Updated: 2022/02/07 20:37:53 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,35 @@ namespace ft {
             //difference type instead iter? 
             reverse_iterator& operator+=(Iter i) {current-= i; return *this;}
             reverse_iterator& operator-=(Iter i) {current+= i; return *this;}
-            reverse_iterator& operator-(Iter i) {}
-            reverse_iterator& operator+(Iter i) {}
+            reverse_iterator& operator-(Iter i) {return reverse_iterator(current + i)}
+            reverse_iterator& operator+(Iter i) {return reverse_iterator(current - i)}
+
             /**************************+*/ 
     };
+    template<class Iter1, class Iter2>
+    bool operator==(const reverse_iterator<Iter1> &i1,reverse_iterator<Iter2> &i2) { return i1.base() == i2.base()}
+    
+    
+    template<class Iter1, class Iter2>
+    bool operator!=(const reverse_iterator<Iter1> &i1,reverse_iterator<Iter2> &i2) { return i1.base() != i2.base()}
+
+    template<class Iter1, class Iter2>
+    bool operator<(const reverse_iterator<Iter1> &i1,reverse_iterator<Iter2> &i2) { return i1.base() < i2.base()}
+   
+    template<class Iter1, class Iter2>
+    bool operator<=(const reverse_iterator<Iter1> &i1,reverse_iterator<Iter2> &i2) { return i1.base() <= i2.base()}
+   
+    template<class Iter1, class Iter2>
+    bool operator>(const reverse_iterator<Iter1> &i1,reverse_iterator<Iter2> &i2) { return i1.base() > i2.base()}
+   
+    template<class Iter1, class Iter2>
+    bool operator>=(const reverse_iterator<Iter1> &i1,reverse_iterator<Iter2> &i2) { return i1.base() >= i2.base()}
+    
+    template<class Iter1, class Iter2>
+    operator-(const reverse_iterator<Iter1>& i1x, const reverse_iterator<Iter2>& i2){return i1.base() - i2.base();}
+    
+    template<class Iter1, class Iter2>
+    operator+(const reverse_iterator<Iter1>& i1x, const reverse_iterator<Iter2>& i2){return i1.base() + i2.base();}
+
 };
-// 'reverse_iterator<__wrap_iter<std::__1::basic_string<char> *> >'
-// 'reverse_iterator<__wrap_iter<std::__1::basic_string<char> *> > &'
 #endif
