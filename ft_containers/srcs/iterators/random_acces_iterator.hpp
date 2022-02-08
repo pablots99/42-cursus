@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 14:17:31 by ptorres           #+#    #+#             */
-/*   Updated: 2022/02/07 18:12:17 by ptorres          ###   ########.fr       */
+/*   Updated: 2022/02/08 19:35:29 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,10 @@
 namespace ft {
 
 
-    template <typename T>
-    struct random_acces_iterator { 
-        using iterator_category = ft::random_access_iterator_tag
-    
-    
-    
+    template <typename Iter>
+    struct my_random_acces_iterator { 
+        typedef ft::random_access_iterator_tag iterator_category;
+
     
     
     };

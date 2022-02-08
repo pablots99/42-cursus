@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 13:34:36 by ptorres           #+#    #+#             */
-/*   Updated: 2022/02/07 19:50:13 by ptorres          ###   ########.fr       */
+/*   Updated: 2022/02/08 19:35:36 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,20 @@ int main()
     std::cout << *ri << std::endl;
     ft::reverse_iterator<std::vector<std::string>::iterator>  *rip = &ri;
     std::cout << *--rip->base() << std::endl;
-
-
     std::cout << *iter << std::endl;
     std::cout << *r_iter << std::endl;
+
+
+    //test all operators!!!!!!!!!!!!!!!!!
+
+    //////////////////////////////////////
+
+
+
+    /*enable_if*/
+
+
+    /*test enable if*/
+
+    
 }
