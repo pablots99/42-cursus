@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 13:36:29 by ptorres           #+#    #+#             */
-/*   Updated: 2022/02/08 20:36:39 by ptorres          ###   ########.fr       */
+/*   Updated: 2022/02/09 20:11:13 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,24 +20,45 @@
 
 
 namespace ft { 
-    template<class T, class Allocator = std::allocator<T> >
+    template<class T, class Allocator /* = std::allocator<T>*/ >
     class vector {
-        private:
-              typedef Allocator                                                      _allocator_type;
         public:
             typedef T                                                               value_type;
             typedef Allocator                                                       allocator_type;
             /*allocator*/
-            typedef value_type&                                                     reference;
-            typedef const value_type&                                               const_reference;
-            typedef allocator_type::pointer                                         pointer;
-            typedef const allocator_type::pointer                                   const_pointer;
-            typedef const allocator_type::difference_type                           difference_type;
+            typedef typename value_type&                                                     reference;
+            typedef  const value_type&                                                   const_reference;
+            typedef  *value_type                                                      pointer;
+            typedef  const *value_type                                                const_pointer;
+            typedef  const ptrdiff_t                                                   difference_type;
+            //allocator_type::difference_type see if matters usig allocator_type as in the definition of the vector
             /*vectory iterators*/
-            typedef ft::my_random_acces_iterator<value_type>                        iterator;
-            typedef ft::my_random_acces_iterator<cosnt value_type>                  const_iterator;
+            // typedef ft::my_random_acces_iterator<value_type>                        iterator;
+            // typedef ft::my_random_acces_iterator<cosnt value_type>                  const_iterator;
+
+            typedef std::__wrap_iter<value_type>                                    iterator;
+            typedef std::__wrap_iter<cosnt value_type>                              const_iterator;
             typedef ft::reverse_iterator<iterator>                                  reverse_iterator;
             typedef ft::reverse_iterator<const iterator>                            const_reverse_iterator;
+            /*CONSTRUCTORS*/
+            /*default*/
+            vector ():_begin(nullptr),_size(0),_end(nullptr){}
+
+            /*MEMBER FUNCTIONS*/
+            iterator begin(void){return iterator(_begin)}
+            const_iterator begin(void) const {return const_iterator(_begin)}
+            iterator end(){return iterator(&begin[_size])}
+            const_iterator end() const{return const_iterator(&begin[_size])}
+            void push_back (const value_type& val) {
+                
+            }
+        
+        private:
+              allocator_type    _allocator;
+              pointer           _begin;
+              pointer           _end;
+              pointer           _size;
+              //pointer           _cap_alloc;
     };
 }
 #endif
