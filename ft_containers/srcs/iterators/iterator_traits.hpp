@@ -6,12 +6,12 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 17:30:41 by ptorres           #+#    #+#             */
-/*   Updated: 2022/02/07 18:36:31 by ptorres          ###   ########.fr       */
+/*   Updated: 2022/02/10 16:49:23 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ITERATOR_HPP
-#define ITERATORS_HPP
+#ifndef ITERATOR_TRAITS_HPP
+#define ITERATOR_TRAITS_HPP
 
 #include <iostream>
 #include "iterator.hpp"

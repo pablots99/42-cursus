@@ -6,14 +6,14 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:06:32 by ptorres           #+#    #+#             */
-/*   Updated: 2022/02/07 20:46:59 by ptorres          ###   ########.fr       */
+/*   Updated: 2022/02/10 16:48:48 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef REVERSE_ITERATOR_HPP
 #define REVERSE_ITERATOR_HPP
 #include <iostream>
-#include "iterator_traits.hpp"
+#include "./iterator_traits.hpp"
 
 namespace ft {
 
