@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 20:48:05 by ptorres           #+#    #+#             */
-/*   Updated: 2022/02/08 19:07:43 by ptorres          ###   ########.fr       */
+/*   Updated: 2022/02/15 19:58:23 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 
 
-namespace ft { 
+namespace ft {
 
     /*
     *enable_if:
@@ -66,13 +66,12 @@ namespace ft {
         }
         return (start2!=end2);
    }
-
     /*pair:
     * is a class template that provides a way to store two heterogeneous objects as a single unit
     */
   std::pair<int,int>;
   template<class T1,class T2>
-  struct pair { 
+  struct pair {
     /*types*/
     typedef T1 first_type;
     typedef T2 second_type;
@@ -93,7 +92,7 @@ namespace ft {
     /*pair non member functions*/
     template< class T1, class T2 >
     pair<T1,T2> make_pair( T1&& t, T2&& u ){return new pair<T1,T2>(t, u)};
-    
+
         /*operators*/
     template< class T1, class T2 >
     bool operator==(const pair<T1,T2> &p1, const pair<T1,T2>  &p2){
@@ -118,7 +117,7 @@ namespace ft {
     bool operator>=(const pair<T1,T2> &p1, const pair<T1,T2>  &p2){
         return !(p1 < p2);
     }
-    
+
     template< class T1, class T2 >
     bool operator<=(const pair<T1,T2> &p1, const pair<T1,T2>  &p2){
         return !(p1 > p2);

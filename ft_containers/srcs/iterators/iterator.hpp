@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   iterator.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 16:43:34 by ptorres           #+#    #+#             */
-/*   Updated: 2022/02/07 18:12:41 by ptorres          ###   ########.fr       */
+/*   Updated: 2022/02/15 19:31:16 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ namespace ft
         http://www.cplusplus.com/reference/iterator/iterator/
     */
 
- 
+
   template <class Category, class T, class Distance = ptrdiff_t,
           class Pointer = T*, class Reference = T&>
   struct iterator {
@@ -45,13 +45,17 @@ namespace ft
     typedef Category  iterator_category;
   };
 
-    /*Input iterator */
-     
- 
-    /*Forward iterator*/
-
-
-    /*Reverse iterator*/
+	template<class Iter1, class Iter2>
+	size_t distance(Iter1 first, Iter2 last)
+	{
+		size_t res = 0;
+		while(first != last)
+		{
+			res++;
+			++first;
+		}
+		return res;
+	}
 
 
 };
