@@ -1,8 +1,0 @@
-very usefull !!!
-https://gist.github.com/justinian/385c70347db8aca7ba93e87db90fc9a6
-https://cs.brown.edu/courses/cs033/docs/guides/x64_cheatsheet.pdf
-
-
-https://en.wikibooks.org/wiki/X86_Disassembly/Branches
-https://www.exabyteinformatica.com/uoc/Informatica/Estructura_de_computadores/Estructura_de_computadores_(Modulo_6).pdf
-https://uva-cs.github.io/pdr/book/x86-64bit-asm-chapter.pdf

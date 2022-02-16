@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 13:36:29 by ptorres           #+#    #+#             */
-/*   Updated: 2022/02/15 23:23:48 by pablo            ###   ########.fr       */
+/*   Updated: 2022/02/16 17:08:22 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,13 @@
 #include "../iterators/iterator_traits.hpp"
 #include "../iterators/random_acces_iterator.hpp"
 #include "../iterators/reverse_iterator.hpp"
+#include "../utils.hpp"
+
+
 #include <iterator>
+
+#include <type_traits>
+
 namespace ft
 {
 	template <class T, class Allocator = std::allocator<T> >
@@ -40,13 +46,19 @@ namespace ft
 		/*CONSTRUCTORS*/
 		vector() :_begin(nullptr), _size(0),_capacity(0){} //defaul
 		explicit vector (size_type n, const value_type& val):_size(0),_capacity(0){assign(n,val);} //fill
-        vector (iterator first, iterator last):_size(0),_capacity(0){assign(first,last);}//range
+		template <class InputIterator>
+        vector (InputIterator first, InputIterator last):_size(0),_capacity(0){assign(first,last);}//range
 		vector (const vector& x):_size(0),_capacity(0) {
 			this->reserve(x.capacity());
 			this->_size = x.size();
 			if(_size)
 				std::copy(x.begin(), x.begin() + x.size(), this->_begin);
 		}//copy
+		vector(value_type val): _begin(0),_size(0),_capacity(0) { 
+			reserve(1);
+			_allocator.construct(_begin,val);
+			_size++;
+		}
 
 
 		/*ITERATORS*/
@@ -111,30 +123,33 @@ namespace ft
 
 
 		/*ELEMENT ACCESS*/
-		reference operator[](int n){return (*(_begin + n));}
 		reference at (size_type n) {
 			if(n >= _size)
 				throw std::out_of_range("Vector index out of range");
 			return (*(_begin + n));
 		}
+		const_reference back() const { 
+			return at(_size - 1);
+		};
+		reference front() { 
+			return at(0);
+		}
+		const_reference front() const { 
+			return at(0);
+		};
+		reference back() { 
+			return at(_size - 1);
+		}
+		
+		reference operator[](int n){return (*(_begin + n));}
+		
 		const_reference at (size_type n) const {
-			if(n >= this->size)
+			if(n >= _size)
 				throw std::out_of_range("Vector index out of range");
 			return (*(_begin + n));
 		}
 
 		/*MODIFIERS*/
-		template <class InputIterator>
-  		void assign (InputIterator first, InputIterator last) {
-			  size_t len = ft::distance(first,last);
-			  uncreate();
-			  this->reserve(len + 2);
-			  for (size_t i = 0; i < len; i++){
-				  this->_allocator.construct(_begin + i,*first);
-				  first++;
-			  }
-			 _size = len;
-		}
 		void assign (size_type n, const value_type& val) {
 			uncreate();
 			_size = 0;
@@ -145,6 +160,23 @@ namespace ft
 			_size = n;
 		}
 
+		//cange enable if to ENABLE IF ITERATOR!!!!!!!
+		template <typename InputIterator, std::enable_if<!std::is_integral<InputIterator>::value, bool> >
+  		void assign (InputIterator first, InputIterator last) {
+			  iterator f = iterator(&*first);
+			  iterator l = iterator(&*last);
+			  size_t len = ft::distance(f,l);
+			  uncreate();
+			  this->reserve(len + 2);
+			  pointer p = f.base();
+			  for (size_t i = 0; i < len; i++){
+				  this->_allocator.construct(_begin + i,*p);
+				  p++;
+			  }
+			 _size = len;
+		}
+
+	
 		void push_back (const value_type& val)
 		{
 			if(!(_size < _capacity))
@@ -160,29 +192,34 @@ namespace ft
 		}
 	iterator insert (iterator position, const value_type& val)
 	{
+		size_t last_size = _size;
+		pointer pos = position.base();
 		pointer res = _allocator.allocate(_size + 1);
-		isize_tnt len = ft::distance(_begin, position);
-		std::copy(_begin, position - 1, res);
+		size_t len = ft::distance(_begin, pos);
+		std::copy(_begin, pos - 1, res);
+		this->uncreate();
 		_allocator.construct(res + len - 1, val);
 		_size++;
 		for (size_t i = len; i < _size; i++)
 		{
-			/* code */
+			_allocator.construct(res + i, val);
+			res++;
 		}
-
-
+		_begin = res;
+		_size  = last_size + 1;
+		return iterator(_begin + len);
 	}
 
-	void insert (iterator position, size_type n, const value_type& val)
-	{
+	// void insert (iterator position, size_type n, const value_type& val)
+	// {
 
-	}
+	// }
 
-	template <class InputIterator>
-    void insert (iterator position, InputIterator first, InputIterator last)
-	{
+	// template <class InputIterator>
+    // void insert (iterator position, InputIterator first, InputIterator last)
+	// {
 
-	}
+	// }
 	private:
 		pointer _begin;
 		allocator_type _allocator;

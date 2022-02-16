@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 13:34:36 by ptorres           #+#    #+#             */
-/*   Updated: 2022/02/15 20:27:38 by pablo            ###   ########.fr       */
+/*   Updated: 2022/02/16 14:01:24 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int main()
 		std::cout << *fiter << std::endl;
 	}
 	fvc.pop_back();
+	fiter = fvc.begin() + 3;
+	fvc.insert(fiter,"dsdfjnsldfn");
 	std::cout << "------------" << std::endl;
 	for (fiter = fvc.begin(); fiter != fvc.end(); ++fiter)
 	{

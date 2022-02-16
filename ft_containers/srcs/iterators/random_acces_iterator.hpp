@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   random_acces_iterator.hpp                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 14:17:31 by ptorres           #+#    #+#             */
-/*   Updated: 2022/02/15 19:30:45 by pablo            ###   ########.fr       */
+/*   Updated: 2022/02/16 15:44:06 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,10 @@ namespace ft {
             my_random_acces_iterator	operator--(int) {my_random_acces_iterator tmp(*this); --current; return tmp;}
             my_random_acces_iterator&	operator+=(Iter i) {current+= i; return *this;}
             my_random_acces_iterator&	operator-=(Iter i) {current-= i; return *this;}
-            my_random_acces_iterator&	operator-(Iter i) {return my_random_acces_iterator(current - i);}
-            my_random_acces_iterator&	operator+(Iter i) {return my_random_acces_iterator(current + i);}
 			my_random_acces_iterator	operator-(difference_type n) {return current - n;}
-            my_random_acces_iterator	operator+( difference_type n) {return current + n;}
-			bool operator==(my_random_acces_iterator const &i2) { return current == i2.base();}
-			bool operator!=(my_random_acces_iterator const &i2) { return current != i2.base();}
+            my_random_acces_iterator	operator+(difference_type n) {return current + n;}
+			bool                        operator==(my_random_acces_iterator const &i2) { return current == i2.base();}
+			bool                        operator!=(my_random_acces_iterator const &i2) { return current != i2.base();}
 		private:
             pointer __t;
 		protected:

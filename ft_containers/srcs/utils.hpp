@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 20:48:05 by ptorres           #+#    #+#             */
-/*   Updated: 2022/02/15 19:58:23 by pablo            ###   ########.fr       */
+/*   Updated: 2022/02/16 16:58:34 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ namespace ft {
     /*pair:
     * is a class template that provides a way to store two heterogeneous objects as a single unit
     */
-  std::pair<int,int>;
+
   template<class T1,class T2>
   struct pair {
     /*types*/
@@ -91,7 +91,7 @@ namespace ft {
 };
     /*pair non member functions*/
     template< class T1, class T2 >
-    pair<T1,T2> make_pair( T1&& t, T2&& u ){return new pair<T1,T2>(t, u)};
+    pair<T1,T2> make_pair( T1& t, T2& u ){return new pair<T1,T2>(t, u);};
 
         /*operators*/
     template< class T1, class T2 >
@@ -105,7 +105,7 @@ namespace ft {
     }
     template< class T1, class T2 >
     bool operator<(const pair<T1,T2> &p1, const pair<T1,T2>  &p2){
-        return ((p1.first < p2.first) || (p1.second < p2.second) && (p1.first < p2.first) );
+        return (((p1.first < p2.first) || (p1.second < p2.second)) && (p1.first < p2.first) );
     }
 
     template< class T1, class T2 >
