@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 13:36:29 by ptorres           #+#    #+#             */
-/*   Updated: 2022/02/15 20:26:30 by pablo            ###   ########.fr       */
+/*   Updated: 2022/02/15 23:23:48 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,9 +158,31 @@ namespace ft
 			_allocator.destroy(&_begin[_size - 1]);
 			_size--;
 		}
+	iterator insert (iterator position, const value_type& val)
+	{
+		pointer res = _allocator.allocate(_size + 1);
+		isize_tnt len = ft::distance(_begin, position);
+		std::copy(_begin, position - 1, res);
+		_allocator.construct(res + len - 1, val);
+		_size++;
+		for (size_t i = len; i < _size; i++)
+		{
+			/* code */
+		}
 
 
+	}
 
+	void insert (iterator position, size_type n, const value_type& val)
+	{
+
+	}
+
+	template <class InputIterator>
+    void insert (iterator position, InputIterator first, InputIterator last)
+	{
+
+	}
 	private:
 		pointer _begin;
 		allocator_type _allocator;
