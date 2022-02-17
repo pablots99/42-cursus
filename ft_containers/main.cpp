@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 13:34:36 by ptorres           #+#    #+#             */
-/*   Updated: 2022/02/16 14:01:24 by ptorres          ###   ########.fr       */
+/*   Updated: 2022/02/17 17:20:43 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,22 +21,32 @@
 #include <iterator>
 int main()
 {
-    ft::vector<std::string> fv(10, "hola");
-    ft::vector<std::string>::iterator fiter = fv.begin();
-	ft::vector<std::string> fvc(fv);
-	(void)fiter;
-	fvc.push_back("juan");
-	for (fiter = fvc.begin(); fiter != fvc.end(); ++fiter)
-	{
-		std::cout << *fiter << std::endl;
-	}
-	fvc.pop_back();
-	fiter = fvc.begin() + 3;
-	fvc.insert(fiter,"dsdfjnsldfn");
-	std::cout << "------------" << std::endl;
-	for (fiter = fvc.begin(); fiter != fvc.end(); ++fiter)
-	{
-		std::cout << *fiter << std::endl;
-	}
+	ft::vector<int> v;
+  ft::vector<int> v1;
 
+  v.assign(7,200);
+  v.assign (7,100);             // 7 ints with a value of 100
+  ft::vector<int>::iterator it;
+  
+
+  v.insert(v.begin() + 4,123);
+
+  for ( it = v.begin(); it != v.end(); ++it)
+      std::cout << *it << ", ";
+  
+  std::cout << std::endl;
+
+  v.insert(v.begin() +5, 5,222);
+
+
+
+  for ( it = v.begin(); it != v.end(); ++it)
+      std::cout << *it << ", ";
+  
+
+  std::cout << std::endl << "size: " << v.size() << std::endl;
+  std::cout << "capacity: " << v.capacity() << std::endl;
+
+
+  return 0;
 }
