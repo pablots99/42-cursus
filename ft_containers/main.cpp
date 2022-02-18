@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 13:34:36 by ptorres           #+#    #+#             */
-/*   Updated: 2022/02/17 17:20:43 by ptorres          ###   ########.fr       */
+/*   Updated: 2022/02/18 00:32:51 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include <iostream>
 #include <map>
@@ -22,31 +21,32 @@
 int main()
 {
 	ft::vector<int> v;
-  ft::vector<int> v1;
+	ft::vector<int> v1;
 
-  v.assign(7,200);
-  v.assign (7,100);             // 7 ints with a value of 100
-  ft::vector<int>::iterator it;
-  
+	v1.assign(7, 200);
+	v.assign(7, 100);
+	ft::vector<int>::iterator it;
 
-  v.insert(v.begin() + 4,123);
+	v.insert(v.begin() + 4, 123);
+	for (it = v.begin(); it != v.end(); ++it)
+		std::cout << *it << ", ";
+	std::cout << std::endl
+			  << "size: " << v.size() << std::endl;
+	std::cout << "capacity: " << v.capacity() << std::endl;
 
-  for ( it = v.begin(); it != v.end(); ++it)
-      std::cout << *it << ", ";
-  
-  std::cout << std::endl;
+	v.insert(v.begin() + 5, 5, 222);
+	for (it = v.begin(); it != v.end(); ++it)
+		std::cout << *it << ", ";
+	std::cout << std::endl
+			  << "size: " << v.size() << std::endl;
+	std::cout << "capacity: " << v.capacity() << std::endl;
 
-  v.insert(v.begin() +5, 5,222);
+	v.insert(v.begin() + 2,v1.begin(), v1.begin() + 4);
+	for (it = v.begin(); it != v.end(); ++it)
+		std::cout << *it << ", ";
+	std::cout << std::endl
+			  << "size: " << v.size() << std::endl;
+	std::cout << "capacity: " << v.capacity() << std::endl;
 
-
-
-  for ( it = v.begin(); it != v.end(); ++it)
-      std::cout << *it << ", ";
-  
-
-  std::cout << std::endl << "size: " << v.size() << std::endl;
-  std::cout << "capacity: " << v.capacity() << std::endl;
-
-
-  return 0;
+	return 0;
 }

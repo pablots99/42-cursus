@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 13:36:29 by ptorres           #+#    #+#             */
-/*   Updated: 2022/02/17 17:23:12 by ptorres          ###   ########.fr       */
+/*   Updated: 2022/02/18 13:27:47 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,9 @@ public:
 	typedef ft::reverse_iterator<const iterator> const_reverse_iterator;
 
 	/*CONSTRUCTORS*/
-	vector() : _begin(nullptr), _size(0), _capacity(0) {}											 //defaul
+	vector() : _begin(nullptr), _size(0), _capacity(0) {
+		reserve(1);
+	}											 //defaul
 	explicit vector(size_type n, const value_type &val) : _size(0), _capacity(0) { assign(n, val); } //fill
 
 	template <class InputIterator>
@@ -92,7 +94,7 @@ public:
 		_capacity = n;
 		_begin = aux;
 	}
-	void resize(size_type n, value_type val)
+	void resize(size_type n, value_type val = value_type())
 	{
 		pointer aux;
 		if (n < _size)
@@ -174,16 +176,13 @@ public:
 	typename std::enable_if<!std::is_integral<InputIterator>::value, void>::type
 	assign(InputIterator first, InputIterator last)
 	{
-		iterator f = iterator(&*first);
-		iterator l = iterator(&*last);
-		size_t len = ft::distance(f, l);
+		size_t len = ft::distance(first, last);
 		uncreate();
 		this->reserve(len + 2);
-		pointer p = f.base();
 		for (size_t i = 0; i < len; i++)
 		{
-			this->_allocator.construct(_begin + i, *p);
-			p++;
+			this->_allocator.construct(_begin + i, *first);
+			first++;
 		}
 		_size = len;
 	}
@@ -212,49 +211,30 @@ public:
 	iterator insert(iterator position, const value_type &val)
 	{
 		size_t last_size = _size;
-		pointer pos = position.base();
 		pointer res = _allocator.allocate(_size + 1);
-		size_t len = ft::distance(_begin, pos);
-		std::copy(_begin, _begin + len - 1, res);
-		_allocator.construct(res + len - 1, val);
+		size_t len = std::distance(this->begin(), position);
+		std::cout << "len "<< len << std::endl;
+		std::copy(_begin, _begin + len, res);
+		_allocator.construct(res + len, val);
 		_size++;
-		std::copy(_begin + len - 1, _begin + last_size, res + len);
+		std::copy(_begin + len, _begin + last_size, res + len);
 		this->uncreate();
 		_begin = res;
 		_size = last_size + 1;
+		_capacity = _size + 1;
 		return iterator(_begin + len);
 	}
 
 	void insert(iterator position, size_type n, const value_type &val)
 	{
-		pointer pos = position.base();
-		pointer res = _allocator.allocate(_size + n + 1);
-		size_t len = ft::distance(_begin, pos) - 1;
-		std::copy(_begin, pos - 1, res);
-		for (size_type i = 0; i < n; i++)
-			*(res + len + i) = value_type(val);
-		std::copy(_begin, pos + 1, res + len + n);
-		this->uncreate();
-		_begin = res;
-		_size = _size + n;
-		_capacity = _size + n + 1;
+
 	}
 
 	template <class InputIterator>
 	typename std::enable_if<!std::is_integral<InputIterator>::value, void>::type
 	insert(iterator position, InputIterator first, InputIterator last)
 	{
-		size_t distance = std::distance(first, last);
-		pointer pos = position.base();
-		pointer res = _allocator.allocate(_size + distance + 1);
-		size_t len = ft::distance(_begin, pos) - 1;
-		std::copy(_begin, pos - 1, res);
-		std::copy(first, last , res + len);
-		std::copy(_begin + len - 1, _begin + _size - 1, res + len + distance);
-		this->uncreate();
-		_begin = res;
-		_size = _size + distance;
-		_capacity = _size + distance + 1;
+
 	}
 
 private:
