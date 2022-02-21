@@ -1,31 +1,41 @@
-Start testing: Feb 18 14:43 CET
+Start testing: Feb 18 15:10 CET
 ----------------------------------------------------------
 1/1 Testing: UnitTests
 1/1 Test: UnitTests
 Command: "/Users/pablo/Desktop/42-cursus/ft_containers/test/build/runUnitTests"
 Directory: /Users/pablo/Desktop/42-cursus/ft_containers/test/build
-"UnitTests" start time: Feb 18 14:43 CET
+"UnitTests" start time: Feb 18 15:10 CET
 Output:
 ----------------------------------------------------------
 Running main() from /Users/pablo/Desktop/42-cursus/ft_containers/test/googletest/googletest/src/gtest_main.cc
-[==========] Running 2 tests from 1 test suite.
+[==========] Running 7 tests from 1 test suite.
 [----------] Global test environment set-up.
-[----------] 2 tests from vector
+[----------] 7 tests from vector
 [ RUN      ] vector.default_constructor
 [       OK ] vector.default_constructor (0 ms)
 [ RUN      ] vector.fill_constructor
 [       OK ] vector.fill_constructor (0 ms)
-[----------] 2 tests from vector (0 ms total)
+[ RUN      ] vector.empty_fill_constructor
+[       OK ] vector.empty_fill_constructor (0 ms)
+[ RUN      ] vector.fill_constructor1
+[       OK ] vector.fill_constructor1 (0 ms)
+[ RUN      ] vector.range_constructor
+[       OK ] vector.range_constructor (0 ms)
+[ RUN      ] vector.empty_range_constructor
+[       OK ] vector.empty_range_constructor (0 ms)
+[ RUN      ] vector.empty_iterator
+[       OK ] vector.empty_iterator (0 ms)
+[----------] 7 tests from vector (0 ms total)
 
 [----------] Global test environment tear-down
-[==========] 2 tests from 1 test suite ran. (0 ms total)
-[  PASSED  ] 2 tests.
+[==========] 7 tests from 1 test suite ran. (0 ms total)
+[  PASSED  ] 7 tests.
 <end of output>
-Test time =   0.29 sec
+Test time =   0.01 sec
 ----------------------------------------------------------
 Test Passed.
-"UnitTests" end time: Feb 18 14:43 CET
+"UnitTests" end time: Feb 18 15:10 CET
 "UnitTests" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-End testing: Feb 18 14:43 CET
+End testing: Feb 18 15:10 CET

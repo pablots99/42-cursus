@@ -69,10 +69,24 @@ include CMakeFiles/runUnitTests.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/runUnitTests.dir/flags.make
 
+CMakeFiles/runUnitTests.dir/vector/vecotr_reverse_iterator.cpp.o: CMakeFiles/runUnitTests.dir/flags.make
+CMakeFiles/runUnitTests.dir/vector/vecotr_reverse_iterator.cpp.o: ../vector/vecotr_reverse_iterator.cpp
+CMakeFiles/runUnitTests.dir/vector/vecotr_reverse_iterator.cpp.o: CMakeFiles/runUnitTests.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/pablo/Desktop/42-cursus/ft_containers/test/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/runUnitTests.dir/vector/vecotr_reverse_iterator.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/runUnitTests.dir/vector/vecotr_reverse_iterator.cpp.o -MF CMakeFiles/runUnitTests.dir/vector/vecotr_reverse_iterator.cpp.o.d -o CMakeFiles/runUnitTests.dir/vector/vecotr_reverse_iterator.cpp.o -c /Users/pablo/Desktop/42-cursus/ft_containers/test/vector/vecotr_reverse_iterator.cpp
+
+CMakeFiles/runUnitTests.dir/vector/vecotr_reverse_iterator.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/runUnitTests.dir/vector/vecotr_reverse_iterator.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/pablo/Desktop/42-cursus/ft_containers/test/vector/vecotr_reverse_iterator.cpp > CMakeFiles/runUnitTests.dir/vector/vecotr_reverse_iterator.cpp.i
+
+CMakeFiles/runUnitTests.dir/vector/vecotr_reverse_iterator.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/runUnitTests.dir/vector/vecotr_reverse_iterator.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/pablo/Desktop/42-cursus/ft_containers/test/vector/vecotr_reverse_iterator.cpp -o CMakeFiles/runUnitTests.dir/vector/vecotr_reverse_iterator.cpp.s
+
 CMakeFiles/runUnitTests.dir/vector/vector_contructors.cpp.o: CMakeFiles/runUnitTests.dir/flags.make
 CMakeFiles/runUnitTests.dir/vector/vector_contructors.cpp.o: ../vector/vector_contructors.cpp
 CMakeFiles/runUnitTests.dir/vector/vector_contructors.cpp.o: CMakeFiles/runUnitTests.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/pablo/Desktop/42-cursus/ft_containers/test/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/runUnitTests.dir/vector/vector_contructors.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/pablo/Desktop/42-cursus/ft_containers/test/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/runUnitTests.dir/vector/vector_contructors.cpp.o"
 	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/runUnitTests.dir/vector/vector_contructors.cpp.o -MF CMakeFiles/runUnitTests.dir/vector/vector_contructors.cpp.o.d -o CMakeFiles/runUnitTests.dir/vector/vector_contructors.cpp.o -c /Users/pablo/Desktop/42-cursus/ft_containers/test/vector/vector_contructors.cpp
 
 CMakeFiles/runUnitTests.dir/vector/vector_contructors.cpp.i: cmake_force
@@ -83,20 +97,38 @@ CMakeFiles/runUnitTests.dir/vector/vector_contructors.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/runUnitTests.dir/vector/vector_contructors.cpp.s"
 	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/pablo/Desktop/42-cursus/ft_containers/test/vector/vector_contructors.cpp -o CMakeFiles/runUnitTests.dir/vector/vector_contructors.cpp.s
 
+CMakeFiles/runUnitTests.dir/vector/vector_iterator.cpp.o: CMakeFiles/runUnitTests.dir/flags.make
+CMakeFiles/runUnitTests.dir/vector/vector_iterator.cpp.o: ../vector/vector_iterator.cpp
+CMakeFiles/runUnitTests.dir/vector/vector_iterator.cpp.o: CMakeFiles/runUnitTests.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/pablo/Desktop/42-cursus/ft_containers/test/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/runUnitTests.dir/vector/vector_iterator.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/runUnitTests.dir/vector/vector_iterator.cpp.o -MF CMakeFiles/runUnitTests.dir/vector/vector_iterator.cpp.o.d -o CMakeFiles/runUnitTests.dir/vector/vector_iterator.cpp.o -c /Users/pablo/Desktop/42-cursus/ft_containers/test/vector/vector_iterator.cpp
+
+CMakeFiles/runUnitTests.dir/vector/vector_iterator.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/runUnitTests.dir/vector/vector_iterator.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/pablo/Desktop/42-cursus/ft_containers/test/vector/vector_iterator.cpp > CMakeFiles/runUnitTests.dir/vector/vector_iterator.cpp.i
+
+CMakeFiles/runUnitTests.dir/vector/vector_iterator.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/runUnitTests.dir/vector/vector_iterator.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/pablo/Desktop/42-cursus/ft_containers/test/vector/vector_iterator.cpp -o CMakeFiles/runUnitTests.dir/vector/vector_iterator.cpp.s
+
 # Object files for target runUnitTests
 runUnitTests_OBJECTS = \
-"CMakeFiles/runUnitTests.dir/vector/vector_contructors.cpp.o"
+"CMakeFiles/runUnitTests.dir/vector/vecotr_reverse_iterator.cpp.o" \
+"CMakeFiles/runUnitTests.dir/vector/vector_contructors.cpp.o" \
+"CMakeFiles/runUnitTests.dir/vector/vector_iterator.cpp.o"
 
 # External object files for target runUnitTests
 runUnitTests_EXTERNAL_OBJECTS =
 
+runUnitTests: CMakeFiles/runUnitTests.dir/vector/vecotr_reverse_iterator.cpp.o
 runUnitTests: CMakeFiles/runUnitTests.dir/vector/vector_contructors.cpp.o
+runUnitTests: CMakeFiles/runUnitTests.dir/vector/vector_iterator.cpp.o
 runUnitTests: CMakeFiles/runUnitTests.dir/build.make
 runUnitTests: lib/libgtest.a
 runUnitTests: lib/libgtest_main.a
 runUnitTests: lib/libgtest.a
 runUnitTests: CMakeFiles/runUnitTests.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/pablo/Desktop/42-cursus/ft_containers/test/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable runUnitTests"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/pablo/Desktop/42-cursus/ft_containers/test/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable runUnitTests"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/runUnitTests.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

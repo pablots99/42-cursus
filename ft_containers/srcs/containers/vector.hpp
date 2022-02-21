@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 13:36:29 by ptorres           #+#    #+#             */
-/*   Updated: 2022/02/18 13:27:47 by pablo            ###   ########.fr       */
+/*   Updated: 2022/02/18 14:52:30 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ public:
 	vector() : _begin(nullptr), _size(0), _capacity(0) {
 		reserve(1);
 	}											 //defaul
-	explicit vector(size_type n, const value_type &val) : _size(0), _capacity(0) { assign(n, val); } //fill
+	explicit vector(size_type n, const value_type &val = value_type()) : _size(0), _capacity(0) { assign(n, val); } //fill
 
 	template <class InputIterator>
 	vector(InputIterator first, InputIterator last) : _size(0), _capacity(0) { assign(first, last); } //range
@@ -58,11 +58,6 @@ public:
 		if (_size)
 			std::copy(x.begin(), x.begin() + x.size(), this->_begin);
 	} //copy
-	vector(size_type n) : _begin(0), _size(0), _capacity(0)
-	{
-		reserve(n);
-		_size = n;
-	}
 
 	/*ITERATORS*/
 	iterator begin(void) { return iterator(_begin); }

@@ -77,6 +77,20 @@
 		"*.tcc": "cpp",
 		"memory_resource": "cpp",
 		"stop_token": "cpp",
-		"*.clang-format": "cpp"
+		"*.clang-format": "cpp",
+		"set": "cpp",
+		"unordered_set": "cpp",
+		"any": "cpp",
+		"codecvt": "cpp",
+		"forward_list": "cpp",
+		"fstream": "cpp",
+		"future": "cpp",
+		"iomanip": "cpp",
+		"list": "cpp",
+		"regex": "cpp",
+		"stack": "cpp",
+		"variant": "cpp",
+		"cinttypes": "cpp",
+		"filesystem": "cpp"
 	}
 }

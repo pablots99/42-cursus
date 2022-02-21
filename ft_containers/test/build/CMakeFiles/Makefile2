@@ -135,12 +135,12 @@ CMakeFiles/runUnitTests.dir/all: googletest/googletest/CMakeFiles/gtest.dir/all
 CMakeFiles/runUnitTests.dir/all: googletest/googletest/CMakeFiles/gtest_main.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/runUnitTests.dir/build.make CMakeFiles/runUnitTests.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/runUnitTests.dir/build.make CMakeFiles/runUnitTests.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/pablo/Desktop/42-cursus/ft_containers/test/build/CMakeFiles --progress-num=9,10 "Built target runUnitTests"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/pablo/Desktop/42-cursus/ft_containers/test/build/CMakeFiles --progress-num=9,10,11,12 "Built target runUnitTests"
 .PHONY : CMakeFiles/runUnitTests.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/runUnitTests.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/pablo/Desktop/42-cursus/ft_containers/test/build/CMakeFiles 6
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/pablo/Desktop/42-cursus/ft_containers/test/build/CMakeFiles 8
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/runUnitTests.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/pablo/Desktop/42-cursus/ft_containers/test/build/CMakeFiles 0
 .PHONY : CMakeFiles/runUnitTests.dir/rule

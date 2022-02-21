@@ -236,6 +236,30 @@ gtest_main/fast:
 	$(MAKE) $(MAKESILENT) -f googletest/googletest/CMakeFiles/gtest_main.dir/build.make googletest/googletest/CMakeFiles/gtest_main.dir/build
 .PHONY : gtest_main/fast
 
+vector/vecotr_reverse_iterator.o: vector/vecotr_reverse_iterator.cpp.o
+.PHONY : vector/vecotr_reverse_iterator.o
+
+# target to build an object file
+vector/vecotr_reverse_iterator.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/runUnitTests.dir/build.make CMakeFiles/runUnitTests.dir/vector/vecotr_reverse_iterator.cpp.o
+.PHONY : vector/vecotr_reverse_iterator.cpp.o
+
+vector/vecotr_reverse_iterator.i: vector/vecotr_reverse_iterator.cpp.i
+.PHONY : vector/vecotr_reverse_iterator.i
+
+# target to preprocess a source file
+vector/vecotr_reverse_iterator.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/runUnitTests.dir/build.make CMakeFiles/runUnitTests.dir/vector/vecotr_reverse_iterator.cpp.i
+.PHONY : vector/vecotr_reverse_iterator.cpp.i
+
+vector/vecotr_reverse_iterator.s: vector/vecotr_reverse_iterator.cpp.s
+.PHONY : vector/vecotr_reverse_iterator.s
+
+# target to generate assembly for a file
+vector/vecotr_reverse_iterator.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/runUnitTests.dir/build.make CMakeFiles/runUnitTests.dir/vector/vecotr_reverse_iterator.cpp.s
+.PHONY : vector/vecotr_reverse_iterator.cpp.s
+
 vector/vector_contructors.o: vector/vector_contructors.cpp.o
 .PHONY : vector/vector_contructors.o
 
@@ -260,6 +284,30 @@ vector/vector_contructors.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/runUnitTests.dir/build.make CMakeFiles/runUnitTests.dir/vector/vector_contructors.cpp.s
 .PHONY : vector/vector_contructors.cpp.s
 
+vector/vector_iterator.o: vector/vector_iterator.cpp.o
+.PHONY : vector/vector_iterator.o
+
+# target to build an object file
+vector/vector_iterator.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/runUnitTests.dir/build.make CMakeFiles/runUnitTests.dir/vector/vector_iterator.cpp.o
+.PHONY : vector/vector_iterator.cpp.o
+
+vector/vector_iterator.i: vector/vector_iterator.cpp.i
+.PHONY : vector/vector_iterator.i
+
+# target to preprocess a source file
+vector/vector_iterator.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/runUnitTests.dir/build.make CMakeFiles/runUnitTests.dir/vector/vector_iterator.cpp.i
+.PHONY : vector/vector_iterator.cpp.i
+
+vector/vector_iterator.s: vector/vector_iterator.cpp.s
+.PHONY : vector/vector_iterator.s
+
+# target to generate assembly for a file
+vector/vector_iterator.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/runUnitTests.dir/build.make CMakeFiles/runUnitTests.dir/vector/vector_iterator.cpp.s
+.PHONY : vector/vector_iterator.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -278,9 +326,15 @@ help:
 	@echo "... gtest"
 	@echo "... gtest_main"
 	@echo "... runUnitTests"
+	@echo "... vector/vecotr_reverse_iterator.o"
+	@echo "... vector/vecotr_reverse_iterator.i"
+	@echo "... vector/vecotr_reverse_iterator.s"
 	@echo "... vector/vector_contructors.o"
 	@echo "... vector/vector_contructors.i"
 	@echo "... vector/vector_contructors.s"
+	@echo "... vector/vector_iterator.o"
+	@echo "... vector/vector_iterator.i"
+	@echo "... vector/vector_iterator.s"
 .PHONY : help
 
 

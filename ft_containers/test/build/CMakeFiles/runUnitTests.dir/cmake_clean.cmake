@@ -1,6 +1,10 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/runUnitTests.dir/vector/vecotr_reverse_iterator.cpp.o"
+  "CMakeFiles/runUnitTests.dir/vector/vecotr_reverse_iterator.cpp.o.d"
   "CMakeFiles/runUnitTests.dir/vector/vector_contructors.cpp.o"
   "CMakeFiles/runUnitTests.dir/vector/vector_contructors.cpp.o.d"
+  "CMakeFiles/runUnitTests.dir/vector/vector_iterator.cpp.o"
+  "CMakeFiles/runUnitTests.dir/vector/vector_iterator.cpp.o.d"
   "runUnitTests"
   "runUnitTests.pdb"
 )
