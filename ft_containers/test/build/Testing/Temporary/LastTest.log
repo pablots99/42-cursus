@@ -1,16 +1,18 @@
-Start testing: Feb 18 15:10 CET
+Start testing: Feb 21 20:04 CET
 ----------------------------------------------------------
 1/1 Testing: UnitTests
 1/1 Test: UnitTests
-Command: "/Users/pablo/Desktop/42-cursus/ft_containers/test/build/runUnitTests"
-Directory: /Users/pablo/Desktop/42-cursus/ft_containers/test/build
-"UnitTests" start time: Feb 18 15:10 CET
+Command: "/Users/ptorres/Desktop/42-cursus/ft_containers/test/build/runUnitTests"
+Directory: /Users/ptorres/Desktop/42-cursus/ft_containers/test/build
+"UnitTests" start time: Feb 21 20:04 CET
 Output:
 ----------------------------------------------------------
-Running main() from /Users/pablo/Desktop/42-cursus/ft_containers/test/googletest/googletest/src/gtest_main.cc
-[==========] Running 7 tests from 1 test suite.
+Running main() from /Users/ptorres/Desktop/42-cursus/ft_containers/test/googletest/googletest/src/gtest_main.cc
+[==========] Running 25 tests from 1 test suite.
 [----------] Global test environment set-up.
-[----------] 7 tests from vector
+[----------] 25 tests from vector
+[ RUN      ] vector.vector_asign
+[       OK ] vector.vector_asign (0 ms)
 [ RUN      ] vector.default_constructor
 [       OK ] vector.default_constructor (0 ms)
 [ RUN      ] vector.fill_constructor
@@ -23,19 +25,53 @@ Running main() from /Users/pablo/Desktop/42-cursus/ft_containers/test/googletest
 [       OK ] vector.range_constructor (0 ms)
 [ RUN      ] vector.empty_range_constructor
 [       OK ] vector.empty_range_constructor (0 ms)
+[ RUN      ] vector.vector_default_insert
+[       OK ] vector.vector_default_insert (0 ms)
+[ RUN      ] vector.vector_fill_insert
+[       OK ] vector.vector_fill_insert (0 ms)
+[ RUN      ] vector.vector_range_insert
+[       OK ] vector.vector_range_insert (0 ms)
 [ RUN      ] vector.empty_iterator
 [       OK ] vector.empty_iterator (0 ms)
-[----------] 7 tests from vector (0 ms total)
+[ RUN      ] vector.iterator_operators
+[       OK ] vector.iterator_operators (0 ms)
+[ RUN      ] vector.vector_reserve
+[       OK ] vector.vector_reserve (0 ms)
+[ RUN      ] vector.vector_resize
+[       OK ] vector.vector_resize (0 ms)
+[ RUN      ] vector.reverse_empty_iterator
+[       OK ] vector.reverse_empty_iterator (0 ms)
+[ RUN      ] vector.reverse_iterator_operators
+[       OK ] vector.reverse_iterator_operators (0 ms)
+[ RUN      ] vector.vector_empty_true
+[       OK ] vector.vector_empty_true (0 ms)
+[ RUN      ] vector.vector_push_back
+[       OK ] vector.vector_push_back (0 ms)
+[ RUN      ] vector.vector_empty_false
+[       OK ] vector.vector_empty_false (0 ms)
+[ RUN      ] vector.vector_pop_back
+[       OK ] vector.vector_pop_back (0 ms)
+[ RUN      ] vector.vector_back
+[       OK ] vector.vector_back (0 ms)
+[ RUN      ] vector.vector_front
+[       OK ] vector.vector_front (0 ms)
+[ RUN      ] vector.vector_at
+[       OK ] vector.vector_at (0 ms)
+[ RUN      ] vector.vector_clear
+[       OK ] vector.vector_clear (0 ms)
+[ RUN      ] vector.vector_erase
+[       OK ] vector.vector_erase (0 ms)
+[----------] 25 tests from vector (0 ms total)
 
 [----------] Global test environment tear-down
-[==========] 7 tests from 1 test suite ran. (0 ms total)
-[  PASSED  ] 7 tests.
+[==========] 25 tests from 1 test suite ran. (0 ms total)
+[  PASSED  ] 25 tests.
 <end of output>
-Test time =   0.01 sec
+Test time =   0.00 sec
 ----------------------------------------------------------
 Test Passed.
-"UnitTests" end time: Feb 18 15:10 CET
+"UnitTests" end time: Feb 21 20:04 CET
 "UnitTests" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-End testing: Feb 18 15:10 CET
+End testing: Feb 21 20:04 CET

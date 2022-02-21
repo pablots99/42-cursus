@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 13:36:29 by ptorres           #+#    #+#             */
-/*   Updated: 2022/02/18 14:52:30 by pablo            ###   ########.fr       */
+/*   Updated: 2022/02/21 20:03:53 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,9 @@ public:
 	void reserve(size_type n)
 	{
 		if (n < _capacity)
-			return;
+			return ;
+		if(n > max_size())
+			return ;
 		pointer aux;
 		aux = _allocator.allocate(n + 1);
 		if (_size)
@@ -89,34 +91,26 @@ public:
 		_capacity = n;
 		_begin = aux;
 	}
+
 	void resize(size_type n, value_type val = value_type())
 	{
 		pointer aux;
 		if (n < _size)
 		{
 			aux = _allocator.allocate(n);
-			_capacity = n;
 			std::copy(_begin, _begin + n, aux);
 			//destroy
-			destroy_begin();
-			_allocator.deallocate(_begin, _size);
+			this->uncreate();
+			_capacity = n;
 			_begin = aux;
 			_size = n;
 		}
 		else
 		{
-			if (n > _capacity)
-			{
-				_capacity *= 2;
-				aux = _allocator.allocate(_capacity);
-				std::copy(_begin, _begin + _size, aux);
-				//destroy
-				destroy_begin();
-				_allocator.deallocate(_begin, _size);
-				_begin = aux;
-			}
-			_allocator.construct(_begin + _size, val);
-			_size++;
+			reserve(n);
+			for (size_type i = _size; i < n; i++)
+				*(_begin + i) = val;
+			_size = n;
 		}
 	}
 	size_type capacity() const { return _capacity; };
@@ -206,31 +200,89 @@ public:
 	iterator insert(iterator position, const value_type &val)
 	{
 		size_t last_size = _size;
-		pointer res = _allocator.allocate(_size + 1);
+		pointer res = _allocator.allocate(_size + 2);
 		size_t len = std::distance(this->begin(), position);
-		std::cout << "len "<< len << std::endl;
 		std::copy(_begin, _begin + len, res);
 		_allocator.construct(res + len, val);
-		_size++;
-		std::copy(_begin + len, _begin + last_size, res + len);
+		std::copy(_begin + len, _begin + last_size, res + len + 1);
 		this->uncreate();
 		_begin = res;
 		_size = last_size + 1;
-		_capacity = _size + 1;
-		return iterator(_begin + len);
+		_capacity = last_size + 2;
+		return iterator(&_begin[len]);
 	}
 
 	void insert(iterator position, size_type n, const value_type &val)
 	{
-
+		size_t last_size = _size;
+		pointer res = _allocator.allocate(_size + n + 1);
+		size_t len = std::distance(this->begin(), position);
+		std::copy(_begin, _begin + len, res);
+		for (size_t i = 0; i < n; i++)
+			_allocator.construct(res + len + i, val);
+		std::copy(_begin + len, _begin + last_size, res + len + n);
+		this->uncreate();
+		_begin = res;
+		_size = last_size + n;
+		_capacity = last_size + n + 1;
 	}
 
 	template <class InputIterator>
 	typename std::enable_if<!std::is_integral<InputIterator>::value, void>::type
 	insert(iterator position, InputIterator first, InputIterator last)
 	{
+		size_t last_size = _size;
+		size_t len2 = std::distance(first, last);
+		pointer res = _allocator.allocate(_size + len2 + 1);
+		size_t len = std::distance(this->begin(), position);
+		std::copy(_begin, _begin + len, res);
+		for (size_t i = 0; i < len2; i++) { 
+			_allocator.construct(res + len + i, *first);
+			first++;
+		}
+		this->uncreate();
+		std::copy(_begin + len, _begin + last_size, res + len + len2);
+		_begin = res;
+		_size = last_size + len2;
+		_capacity = last_size + len2 + 1;
+	}
+
+	iterator erase (iterator position)
+	{
+		size_t last_size = _size;
+		size_t last_cap = _capacity + 2;
+		pointer res = _allocator.allocate(last_cap);
+		size_t len = std::distance(this->begin(), position);
+		std::copy(_begin, _begin + len, res);
+		_allocator.destroy(_begin + len);
+		std::copy(_begin + len + 1, _begin + _size, res + len);
+		this->uncreate();
+		_begin = res;
+		_size = last_size - 1;
+		_capacity = last_cap;
+		return iterator(&_begin[len]);
 
 	}
+	
+	iterator erase (iterator first, iterator last)
+	{
+		size_t last_size = _size;
+		size_t last_cap = _capacity;
+		size_t len2 = std::distance(first, last);
+		pointer res = _allocator.allocate(_capacity);
+		size_t len = std::distance(this->begin(), first);
+		std::copy(_begin, _begin + len, res);
+		size_t i;
+		for (i = 0; i < len2; i++)
+			_allocator.destroy(_begin + len + i);
+		this->uncreate();
+		std::copy(_begin + len + i, _begin + last_size, res + len);
+		_begin = res;
+		_size = last_size - len2;
+		_capacity = last_cap;
+		return iterator(&_begin[len]);
+	}
+
 
 private:
 	pointer _begin;

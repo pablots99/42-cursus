@@ -7,3 +7,5 @@ Stack
 TO DO
 
     -> test all utils!!!!!!!!!!
+    -> vector:
+            -> reserve(-1);  make the exception

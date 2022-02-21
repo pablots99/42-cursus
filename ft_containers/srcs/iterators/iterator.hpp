@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   iterator.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 16:43:34 by ptorres           #+#    #+#             */
-/*   Updated: 2022/02/15 19:31:16 by pablo            ###   ########.fr       */
+/*   Updated: 2022/02/21 13:53:59 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ITERATOR_HPP
-#define ITERATOR_HPP
+
+
+#ifndef ITERATOR__HPP
+#define ITERATOR__HPP
 #include <iostream>
 
 #include "iterator_traits.hpp"

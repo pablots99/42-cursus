@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 13:34:36 by ptorres           #+#    #+#             */
-/*   Updated: 2022/02/18 00:32:51 by pablo            ###   ########.fr       */
+/*   Updated: 2022/02/21 16:19:25 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,10 @@
 #include <iterator>
 int main()
 {
+	std::vector<int> va;
 	ft::vector<int> v;
 	ft::vector<int> v1;
+
 
 	v1.assign(7, 200);
 	v.assign(7, 100);

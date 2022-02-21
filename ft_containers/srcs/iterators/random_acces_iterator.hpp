@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 14:17:31 by ptorres           #+#    #+#             */
-/*   Updated: 2022/02/17 15:43:58 by ptorres          ###   ########.fr       */
+/*   Updated: 2022/02/21 20:37:26 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,9 @@ namespace ft {
 			/*CONSTRUCTORS*/
 			my_random_acces_iterator():__t(),  current() {}
             my_random_acces_iterator(pointer x ):__t(x), current(x) {}
+          
             template< class U >
-            my_random_acces_iterator( const my_random_acces_iterator<U>& obj ):__t(obj.base()), current(obj.base()){}
+            my_random_acces_iterator(const my_random_acces_iterator<U>& obj ):__t((pointer)obj.base()), current((pointer)obj.base()){}
             /**************/
 			pointer base() const {return current;}
 			 /*operators*/
@@ -50,20 +51,20 @@ namespace ft {
             my_random_acces_iterator	operator++(int) {my_random_acces_iterator tmp(*this); ++current; return tmp;}
             my_random_acces_iterator&	operator--() {--current; return *this;}
             my_random_acces_iterator	operator--(int) {my_random_acces_iterator tmp(*this); --current; return tmp;}
-            my_random_acces_iterator&	operator+=(Iter i) {current+= i; return *this;}
-            my_random_acces_iterator&	operator-=(Iter i) {current-= i; return *this;}
-            my_random_acces_iterator	operator-(difference_type n) {return current - n;}
-            my_random_acces_iterator	operator+(difference_type n) {return current + n;}
-            
-            /*cange to non member*/
-            difference_type             operator-(my_random_acces_iterator n) {return current - n.base();}
-            difference_type	            operator+(my_random_acces_iterator n) {return current + n.base();}
+            my_random_acces_iterator	operator+=(difference_type i) {current+= i; return *this;}
+            my_random_acces_iterator	operator-=(difference_type i) {current-= i; return *this;}
+            my_random_acces_iterator	operator-(difference_type n) const {return current - n;}
+            my_random_acces_iterator	operator+(difference_type n) const {return current + n;}
+            /*cange to non member*/ 
+            difference_type             operator-(my_random_acces_iterator n) const {return current - n.base();}
+            difference_type	            operator+(my_random_acces_iterator n) const {return current + n.base();}
 			bool                        operator==(my_random_acces_iterator const &i2) { return current == i2.base();}
 			bool                        operator!=(my_random_acces_iterator const &i2) { return current != i2.base();}
 		private:
             pointer __t;
+            pointer current;
 		protected:
-			pointer current;
+			
     };
 
 
@@ -79,6 +80,15 @@ namespace ft {
     template<class Iter1, class Iter2>
     bool operator>=(my_random_acces_iterator<Iter1> const &i1,my_random_acces_iterator<Iter2> const &i2) { return i1.base() >= i2.base();}
 
+
+    template<class Iter>
+    my_random_acces_iterator<Iter> operator+(typename ft::my_random_acces_iterator<Iter>::difference_type n,my_random_acces_iterator<Iter> const &i) { 
+        return i.base() + n;
+    }
+    template<class Iter>
+    my_random_acces_iterator<Iter> operator-(typename ft::my_random_acces_iterator<Iter>::difference_type n,my_random_acces_iterator<Iter> const &i) { 
+        return i.base() - n;
+    }
 }
 
 
