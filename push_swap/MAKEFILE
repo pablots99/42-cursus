@@ -1,0 +1,45 @@
+NAME = checker
+NAME1 = push_swap
+
+
+SRCS = checker.c
+
+
+OBJS = $(SRCS:.c=.o)
+
+SRCS1 = push_swap.c
+
+
+OBJS1 = $(SRCS1:.c=.o)
+
+
+CC = gcc
+
+CFLAGS = -Wall -Werror -Wextra #-fsanitize=address  -g3
+
+
+LFAGS = -L. ./libft/libft.a -L. ./srcs/pushswap.a
+
+
+all: $(NAME)
+
+
+
+$(NAME):$(OBJS)
+	make -C srcs
+	$(CC)    $(CFLAGS)   $(LFAGS) $(SRCS) -o $(NAME)
+	$(CC)    $(CFLAGS)   $(LFAGS) $(SRCS1) -o $(NAME1)
+	rm -rf *.dSYM
+
+
+clean:
+	make clean -C srcs
+	rm -f *.o
+	/bin/rm -f $(OBJS)
+
+fclean: clean
+	/bin/rm -f $(NAME)
+	/bin/rm -f $(NAME1)
+	make fclean -C srcs
+
+re : fclean all

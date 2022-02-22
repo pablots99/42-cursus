@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: ftps
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: ftps
+    template:
+        metadata:
+            labels:
+                app: ftps
+        spec:
+            containers:
+            - name: ftps
+              image: my_ftps
+              imagePullPolicy: Never
+              ports:
+              - containerPort: 21
+                hostPort: 21
+              - containerPort: 2020
+                hostPort: 2020

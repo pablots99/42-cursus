@@ -1,0 +1,10 @@
+# # config file version
+apiVersion: 1
+datasources:
+  - name: InfluxDB
+    type: influxdb
+    access: proxy
+    database: telegraf
+    user: ""
+    password: ""
+    url: http://10.96.0.16:8086

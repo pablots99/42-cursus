@@ -1,0 +1,7 @@
+function =  logistigRegresion()
+
+
+
+
+
+end
