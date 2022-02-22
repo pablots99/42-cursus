@@ -1,4 +1,4 @@
-# Install script for directory: /Users/ptorres/Desktop/42-cursus/ft_containers/test
+# Install script for directory: /Users/pablo/Desktop/42-cursus/ft_containers/test
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -34,13 +34,7 @@ endif()
 
 # Set default install directory permissions.
 if(NOT DEFINED CMAKE_OBJDUMP)
-  set(CMAKE_OBJDUMP "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/objdump")
-endif()
-
-if(NOT CMAKE_INSTALL_LOCAL_ONLY)
-  # Include the install script for each subdirectory.
-  include("/Users/ptorres/Desktop/42-cursus/ft_containers/test/build/googletest/cmake_install.cmake")
-
+  set(CMAKE_OBJDUMP "/Library/Developer/CommandLineTools/usr/bin/objdump")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT)
@@ -51,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/Users/ptorres/Desktop/42-cursus/ft_containers/test/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/Users/pablo/Desktop/42-cursus/ft_containers/test/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
