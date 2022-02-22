@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 13:36:29 by ptorres           #+#    #+#             */
-/*   Updated: 2022/02/22 12:51:40 by pablo            ###   ########.fr       */
+/*   Updated: 2022/02/22 14:43:32 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ public:
 	typedef ft::my_random_acces_iterator<value_type> iterator;
 	typedef ft::my_random_acces_iterator<const value_type> const_iterator;
 	typedef ft::reverse_iterator<iterator> reverse_iterator;
-	typedef ft::reverse_iterator<const iterator> const_reverse_iterator;
+	typedef ft::reverse_iterator<iterator> const const_reverse_iterator;
 
 	/*CONSTRUCTORS*/
 	vector() : _begin(nullptr), _size(0), _capacity(0) {
