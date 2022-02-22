@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 13:36:29 by ptorres           #+#    #+#             */
-/*   Updated: 2022/02/22 14:43:32 by pablo            ###   ########.fr       */
+/*   Updated: 2022/02/22 23:17:53 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,27 +29,35 @@ template <class T, class Allocator = std::allocator<T> >
 class vector
 {
 public:
-	typedef T										value_type;
-	typedef Allocator								allocator_type;
-	typedef value_type								&reference;
-	typedef const value_type						&const_reference;
-	typedef value_type 								*pointer;
-	typedef const value_type 						const_pointer;
+	typedef T value_type;
+	typedef Allocator allocator_type;
+	typedef value_type &reference;
+	typedef const value_type &const_reference;
+	typedef value_type *pointer;
+	typedef const value_type const_pointer;
 	typedef const ptrdiff_t difference_type;
 	typedef size_t size_type;
 	typedef ft::my_random_acces_iterator<value_type> iterator;
 	typedef ft::my_random_acces_iterator<const value_type> const_iterator;
 	typedef ft::reverse_iterator<iterator> reverse_iterator;
-	typedef ft::reverse_iterator<iterator> const const_reverse_iterator;
+	typedef ft::reverse_iterator<const iterator> const const_reverse_iterator;
 
 	/*CONSTRUCTORS*/
-	vector() : _begin(nullptr), _size(0), _capacity(0) {
+	vector() : _begin(NULL), _size(0), _capacity(0)
+	{
 		reserve(1);
-	}											 //defaul
-	explicit vector(size_type n, const value_type &val = value_type()) : _size(0), _capacity(0) { assign(n, val); } //fill
+	}
+	//defaul
+	explicit vector(const size_type n, const value_type &val = value_type(), const allocator_type alloc = allocator_type()) :_begin(NULL), _size(0), _capacity(0), _allocator(alloc)
+	{ 
+		assign(n, val);
+	} //fill
 
 	template <class InputIterator>
-	vector(InputIterator first, InputIterator last) : _size(0), _capacity(0) { assign(first, last); } //range
+	vector(InputIterator first, InputIterator last,const allocator_type alloc = allocator_type()) : _size(0), _capacity(0) ,_allocator(alloc)
+	{
+		 assign(first, last); 
+	} //range
 
 	vector(const vector &x) : _size(0), _capacity(0)
 	{
@@ -78,9 +86,9 @@ public:
 	void reserve(size_type n)
 	{
 		if (n < _capacity)
-			return ;
-		if(n > max_size())
-			return ;
+			return;
+		if (n > max_size())
+			return;
 		pointer aux;
 		aux = _allocator.allocate(n + 1);
 		if (_size)
@@ -236,7 +244,8 @@ public:
 		pointer res = _allocator.allocate(_size + len2 + 1);
 		size_t len = std::distance(this->begin(), position);
 		std::copy(_begin, _begin + len, res);
-		for (size_t i = 0; i < len2; i++) {
+		for (size_t i = 0; i < len2; i++)
+		{
 			_allocator.construct(res + len + i, *first);
 			first++;
 		}
@@ -247,7 +256,7 @@ public:
 		_capacity = last_size + len2 + 1;
 	}
 
-	iterator erase (iterator position)
+	iterator erase(iterator position)
 	{
 		size_t last_size = _size;
 		size_t last_cap = _capacity + 2;
@@ -261,10 +270,9 @@ public:
 		_size = last_size - 1;
 		_capacity = last_cap;
 		return iterator(&_begin[len]);
-
 	}
 
-	iterator erase (iterator first, iterator last)
+	iterator erase(iterator first, iterator last)
 	{
 		size_t last_size = _size;
 		size_t last_cap = _capacity;
@@ -283,12 +291,11 @@ public:
 		return iterator(&_begin[len]);
 	}
 
-
-private:
+protected:
 	pointer _begin;
-	allocator_type _allocator;
 	size_t _size;
 	size_t _capacity;
+	allocator_type _allocator;
 
 	void destroy_begin()
 	{

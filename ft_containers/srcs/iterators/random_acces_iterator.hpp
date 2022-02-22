@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   random_acces_iterator.hpp                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 14:17:31 by ptorres           #+#    #+#             */
-/*   Updated: 2022/02/22 14:43:51 by pablo            ###   ########.fr       */
+/*   Updated: 2022/02/22 23:50:25 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,22 +32,25 @@ namespace ft
 		typedef typename ft::iterator<iterator_category, Iter>::reference 			reference;
 		typedef typename ft::iterator<iterator_category,const Iter>::reference  	const_reference;
 		/******************/
-
 		/*CONSTRUCTORS*/
-		my_random_acces_iterator() : __t(), current() {}
-		explicit my_random_acces_iterator(pointer x) : __t(x), current(x) {}
+		my_random_acces_iterator() : current() {
+		}
+		my_random_acces_iterator(pointer x) : current(x) {
+		}
 
+		
 		template <class U>
-		my_random_acces_iterator(const my_random_acces_iterator<U> &obj) :
-			__t((pointer)obj.base()), current((pointer)obj.base()) {}
+		my_random_acces_iterator(const my_random_acces_iterator<U> &obj) : current(obj.base()) {
+
+		}
+
+
+			
 		/**************/
-
-
 		pointer base() const { return current; }
 		/*operators*/
 		template <class U>
-		my_random_acces_iterator &operator=(const my_random_acces_iterator<U> &other)
-		{
+		my_random_acces_iterator &operator=(my_random_acces_iterator<U> const &other){
 			current = other.base();
 			return *this;
 		}
@@ -94,11 +97,10 @@ namespace ft
 		difference_type operator+(my_random_acces_iterator n) const { return current + n.base(); }
 		bool operator==(my_random_acces_iterator const &i2) { return current == i2.base(); }
 		bool operator!=(my_random_acces_iterator const &i2) { return current != i2.base(); }
-	private:
-		pointer __t;
+	
+	protected:
 		pointer current;
 
-	protected:
 	};
 
 	template <class Iter1, class Iter2>
