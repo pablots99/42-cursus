@@ -48,37 +48,27 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /Users/ptorres/.brew/Cellar/cmake/3.22.2/bin/cmake
+CMAKE_COMMAND = /usr/local/Cellar/cmake/3.22.2/bin/cmake
 
 # The command to remove a file.
-RM = /Users/ptorres/.brew/Cellar/cmake/3.22.2/bin/cmake -E rm -f
+RM = /usr/local/Cellar/cmake/3.22.2/bin/cmake -E rm -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/ptorres/Desktop/42-cursus/ft_containers/test
+CMAKE_SOURCE_DIR = /Users/pablo/Desktop/42-cursus/ft_containers/test
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/ptorres/Desktop/42-cursus/ft_containers/test/build
+CMAKE_BINARY_DIR = /Users/pablo/Desktop/42-cursus/ft_containers/test/build
 
 #=============================================================================
 # Targets provided globally by CMake.
 
-# Special rule for the target test
-test:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
-	/Users/ptorres/.brew/Cellar/cmake/3.22.2/bin/ctest --force-new-ctest-process $(ARGS)
-.PHONY : test
-
-# Special rule for the target test
-test/fast: test
-.PHONY : test/fast
-
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake cache editor..."
-	/Users/ptorres/.brew/Cellar/cmake/3.22.2/bin/ccmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	/usr/local/Cellar/cmake/3.22.2/bin/ccmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -88,63 +78,18 @@ edit_cache/fast: edit_cache
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/Users/ptorres/.brew/Cellar/cmake/3.22.2/bin/cmake --regenerate-during-build -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	/usr/local/Cellar/cmake/3.22.2/bin/cmake --regenerate-during-build -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : rebuild_cache
 
 # Special rule for the target rebuild_cache
 rebuild_cache/fast: rebuild_cache
 .PHONY : rebuild_cache/fast
 
-# Special rule for the target list_install_components
-list_install_components:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
-.PHONY : list_install_components
-
-# Special rule for the target list_install_components
-list_install_components/fast: list_install_components
-.PHONY : list_install_components/fast
-
-# Special rule for the target install
-install: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
-	/Users/ptorres/.brew/Cellar/cmake/3.22.2/bin/cmake -P cmake_install.cmake
-.PHONY : install
-
-# Special rule for the target install
-install/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
-	/Users/ptorres/.brew/Cellar/cmake/3.22.2/bin/cmake -P cmake_install.cmake
-.PHONY : install/fast
-
-# Special rule for the target install/local
-install/local: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	/Users/ptorres/.brew/Cellar/cmake/3.22.2/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local
-
-# Special rule for the target install/local
-install/local/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	/Users/ptorres/.brew/Cellar/cmake/3.22.2/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local/fast
-
-# Special rule for the target install/strip
-install/strip: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
-	/Users/ptorres/.brew/Cellar/cmake/3.22.2/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
-.PHONY : install/strip
-
-# Special rule for the target install/strip
-install/strip/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
-	/Users/ptorres/.brew/Cellar/cmake/3.22.2/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
-.PHONY : install/strip/fast
-
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/ptorres/Desktop/42-cursus/ft_containers/test/build/CMakeFiles /Users/ptorres/Desktop/42-cursus/ft_containers/test/build//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/pablo/Desktop/42-cursus/ft_containers/test/build/CMakeFiles /Users/pablo/Desktop/42-cursus/ft_containers/test/build//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/ptorres/Desktop/42-cursus/ft_containers/test/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/pablo/Desktop/42-cursus/ft_containers/test/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -171,263 +116,6 @@ depend:
 	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
-#=============================================================================
-# Target rules for targets named runUnitTests
-
-# Build rule for target.
-runUnitTests: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 runUnitTests
-.PHONY : runUnitTests
-
-# fast build rule for target.
-runUnitTests/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/runUnitTests.dir/build.make CMakeFiles/runUnitTests.dir/build
-.PHONY : runUnitTests/fast
-
-#=============================================================================
-# Target rules for targets named gmock
-
-# Build rule for target.
-gmock: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 gmock
-.PHONY : gmock
-
-# fast build rule for target.
-gmock/fast:
-	$(MAKE) $(MAKESILENT) -f googletest/googlemock/CMakeFiles/gmock.dir/build.make googletest/googlemock/CMakeFiles/gmock.dir/build
-.PHONY : gmock/fast
-
-#=============================================================================
-# Target rules for targets named gmock_main
-
-# Build rule for target.
-gmock_main: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 gmock_main
-.PHONY : gmock_main
-
-# fast build rule for target.
-gmock_main/fast:
-	$(MAKE) $(MAKESILENT) -f googletest/googlemock/CMakeFiles/gmock_main.dir/build.make googletest/googlemock/CMakeFiles/gmock_main.dir/build
-.PHONY : gmock_main/fast
-
-#=============================================================================
-# Target rules for targets named gtest
-
-# Build rule for target.
-gtest: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 gtest
-.PHONY : gtest
-
-# fast build rule for target.
-gtest/fast:
-	$(MAKE) $(MAKESILENT) -f googletest/googletest/CMakeFiles/gtest.dir/build.make googletest/googletest/CMakeFiles/gtest.dir/build
-.PHONY : gtest/fast
-
-#=============================================================================
-# Target rules for targets named gtest_main
-
-# Build rule for target.
-gtest_main: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 gtest_main
-.PHONY : gtest_main
-
-# fast build rule for target.
-gtest_main/fast:
-	$(MAKE) $(MAKESILENT) -f googletest/googletest/CMakeFiles/gtest_main.dir/build.make googletest/googletest/CMakeFiles/gtest_main.dir/build
-.PHONY : gtest_main/fast
-
-vector/vector_asign.o: vector/vector_asign.cpp.o
-.PHONY : vector/vector_asign.o
-
-# target to build an object file
-vector/vector_asign.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/runUnitTests.dir/build.make CMakeFiles/runUnitTests.dir/vector/vector_asign.cpp.o
-.PHONY : vector/vector_asign.cpp.o
-
-vector/vector_asign.i: vector/vector_asign.cpp.i
-.PHONY : vector/vector_asign.i
-
-# target to preprocess a source file
-vector/vector_asign.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/runUnitTests.dir/build.make CMakeFiles/runUnitTests.dir/vector/vector_asign.cpp.i
-.PHONY : vector/vector_asign.cpp.i
-
-vector/vector_asign.s: vector/vector_asign.cpp.s
-.PHONY : vector/vector_asign.s
-
-# target to generate assembly for a file
-vector/vector_asign.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/runUnitTests.dir/build.make CMakeFiles/runUnitTests.dir/vector/vector_asign.cpp.s
-.PHONY : vector/vector_asign.cpp.s
-
-vector/vector_contructors.o: vector/vector_contructors.cpp.o
-.PHONY : vector/vector_contructors.o
-
-# target to build an object file
-vector/vector_contructors.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/runUnitTests.dir/build.make CMakeFiles/runUnitTests.dir/vector/vector_contructors.cpp.o
-.PHONY : vector/vector_contructors.cpp.o
-
-vector/vector_contructors.i: vector/vector_contructors.cpp.i
-.PHONY : vector/vector_contructors.i
-
-# target to preprocess a source file
-vector/vector_contructors.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/runUnitTests.dir/build.make CMakeFiles/runUnitTests.dir/vector/vector_contructors.cpp.i
-.PHONY : vector/vector_contructors.cpp.i
-
-vector/vector_contructors.s: vector/vector_contructors.cpp.s
-.PHONY : vector/vector_contructors.s
-
-# target to generate assembly for a file
-vector/vector_contructors.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/runUnitTests.dir/build.make CMakeFiles/runUnitTests.dir/vector/vector_contructors.cpp.s
-.PHONY : vector/vector_contructors.cpp.s
-
-vector/vector_insert.o: vector/vector_insert.cpp.o
-.PHONY : vector/vector_insert.o
-
-# target to build an object file
-vector/vector_insert.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/runUnitTests.dir/build.make CMakeFiles/runUnitTests.dir/vector/vector_insert.cpp.o
-.PHONY : vector/vector_insert.cpp.o
-
-vector/vector_insert.i: vector/vector_insert.cpp.i
-.PHONY : vector/vector_insert.i
-
-# target to preprocess a source file
-vector/vector_insert.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/runUnitTests.dir/build.make CMakeFiles/runUnitTests.dir/vector/vector_insert.cpp.i
-.PHONY : vector/vector_insert.cpp.i
-
-vector/vector_insert.s: vector/vector_insert.cpp.s
-.PHONY : vector/vector_insert.s
-
-# target to generate assembly for a file
-vector/vector_insert.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/runUnitTests.dir/build.make CMakeFiles/runUnitTests.dir/vector/vector_insert.cpp.s
-.PHONY : vector/vector_insert.cpp.s
-
-vector/vector_iterator.o: vector/vector_iterator.cpp.o
-.PHONY : vector/vector_iterator.o
-
-# target to build an object file
-vector/vector_iterator.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/runUnitTests.dir/build.make CMakeFiles/runUnitTests.dir/vector/vector_iterator.cpp.o
-.PHONY : vector/vector_iterator.cpp.o
-
-vector/vector_iterator.i: vector/vector_iterator.cpp.i
-.PHONY : vector/vector_iterator.i
-
-# target to preprocess a source file
-vector/vector_iterator.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/runUnitTests.dir/build.make CMakeFiles/runUnitTests.dir/vector/vector_iterator.cpp.i
-.PHONY : vector/vector_iterator.cpp.i
-
-vector/vector_iterator.s: vector/vector_iterator.cpp.s
-.PHONY : vector/vector_iterator.s
-
-# target to generate assembly for a file
-vector/vector_iterator.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/runUnitTests.dir/build.make CMakeFiles/runUnitTests.dir/vector/vector_iterator.cpp.s
-.PHONY : vector/vector_iterator.cpp.s
-
-vector/vector_reserve.o: vector/vector_reserve.cpp.o
-.PHONY : vector/vector_reserve.o
-
-# target to build an object file
-vector/vector_reserve.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/runUnitTests.dir/build.make CMakeFiles/runUnitTests.dir/vector/vector_reserve.cpp.o
-.PHONY : vector/vector_reserve.cpp.o
-
-vector/vector_reserve.i: vector/vector_reserve.cpp.i
-.PHONY : vector/vector_reserve.i
-
-# target to preprocess a source file
-vector/vector_reserve.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/runUnitTests.dir/build.make CMakeFiles/runUnitTests.dir/vector/vector_reserve.cpp.i
-.PHONY : vector/vector_reserve.cpp.i
-
-vector/vector_reserve.s: vector/vector_reserve.cpp.s
-.PHONY : vector/vector_reserve.s
-
-# target to generate assembly for a file
-vector/vector_reserve.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/runUnitTests.dir/build.make CMakeFiles/runUnitTests.dir/vector/vector_reserve.cpp.s
-.PHONY : vector/vector_reserve.cpp.s
-
-vector/vector_resize.o: vector/vector_resize.cpp.o
-.PHONY : vector/vector_resize.o
-
-# target to build an object file
-vector/vector_resize.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/runUnitTests.dir/build.make CMakeFiles/runUnitTests.dir/vector/vector_resize.cpp.o
-.PHONY : vector/vector_resize.cpp.o
-
-vector/vector_resize.i: vector/vector_resize.cpp.i
-.PHONY : vector/vector_resize.i
-
-# target to preprocess a source file
-vector/vector_resize.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/runUnitTests.dir/build.make CMakeFiles/runUnitTests.dir/vector/vector_resize.cpp.i
-.PHONY : vector/vector_resize.cpp.i
-
-vector/vector_resize.s: vector/vector_resize.cpp.s
-.PHONY : vector/vector_resize.s
-
-# target to generate assembly for a file
-vector/vector_resize.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/runUnitTests.dir/build.make CMakeFiles/runUnitTests.dir/vector/vector_resize.cpp.s
-.PHONY : vector/vector_resize.cpp.s
-
-vector/vector_reverse_iterator.o: vector/vector_reverse_iterator.cpp.o
-.PHONY : vector/vector_reverse_iterator.o
-
-# target to build an object file
-vector/vector_reverse_iterator.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/runUnitTests.dir/build.make CMakeFiles/runUnitTests.dir/vector/vector_reverse_iterator.cpp.o
-.PHONY : vector/vector_reverse_iterator.cpp.o
-
-vector/vector_reverse_iterator.i: vector/vector_reverse_iterator.cpp.i
-.PHONY : vector/vector_reverse_iterator.i
-
-# target to preprocess a source file
-vector/vector_reverse_iterator.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/runUnitTests.dir/build.make CMakeFiles/runUnitTests.dir/vector/vector_reverse_iterator.cpp.i
-.PHONY : vector/vector_reverse_iterator.cpp.i
-
-vector/vector_reverse_iterator.s: vector/vector_reverse_iterator.cpp.s
-.PHONY : vector/vector_reverse_iterator.s
-
-# target to generate assembly for a file
-vector/vector_reverse_iterator.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/runUnitTests.dir/build.make CMakeFiles/runUnitTests.dir/vector/vector_reverse_iterator.cpp.s
-.PHONY : vector/vector_reverse_iterator.cpp.s
-
-vector/vector_utils.o: vector/vector_utils.cpp.o
-.PHONY : vector/vector_utils.o
-
-# target to build an object file
-vector/vector_utils.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/runUnitTests.dir/build.make CMakeFiles/runUnitTests.dir/vector/vector_utils.cpp.o
-.PHONY : vector/vector_utils.cpp.o
-
-vector/vector_utils.i: vector/vector_utils.cpp.i
-.PHONY : vector/vector_utils.i
-
-# target to preprocess a source file
-vector/vector_utils.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/runUnitTests.dir/build.make CMakeFiles/runUnitTests.dir/vector/vector_utils.cpp.i
-.PHONY : vector/vector_utils.cpp.i
-
-vector/vector_utils.s: vector/vector_utils.cpp.s
-.PHONY : vector/vector_utils.s
-
-# target to generate assembly for a file
-vector/vector_utils.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/runUnitTests.dir/build.make CMakeFiles/runUnitTests.dir/vector/vector_utils.cpp.s
-.PHONY : vector/vector_utils.cpp.s
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -435,41 +123,7 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... edit_cache"
-	@echo "... install"
-	@echo "... install/local"
-	@echo "... install/strip"
-	@echo "... list_install_components"
 	@echo "... rebuild_cache"
-	@echo "... test"
-	@echo "... gmock"
-	@echo "... gmock_main"
-	@echo "... gtest"
-	@echo "... gtest_main"
-	@echo "... runUnitTests"
-	@echo "... vector/vector_asign.o"
-	@echo "... vector/vector_asign.i"
-	@echo "... vector/vector_asign.s"
-	@echo "... vector/vector_contructors.o"
-	@echo "... vector/vector_contructors.i"
-	@echo "... vector/vector_contructors.s"
-	@echo "... vector/vector_insert.o"
-	@echo "... vector/vector_insert.i"
-	@echo "... vector/vector_insert.s"
-	@echo "... vector/vector_iterator.o"
-	@echo "... vector/vector_iterator.i"
-	@echo "... vector/vector_iterator.s"
-	@echo "... vector/vector_reserve.o"
-	@echo "... vector/vector_reserve.i"
-	@echo "... vector/vector_reserve.s"
-	@echo "... vector/vector_resize.o"
-	@echo "... vector/vector_resize.i"
-	@echo "... vector/vector_resize.s"
-	@echo "... vector/vector_reverse_iterator.o"
-	@echo "... vector/vector_reverse_iterator.i"
-	@echo "... vector/vector_reverse_iterator.s"
-	@echo "... vector/vector_utils.o"
-	@echo "... vector/vector_utils.i"
-	@echo "... vector/vector_utils.s"
 .PHONY : help
 
 

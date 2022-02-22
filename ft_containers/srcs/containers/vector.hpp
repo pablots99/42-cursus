@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 13:36:29 by ptorres           #+#    #+#             */
-/*   Updated: 2022/02/21 20:03:53 by ptorres          ###   ########.fr       */
+/*   Updated: 2022/02/22 14:43:32 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,18 +29,18 @@ template <class T, class Allocator = std::allocator<T> >
 class vector
 {
 public:
-	typedef T value_type;
-	typedef Allocator allocator_type;
-	typedef value_type &reference;
-	typedef const value_type &const_reference;
-	typedef value_type *pointer;
-	typedef const value_type const_pointer;
+	typedef T										value_type;
+	typedef Allocator								allocator_type;
+	typedef value_type								&reference;
+	typedef const value_type						&const_reference;
+	typedef value_type 								*pointer;
+	typedef const value_type 						const_pointer;
 	typedef const ptrdiff_t difference_type;
 	typedef size_t size_type;
 	typedef ft::my_random_acces_iterator<value_type> iterator;
 	typedef ft::my_random_acces_iterator<const value_type> const_iterator;
 	typedef ft::reverse_iterator<iterator> reverse_iterator;
-	typedef ft::reverse_iterator<const iterator> const_reverse_iterator;
+	typedef ft::reverse_iterator<iterator> const const_reverse_iterator;
 
 	/*CONSTRUCTORS*/
 	vector() : _begin(nullptr), _size(0), _capacity(0) {
@@ -236,7 +236,7 @@ public:
 		pointer res = _allocator.allocate(_size + len2 + 1);
 		size_t len = std::distance(this->begin(), position);
 		std::copy(_begin, _begin + len, res);
-		for (size_t i = 0; i < len2; i++) { 
+		for (size_t i = 0; i < len2; i++) {
 			_allocator.construct(res + len + i, *first);
 			first++;
 		}
@@ -263,7 +263,7 @@ public:
 		return iterator(&_begin[len]);
 
 	}
-	
+
 	iterator erase (iterator first, iterator last)
 	{
 		size_t last_size = _size;
