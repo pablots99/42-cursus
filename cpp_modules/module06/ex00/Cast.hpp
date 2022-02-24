@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 11:48:01 by ptorres           #+#    #+#             */
-/*   Updated: 2022/01/18 16:17:05 by ptorres          ###   ########.fr       */
+/*   Updated: 2022/02/24 18:35:33 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ class Cast {
         float       to_float();
         double      to_double();
         char        to_char();
+       
         void        printResult();
         int         getInt();
         float       getFloat();
