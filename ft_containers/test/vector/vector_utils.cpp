@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector_utils.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 16:06:53 by ptorres           #+#    #+#             */
-/*   Updated: 2022/02/21 19:19:51 by ptorres          ###   ########.fr       */
+/*   Updated: 2022/02/23 13:53:53 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ TEST(vector,vector_at)
     ASSERT_EQ(e1.what(),e2.what());
 }
 
-TEST(vector,vector_clear) { 
+TEST(vector,vector_clear) {
     v.clear();
     fv.clear();
     ASSERT_EQ(v.size(),fv.size()) << "sizes are not equal";
@@ -100,13 +100,13 @@ TEST(vector,vector_clear) {
 
 TEST(vector,vector_erase)
 {
-    
+
     std::list<std::string> list;
 	for (size_t i = 0; i < 10; i++)
 		list.push_back("number: " + std::to_string(i));
 	std::vector<std::string> v1(list.begin(),list.end());
 	ft::vector<std::string> fv1(list.begin(),list.end());
-    
+
     ASSERT_EQ(
          *v1.erase(v1.begin() + 3),
          *fv1.erase(fv1.begin() + 3)
@@ -117,10 +117,8 @@ TEST(vector,vector_erase)
     for (int i = 0; i < v1.size(); ++i) {
   		EXPECT_EQ(v1[i], fv1[i]) << "Vectors ft and std differ at index " << i;
 	}
-    ASSERT_EQ(
-        *v1.erase(v1.begin() + 3,v1.end()),
-        *fv1.erase(fv1.begin() + 3,fv1.end())
-    ) << "erase return value not ok";
+    v1.erase(v1.begin() + 3,v1.end());
+    fv1.erase(fv1.begin() + 3,fv1.end());
     ASSERT_EQ(v1.size(),fv1.size()) << "sizes are not equal";
     ASSERT_EQ(v1.max_size(),fv1.max_size()) << "max_sizes are not equal";
     ASSERT_GE(fv1.capacity(),fv1.size()) << "not enougth capacity";

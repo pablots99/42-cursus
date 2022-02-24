@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   random_acces_iterator.hpp                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 14:17:31 by ptorres           #+#    #+#             */
-/*   Updated: 2022/02/22 23:50:25 by ptorres          ###   ########.fr       */
+/*   Updated: 2022/02/23 15:26:21 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,19 +33,12 @@ namespace ft
 		typedef typename ft::iterator<iterator_category,const Iter>::reference  	const_reference;
 		/******************/
 		/*CONSTRUCTORS*/
-		my_random_acces_iterator() : current() {
+		my_random_acces_iterator(void) : current() {
 		}
-		my_random_acces_iterator(pointer x) : current(x) {
-		}
+		my_random_acces_iterator(pointer x) : current(x) {}
 
-		
 		template <class U>
-		my_random_acces_iterator(const my_random_acces_iterator<U> &obj) : current(obj.base()) {
-
-		}
-
-
-			
+		my_random_acces_iterator(const my_random_acces_iterator<U> &obj) : current(obj.base()) {}
 		/**************/
 		pointer base() const { return current; }
 		/*operators*/
@@ -90,18 +83,22 @@ namespace ft
 			current -= i;
 			return *this;
 		}
-		/*cange to non member*/
-		my_random_acces_iterator operator-(difference_type n) const { return my_random_acces_iterator(current - n); }
-		my_random_acces_iterator operator+(difference_type n) const { return my_random_acces_iterator(current + n); }
-		difference_type operator-(my_random_acces_iterator n) const { return current - n.base(); }
-		difference_type operator+(my_random_acces_iterator n) const { return current + n.base(); }
-		bool operator==(my_random_acces_iterator const &i2) { return current == i2.base(); }
-		bool operator!=(my_random_acces_iterator const &i2) { return current != i2.base(); }
-	
+		my_random_acces_iterator operator-(difference_type n) const {
+			return my_random_acces_iterator(current - n); }
+		my_random_acces_iterator operator+(difference_type n) const {
+			return my_random_acces_iterator(current + n); }
+
 	protected:
 		pointer current;
 
 	};
+
+	template <class Iter1, class Iter2>
+	bool operator==(my_random_acces_iterator<Iter1> const &i1, my_random_acces_iterator<Iter2> const &i2) { return i1.base() == i2.base(); }
+
+	template <class Iter1, class Iter2>
+	bool operator!=(my_random_acces_iterator<Iter1> const &i1, my_random_acces_iterator<Iter2> const &i2) { return !(i1==i2); }
+
 
 	template <class Iter1, class Iter2>
 	bool operator<(my_random_acces_iterator<Iter1> const &i1, my_random_acces_iterator<Iter2> const &i2) { return i1.base() < i2.base(); }
@@ -120,14 +117,19 @@ namespace ft
 	bool operator>=(my_random_acces_iterator<Iter1> const &i1, my_random_acces_iterator<Iter2> const &i2) { return i1.base() >= i2.base(); }
 
 	template <class Iter>
-	my_random_acces_iterator<Iter> operator+(typename ft::my_random_acces_iterator<Iter>::difference_type n, ft::my_random_acces_iterator<Iter> const &i)
+	my_random_acces_iterator<Iter>
+	operator+(typename ft::my_random_acces_iterator<Iter>::difference_type n,
+		ft::my_random_acces_iterator<Iter> const &i)
 	{
 		return my_random_acces_iterator<Iter>(i.base() + n);
 	}
-	template <class Iter>
-	my_random_acces_iterator<Iter> operator-(typename ft::my_random_acces_iterator<Iter>::difference_type n, my_random_acces_iterator<Iter> const &i)
+
+	template <class Iter, class Iter2>
+	typename my_random_acces_iterator<Iter>::difference_type
+	operator-(const ft::my_random_acces_iterator<Iter> &n,
+			  const ft::my_random_acces_iterator<Iter2>  &i)
 	{
-		return my_random_acces_iterator<Iter>(i.base() - n);
+		return n.base() - i.base() ;
 	}
 }
 

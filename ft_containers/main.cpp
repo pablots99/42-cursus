@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 13:34:36 by ptorres           #+#    #+#             */
-/*   Updated: 2022/02/22 23:27:55 by ptorres          ###   ########.fr       */
+/*   Updated: 2022/02/23 15:33:30 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,10 @@
 #include <iterator>
 int main()
 {
-	// std::vector<int> const v(5);
-	// std::vector<int>::iterator it = v.begin();
-	const int size = 5;
-	ft::vector<int> const fv(size);
-	ft::vector<int>::iterator fit = fv.begin();
+	std::vector<int> v(5);
+	std::vector<int>::iterator it = v.begin();
 
+	std::cout << (it == it.base()) << std::endl;
 
 
 	// std::iterator_traits<ft::vector<int>::iterator> a;
