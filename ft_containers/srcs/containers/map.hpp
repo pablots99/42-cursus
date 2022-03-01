@@ -3,24 +3,53 @@
 /*                                                        :::      ::::::::   */
 /*   map.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 13:36:35 by ptorres           #+#    #+#             */
-/*   Updated: 2022/01/21 13:51:32 by ptorres          ###   ########.fr       */
+/*   Updated: 2022/02/25 13:37:10 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
-#ifndef FT_MAP_HPP  
-#define FT_MAP_HPP  
+#ifndef FT_MAP_HPP
+#define FT_MAP_HPP
 #include <iostream>
+#include "../utils.hpp"
+#include "../iterators/bidirectional_iterator.hpp"
+#include "../iterators/reverse_iterator.hpp"
 
-namespace ft { 
+namespace ft {
 
-    template<typename K, typename T>
-    class map { 
-        private:
-            unsigned int _N;
-    };
+    template < class Key,class T,
+           class Compare = std::less<Key>,
+           class Alloc = std::allocator<ft::pair<const Key,T> > >
+	class map {
+
+			public:
+				typedef Key 					key_type;
+				typedef T						mapped_type;
+				typedef pair<const Key, T>		value_type;
+				typedef Compare					key_compare
+				typedef Alloc					allocator_type;
+				typedef size_t					size_type;
+				typedef std::ptrdiff_t			difference_type;
+				typedef value_type 				&reference;
+				typedef value_type 				*pointer;
+
+				class value_compare: public ft::map<Key, T, Compare, Alloc> {
+
+				}
+			protected:
+
+
+
+
+
+
+
+
+
+
+	}
 }
 #endif

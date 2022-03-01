@@ -6,22 +6,16 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 13:36:29 by ptorres           #+#    #+#             */
-/*   Updated: 2022/02/23 15:05:32 by pablo            ###   ########.fr       */
+/*   Updated: 2022/02/25 13:36:20 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_VECTOR_HPP
 #define FT_VECTOR_HPP
 #include <iostream>
-#include "../iterators/iterator.hpp"
-#include "../iterators/iterator_traits.hpp"
 #include "../iterators/random_acces_iterator.hpp"
 #include "../iterators/reverse_iterator.hpp"
 #include "../utils.hpp"
-
-#include <iterator>
-
-#include <type_traits>
 
 namespace ft
 {
