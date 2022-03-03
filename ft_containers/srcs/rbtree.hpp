@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   binaryTree.hpp                                     :+:      :+:    :+:   */
+/*   rbtree.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 15:19:22 by pablo             #+#    #+#             */
-/*   Updated: 2022/03/03 20:39:14 by ptorres          ###   ########.fr       */
+/*   Updated: 2022/03/03 18:46:19 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,28 @@
 #include "containers/stack.hpp"
 #include <iostream>
 #include <math.h>
+
+#define RED true;
+#define BLACK false;
+
+
 namespace ft {
 
 
 	template<class Key,class T,typename Compare = std::less<Key> >
-	class BinarySearchTree {
+	class RedBlackTree {
 		protected:
 			Key									_key;
 			T									_val;
 			Compare								_comp;
-			BinarySearchTree<Key, T, Compare>	*_parent;
-			BinarySearchTree<Key, T, Compare>	*_l;
-			BinarySearchTree<Key, T, Compare>	*_r;
+			RedBlackTree<Key, T, Compare>	*_parent;
+			RedBlackTree<Key, T, Compare>	*_l;
+			RedBlackTree<Key, T, Compare>	*_r;
 			bool								_root;
+            bool                                _color;
 			
-			BinarySearchTree* _getReplace() {
-				BinarySearchTree *aux = this;
+			RedBlackTree* _getReplace() {
+				RedBlackTree *aux = this;
 				while (aux->getR() || aux->getL())
 					if(aux->getR())
 						aux = aux->getR();
@@ -37,14 +43,7 @@ namespace ft {
 						aux = aux->getL();
 				return aux;
 			}
-		
-		public:
-			BinarySearchTree():_key(),_val(),_comp(Compare()),_parent(NULL),_l(NULL),_r(NULL),_root(false){};
-			BinarySearchTree(Key k, T t,BinarySearchTree<Key, T, Compare> *r):
-				_key(k),_val(t),_comp(Compare()),_parent(r),_l(NULL),_r(NULL),_root(false){};
-
-
-			void insert(Key k,T t)
+            void _insert(Key k,T t)
 			{
 				if(!_parent) {
 					_parent = this;
@@ -57,19 +56,40 @@ namespace ft {
 					return ;
 				if(_comp(k, _key)) {
 					if(_l)
-						_l->insert(k,t);
+						_l->_insert(k,t);
 					else
-						_l = new BinarySearchTree(k, t,this);
+						_l = new RedBlackTree(k, t,this);
 				}
 				else {
 					if(_r)
-						_r->insert(k,t);
+						_r->_insert(k,t);
 					else
-						_r = new BinarySearchTree(k, t,this);
+						_r = new RedBlackTree(k, t,this);
 				}
+                
+			}
+		public:
+			RedBlackTree():_key(),_val(),_comp(Compare()),_parent(NULL),_l(NULL),_r(NULL),_root(false){};
+			RedBlackTree(Key k, T t,RedBlackTree<Key, T, Compare> *r):
+				_key(k),_val(t),_comp(Compare()),_parent(r),_l(NULL),_r(NULL),_root(false){};
+
+
+          
+			RedBlackTree* getMax() {
+				RedBlackTree *aux = this;
+				while (aux->getR())
+					aux = aux->getR();
+				return aux;
 			}
 
-			BinarySearchTree* search(Key k)
+			RedBlackTree* getMin() {
+				RedBlackTree *aux = this;
+				while (aux->getL())
+					aux = aux->getL();
+				return aux;
+			}
+
+			RedBlackTree* search(Key k)
 			{	
 				if(_key == k)
 					return this;
@@ -80,42 +100,14 @@ namespace ft {
 				return NULL;
 			}
 
-			BinarySearchTree* getMax() {
-				BinarySearchTree *aux = this;
-				while (aux->getR())
-					aux = aux->getR();
-				return aux;
-			}
 
-			BinarySearchTree* getMin() {
-				BinarySearchTree *aux = this;
-				while (aux->getL())
-					aux = aux->getL();
-				return aux;
-			}
-
-
-
-			void setR(BinarySearchTree *r) {
-					_r = r;
-			}
-
-			void setL(BinarySearchTree *l) {
-					_l = l;
-			}
-
-			void setParent(BinarySearchTree *p) {
-					_parent = p;
-			}
-
-
-			BinarySearchTree & operator=(BinarySearchTree const &obj) {
+			RedBlackTree & operator=(RedBlackTree const &obj) {
 				std::cout << "operator" << std::endl;
 				*this = obj;
 				return *this;
 			}
 
-			BinarySearchTree *getParent() {
+			RedBlackTree *getParent() {
 				return _parent;
 			}
 
@@ -124,7 +116,7 @@ namespace ft {
 			}
 			
 			void removeSelf() {
-				BinarySearchTree *rep = _getReplace();
+				RedBlackTree *rep = _getReplace();
 				if(_l || _r){
 					if(_l && rep->getKey() == _l->getKey())
 						rep->setL(NULL);
@@ -162,11 +154,23 @@ namespace ft {
 				}
 			}
 
-			BinarySearchTree* getR() {
+             void setR(RedBlackTree *r) {
+					_r = r;
+			}
+
+			void setL(RedBlackTree *l) {
+					_l = l;
+			}
+
+			void setParent(RedBlackTree *p) {
+					_parent = p;
+			}
+
+			RedBlackTree* getR() {
 				return _r;
 			}
 
-			BinarySearchTree* getL() {
+			RedBlackTree* getL() {
 				return _l;
 			}
 
@@ -178,10 +182,11 @@ namespace ft {
 				return _val;
 			}
 
+            
 			void print()
 			{
 
-				ft::vector<	BinarySearchTree<Key, T, Compare>	* > stk;
+				ft::vector<	RedBlackTree<Key, T, Compare>	* > stk;
 				size_t i = 1;
 				size_t j = 0;
 				size_t size = 1;
