@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 20:48:05 by ptorres           #+#    #+#             */
-/*   Updated: 2022/03/01 03:10:19 by pablo            ###   ########.fr       */
+/*   Updated: 2022/03/02 15:19:55 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 #include <iostream>
 #include "iterators/iterator.hpp"
-#include <functional>
+
 
 namespace ft {
 
@@ -59,7 +59,7 @@ namespace ft {
         {
              if (*start2 <* start1)
                 return false;
-             else if (*start1< *start2)
+             else if (*start1 < *start2)
                 return true;
             ++start1;
             ++start2;
@@ -97,82 +97,6 @@ namespace ft {
 	{
     	return aux_distance(first, last,typename ft::iterator_traits<Iter>::iterator_category());
 	}
-
-	template<class Key,class T,typename Compare = std::less<Key> >
-	class BinarySearchTree {
-		protected:
-			Key									_key;
-			T									_val;
-			Compare								_comp;
-			BinarySearchTree<Key, T, Compare>	*_root;
-			BinarySearchTree<Key, T, Compare>	*_l;
-			BinarySearchTree<Key, T, Compare>	*_r;
-			static int p_space;
-		public:
-			BinarySearchTree():_key(),_val(),_comp(Compare()),_root(NULL),_l(NULL),_r(NULL){};
-			BinarySearchTree(Key k, T t,BinarySearchTree<Key, T, Compare> *r):
-				_key(k),_val(t),_comp(Compare()),_root(r),_l(NULL),_r(NULL){};
-
-
-			void push(Key k,T t)
-			{
-				if(!_root) {
-					_root = this;
-					_val = t;
-					_key = k;
-					return ;
-				}
-				/*exception*/
-				if(k ==  _key)
-					return ;
-				if(_comp(k, _key)) {
-					if(_l)
-						_l->push(k,t);
-					else
-						_l = new BinarySearchTree(k, t,_root);
-				}
-				else {
-					if(_r)
-						_r->push(k,t);
-					else
-						_r = new BinarySearchTree(k, t,_root);
-				}
-			}
-
-			T get(Key k)
-			{
-				/*if _key*/
-				if(_key == k)
-					return _val;
-				if(_comp(k, _key))
-					return _l->get(k);
-				else
-					return _r->get(k);
-				return T();
-			}
-			// void remove(Key k) {
-
-			// }
-			void print()
-			{
-				std::cout << "key: " << _key << ", val: " << _val << std::endl;
-				p_space+=4;
-				int aux = p_space;
-				if(_l) {
-					std::cout <<  std::string(p_space, ' ') << "L(" << p_space / 4 << ") -> ";
-					_l->print();
-				}
-				p_space = aux;
-				if(_r) {
-					std::cout << std::string(p_space, ' ') << "R(" << p_space / 4 << ") -> ";
-					_r->print();
-				}
-
-			}
-	};
-	template<class Key,class T, typename Compare >
-	int BinarySearchTree<Key,T, Compare>::p_space = 0;
-
 
 
 

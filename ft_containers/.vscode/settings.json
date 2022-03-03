@@ -92,7 +92,8 @@
 		"*.tcc": "cpp",
 		"memory_resource": "cpp",
 		"stop_token": "cpp",
-		"filesystem": "cpp"
+		"filesystem": "cpp",
+		"*.keepme": "cpp"
 	},
 	"cmake.configureOnOpen": false
 }
