@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   binaryTree.hpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 15:19:22 by pablo             #+#    #+#             */
-/*   Updated: 2022/03/03 20:39:14 by ptorres          ###   ########.fr       */
+/*   Updated: 2022/03/17 16:32:29 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ namespace ft {
 			BinarySearchTree<Key, T, Compare>	*_l;
 			BinarySearchTree<Key, T, Compare>	*_r;
 			bool								_root;
-			
+
 			BinarySearchTree* _getReplace() {
 				BinarySearchTree *aux = this;
 				while (aux->getR() || aux->getL())
@@ -37,13 +37,28 @@ namespace ft {
 						aux = aux->getL();
 				return aux;
 			}
-		
+
+
 		public:
 			BinarySearchTree():_key(),_val(),_comp(Compare()),_parent(NULL),_l(NULL),_r(NULL),_root(false){};
 			BinarySearchTree(Key k, T t,BinarySearchTree<Key, T, Compare> *r):
 				_key(k),_val(t),_comp(Compare()),_parent(r),_l(NULL),_r(NULL),_root(false){};
 
+			BinarySearchTree &operator=(BinarySearchTree  &obj){
 
+				std::cout << "ewaewaewa" <<std::endl;
+				_key = obj.getKey();
+				_val = obj.getVal();
+				_l =   obj.getL();
+				_r = obj.getR();
+				_comp = Compare();
+				if(isRoot()){
+					_parent = &obj;
+				}
+				if(!_parent)
+					_parent = obj.getParent();
+				return *this;
+			}
 			void insert(Key k,T t)
 			{
 				if(!_parent) {
@@ -70,7 +85,7 @@ namespace ft {
 			}
 
 			BinarySearchTree* search(Key k)
-			{	
+			{
 				if(_key == k)
 					return this;
 				if(_comp(k, _key))
@@ -87,7 +102,7 @@ namespace ft {
 				return aux;
 			}
 
-			BinarySearchTree* getMin() {
+			BinarySearchTree* getMin()  {
 				BinarySearchTree *aux = this;
 				while (aux->getL())
 					aux = aux->getL();
@@ -95,7 +110,9 @@ namespace ft {
 			}
 
 
-
+			bool isRoot()const {
+				return _key == _parent->getKey();
+			}
 			void setR(BinarySearchTree *r) {
 					_r = r;
 			}
@@ -108,21 +125,14 @@ namespace ft {
 					_parent = p;
 			}
 
-
-			BinarySearchTree & operator=(BinarySearchTree const &obj) {
-				std::cout << "operator" << std::endl;
-				*this = obj;
-				return *this;
-			}
-
-			BinarySearchTree *getParent() {
+			BinarySearchTree *getParent() const {
 				return _parent;
 			}
 
-			void removeKey(Key key) { 
+			void removeKey(Key key) {
 				search(key)->removeSelf();
 			}
-			
+
 			void removeSelf() {
 				BinarySearchTree *rep = _getReplace();
 				if(_l || _r){
@@ -130,12 +140,12 @@ namespace ft {
 						rep->setL(NULL);
 					else
 						rep->setL(_l);
-					
+
 					if(_r && rep->getKey() == _r->getKey())
 						rep->setR(NULL);
 					else
 						rep->setR(_r);
-					
+
 					if(rep->getParent()->getL()->getKey() == rep->getKey())
 							rep->getParent()->setL(NULL);
 					else
@@ -143,7 +153,7 @@ namespace ft {
 
 					rep->setParent(_parent);
 				}
-				else 
+				else
 					rep = NULL;
 				if(_root)
 				{
@@ -156,29 +166,51 @@ namespace ft {
 						delete _parent->getR();
 						_parent->setR(rep);
 				}
-				else { 
+				else {
 						delete _parent->getL();
 					 	_parent->setL(rep);
 				}
 			}
 
-			BinarySearchTree* getR() {
+
+
+
+			BinarySearchTree* getR() const{
 				return _r;
 			}
 
-			BinarySearchTree* getL() {
+			BinarySearchTree* getL() const{
 				return _l;
 			}
 
-			Key getKey() {
+			Key getKey() const {
 				return _key;
 			}
 
-			T getVal() {
+			T getVal() const{
 				return _val;
 			}
 
+
+
+			void rotRigth(BinarySearchTree  *node) {
+				BinarySearchTree *aux = node->getL();
+				node->setL(aux->getR());
+				node->getL()->setParent(node);
+				node->setParent(aux);
+				aux->setR(node);
+				*node = *aux;
+			}
+
+			bool rotR() {
+				rotRigth(this);
+				return false;
+			}
+
+
+
 			void print()
+
 			{
 
 				ft::vector<	BinarySearchTree<Key, T, Compare>	* > stk;
@@ -250,6 +282,10 @@ namespace ft {
 				std::cout   << "\n\n";
 
 			}
+
+
+
+
 	};
 
 }

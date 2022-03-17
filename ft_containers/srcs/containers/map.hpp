@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 13:36:35 by ptorres           #+#    #+#             */
-/*   Updated: 2022/02/25 13:37:10 by pablo            ###   ########.fr       */
+/*   Updated: 2022/03/17 11:50:43 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 #define FT_MAP_HPP
 #include <iostream>
 #include "../utils.hpp"
-#include "../iterators/bidirectional_iterator.hpp"
 #include "../iterators/reverse_iterator.hpp"
 
 namespace ft {
@@ -50,6 +49,6 @@ namespace ft {
 
 
 
-	}
+	};
 }
 #endif

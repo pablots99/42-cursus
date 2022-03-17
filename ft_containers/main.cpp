@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 13:34:36 by ptorres           #+#    #+#             */
-/*   Updated: 2022/03/03 20:53:09 by ptorres          ###   ########.fr       */
+/*   Updated: 2022/03/17 16:11:21 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,20 @@ void search_tree() {
 
 }
 
+void righRot() {
+	ft::BinarySearchTree<int, std::string>   tree;
+	tree.insert(10,"A");
+	tree.insert(8,"B");
+	tree.insert(11,"C");
+	tree.insert(7,"D");
+	tree.insert(9,"E");
+	tree.print();
+	tree.rotR();
+	tree.print();
+
+}
+
+
 void map_iterator() {
 
 	std::map<int,std::string> m;
@@ -66,7 +80,8 @@ int main()
 {
 
 	//search_tree();
-	map_iterator();
+	righRot();
+	//map_iterator();
 
 
 
