@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 13:34:36 by ptorres           #+#    #+#             */
-/*   Updated: 2022/03/17 19:02:14 by ptorres          ###   ########.fr       */
+/*   Updated: 2022/03/17 23:41:00 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,22 +26,19 @@ void search_tree() {
 
 	ft::Avl<int, std::string>   tree;
 
-	tree.insert(1,"hola");
-	tree.insert(6,"aa");
-	tree.insert(8,"sa");
-	tree.insert(-1,"ssaa");
-	tree.insert(-3,"ssaa");
-	tree.insert(0,"ssaa");
+	tree.insert(30,"aa");
+	tree.insert(10,"sa");
+	tree.insert(20,"hola");
+	tree.insert(9,"sa");
+	tree.insert(19,"sa");
+	tree.insert(21,"sa");
+	tree.insert(31,"sa");
+	tree.print();
+	tree.rotRL();
+	tree.print();
 
 
-	tree.print();
-	tree.rotR();
-	tree.print();
-	tree.rotL();
-	tree.print();
-	// std::cout << "Max: "<<  tree.getMax()->getKey() << std::endl;
-	
-	// std::cout << tree.get(3) << std::endl;
+
 
 }
 

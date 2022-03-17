@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 16:39:45 by pablo             #+#    #+#             */
-/*   Updated: 2022/03/17 19:03:13 by ptorres          ###   ########.fr       */
+/*   Updated: 2022/03/17 23:40:15 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ namespace ft {
 			K	key;
 			Node<T, K> *r;
 			Node<T, K> *l;
-			size_t h;
-			Node(K _key,T val):key(_key),value(val),l(NULL),r(NULL),h(0){}
+			size_t b;
+			Node(K _key,T val):key(_key),value(val),l(NULL),r(NULL),b(0){}
 		};
 
 		template<class Key,class T,typename Compare = std::less<Key> >
@@ -43,25 +43,54 @@ namespace ft {
 				}
 
 
-				void _rotR(node **n){ 
+				void _rotLL(node **n){
+					if(!(*n)->l)
+						return ;
 					node *aux = (*n)->l;
 					(*n)->l = aux->r;
 					aux->r = (*n);
 					*n = aux;
 				}
 				
-				void _rotL(node **n){ 
+				void _rotRR(node **n){
+					if(!(*n)->r)
+						return ;
 					node *aux = (*n)->r;
 					(*n)->r = aux->l;
 					aux->l = (*n);
 					*n = aux;
 				}	
 
-				void rotR(){ 
-					_rotR(&_root);
+				void _rotRL(node **n){
+					if(!(*n)->r)
+						return ;
+					_rotLL(&(*n)->r);
+					_rotRR(&(*n));
+
+				}	
+				
+				void _rotLR(node **n){
+					if(!(*n)->l)
+						return ;
+					_rotRR(&(*n)->l);
+					_rotLL(&(*n));
+
+				}	
+				
+
+				void rotRL() { 
+					_rotRL(&_root);
 				}
-				void rotL(){ 
-					_rotL(&_root);
+				void rotLR() { 
+					_rotLR(&_root);
+				}
+
+
+				void rotRR(){ 
+					_rotRR(&_root);
+				}
+				void rotLL(){ 
+					_rotLL(&_root);
 				}
 
 
