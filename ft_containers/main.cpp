@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 13:34:36 by ptorres           #+#    #+#             */
-/*   Updated: 2022/03/17 16:11:21 by pablo            ###   ########.fr       */
+/*   Updated: 2022/03/17 19:02:14 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,46 +18,30 @@
 #include "srcs/iterators/reverse_iterator.hpp"
 #include <iterator>
 #include <functional>
-#include "./srcs/binaryTree.hpp"
+#include "./srcs/avlTree.hpp"
 #include <utility>
-
-
 
 
 void search_tree() {
 
-	ft::BinarySearchTree<int, std::string>   tree;
+	ft::Avl<int, std::string>   tree;
 
 	tree.insert(1,"hola");
 	tree.insert(6,"aa");
 	tree.insert(8,"sa");
 	tree.insert(-1,"ssaa");
 	tree.insert(-3,"ssaa");
-	tree.insert(-2,"ssaa");
 	tree.insert(0,"ssaa");
-	tree.insert(-4,"ssaa");
-	tree.insert(10,"ssaa");
-	tree.insert(7,"ssaa");
 
 
-	tree.print();
-	std::cout << "Max: "<<  tree.getMax()->getKey() << std::endl;
-	tree.removeKey(1);
-	tree.print();
-	// std::cout << tree.get(3) << std::endl;
-
-}
-
-void righRot() {
-	ft::BinarySearchTree<int, std::string>   tree;
-	tree.insert(10,"A");
-	tree.insert(8,"B");
-	tree.insert(11,"C");
-	tree.insert(7,"D");
-	tree.insert(9,"E");
 	tree.print();
 	tree.rotR();
 	tree.print();
+	tree.rotL();
+	tree.print();
+	// std::cout << "Max: "<<  tree.getMax()->getKey() << std::endl;
+	
+	// std::cout << tree.get(3) << std::endl;
 
 }
 
@@ -79,8 +63,8 @@ void map_iterator() {
 int main()
 {
 
-	//search_tree();
-	righRot();
+	search_tree();
+	//righRot();
 	//map_iterator();
 
 
