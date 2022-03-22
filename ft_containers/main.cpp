@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 13:34:36 by ptorres           #+#    #+#             */
-/*   Updated: 2022/03/17 23:41:00 by ptorres          ###   ########.fr       */
+/*   Updated: 2022/03/22 17:34:54 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,7 @@ void search_tree() {
 	tree.insert(21,"sa");
 	tree.insert(31,"sa");
 	tree.print();
-	tree.rotRL();
-	tree.print();
-
-
-
+	std::cout << "lenl: " <<  tree.lenL(tree.getRoot()) << " lenR: " << tree.lenR(tree.getRoot()) << " balance: " << tree.getRoot()->l->getBalance() << std::endl;
 
 }
 
@@ -59,12 +55,8 @@ void map_iterator() {
 
 int main()
 {
-
 	search_tree();
 	//righRot();
 	//map_iterator();
-
-
-
 	return 0;
 }

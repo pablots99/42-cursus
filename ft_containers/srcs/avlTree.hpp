@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 16:39:45 by pablo             #+#    #+#             */
-/*   Updated: 2022/03/17 23:40:15 by ptorres          ###   ########.fr       */
+/*   Updated: 2022/03/22 17:45:47 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,33 @@ namespace ft {
 			K	key;
 			Node<T, K> *r;
 			Node<T, K> *l;
-			size_t b;
-			Node(K _key,T val):key(_key),value(val),l(NULL),r(NULL),b(0){}
+			Node<T, K> *parent;
+
+			
+			Node(K _key,T val):key(_key),value(val),l(NULL),r(NULL){}
+			size_t lenL() { 
+				Node *aux = this;
+				size_t res = 0;
+				while(aux->l)
+				{
+					res++;
+					aux = aux->l;
+				}
+				return res;
+			}
+			size_t lenR() { 
+				Node *aux = this;
+				size_t res = 0;
+				while(aux->r)
+				{
+					res++;
+					aux = aux->r;
+				}
+				return res;
+			}
+			int getBalance() { 
+				return ((int)lenL() - (int)lenR());
+			}
 		};
 
 		template<class Key,class T,typename Compare = std::less<Key> >
@@ -41,7 +66,7 @@ namespace ft {
 				node *getRoot() const{ 
 					return _root;
 				}
-
+			
 
 				void _rotLL(node **n){
 					if(!(*n)->l)
@@ -75,25 +100,15 @@ namespace ft {
 					_rotRR(&(*n)->l);
 					_rotLL(&(*n));
 
-				}	
+				}
+				size_t lenL(node *n) { 
+					return n->lenL();
+				}
 				
-
-				void rotRL() { 
-					_rotRL(&_root);
+				size_t lenR(node *n) { 
+					return n->lenR();
 				}
-				void rotLR() { 
-					_rotLR(&_root);
-				}
-
-
-				void rotRR(){ 
-					_rotRR(&_root);
-				}
-				void rotLL(){ 
-					_rotLL(&_root);
-				}
-
-
+				
 				void insert(node *n,node *curr) { 
 					if(n == NULL)
 						return ;
