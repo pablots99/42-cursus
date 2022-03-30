@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   avlTree.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 16:39:45 by pablo             #+#    #+#             */
-/*   Updated: 2022/03/22 17:45:47 by ptorres          ###   ########.fr       */
+/*   Updated: 2022/03/30 04:23:17 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,118 +26,68 @@ namespace ft {
 			K	key;
 			Node<T, K> *r;
 			Node<T, K> *l;
-			Node<T, K> *parent;
+			int 		height;
 
-			
-			Node(K _key,T val):key(_key),value(val),l(NULL),r(NULL){}
-			size_t lenL() { 
-				Node *aux = this;
-				size_t res = 0;
-				while(aux->l)
-				{
-					res++;
-					aux = aux->l;
+			Node(K _key,T val):key(_key),value(val),l(NULL),r(NULL),height(1){}
+			void updateHeight() {
+				if(!r && !l) {
+					height = 1;
+					return ;
 				}
-				return res;
-			}
-			size_t lenR() { 
-				Node *aux = this;
-				size_t res = 0;
-				while(aux->r)
-				{
-					res++;
-					aux = aux->r;
+				if(r && l) {
+					if(l->height < r->height)
+						height = r->height + 1;
+					else
+						height = l->height + 1;
 				}
-				return res;
+				else if(l && !r)
+					height = l->height + 1;
+				else if (r && !l)
+					height = r->height + 1;
 			}
-			int getBalance() { 
-				return ((int)lenL() - (int)lenR());
+			int getBalance() {
+				if(l && r)
+					return (l->height - r->height);
+				if(l)
+					return l->height;
+				if(r)
+					return -r->height;
+				return 0;
 			}
 		};
 
 		template<class Key,class T,typename Compare = std::less<Key> >
 		class Avl {
-			private:
+
 				typedef Node<T, Key>   node;
-				node *_root;
 			public:
 				Avl():_root(NULL){}
+				~Avl(){}
 
-				node *getRoot() const{ 
-					return _root;
+
+				T get(Key k){
+					node * res = _get(k,_root);
+					if(!res)
+						return T();
+						// trhow new error
+					return res->value;
 				}
-			
 
-				void _rotLL(node **n){
-					if(!(*n)->l)
-						return ;
-					node *aux = (*n)->l;
-					(*n)->l = aux->r;
-					aux->r = (*n);
-					*n = aux;
-				}
-				
-				void _rotRR(node **n){
-					if(!(*n)->r)
-						return ;
-					node *aux = (*n)->r;
-					(*n)->r = aux->l;
-					aux->l = (*n);
-					*n = aux;
-				}	
+				void remove(Key k) {
 
-				void _rotRL(node **n){
-					if(!(*n)->r)
-						return ;
-					_rotLL(&(*n)->r);
-					_rotRR(&(*n));
-
-				}	
-				
-				void _rotLR(node **n){
-					if(!(*n)->l)
-						return ;
-					_rotRR(&(*n)->l);
-					_rotLL(&(*n));
 
 				}
-				size_t lenL(node *n) { 
-					return n->lenL();
-				}
-				
-				size_t lenR(node *n) { 
-					return n->lenR();
-				}
-				
-				void insert(node *n,node *curr) { 
-					if(n == NULL)
-						return ;
-					if(!_root) { 
-						_root = n;
-						return ;
-					}
-					if(n->key < curr->key)
-					{
-						if(!curr->l)
-							curr->l = n;
-						else 
-							insert(n,curr->l);
-					}
-					else { 
-						if(!curr->r)
-							curr->r = n;
-						else 
-							insert(n,curr->r);
-					}
-				}
-				
-				
-				
-				
+
+
+
+
+
 				void insert(Key key, T val){
 					node *n = new node(key,val);
-					insert(n,_root);
-				}	
+					std::cout << "n: " << key << std::endl;
+					_insert(n,&_root);
+					std::cout << "--------------" << std::endl;
+				}
 
 				void print() {
 					node *n = _root;
@@ -177,7 +127,6 @@ namespace ft {
 					size = ((3+5) * n_count)/ 2;
 					int sp = 11 << (levels - 2);//11 = 3 * 2 + 5
 					size_t level  = 1;
-					std::cout << n_count << "," << levels << "," << sp << ","  << size  <<  std::endl;
 					j = 1;
 					for ( i = 0; i < stk.size(); i++)
 					{
@@ -193,7 +142,7 @@ namespace ft {
 						}
 						std::string number = "N    ";
 						if(stk[i])
-							number = std::to_string(stk[i]->key);
+							number = std::to_string(stk[i]->key) + "," + std::to_string(stk[i]->height);
 
 						std::cout << number;
 						if(number.length() < 5)
@@ -209,5 +158,128 @@ namespace ft {
 					}
 					std::cout   << "\n\n";
 				}
+				node *getRoot() const{
+					return _root;
+				}
+
+
+			private:
+				node *_root;
+
+				node *deleteNode(Key k,node *n) {
+					//memory destruction not node
+					if(!n->l && ! n->r){
+						//if root root == NULL?
+						return NULL;
+					}
+
+
+
+				}
+
+				node * _get(Key key, node *n) {
+					if(n->key == key)
+						return n;
+					else if(key < n->key && n->l )
+						return _get(key,n->l);
+					else if(n->r)
+						return _get(key,n->r);
+					return NULL;
+				}
+				node * _rotLL(node *n){
+					std::cout << "ll rotation " << std::endl;
+					if(!n->l)
+						return NULL;
+					std::cout << "n " << n->key << std::endl;
+					node *a = n;
+					node *aux = a->l;
+					a->l = aux->r;
+					aux->r = a;
+					return aux;
+				}
+
+				node *  _rotRR(node *n){
+					std::cout << "rr rotation " << std::endl;
+					if(!n->r)
+						return NULL;
+					node *a = n;
+					node *aux = a->r;
+					a->r = aux->l;
+					aux->l = a;
+					return aux;
+				}
+
+				node * _rotRL(node *n){
+					if(!n->l)
+						return NULL;
+					node *aux =  n->r;
+					node *aux2 = n->r->l;
+
+					n->r = aux2->l;
+					aux->l = aux2->r;
+					aux2->l = n;
+					aux2->r = aux;
+					return aux2;
+
+				}
+
+				node * _rotLR(node *n){
+					if(!n->l)
+						return NULL;
+					node *aux =  n->l;
+					node *aux2 = n->l->r;
+
+					n->l = aux2->r;
+					aux->r = aux2->l;
+					aux2->r = n;
+					aux2->l = aux;
+					return aux2;
+				}
+
+
+
+
+				void _insert(node *n,node **curr) {
+					if(n == NULL)
+						return ;
+					if(!_root) {
+						_root = n;
+						return ;
+					}
+					//use compare?
+					if(n->key < (*curr)->key)
+					{
+						if(!(*curr)->l)
+							(*curr)->l = n;
+						else {
+							_insert(n,&(*curr)->l);
+						}
+					}
+					else {
+						if(!(*curr)->r)
+							(*curr)->r = n;
+						else {
+							_insert(n,&(*curr)->r);
+						}
+					}
+					//set height with childs is idilic?
+					(*curr)->updateHeight();
+					int balance = (*curr)->getBalance();
+					if(balance == 2 && (*curr)->l && (*curr)->l->getBalance() == 1)
+						(*curr) = _rotLL((*curr));
+					else if(balance == -2 && (*curr)->r && (*curr)->r->getBalance() == -1)
+						(*curr) = _rotRR((*curr));
+					else if(balance == -2 && (*curr)->r && (*curr)->r->getBalance() == -1)
+						(*curr) = _rotRL((*curr));
+					else if(balance == 2 && (*curr)->l && (*curr)->l->getBalance() == -1)
+						(*curr) = _rotLR((*curr));
+					if((*curr)->l)
+						(*curr)->l->updateHeight();
+					if((*curr)->r)
+						(*curr)->r->updateHeight();
+					(*curr)->updateHeight();
+				}
+
+
 		};
 };
