@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 20:48:05 by ptorres           #+#    #+#             */
-/*   Updated: 2022/03/02 15:19:55 by pablo            ###   ########.fr       */
+/*   Updated: 2022/04/01 03:16:31 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ namespace ft {
     typedef T2 second_type;
     /*objects*/
     T1 first;
-    T1 second;
+    T2 second;
     /*member fuctions*/
     pair() : first(), second() {}
     pair(T1 const& t1, T2 const& t2) : first(t1), second(t2) {}
