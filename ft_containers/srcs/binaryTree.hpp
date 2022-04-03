@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 15:19:22 by pablo             #+#    #+#             */
-/*   Updated: 2022/03/17 18:38:22 by ptorres          ###   ########.fr       */
+/*   Updated: 2022/04/03 23:37:26 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ namespace ft {
 		public:
 			BinarySearchTree():_key(),_val(),_comp(Compare()),_parent(NULL),_l(NULL),_r(NULL),_root(false){};
 			BinarySearchTree(Key k, T t,BinarySearchTree<Key, T, Compare> *r):
-				_key(k),_val(t),_comp(Compare()),_parent(r),_l(NULL),_r(NULL),_root(false){};
+			key(k),_val(t),_comp(Compare()),_parent(r),_l(NULL),_r(NULL),_root(false){};
 
 			BinarySearchTree &operator=(BinarySearchTree  &obj){
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   avlTree.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 16:39:45 by pablo             #+#    #+#             */
-/*   Updated: 2022/04/02 03:02:23 by pablo            ###   ########.fr       */
+/*   Updated: 2022/04/04 00:01:14 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ namespace ft
 		pointer l;
 		pointer parent;
 		int height;
-		Node(T _val) : val(_val), l(NULL), r(NULL), parent(NULL), height(1) {}
+		Node(T _val) : val(_val),  r(NULL), l(NULL), parent(NULL), height(1) {}
 
 		void updateHeight()
 		{
@@ -126,9 +126,7 @@ namespace ft
 
 
 	/*
-
 		NODE ITERATOR
-
 	*/
 
 	template <class Iter, class node = ft::Node<Iter> >
@@ -161,7 +159,7 @@ namespace ft
 		TreeIterator operator++(int)
 		{
 			TreeIterator tmp(*this);
-			++this;
+			++*this;
 			return tmp;
 		}
 		TreeIterator &operator--()
@@ -172,7 +170,7 @@ namespace ft
 		TreeIterator operator--(int)
 		{
 			TreeIterator tmp(*this);
-			--this;
+			--*this;
 			return tmp;
 		}
 		node_pointer base() const {
@@ -189,12 +187,8 @@ namespace ft
 	bool operator!=(TreeIterator<Iter1> const &i1, TreeIterator<Iter2> const &i2) { return !(i1==i2); }
 
 	/*
-
 		ALV TREE
-
 	*/
-
-
 	template <class Key, class val, class T = ft::pair<Key, val>, typename Compare = std::less<Key> >
 	class Avl
 	{
@@ -204,7 +198,7 @@ namespace ft
 		typedef Key key_type;
 		typedef Node<T> node;
 		typedef TreeIterator<T> iterator;
-		typedef TreeIterator<const T> const_iterator;
+		typedef TreeIterator<T> const_iterator;
 		Avl() : _root(NULL), _size(0), comp(Compare()) {}
 		~Avl() {}
 
@@ -242,11 +236,18 @@ namespace ft
 			_deleteNode(k, &_root);
 		}
 
-		void insert(T pair)
+		iterator insert(T pair)
 		{
 			node *n = new node(pair);
-			_insert(n, &_root);
 			_size++;
+			return _insert(n, &_root);
+		}
+		
+		template< class InputIt >
+		void insert(InputIt begin, InputIt end) { 
+			for(; begin != end; ++begin) { 
+				insert(*begin);
+			}
 		}
 
 		void clear() {
@@ -388,16 +389,17 @@ namespace ft
 			return aux2;
 		}
 
-		void _insert(node *n, node **curr)
+		iterator _insert(node *n, node **curr)
 		{
+			node * ret =  NULL;
 			if (n == NULL)
-				return;
-			// IF KEY EXISTS TROW ERROR
-
+				return iterator(NULL);
+			if(n->val.first == (*curr)->val.first )
+				return *curr;
 			if (!_root)
 			{
 				_root = n;
-				return;
+				return iterator(NULL);
 			}
 			if (comp(n->val.first, (*curr)->val.first))
 			{
@@ -405,6 +407,7 @@ namespace ft
 				{
 					n->parent = *curr;
 					(*curr)->l = n;
+					ret = n;
 				}
 				else
 				{
@@ -417,6 +420,7 @@ namespace ft
 				{
 					n->parent = *curr;
 					(*curr)->r = n;
+					ret = n;
 				}
 				else
 				{
@@ -438,6 +442,7 @@ namespace ft
 			if ((*curr)->r)
 				(*curr)->r->updateHeight();
 			(*curr)->updateHeight();
+			return ret;
 		}
 		public:
 		void print()

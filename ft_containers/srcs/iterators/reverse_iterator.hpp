@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:06:32 by ptorres           #+#    #+#             */
-/*   Updated: 2022/03/03 20:06:18 by ptorres          ###   ########.fr       */
+/*   Updated: 2022/04/03 23:32:05 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ operator+(typename ft::reverse_iterator<Iter>::difference_type n,
 }
 
 template <class Iter, class Iter2>
-typename my_random_acces_iterator<Iter>::difference_type
+typename reverse_iterator<Iter>::difference_type
 operator-(const ft::reverse_iterator<Iter> &n,
           const ft::reverse_iterator<Iter2> &it)
 {
