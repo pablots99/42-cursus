@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 16:39:45 by pablo             #+#    #+#             */
-/*   Updated: 2022/04/02 02:23:11 by pablo            ###   ########.fr       */
+/*   Updated: 2022/04/02 03:02:23 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,37 +204,37 @@ namespace ft
 		typedef Key key_type;
 		typedef Node<T> node;
 		typedef TreeIterator<T> iterator;
+		typedef TreeIterator<const T> const_iterator;
 		Avl() : _root(NULL), _size(0), comp(Compare()) {}
 		~Avl() {}
 
-		iterator begin()
+		iterator begin() { return iterator(_root->getMin(NULL)); }
+
+		iterator end(){ return iterator(NULL); }
+
+		const_iterator cbegin() const { return const_iterator(_root->getMin(NULL)); }
+
+		const_iterator cend() const { return const_iterator(NULL); }
+
+		iterator rbegin() { return iterator(_root->getMax(NULL)); }
+
+		iterator rend() { return iterator(NULL); }
+
+		const_iterator crbegin(){ return const_iterator(_root->getMax(NULL));}
+
+		const_iterator crend(){ return const_iterator(NULL); }
+
+		size_t getSize() const { return _size; }
+
+
+		node* get(Key const &k)
 		{
-			//std::cout << _root->getMin(NULL)->val.first << std::endl;
-			return iterator(_root->getMin(NULL));
+			node *res = _get(k, _root);;
+			return res;
 		}
 
-		iterator end()
-		{
-			return iterator(NULL);
-		}
-
-		iterator rbegin()
-		{
-			return iterator(_root->getMax(NULL));
-		}
-
-		iterator rend()
-		{
-			return iterator(NULL);
-		}
-
-		val get(Key k)
-		{
-			node *res = _get(k, _root);
-			if (!res)
-				return val();
-			// trhow new error
-			return res->val.second;
+		iterator find(Key const k) const {
+			return iterator(get(k));
 		}
 
 		void remove(Key k)
@@ -249,10 +249,9 @@ namespace ft
 			_size++;
 		}
 
-
-		node *getRoot() const
-		{
-			return _root;
+		void clear() {
+			_size = 0;
+			_clear(_root);
 		}
 
 	private:
@@ -308,6 +307,13 @@ namespace ft
 			return *n;
 		}
 
+		void _clear(node *n) {
+			if(n->r)
+				_clear(n->r);
+			if(n->l)
+				_clear(n->l);
+			delete n->l;
+		}
 		node *_get(Key key, node *n)
 		{
 			if (n->val.first == key)
