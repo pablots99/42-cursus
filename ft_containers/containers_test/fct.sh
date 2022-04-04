@@ -14,7 +14,7 @@ incl_path="../"
 srcs="srcs"
 
 CC="clang++"
-CFLAGS="-Wall -Wextra -Werror -std=c++98"
+CFLAGS="-Wall -Wextra -Werror -std=c++98 -g3 -fsanitize=address"
 # CFLAGS+=" -fsanitize=address -g3"
 
 function pheader () {

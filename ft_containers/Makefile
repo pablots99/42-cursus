@@ -3,8 +3,8 @@ NAME = containers
 SRCS = main.cpp
 
 OBJ = $(SRCS:.cpp=.o)
-CPP = clang++
-CPP_FLAGS = --std=c++98
+CPP = c++
+CPP_FLAGS = --std=c++98 -g3
 
 all: $(NAME)
 

@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 13:34:36 by ptorres           #+#    #+#             */
-/*   Updated: 2022/04/02 02:19:46 by pablo            ###   ########.fr       */
+/*   Updated: 2022/04/04 15:13:12 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,48 +20,8 @@
 #include <functional>
 #include "./srcs/avlTree.hpp"
 #include <utility>
-
-
-void search_tree() {
-
-	ft::Avl<int, std::string>   tree;
-	typedef ft::Avl<int, std::string>::value_type val;
-	tree.insert(val(30,"aa"));
-	tree.print();
-	tree.insert(val(10,"sa"));
-	tree.print();
-	tree.insert(val(20,"hola20"));
-	tree.print();
-	tree.insert(val(9,"hola"));
-	tree.print();
-	tree.insert(val(8,"hola88"));
-	tree.print();
-	tree.insert(val(7,"hola"));
-	tree.print();
-	tree.insert(val(40,"hola"));
-	tree.print();
-	tree.insert(val(41,"hola"));
-	tree.print();
-	tree.insert(val(6,"hola"));
-	tree.print();
-	// tree.remove(20);
-
-	std::cout << "-----------------------------------------" << std::endl;
-	//tree.begin();
-
-	// tree.insert(9,"sa");
-	// tree.print();
-	// tree.insert(19,"sa");
-	// tree.print();
-	// tree.insert(21,"sa");
-	// tree.print();
-	// tree.insert(31,"sa");
-	// tree.print();
-	//std::cout << "lenl: " <<  tree.lenL(tree.getRoot()) << " lenR: " << tree.lenR(tree.getRoot()) << " balance: " << tree.getRoot()->l->getBalance() << std::endl;
-
-}
-
-
+#include "srcs/utils.hpp"
+#include <list>
 void map_iterator() {
 
 	std::map<int,std::string> m;
@@ -88,18 +48,39 @@ void map_iterator() {
 void my_map() {
 	ft::map<int, std::string> map;
 	typedef ft::Avl<int, std::string>::value_type val;
-	map.insert(val(30,"aa"));
-	map.insert(val(40,"jeje"));
-	map.insert(val(0,"asdasd"));
-	map.insert(val(1,"hola"));
-	map.insert(val(2,"adios"));
-	map._tree.print();
-	ft::map<int, std::string>::iterator it;
-	for (it = map.begin(); it != map.end(); ++it)
-	{
-		std::cout << "key: " << it->first << "value: " << it->second <<std::endl;
+	map.insert(ft::make_pair(30,"aa"));
+	map.insert(ft::make_pair(40,"jeje"));
+	map.insert(ft::make_pair(0,"asdasd"));
+	map.insert(ft::make_pair(1,"hola"));
+	map.insert(ft::make_pair(2,"adios"));
+	// map._tree.print();
+	ft::map<int, std::string>::iterator it = map.begin();
+	ft::map<int, std::string>::iterator ite = map.end();
+
+	while (it != ite) {
+		std::cout << "-> " << it->first << ", " << it->second << std::endl;
+				it++;
+
 	}
 
+}
+
+#define T1 char
+#define T2 int
+typedef ft::pair<const char, int> T3;
+
+void empty() {
+	std::list<T3> lst;
+	unsigned int lst_size = 7;
+	for (unsigned int i = 0; i < lst_size; ++i)
+		lst.push_back(T3('a' + i, lst_size - i));
+
+	ft::map<T1, T2> mp(lst.begin(), lst.end());
+	ft::map<T1, T2>::iterator it = mp.begin();
+	mp._tree.print();
+	for(size_t i =0 ; it != mp.end() && i < 10; ++it,i++) {
+				std::cout << "-> " << it->first << ", " << it->second << std::endl;
+	}
 }
 
 
@@ -107,6 +88,8 @@ void vector() {
 	ft::vector<int> v(10,10);
 	ft::vector<int>::iterator it = v.begin();
 	it.base();
+
+
 }
 
 int main()
@@ -114,6 +97,7 @@ int main()
 	//search_tree();
 	//righRot();
 	//map_iterator();
-	my_map();
+	//my_map();
+	empty();
 	return 0;
 }

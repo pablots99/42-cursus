@@ -25,6 +25,7 @@ int		main(void)
 	is_empty(mp);
 	printSize(mp);
 
+
 	is_empty(mp2);
 	mp2 = mp;
 	is_empty(mp2);

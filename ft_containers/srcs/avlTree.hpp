@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   avlTree.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 16:39:45 by pablo             #+#    #+#             */
-/*   Updated: 2022/04/04 00:01:14 by ptorres          ###   ########.fr       */
+/*   Updated: 2022/04/04 15:04:32 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ namespace ft
 		pointer l;
 		pointer parent;
 		int height;
+		Node() : val(),  r(NULL), l(NULL), parent(NULL), height(0) {}
 		Node(T _val) : val(_val),  r(NULL), l(NULL), parent(NULL), height(1) {}
 
 		void updateHeight()
@@ -94,7 +95,7 @@ namespace ft
 		node *next()
 		{
 			if (r)
-				return r;
+				return getMin(r);
 
 			//USE COMP!!!!!!!!!!!!!!!!!!!!!
 			if(parent && val.first > parent->val.first){
@@ -110,7 +111,7 @@ namespace ft
 		node *prev()
 		{
 			if (l)
-				return l;
+				return getMax(l);
 
 			//USE COMP!!!!!!!!!!!!!!!!!!!!!
 			if(parent && val.first < parent->val.first){
@@ -133,27 +134,29 @@ namespace ft
 	class TreeIterator : public ft::iterator<std::bidirectional_iterator_tag, Iter>
 	{
 	public:
-		typedef Iter iterator_type;
-		typedef Iter value_type;
-		typedef typename std::bidirectional_iterator_tag iterator_category;
+		typedef Iter 															iterator_type;
+		typedef Iter 															value_type;
+		typedef typename std::bidirectional_iterator_tag 						iterator_category;
 		typedef typename ft::iterator<iterator_category, Iter>::difference_type difference_type;
-		typedef typename ft::iterator<iterator_category, Iter>::pointer pointer;
-		typedef node 												*node_pointer;
-		typedef typename ft::iterator<iterator_category, Iter>::reference reference;
+		typedef typename ft::iterator<iterator_category, Iter>::pointer 		pointer;
+		typedef node 															*node_pointer;
+		typedef typename ft::iterator<iterator_category, Iter>::reference 		reference;
 		typedef typename ft::iterator<iterator_category, const Iter>::reference const_reference;
+		node_pointer 	node_end;
 
 
-		TreeIterator(void) : _base(NULL) {}
-		TreeIterator(const node_pointer p) : _base(p) {}
-
+		TreeIterator(void) : node_end(NULL),_base(NULL) {}
+		TreeIterator(const node_pointer p,node_pointer _node_end) :node_end(_node_end), _base(p){}
 		template <typename U>
-		TreeIterator(const TreeIterator<U> &obj) : _base(obj.base()) {}
-
+		TreeIterator(const TreeIterator<U> &obj) :node_end(obj.node_end), _base(obj.base()){}
+		~TreeIterator() {}
 		reference operator*() const { return _base->val; }
 		pointer operator->() const { return std::addressof(operator*()); }
 		TreeIterator &operator++()
 		{
 			_base = _base->next();
+			if(!_base)
+				_base = node_end;
 			return *this;
 		}
 		TreeIterator operator++(int)
@@ -164,7 +167,10 @@ namespace ft
 		}
 		TreeIterator &operator--()
 		{
-			_base = _base->prev();
+			if(_base == node_end)
+				_base = node_end->parent;
+			else
+				_base = _base->prev();
 			return *this;
 		}
 		TreeIterator operator--(int)
@@ -194,41 +200,48 @@ namespace ft
 	{
 
 	public:
-		typedef T value_type;
-		typedef Key key_type;
-		typedef Node<T> node;
+		typedef T 				value_type;
+		typedef Key 			key_type;
+		typedef Node<T> 		node;
+		typedef node 			*node_pointer;
 		typedef TreeIterator<T> iterator;
 		typedef TreeIterator<T> const_iterator;
-		Avl() : _root(NULL), _size(0), comp(Compare()) {}
+
+
+		Avl() : _root(NULL),_node_end(new node()), _size(0), comp(Compare()) {}
 		~Avl() {}
 
-		iterator begin() { return iterator(_root->getMin(NULL)); }
+		iterator begin() { return iterator(_root->getMin(NULL),_node_end); }
 
-		iterator end(){ return iterator(NULL); }
+		iterator end(){
+			_node_end->parent = _root->getMax(NULL);
+			std::cout << "aaaa" <<  _node_end->parent->val.first << std::endl;
+			return iterator(_node_end,_node_end);
+		}
 
-		const_iterator cbegin() const { return const_iterator(_root->getMin(NULL)); }
+		const_iterator cbegin() const { return const_iterator(_root->getMin(NULL),_node_end); }
 
-		const_iterator cend() const { return const_iterator(NULL); }
+		const_iterator cend() const { _node_end->parent = _root->getMax(NULL); return const_iterator(_node_end,NULL); }
 
 		iterator rbegin() { return iterator(_root->getMax(NULL)); }
 
-		iterator rend() { return iterator(NULL); }
+		iterator rend() { return begin(); }
 
 		const_iterator crbegin(){ return const_iterator(_root->getMax(NULL));}
 
-		const_iterator crend(){ return const_iterator(NULL); }
+		const_iterator crend(){ return cbegin(); }
 
 		size_t getSize() const { return _size; }
 
 
-		node* get(Key const &k)
+		node_pointer get(Key const &k)
 		{
 			node *res = _get(k, _root);;
 			return res;
 		}
 
 		iterator find(Key const k) const {
-			return iterator(get(k));
+			return iterator(get(k),_node_end);
 		}
 
 		void remove(Key k)
@@ -242,10 +255,10 @@ namespace ft
 			_size++;
 			return _insert(n, &_root);
 		}
-		
+
 		template< class InputIt >
-		void insert(InputIt begin, InputIt end) { 
-			for(; begin != end; ++begin) { 
+		void insert(InputIt begin, InputIt end) {
+			for(; begin != end; ++begin) {
 				insert(*begin);
 			}
 		}
@@ -256,11 +269,12 @@ namespace ft
 		}
 
 	private:
-		node *_root;
+		node_pointer _root;
+		node_pointer _node_end;
 		size_t _size;
 		Compare comp;
 		// no funciona
-		node *_deleteNode(Key key, node **n)
+		node_pointer _deleteNode(Key key, node **n)
 		{
 			if (!(*n)->l && !(*n)->r)
 			{
@@ -326,7 +340,7 @@ namespace ft
 			return NULL;
 		}
 
-		node *_rotLL(node *n)
+		node_pointer _rotLL(node *n)
 		{
 			if (!n->l)
 				return NULL;
@@ -341,7 +355,7 @@ namespace ft
 			return aux;
 		}
 
-		node *_rotRR(node *n)
+		node_pointer _rotRR(node *n)
 		{
 			if (!n->r)
 				return NULL;
@@ -355,7 +369,7 @@ namespace ft
 			return aux;
 		}
 
-		node *_rotRL(node *n)
+		node_pointer _rotRL(node *n)
 		{
 			if (!n->l)
 				return NULL;
@@ -372,7 +386,7 @@ namespace ft
 			return aux2;
 		}
 
-		node *_rotLR(node *n)
+		node_pointer _rotLR(node *n)
 		{
 			if (!n->l)
 				return NULL;
@@ -393,13 +407,13 @@ namespace ft
 		{
 			node * ret =  NULL;
 			if (n == NULL)
-				return iterator(NULL);
-			if(n->val.first == (*curr)->val.first )
-				return *curr;
+				return iterator(NULL,_node_end);
+			// if(*curr && n->val.first == (*curr)->val.first )
+			// 	return iterator(*curr);
 			if (!_root)
 			{
 				_root = n;
-				return iterator(NULL);
+				return iterator(NULL,_node_end);
 			}
 			if (comp(n->val.first, (*curr)->val.first))
 			{
@@ -442,7 +456,7 @@ namespace ft
 			if ((*curr)->r)
 				(*curr)->r->updateHeight();
 			(*curr)->updateHeight();
-			return ret;
+			return iterator(ret,_node_end);
 		}
 		public:
 		void print()
