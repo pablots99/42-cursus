@@ -39,6 +39,7 @@ void	printReverse(TESTED_NAMESPACE::map<T1, T2> &mp)
 	std::cout << "printReverse:" << std::endl;
 	while (it != ite) {
 		it--;
+		std::cout << "asdasd:" << std::endl;
 		std::cout << "-> " << printPair(it, false) << std::endl;
 	}
 	std::cout << "_______________________________________________" << std::endl;

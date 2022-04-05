@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   avlTree.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 16:39:45 by pablo             #+#    #+#             */
-/*   Updated: 2022/04/05 02:39:36 by pablo            ###   ########.fr       */
+/*   Updated: 2022/04/05 19:48:47 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,16 +103,17 @@ namespace ft
 			if (r)
 				return getMin(r);
 			node *aux = parent;
-			while (aux && !comp(val.first , aux->val.first))
+			while (aux  && !comp(val.first , aux->val.first))
 				aux = aux->parent;
 			return aux;
 		}
 		node *prev()
 		{
-			if (l)
+			if (l){
 				return getMax(l);
+			}
 			node *aux = parent;
-			while (aux && comp(val.first , aux->val.first))
+			while (aux &&  comp(val.first , aux->val.first))
 				aux = aux->parent;
 			return aux;
 		}
@@ -139,7 +140,8 @@ namespace ft
 
 
 		TreeIterator(void) : node_end(NULL),_base(NULL) {}
-		TreeIterator(const node_pointer p,node_pointer _node_end) :node_end(_node_end), _base(p){}
+		TreeIterator(const node_pointer p,node_pointer _node_end) :node_end(_node_end), _base(p){
+		}
 
 		template <typename U>
 		TreeIterator(const TreeIterator<U,node> &obj) :node_end(obj.node_end), _base(obj.base()){}
@@ -160,11 +162,16 @@ namespace ft
 			return tmp;
 		}
 		TreeIterator &operator--()
-		{
-			if(_base == node_end)
-				_base = node_end->parent;
-			else
-				_base = _base->prev();
+		{	
+			if(_base == node_end) { 
+				_base = _base->parent;
+			
+				return *this;
+			}
+			
+			_base = _base->prev();
+			// if(_base == NULL)
+			//  	_base = node_end;
 			return *this;
 		}
 		TreeIterator operator--(int)
@@ -199,7 +206,7 @@ namespace ft
 		typedef Node<T,Compare> 		node;
 		typedef node 			*node_pointer;
 		typedef TreeIterator<T,node> iterator;
-		typedef TreeIterator<T,node> const_iterator;
+		typedef TreeIterator<const T,node> const_iterator;
 
 
 		Avl(Compare _comp = Compare(),Alloc alloc = Alloc()) : _root(NULL),_node_end(new node()), _size(0), comp(_comp), _allocator(alloc) {}
@@ -234,13 +241,33 @@ namespace ft
 			return const_iterator(_node_end,NULL);
 		}
 
-		iterator rbegin() { return iterator(_root->getMax(NULL)); }
+		iterator rbegin() { 
+			if(_size == 0){
+				return iterator(NULL,NULL);
+			}
+			return end();
+		}
 
-		iterator rend() { return begin(); }
+		iterator rend() {
+			if(_size == 0) {
+				return iterator(NULL,NULL);
+			}
+			return iterator(_root->getMin(NULL),_node_end);
+		}
 
-		const_iterator crbegin(){ return const_iterator(_root->getMax(NULL));}
+		const_iterator crbegin(){
+			if(_size == 0){
+				return const_iterator(NULL,NULL);
+			}
+			return cend();
+		}
 
-		const_iterator crend(){ return cbegin(); }
+		const_iterator crend(){ 
+			if(_size == 0) {
+				return const_iterator(NULL,NULL);
+			}
+			return const_iterator(_root->getMin(NULL),_node_end);
+		}
 
 		size_t getSize() const { return _size; }
 

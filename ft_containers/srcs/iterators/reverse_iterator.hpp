@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:06:32 by ptorres           #+#    #+#             */
-/*   Updated: 2022/04/03 23:32:05 by ptorres          ###   ########.fr       */
+/*   Updated: 2022/04/05 16:01:17 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ public:
 
     /*constructors*/
     reverse_iterator() : __t(), current() {}
-    explicit reverse_iterator(Iter x) : __t(x), current(x.base()) {}
+    explicit reverse_iterator(Iter x) : __t(x), current(x) {}
 
     template <class U>
     reverse_iterator(const reverse_iterator<U> &obj) : __t(obj.base()), current(obj.base()) {}

@@ -3,8 +3,8 @@ NAME = containers
 SRCS = main.cpp
 
 OBJ = $(SRCS:.cpp=.o)
-CPP = c++
-CPP_FLAGS = --std=c++98 -g3
+CPP = clang++
+CPP_FLAGS = -g3 -fsanitize=address --std=c++98 
 
 all: $(NAME)
 
@@ -12,7 +12,7 @@ all: $(NAME)
 	$(CPP) $(CPP_FLAGS) -c $< -o $@
 
 $(NAME): $(OBJ)
-	$(CPP) $(OBJ) -o $(NAME)
+	$(CPP) $(CPP_FLAGS) $(OBJ) -o $(NAME)
 
 clean:
 	rm -f $(OBJ)

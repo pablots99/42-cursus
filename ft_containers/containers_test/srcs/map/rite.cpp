@@ -27,7 +27,6 @@ int		main(void)
 	--it;
 	printPair(it);
 	printPair(it.base());
-
 	it = mp.rbegin(); ite = mp.rend();
 	while (it != ite)
 		std::cout << "[rev] " << printPair(it++, false) << std::endl;

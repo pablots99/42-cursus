@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 13:34:36 by ptorres           #+#    #+#             */
-/*   Updated: 2022/04/05 02:48:07 by pablo            ###   ########.fr       */
+/*   Updated: 2022/04/05 19:52:23 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void map_iterator() {
 
 	for (it = m.begin(); it != m.end(); ++it)
 	{
-		*it = 4;
 		std::cout << "f: " << it->first << ", ";
 	}
 	std::cout << std::endl;
@@ -69,6 +68,7 @@ void my_map() {
 #define T1 char
 #define T2 int
 typedef ft::pair<const char, int> T3;
+typedef std::pair<const char, int> T4;
 
 void empty() {
 	std::list<T3> lst;
@@ -79,7 +79,39 @@ void empty() {
 	ft::map<T1, T2> mp(lst.begin(), lst.end());
 	ft::map<T1, T2>::iterator it = mp.begin();
 	mp._tree.print();
-	for(size_t i =0 ; it != mp.end() && i < 10; ++it,i++) {
+	for(size_t i =0 ; it != mp.end(); ++it,i++) {
+				std::cout << "-> " << it->first << ", " << it->second << std::endl;
+	}
+		std::cout << "-> rev"<< std::endl;
+	it = mp.end();
+	for(size_t i= 0 ; it != mp.begin() && i < 10 ;i++ ) {
+				--it;
+				std::cout << "-> " << it->first << ", " << it->second << std::endl;
+	}
+}
+
+void ritermap() { 
+	std::list<T4> lst;
+	unsigned int lst_size = 7;
+	for (unsigned int i = 0; i < lst_size; ++i)
+		lst.push_back(T4('a' + i, lst_size - i));
+	std::map<T1, T2> mp(lst.begin(), lst.end());
+	std::map<T1, T2>::reverse_iterator it = mp.rbegin();
+	//mp._tree.print();
+	std::cout << "-> " << it->first << ", " << it->second << std::endl;
+	for(size_t i =0 ; it != mp.rend();it++,i++) {
+				std::cout << "-> " << it->first << ", " << it->second << std::endl;
+	}
+}
+void ritermap2() { 
+	std::list<T3> lst;
+	unsigned int lst_size = 7;
+	for (unsigned int i = 0; i < lst_size; ++i)
+		lst.push_back(T3('a' + i, lst_size - i));
+	ft::map<T1, T2> mp(lst.begin(), lst.end());
+	ft::map<T1, T2>::reverse_iterator it = mp.rbegin();
+	//mp._tree.print();
+	for(size_t i =0 ; it != mp.rend();it++,i++) {
 				std::cout << "-> " << it->first << ", " << it->second << std::endl;
 	}
 }
@@ -97,8 +129,10 @@ int main()
 {
 	//search_tree();
 	//righRot();
-	//map_iterator();
+	map_iterator();
 	//my_map();
-	empty();
+	//empty();
+	//ritermap();
+	//ritermap2();
 	return 0;
 }

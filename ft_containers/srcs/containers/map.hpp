@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 13:36:35 by ptorres           #+#    #+#             */
-/*   Updated: 2022/04/05 02:36:13 by pablo            ###   ########.fr       */
+/*   Updated: 2022/04/05 19:53:54 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,13 @@ namespace ft
 		typedef std::ptrdiff_t difference_type;
 		typedef value_type &reference;
 		typedef value_type *pointer;
-		typedef Avl<Key, T, ft::pair<Key, T> > __tree;
+		typedef Avl<Key, T, ft::pair<Key, T>, Compare> __tree;
 		typedef typename __tree::node node;
 		typedef ft::TreeIterator<ft::pair<Key, T>, node> iterator;
 		// add const iterator to alvtree
-		typedef ft::TreeIterator<ft::pair<Key, T>, node> const_iterator;
+		typedef ft::TreeIterator<const ft::pair<Key, T>, node> const_iterator;
 		typedef ft::reverse_iterator<iterator> reverse_iterator;
-		typedef ft::reverse_iterator<iterator> const_reverse_iterator;
+		typedef ft::reverse_iterator<const_iterator> const_reverse_iterator;
 
 
 		class value_compare
@@ -145,13 +145,13 @@ namespace ft
 
 		const_iterator end() const { return _tree.cend(); }
 
-		reverse_iterator rbegin() { return _tree.rbegin(); }
+		reverse_iterator rbegin() { return reverse_iterator(_tree.rbegin()); }
 
-		reverse_iterator rend() { return _tree.rend(); }
+		reverse_iterator rend() { return reverse_iterator(_tree.rend()); }
 
-		reverse_iterator crbegin() { return _tree.crbegin(); }
+		const_reverse_iterator crbegin() { return const_reverse_iterator(_tree.crbegin()); }
 
-		reverse_iterator crend() { return _tree.crend(); }
+		const_reverse_iterator crend() { return const_reverse_iterator(_tree.crend()); }
 
 		bool empty() const { return size() == 0; }
 
@@ -174,7 +174,7 @@ namespace ft
 				iterator v =  _tree.find(k);
 				if(v.base())
 					return v->second;
-				v = insert(make_pair(k,mapped_type())).first;
+				v = insert(ft::make_pair(k,mapped_type())).first;
 				return v->second;
 
 

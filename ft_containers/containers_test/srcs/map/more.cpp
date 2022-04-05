@@ -23,6 +23,7 @@ int		main(void)
 	mp[27] = "bee";
 	mp[90] = "8";
 	printSize(mp);
+	//mp._tree.print();
 
 	return (0);
 }
