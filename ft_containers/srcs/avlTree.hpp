@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 16:39:45 by pablo             #+#    #+#             */
-/*   Updated: 2022/04/04 15:04:32 by pablo            ###   ########.fr       */
+/*   Updated: 2022/04/05 02:39:36 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,20 @@ namespace ft
 			TREE NODE
 
 	*/
-	template <class T>
+	template <class T,class Compare>
 	struct Node
 	{
-		typedef Node<T> node;
+		typedef Node<T,Compare> node;
 		typedef node *pointer;
 		T val;
 		pointer r;
 		pointer l;
 		pointer parent;
 		int height;
-		Node() : val(),  r(NULL), l(NULL), parent(NULL), height(0) {}
-		Node(T _val) : val(_val),  r(NULL), l(NULL), parent(NULL), height(1) {}
+		Compare comp;
+
+		Node(Compare _comp = Compare()) : val(),  r(NULL), l(NULL), parent(NULL), height(0),comp(_comp) {}
+		Node(T _val,Compare _comp = Compare()) : val(_val),  r(NULL), l(NULL), parent(NULL), height(1),comp(_comp) {}
 
 		void updateHeight()
 		{
@@ -80,6 +82,8 @@ namespace ft
 		{
 			if (!n)
 				n = this;
+			if (!n)
+				return NULL;
 			if (!n->l)
 				return n;
 			return getMin(n->l);
@@ -88,6 +92,8 @@ namespace ft
 		{
 			if (!n)
 				n = this;
+			if (!n)
+				return NULL;
 			if (!n->r)
 				return n;
 			return getMax(n->r);
@@ -96,32 +102,19 @@ namespace ft
 		{
 			if (r)
 				return getMin(r);
-
-			//USE COMP!!!!!!!!!!!!!!!!!!!!!
-			if(parent && val.first > parent->val.first){
-				if(parent && parent->parent) {
-					return parent->parent;
-				}
-				else
-					return NULL;
-			}
-
-			return parent;
+			node *aux = parent;
+			while (aux && !comp(val.first , aux->val.first))
+				aux = aux->parent;
+			return aux;
 		}
 		node *prev()
 		{
 			if (l)
 				return getMax(l);
-
-			//USE COMP!!!!!!!!!!!!!!!!!!!!!
-			if(parent && val.first < parent->val.first){
-				if(parent && parent->parent) {
-					return parent->parent;
-				}
-				else
-					return NULL;
-			}
-			return parent;
+			node *aux = parent;
+			while (aux && comp(val.first , aux->val.first))
+				aux = aux->parent;
+			return aux;
 		}
 	};
 
@@ -130,7 +123,7 @@ namespace ft
 		NODE ITERATOR
 	*/
 
-	template <class Iter, class node = ft::Node<Iter> >
+	template <class Iter, class node>
 	class TreeIterator : public ft::iterator<std::bidirectional_iterator_tag, Iter>
 	{
 	public:
@@ -147,8 +140,9 @@ namespace ft
 
 		TreeIterator(void) : node_end(NULL),_base(NULL) {}
 		TreeIterator(const node_pointer p,node_pointer _node_end) :node_end(_node_end), _base(p){}
+
 		template <typename U>
-		TreeIterator(const TreeIterator<U> &obj) :node_end(obj.node_end), _base(obj.base()){}
+		TreeIterator(const TreeIterator<U,node> &obj) :node_end(obj.node_end), _base(obj.base()){}
 		~TreeIterator() {}
 		reference operator*() const { return _base->val; }
 		pointer operator->() const { return std::addressof(operator*()); }
@@ -182,46 +176,63 @@ namespace ft
 		node_pointer base() const {
 			return _base;
 		}
+		bool operator==(TreeIterator const &i1) const {
+			 return i1.base() == _base;
+			 }
 
+		bool operator!=(TreeIterator const &i1) const { return !(i1==*this); }
 	private:
 		node_pointer _base;
 	};
-	template <class Iter1, class Iter2>
-	bool operator==(TreeIterator<Iter1> const &i1, TreeIterator<Iter2> const &i2) { return i1.base() == i2.base(); }
 
-	template <class Iter1, class Iter2>
-	bool operator!=(TreeIterator<Iter1> const &i1, TreeIterator<Iter2> const &i2) { return !(i1==i2); }
 
 	/*
 		ALV TREE
 	*/
-	template <class Key, class val, class T = ft::pair<Key, val>, typename Compare = std::less<Key> >
+	template <class Key, class val, class T = ft::pair<Key, val>, class Compare = std::less<Key>,class Alloc = std::allocator<Node<T,Compare> > >
 	class Avl
 	{
 
 	public:
 		typedef T 				value_type;
 		typedef Key 			key_type;
-		typedef Node<T> 		node;
+		typedef Node<T,Compare> 		node;
 		typedef node 			*node_pointer;
-		typedef TreeIterator<T> iterator;
-		typedef TreeIterator<T> const_iterator;
+		typedef TreeIterator<T,node> iterator;
+		typedef TreeIterator<T,node> const_iterator;
 
 
-		Avl() : _root(NULL),_node_end(new node()), _size(0), comp(Compare()) {}
+		Avl(Compare _comp = Compare(),Alloc alloc = Alloc()) : _root(NULL),_node_end(new node()), _size(0), comp(_comp), _allocator(alloc) {}
 		~Avl() {}
 
-		iterator begin() { return iterator(_root->getMin(NULL),_node_end); }
+		iterator begin() {
+			if(_size == 0){
+				return iterator(NULL,NULL);
+			}
+			return iterator(_root->getMin(NULL),_node_end);
+		}
 
 		iterator end(){
+			if(_size == 0) {
+				return iterator(NULL,NULL);
+			}
 			_node_end->parent = _root->getMax(NULL);
-			std::cout << "aaaa" <<  _node_end->parent->val.first << std::endl;
 			return iterator(_node_end,_node_end);
 		}
 
-		const_iterator cbegin() const { return const_iterator(_root->getMin(NULL),_node_end); }
+		const_iterator cbegin() const {
+			if(_size == 0){
+				return iterator(NULL,NULL);
+			}
+			return const_iterator(_root->getMin(NULL),_node_end); }
 
-		const_iterator cend() const { _node_end->parent = _root->getMax(NULL); return const_iterator(_node_end,NULL); }
+		const_iterator cend() const {
+			if(_size == 0){
+				return iterator(NULL,NULL);
+			}
+			_node_end->parent = _root->getMax(NULL);
+			return const_iterator(_node_end,NULL);
+		}
 
 		iterator rbegin() { return iterator(_root->getMax(NULL)); }
 
@@ -234,9 +245,9 @@ namespace ft
 		size_t getSize() const { return _size; }
 
 
-		node_pointer get(Key const &k)
+		node_pointer get(Key const &k) const
 		{
-			node *res = _get(k, _root);;
+			node *res = _get(k, _root);
 			return res;
 		}
 
@@ -249,7 +260,7 @@ namespace ft
 			_deleteNode(k, &_root);
 		}
 
-		iterator insert(T pair)
+		ft::pair<iterator, bool> insert(value_type pair)
 		{
 			node *n = new node(pair);
 			_size++;
@@ -263,16 +274,39 @@ namespace ft
 			}
 		}
 
+		//review this insert in n not root REDO THIS!!!
+		iterator insert_at (iterator position, const value_type& value){
+			node_pointer n = NULL;
+			if(position.base())
+		 		n = _get(position->first,_root);
+			_size++;
+			node_pointer aux = new node(value);
+			if(n)
+				return  _insert(aux, &_root).first;
+
+			return _insert(aux, &_root).first;
+
+		}
+
 		void clear() {
 			_size = 0;
 			_clear(_root);
+			delete _root;
+			_root = NULL;
 		}
+
+		size_t max_size() const {
+			return _allocator.max_size();
+		}
+
+
 
 	private:
 		node_pointer _root;
 		node_pointer _node_end;
 		size_t _size;
 		Compare comp;
+		Alloc _allocator;
 		// no funciona
 		node_pointer _deleteNode(Key key, node **n)
 		{
@@ -323,19 +357,24 @@ namespace ft
 		}
 
 		void _clear(node *n) {
-			if(n->r)
+			if(!n)
+				return ;
+			if(n && n->r)
 				_clear(n->r);
-			if(n->l)
+			if(n && n->l)
 				_clear(n->l);
 			delete n->l;
+			n->l = NULL;
+			n->r = NULL;
+			delete n->r;
 		}
-		node *_get(Key key, node *n)
+		node *_get(Key key, node *n) const
 		{
-			if (n->val.first == key)
+			if (n && n->val.first == key)
 				return n;
-			else if (n->l && comp(key, n->val.first))
+			else if (n && n->l && comp(key, n->val.first))
 				return _get(key, n->l);
-			else if (n->r)
+			else if (n && n->r)
 				return _get(key, n->r);
 			return NULL;
 		}
@@ -344,7 +383,6 @@ namespace ft
 		{
 			if (!n->l)
 				return NULL;
-			std::cout << "n " << n->val.first << std::endl;
 			node *a = n;
 			node *aux = a->l;
 			aux->parent = n->parent;
@@ -403,17 +441,19 @@ namespace ft
 			return aux2;
 		}
 
-		iterator _insert(node *n, node **curr)
+		ft::pair<iterator, bool> _insert(node *n, node **curr)
 		{
 			node * ret =  NULL;
 			if (n == NULL)
-				return iterator(NULL,_node_end);
-			// if(*curr && n->val.first == (*curr)->val.first )
-			// 	return iterator(*curr);
+				return ft::make_pair(iterator(NULL,_node_end),false);
+			if(*curr && n->val.first == (*curr)->val.first ){
+				_size--;
+				return ft::make_pair(iterator(*curr,_node_end),false);
+			}
 			if (!_root)
 			{
 				_root = n;
-				return iterator(NULL,_node_end);
+				return ft::make_pair(iterator(_root,_node_end),true);
 			}
 			if (comp(n->val.first, (*curr)->val.first))
 			{
@@ -456,7 +496,7 @@ namespace ft
 			if ((*curr)->r)
 				(*curr)->r->updateHeight();
 			(*curr)->updateHeight();
-			return iterator(ret,_node_end);
+			return ft::make_pair(iterator(n,_node_end),true);
 		}
 		public:
 		void print()

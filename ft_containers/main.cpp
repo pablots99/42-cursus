@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 13:34:36 by ptorres           #+#    #+#             */
-/*   Updated: 2022/04/04 15:13:12 by pablo            ###   ########.fr       */
+/*   Updated: 2022/04/05 02:48:07 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void map_iterator() {
 
 	for (it = m.begin(); it != m.end(); ++it)
 	{
+		*it = 4;
 		std::cout << "f: " << it->first << ", ";
 	}
 	std::cout << std::endl;

@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 20:48:05 by ptorres           #+#    #+#             */
-/*   Updated: 2022/04/04 13:16:33 by pablo            ###   ########.fr       */
+/*   Updated: 2022/04/05 00:15:38 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ namespace ft {
     pair(T1 const& t1, T2 const& t2) : first(t1), second(t2) {}
     template <class U1, class U2>
     pair(const pair<U1, U2>& p) : first(p.first), second(p.second) {}
+
     pair& operator=(pair const& p) {
         first = p.first;
         second = p.second;
