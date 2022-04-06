@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 20:48:05 by ptorres           #+#    #+#             */
-/*   Updated: 2022/04/05 00:15:38 by pablo            ###   ########.fr       */
+/*   Updated: 2022/04/06 17:33:56 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,16 +55,18 @@ namespace ft {
    template<class Iterator1, class Iterator2>
    bool lexicographical_compare(Iterator1 start1, Iterator1 end1,Iterator2 start2, Iterator2 end2)
    {
-        while (start1!=end1 && start2 != end2)
+	   	// &&
+        while (start1!=end1)
         {
-             if (*start2 <* start1)
+             if (start2 == end2 || *start2 < *start1)
                 return false;
              else if (*start1 < *start2)
                 return true;
             ++start1;
             ++start2;
         }
-        return (start2!=end2) && (start1 == end1);
+		//&& (start1 == end1)
+        return (start2!=end2) ;
    }
 
 
@@ -144,7 +146,7 @@ namespace ft {
     }
     template< class T1, class T2 >
     bool operator<(const pair<T1,T2> &p1, const pair<T1,T2>  &p2){
-        return (((p1.first < p2.first) || (p1.second < p2.second)) && (p1.first < p2.first) );
+        return ((!(p1.first < p2.first) && (p1.second < p2.second)) || (p1.first < p2.first) );
     }
 
     template< class T1, class T2 >
@@ -166,6 +168,9 @@ namespace ft {
   	{
     return ( ft::pair<T1,T2>(x,y) );
   	}
+
+
+
 
 }
 

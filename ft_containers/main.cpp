@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 13:34:36 by ptorres           #+#    #+#             */
-/*   Updated: 2022/04/05 19:52:23 by ptorres          ###   ########.fr       */
+/*   Updated: 2022/04/06 17:19:10 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,31 +18,87 @@
 #include "srcs/iterators/iterator.hpp"
 #include <iterator>
 #include <functional>
-#include "./srcs/avlTree.hpp"
+#include "./srcs/iterators/avlTree.hpp"
 #include <utility>
 #include "srcs/utils.hpp"
 #include <list>
-void map_iterator() {
+#include <chrono>
 
-	std::map<int,std::string> m;
-	std::map<int, std::string>::iterator it;
-	for (size_t i = 0; i < 100; i++)
+void ft_map_time() {
+
+	ft::map<int,std::string> m;
+	ft::map<int, std::string>::iterator it;
+	std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+	std::chrono::steady_clock::time_point end;
+
+	for (size_t i = 0; i < 1000000; i++)
 	{
-		m.insert( std::pair<int, std::string>(i,"hola"));
+
+		m.insert( ft::pair<int, std::string>(i,"hola" + std::to_string(i)));
+	}
+	for (size_t i = -1; i > -1000000; i--)
+	{
+		m.insert( ft::pair<int, std::string>(i,"hola" + std::to_string(i)));
 
 	}
-	for (size_t i = 200; i > 100; i--)
-	{
-		m.insert( std::pair<int, std::string>(i,"hola"));
-
-	}
+	end = std::chrono::steady_clock::now();
+	std::cout << "ft  insert  time = " << std::chrono::duration_cast<std::chrono::nanoseconds> (end - begin).count() << "[ns]" << std::endl;
+	begin = std::chrono::steady_clock::now();
 
 	for (it = m.begin(); it != m.end(); ++it)
 	{
-		std::cout << "f: " << it->first << ", ";
+		*it;
 	}
+	end = std::chrono::steady_clock::now();
+	std::cout << "ft  iter time  time = " << std::chrono::duration_cast<std::chrono::nanoseconds> (end - begin).count() << "[ns]" << std::endl;
+	begin = std::chrono::steady_clock::now();
+	std::cout << "finded: " << m.find(500000)->first << ":" <<  m.find(500000)->second;
+	std::cout << "finded: " << m.find(-500000)->first << ":" <<  m.find(-500000)->second;
+	std::cout << "finded: " << m.find(999999)->first << ":" <<  m.find(999999)->second;
+	std::cout << "finded: " << m.find(-999999)->first << ":" <<  m.find(-999999)->second;
 	std::cout << std::endl;
+	end = std::chrono::steady_clock::now();
+	std::cout << "ft  find time  time = " << std::chrono::duration_cast<std::chrono::nanoseconds> (end - begin).count() << "[ns]" << std::endl;
+
 }
+void std_map_time() {
+
+	std::map<int,std::string> m;
+	std::map<int, std::string>::iterator it;
+	std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+	std::chrono::steady_clock::time_point end;
+
+	for (size_t i = 0; i < 1000000; i++)
+	{
+
+		m.insert( std::pair<int, std::string>(i,"hola" + std::to_string(i)));
+	}
+	for (size_t i = -1; i > -1000000; i--)
+	{
+		m.insert( std::pair<int, std::string>(i,"hola" + std::to_string(i)));
+
+	}
+	end = std::chrono::steady_clock::now();
+	std::cout << "std insert  time = " << std::chrono::duration_cast<std::chrono::nanoseconds> (end - begin).count() << "[ns]" << std::endl;
+	begin = std::chrono::steady_clock::now();
+
+	for (it = m.begin(); it != m.end(); ++it)
+	{
+		*it;
+	}
+	end = std::chrono::steady_clock::now();
+	std::cout << "std iter time  time = " << std::chrono::duration_cast<std::chrono::nanoseconds> (end - begin).count() << "[ns]" << std::endl;
+	begin = std::chrono::steady_clock::now();
+	std::cout << "finded: " << m.find(500000)->first << ":" <<  m.find(500000)->second;
+	std::cout << "finded: " << m.find(-500000)->first << ":" <<  m.find(-500000)->second;
+	std::cout << "finded: " << m.find(999999)->first << ":" <<  m.find(999999)->second;
+	std::cout << "finded: " << m.find(-999999)->first << ":" <<  m.find(-999999)->second;
+	std::cout << std::endl;
+	end = std::chrono::steady_clock::now();
+	std::cout << "std find time  time = " << std::chrono::duration_cast<std::chrono::nanoseconds> (end - begin).count() << "[ns]" << std::endl;
+
+}
+
 
 
 void my_map() {
@@ -90,7 +146,7 @@ void empty() {
 	}
 }
 
-void ritermap() { 
+void ritermap() {
 	std::list<T4> lst;
 	unsigned int lst_size = 7;
 	for (unsigned int i = 0; i < lst_size; ++i)
@@ -103,7 +159,7 @@ void ritermap() {
 				std::cout << "-> " << it->first << ", " << it->second << std::endl;
 	}
 }
-void ritermap2() { 
+void ritermap2() {
 	std::list<T3> lst;
 	unsigned int lst_size = 7;
 	for (unsigned int i = 0; i < lst_size; ++i)
@@ -129,7 +185,9 @@ int main()
 {
 	//search_tree();
 	//righRot();
-	map_iterator();
+	//map_iterator();
+	std_map_time();
+	ft_map_time();
 	//my_map();
 	//empty();
 	//ritermap();

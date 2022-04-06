@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   avlTree.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 16:39:45 by pablo             #+#    #+#             */
-/*   Updated: 2022/04/05 19:48:47 by ptorres          ###   ########.fr       */
+/*   Updated: 2022/04/06 16:02:46 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_TREE_HPP
 #define FT_TREE_HPP
 #include <functional>
-#include "containers/stack.hpp"
-#include "utils.hpp"
+#include "../containers/stack.hpp"
+#include "../utils.hpp"
 #include <iostream>
 #include <math.h>
 #include <vector>
@@ -162,13 +162,13 @@ namespace ft
 			return tmp;
 		}
 		TreeIterator &operator--()
-		{	
-			if(_base == node_end) { 
+		{
+			if(_base == node_end) {
 				_base = _base->parent;
-			
+
 				return *this;
 			}
-			
+
 			_base = _base->prev();
 			// if(_base == NULL)
 			//  	_base = node_end;
@@ -212,6 +212,13 @@ namespace ft
 		Avl(Compare _comp = Compare(),Alloc alloc = Alloc()) : _root(NULL),_node_end(new node()), _size(0), comp(_comp), _allocator(alloc) {}
 		~Avl() {}
 
+
+
+		/*
+
+			iterators
+
+		*/
 		iterator begin() {
 			if(_size == 0){
 				return iterator(NULL,NULL);
@@ -241,7 +248,7 @@ namespace ft
 			return const_iterator(_node_end,NULL);
 		}
 
-		iterator rbegin() { 
+		iterator rbegin() {
 			if(_size == 0){
 				return iterator(NULL,NULL);
 			}
@@ -262,7 +269,7 @@ namespace ft
 			return cend();
 		}
 
-		const_iterator crend(){ 
+		const_iterator crend(){
 			if(_size == 0) {
 				return const_iterator(NULL,NULL);
 			}
@@ -324,6 +331,54 @@ namespace ft
 
 		size_t max_size() const {
 			return _allocator.max_size();
+		}
+
+		iterator get_upper_iter(const key_type &key)
+		{
+			node *ret = _root->getMin(NULL);
+
+			while(ret && !comp(key,ret->val.first))
+				ret = ret->next();
+			if(!ret)
+				return end();
+			return iterator(ret,_node_end);
+		}
+
+		const_iterator get_upper_iter(const key_type &key) const
+		{
+			node *ret = _root->getMin(NULL);
+
+			while(ret && !comp(key,ret->val.first))
+				ret = ret->next();
+			if(!ret)
+				return cend();
+			return const_iterator(ret,_node_end);
+		}
+
+
+
+		iterator get_lower_node(const key_type &key)
+		{
+			node *ret = _root->getMin(NULL);
+
+			while(ret && comp(ret->val.first,key))
+				ret = ret->next();
+			if(!ret)
+				return end();
+			return iterator(ret,_node_end);
+		}
+
+
+
+		const_iterator get_lower_iter(const key_type &key) const
+		{
+			node *ret = _root->getMin(NULL);
+
+			while(ret && comp(ret->val.first,key))
+				ret = ret->next();
+			if(!ret)
+				return cend();
+			return const_iterator(ret,_node_end);
 		}
 
 

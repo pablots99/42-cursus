@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 13:36:35 by ptorres           #+#    #+#             */
-/*   Updated: 2022/04/05 19:53:54 by ptorres          ###   ########.fr       */
+/*   Updated: 2022/04/06 17:24:29 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <iostream>
 #include "../utils.hpp"
 #include "../iterators/reverse_iterator.hpp"
-#include "../avlTree.hpp"
+#include "../iterators/avlTree.hpp"
 
 namespace ft
 {
@@ -64,7 +64,7 @@ namespace ft
 
 
 		/*
-			constructors
+			member funcitons
 		*/
 
 
@@ -90,9 +90,6 @@ namespace ft
 			_tree.insert(other.begin(), other.end());
 		}
 
-
-
-
 		// make deep copy??
 		map &operator=(const map &other)
 		{
@@ -102,6 +99,34 @@ namespace ft
 			_tree.insert(other.begin(), other.end());
 			return *this;
 		}
+
+		allocator_type get_allocator() const { return Alloc(); }
+
+		/*
+
+			element acces
+
+		*/
+
+		mapped_type &operator[](const key_type &k)
+		{
+				iterator v =  _tree.find(k);
+				if(v.base())
+					return v->second;
+				v = insert(ft::make_pair(k,mapped_type())).first;
+				return v->second;
+
+		}
+
+		mapped_type at(key_type const &key) { return _tree.get(key)->val->second; }
+
+
+		/*
+
+			modifiers
+
+		*/
+
 
 		ft::pair<iterator, bool> insert(value_type const val) { return _tree.insert(val); }
 
@@ -116,15 +141,34 @@ namespace ft
 			return _tree.insert_at(position, val);
 		}
 
-		key_compare key_comp() const
+		void clear()
 		{
-			return _comp;
-		};
+			_tree.clear();
+		}
 
-		mapped_type at(key_type const &key) { return _tree.get(key)->val->second; }
+		//erase
+
+		/*
+
+			capacity
+
+		*/
+
 
 		size_type size() const { return _tree.getSize(); }
 
+
+		bool empty() const { return size() == 0; }
+
+
+		size_type max_size() const { return _tree.max_size(); }
+
+
+		/*
+
+			lookup
+
+		*/
 		size_type count(const key_type &k) const
 		{
 			if (_tree.get(k))
@@ -132,11 +176,57 @@ namespace ft
 			return 0;
 		}
 
-		void clear()
+
+		iterator find(const key_type &k) { return _tree.find(k); }
+
+		const_iterator find(const key_type &k) const { return _tree.find(k); }
+
+
+		iterator upper_bound( const Key& key )
 		{
-			_tree.clear();
+			return _tree.get_upper_iter(key);
 		}
 
+		const_iterator upper_bound( const Key& key ) const
+		{
+			return _tree.get_upper_iter(key);
+		}
+
+		iterator lower_bound( const Key& key ) {
+			return _tree.get_lower_iter(key);
+		}
+
+		const_iterator lower_bound( const Key& key ) const{
+			return _tree.get_lower_iter(key);
+		}
+
+		ft::pair<iterator,iterator> equal_range( const Key& key ){
+			return ft::make_pair(lower_bound(key),upper_bound(key));
+		}
+		ft::pair<const_iterator,const_iterator> equal_range( const Key& key ) const
+		{
+			return ft::make_pair(lower_bound(key),upper_bound(key));
+
+		}
+
+		/*
+
+			observers
+
+		*/
+
+		value_compare value_comp() const{
+			return value_compare(_comp);
+		}
+
+		key_compare key_comp() const
+		{
+			return _comp;
+		}
+
+		/*
+			iterator
+		*/
 		iterator begin() { return _tree.begin(); }
 
 		iterator end() { return _tree.end(); }
@@ -153,37 +243,60 @@ namespace ft
 
 		const_reverse_iterator crend() { return const_reverse_iterator(_tree.crend()); }
 
-		bool empty() const { return size() == 0; }
-
-		iterator find(const key_type &k) { return _tree.find(k); }
-
-		const_iterator find(const key_type &k) const { return _tree.find(k); }
-
-		allocator_type get_allocator() const { return Alloc(); }
-
-		size_type max_size() const
-		{
-			return _tree.max_size();
-		}
-		value_compare value_comp() const{
-			return value_compare(_comp);
-		}
-
-		mapped_type &operator[](const key_type &k)
-		{
-				iterator v =  _tree.find(k);
-				if(v.base())
-					return v->second;
-				v = insert(ft::make_pair(k,mapped_type())).first;
-				return v->second;
 
 
-		}
 
 	public:
 		__tree _tree;
 		Compare _comp;
 		allocator_type _allocator;
 	};
+	template <class Key, class T, class Compare, class Alloc>
+	bool operator==( const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs)
+	{
+		size_t size = lhs.size();
+
+		if(size != rhs.size())
+			return false;
+		typename ft::map<Key,T,Compare,Alloc>::iterator it1 = lhs.begin();
+		typename ft::map<Key,T,Compare,Alloc>::iterator it2 = rhs.begin();
+		typename ft::map<Key,T,Compare,Alloc>::iterator it_end = lhs.end();
+		while(it1 != it_end)
+		{
+			if(*it1 != *it2)
+				return false;
+			++it1;
+			++it2;
+		}
+		return true;
+	}
+	template <class Key, class T, class Compare, class Alloc>
+	bool operator!=( const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs)
+	{
+		return !(lhs == rhs);
+	}
+	template <class Key, class T, class Compare, class Alloc>
+	bool operator<( const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs)
+	{
+		return ft::lexicographical_compare(lhs.begin(),lhs.end(),rhs.begin(),rhs.end ());
+	}
+	template <class Key, class T, class Compare, class Alloc>
+	bool operator>( const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs)
+	{
+		return (rhs < lhs);
+	}
+	template <class Key, class T, class Compare, class Alloc>
+	bool operator<=( const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs)
+	{
+		return !(lhs > rhs);
+	}
+
+	template <class Key, class T, class Compare, class Alloc>
+	bool operator>=( const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs)
+	{
+		return !(lhs < rhs);
+	}
+
+
 }
 #endif
