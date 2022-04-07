@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 16:39:45 by pablo             #+#    #+#             */
-/*   Updated: 2022/04/06 16:02:46 by pablo            ###   ########.fr       */
+/*   Updated: 2022/04/07 01:44:31 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,7 +196,7 @@ namespace ft
 	/*
 		ALV TREE
 	*/
-	template <class Key, class val, class T = ft::pair<Key, val>, class Compare = std::less<Key>,class Alloc = std::allocator<Node<T,Compare> > >
+	template <class Key, class val, class T = ft::pair<Key, val>, class Compare = std::less<Key>,class Alloc= std::allocator<ft::pair<const Key, val> > >
 	class Avl
 	{
 
@@ -207,9 +207,12 @@ namespace ft
 		typedef node 			*node_pointer;
 		typedef TreeIterator<T,node> iterator;
 		typedef TreeIterator<const T,node> const_iterator;
+		typedef typename Alloc::template rebind<node>::other node_allocator;
+		typedef typename std::allocator<Node<T,Compare> > _allocator;
 
-
-		Avl(Compare _comp = Compare(),Alloc alloc = Alloc()) : _root(NULL),_node_end(new node()), _size(0), comp(_comp), _allocator(alloc) {}
+		Avl(Compare _comp = Compare(),node_allocator alloc = node_allocator()) : _root(NULL), _size(0), comp(_comp), _n_allocator(alloc) {
+			_node_end = new_node();
+		}
 		~Avl() {}
 
 
@@ -221,7 +224,7 @@ namespace ft
 		*/
 		iterator begin() {
 			if(_size == 0){
-				return iterator(NULL,NULL);
+				return end();
 			}
 			return iterator(_root->getMin(NULL),_node_end);
 		}
@@ -236,7 +239,7 @@ namespace ft
 
 		const_iterator cbegin() const {
 			if(_size == 0){
-				return iterator(NULL,NULL);
+				return cend();
 			}
 			return const_iterator(_root->getMin(NULL),_node_end); }
 
@@ -289,14 +292,21 @@ namespace ft
 			return iterator(get(k),_node_end);
 		}
 
-		void remove(Key k)
+		size_t remove(Key k)
 		{
-			_deleteNode(k, &_root);
+			size_t ret = _deleteNode(k, &_root);
+			_size -= ret;
+			return ret;
+		}
+
+		void remove(iterator it) {
+			_size -= _deleteNode(it->first, &_root);
+			//_deleteNode(it->first, &it.base());
 		}
 
 		ft::pair<iterator, bool> insert(value_type pair)
 		{
-			node *n = new node(pair);
+			node *n = new_node(pair);
 			_size++;
 			return _insert(n, &_root);
 		}
@@ -314,7 +324,7 @@ namespace ft
 			if(position.base())
 		 		n = _get(position->first,_root);
 			_size++;
-			node_pointer aux = new node(value);
+			node_pointer aux = new_node(value);
 			if(n)
 				return  _insert(aux, &_root).first;
 
@@ -325,12 +335,12 @@ namespace ft
 		void clear() {
 			_size = 0;
 			_clear(_root);
-			delete _root;
+			_deallocate(_root);
 			_root = NULL;
 		}
 
 		size_t max_size() const {
-			return _allocator.max_size();
+			return _n_allocator.max_size();
 		}
 
 		iterator get_upper_iter(const key_type &key)
@@ -388,54 +398,87 @@ namespace ft
 		node_pointer _node_end;
 		size_t _size;
 		Compare comp;
-		Alloc _allocator;
-		// no funciona
-		node_pointer _deleteNode(Key key, node **n)
-		{
-			if (!(*n)->l && !(*n)->r)
-			{
-				// if root root == NULL?
-				return NULL;
-			}
-			if (key == (*n)->val.first)
-			{
-				node *aux = *n;
-				while (aux->r || aux->l)
-				{
-					if (aux->r)
-						aux = aux->r;
-					else
-						aux = aux->l;
-				}
-				node *aux1 = aux;
-				(*n)->val.first = aux->val.first;
-				(*n)->value = aux->value;
-				if ((*n)->r)
-					(*n)->r = _deleteNode(aux->val.first, &(*n)->r);
-				else
-					(*n)->l = _deleteNode(aux->val.first, &(*n)->l);
-			}
-			else if ((*n)->l && comp(key, (*n)->val.first))
-				return _deleteNode(key, &(*n)->l);
-			else if ((*n)->r)
-				return _deleteNode(key, &(*n)->r);
+		node_allocator _n_allocator;
 
-			(*n)->updateHeight();
-			int balance = (*n)->getBalance();
-			if (balance == 2 && (*n)->l && (*n)->l->getBalance() == 1)
-				(*n) = _rotLL((*n));
-			else if (balance == -2 && (*n)->r && (*n)->r->getBalance() == -1)
-				(*n) = _rotRR((*n));
-			else if (balance == -2 && (*n)->r && (*n)->r->getBalance() == -1)
-				(*n) = _rotRL((*n));
-			else if (balance == 2 && (*n)->l && (*n)->l->getBalance() == -1)
-				(*n) = _rotLR((*n));
-			if ((*n)->l)
-				(*n)->l->updateHeight();
-			if ((*n)->r)
-				(*n)->r->updateHeight();
-			(*n)->updateHeight();
-			return *n;
+		// val(),  r(NULL), l(NULL), parent(NULL), height(0),comp(_comp) {}
+		node *new_node() {
+			node * ret = _n_allocator.allocate(1);
+			_n_allocator.construct(ret ,node());
+			return ret;
+			// return new node();
+		}
+		node *new_node(value_type v) {
+			node * ret = _n_allocator.allocate(1);
+			_n_allocator.construct(ret ,node(v));
+			return ret;
+			//return new node(v);
+		}
+
+		void _deallocate(node *n) {
+			_n_allocator.destroy(n);
+			_n_allocator.deallocate(n,1);
+		}
+
+		size_t _deleteNode(Key key, node **n)
+		{
+			size_t ret = 0;
+			if ((*n) && (*n)->val.first == key) {
+
+				node *aux = NULL;
+				if((*n)->l)
+					aux = (*n)->l->getMax(NULL);
+				else
+					aux = (*n)->getMax(NULL);
+				if(aux == (*n)){
+					(*n) = NULL;//DEALOCATE
+				}
+				else {
+					if(aux == aux->parent->r)
+						aux->parent->r = NULL;
+					if(aux != (*n)->l)
+						aux->l = (*n)->l;
+					if(aux != (*n)->r)
+						aux->r = (*n)->r;
+					aux->parent = (*n)->parent;
+
+
+					(*n) = aux;
+					if(*n == _root){
+						std::cout << "loes" << std::endl;
+						std::cout <<  _root->r->l->val.first << std::endl;
+					}
+
+					//_deallocate(*n);
+
+				}
+				ret =  1;
+			}
+			else if ((*n) && (*n)->l && comp(key, (*n)->val.first))
+				  ret = _deleteNode(key, &(*n)->l);
+			else if ((*n)  && (*n) ->r)
+				  ret =_deleteNode(key, &(*n)->r);
+			// std::cout << "balance:asdasdasd " << *n<< std::endl;
+			if(*n)
+			{
+				(*n)->updateHeight();
+				int balance = (*n)->getBalance();
+				if (balance == 2 && (*n)->l && (*n)->l->getBalance() == 1)
+					(*n) = _rotLL((*n));
+				else if (balance == -2 && (*n)->r && (*n)->r->getBalance() == -1)
+					(*n) = _rotRR((*n));
+				else if (balance == -2 && (*n)->r && (*n)->r->getBalance() == 1)
+					(*n) = _rotRL((*n));
+				else if (balance == 2 && (*n)->l && (*n)->l->getBalance() == -1)
+					(*n) = _rotLR((*n));
+				if(*n){
+					if ((*n)->l)
+						(*n)->l->updateHeight();
+					if ((*n)->r)
+						(*n)->r->updateHeight();
+					(*n)->updateHeight();
+				}
+			}
+			return ret;
 		}
 
 		void _clear(node *n) {
@@ -445,10 +488,10 @@ namespace ft
 				_clear(n->r);
 			if(n && n->l)
 				_clear(n->l);
-			delete n->l;
+			_deallocate(n->l);
 			n->l = NULL;
 			n->r = NULL;
-			delete n->r;
+			_deallocate(n->r);
 		}
 		node *_get(Key key, node *n) const
 		{
@@ -491,6 +534,7 @@ namespace ft
 
 		node_pointer _rotRL(node *n)
 		{
+			print();
 			if (!n->l)
 				return NULL;
 			node *aux = n->r;
@@ -569,7 +613,7 @@ namespace ft
 				(*curr) = _rotLL((*curr));
 			else if (balance == -2 && (*curr)->r && (*curr)->r->getBalance() == -1)
 				(*curr) = _rotRR((*curr));
-			else if (balance == -2 && (*curr)->r && (*curr)->r->getBalance() == -1)
+			else if (balance == -2 && (*curr)->r && (*curr)->r->getBalance() == 1)
 				(*curr) = _rotRL((*curr));
 			else if (balance == 2 && (*curr)->l && (*curr)->l->getBalance() == -1)
 				(*curr) = _rotLR((*curr));
@@ -642,7 +686,7 @@ namespace ft
 				if (stk[i])
 				{
 					if (stk[i]->parent != NULL)
-						number = std::to_string(stk[i]->val.first) + "," + std::to_string(stk[i]->parent->val.first);
+						number = std::to_string(stk[i]->val.first);
 					else
 						number = std::to_string(stk[i]->val.first) + ", ()";
 				}

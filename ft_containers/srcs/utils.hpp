@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 20:48:05 by ptorres           #+#    #+#             */
-/*   Updated: 2022/04/06 17:33:56 by pablo            ###   ########.fr       */
+/*   Updated: 2022/04/06 17:42:10 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ namespace ft {
     struct is_integral {};
 
 
-    /*(CHANGE THIS I DONT LIKE IT)
+    /*
     *lexicographical_compare(algorithm):
     *compare to iterator ranges until one element is not equivalent to the other,
     *If both sequences compare equal until one of them ends,
@@ -55,22 +55,22 @@ namespace ft {
    template<class Iterator1, class Iterator2>
    bool lexicographical_compare(Iterator1 start1, Iterator1 end1,Iterator2 start2, Iterator2 end2)
    {
-	   	// &&
-        while (start1!=end1)
+       while (start1!=end1 && start2 != end2)
         {
-             if (start2 == end2 || *start2 < *start1)
+             if (*start2 < *start1)
                 return false;
              else if (*start1 < *start2)
                 return true;
             ++start1;
             ++start2;
         }
-		//&& (start1 == end1)
-        return (start2!=end2) ;
+        return (start2!=end2) && (start1 == end1);
    }
 
 
-
+	/*
+		COPY FRON FIRST TO LAST INTO D_FIRST
+	*/
 	template<class InputIt, class OutputIt>
 	OutputIt copy(InputIt first, InputIt last, OutputIt d_first)
 	{
@@ -80,9 +80,25 @@ namespace ft {
     	return d_first;
 	}
 
+
+
+
+	/*
+
+		DISTANCE BETWEEN FIRST AND LAST
+
+	*/
+
 	template<class Iter>
-	const// required since C++17
-	typename ft::iterator_traits<Iter>::difference_type
+	const typename std::iterator_traits<Iter>::difference_type
+    distance(Iter first, Iter last)
+	{
+    	return aux_distance(first, last,typename ft::iterator_traits<Iter>::iterator_category());
+	}
+
+
+	template<class Iter>
+	const typename ft::iterator_traits<Iter>::difference_type
     aux_distance(Iter first, Iter last, std::input_iterator_tag)
 	{
     	typename std::iterator_traits<Iter>::difference_type result = 0;
@@ -93,12 +109,6 @@ namespace ft {
     	return result;
 	}
 
-	template<class Iter>
-	const typename std::iterator_traits<Iter>::difference_type
-    distance(Iter first, Iter last)
-	{
-    	return aux_distance(first, last,typename ft::iterator_traits<Iter>::iterator_category());
-	}
 
 
 

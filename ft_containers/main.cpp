@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 13:34:36 by ptorres           #+#    #+#             */
-/*   Updated: 2022/04/06 17:19:10 by pablo            ###   ########.fr       */
+/*   Updated: 2022/04/07 01:33:22 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,15 +104,13 @@ void std_map_time() {
 void my_map() {
 	ft::map<int, std::string> map;
 	typedef ft::Avl<int, std::string>::value_type val;
-	map.insert(ft::make_pair(30,"aa"));
-	map.insert(ft::make_pair(40,"jeje"));
-	map.insert(ft::make_pair(0,"asdasd"));
-	map.insert(ft::make_pair(1,"hola"));
-	map.insert(ft::make_pair(2,"adios"));
+	map.insert(ft::make_pair(5,"aa"));
+	map.insert(ft::make_pair(7,"jeje"));
+	map.insert(ft::make_pair(6,"asdasd"));
 	// map._tree.print();
 	ft::map<int, std::string>::iterator it = map.begin();
 	ft::map<int, std::string>::iterator ite = map.end();
-
+	map._tree.print();
 	while (it != ite) {
 		std::cout << "-> " << it->first << ", " << it->second << std::endl;
 				it++;
@@ -177,8 +175,38 @@ void vector() {
 	ft::vector<int> v(10,10);
 	ft::vector<int>::iterator it = v.begin();
 	it.base();
+}
 
+void map_erase() {
+	ft::map<int, std::string > map;
+	for (size_t i = 0; i < 10; i++)
+	{
+		map.insert( ft::pair<int, std::string>(i,"hola" + std::to_string(i)));
+	}
+	ft::map<int, std::string >::iterator it = map.begin();
+	map._tree.print();
+	//it++;
+	map.erase(++map.begin());
+	map._tree.print();
 
+	map.erase(map.begin());
+	map._tree.print();
+
+	map.erase(--map.end());
+	map._tree.print();
+
+	it = map.begin();
+	for(size_t i =0 ; it != map.end();it++,i++) {
+				std::cout << "-> " << it->first << ", " << it->second << std::endl;
+	}
+	map.erase(map.begin(), map.end());
+	it = map.begin();
+	for(size_t i =0 ; it != map.end();it++,i++) {
+				std::cout << "-> " << it->first << ", " << it->second << std::endl;
+	}
+	map.erase(map.begin(),(++(++(++map.begin()))));
+	map._tree.print();
+	//map.begin();
 }
 
 int main()
@@ -186,11 +214,13 @@ int main()
 	//search_tree();
 	//righRot();
 	//map_iterator();
-	std_map_time();
-	ft_map_time();
-	//my_map();
+	//std_map_time();
+	//ft_map_time();
+	my_map();
 	//empty();
 	//ritermap();
 	//ritermap2();
+	//map_erase();
+
 	return 0;
 }

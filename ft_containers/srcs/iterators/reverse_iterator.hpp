@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   reverse_iterator.hpp                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:06:32 by ptorres           #+#    #+#             */
-/*   Updated: 2022/04/05 16:01:17 by ptorres          ###   ########.fr       */
+/*   Updated: 2022/04/06 17:45:02 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef REVERSE_ITERATOR_HPP
 #define REVERSE_ITERATOR_HPP
 #include <iostream>
-#include "./iterator_traits.hpp"
+#include "./iterator.hpp"
 
 namespace ft
 {

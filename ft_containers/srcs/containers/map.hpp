@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 13:36:35 by ptorres           #+#    #+#             */
-/*   Updated: 2022/04/06 17:24:29 by pablo            ###   ########.fr       */
+/*   Updated: 2022/04/07 01:19:14 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ namespace ft
 		typedef std::ptrdiff_t difference_type;
 		typedef value_type &reference;
 		typedef value_type *pointer;
-		typedef Avl<Key, T, ft::pair<Key, T>, Compare> __tree;
+		typedef Avl<Key, T, ft::pair<Key, T>, Compare, Alloc> __tree;
 		typedef typename __tree::node node;
 		typedef ft::TreeIterator<ft::pair<Key, T>, node> iterator;
 		// add const iterator to alvtree
@@ -138,6 +138,7 @@ namespace ft
 
 		iterator insert(iterator position, const value_type &val)
 		{
+
 			return _tree.insert_at(position, val);
 		}
 
@@ -146,7 +147,32 @@ namespace ft
 			_tree.clear();
 		}
 
-		//erase
+
+		size_type erase( const Key& key ) {
+			return _tree.remove(key);
+		}
+
+
+		void erase( iterator pos )
+		{
+			_tree.remove(pos);
+			(void)pos;
+		}
+
+
+		void erase( iterator first, iterator last )
+		{
+			while (first != last)
+			{
+				iterator aux = first;
+				++first;
+				std::cout << "val: " << aux->first << "," << _tree.getSize() << std::endl;
+				_tree.print();
+				erase(aux);
+			}
+		}
+
+
 
 		/*
 
@@ -251,6 +277,10 @@ namespace ft
 		Compare _comp;
 		allocator_type _allocator;
 	};
+
+
+	/*swap*/
+
 	template <class Key, class T, class Compare, class Alloc>
 	bool operator==( const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs)
 	{

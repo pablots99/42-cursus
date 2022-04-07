@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 16:43:34 by ptorres           #+#    #+#             */
-/*   Updated: 2022/02/22 13:52:25 by pablo            ###   ########.fr       */
+/*   Updated: 2022/04/06 17:44:42 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,8 @@
 #define ITERATOR__HPP
 #include <iostream>
 
-#include "iterator_traits.hpp"
-
 namespace ft
 {
-
-    /*Iterator categorys tags is not ideal to use it*/
-    struct input_iterator_tag { };
-
-    struct output_iterator_tag { };
-
-    struct forward_iterator_tag : public input_iterator_tag { };
-
-    struct bidirectional_iterator_tag : public forward_iterator_tag { };
-
-    struct random_access_iterator_tag : public bidirectional_iterator_tag { };
 
     /*Base iterator class
         http://www.cplusplus.com/reference/iterator/iterator/
@@ -58,6 +45,47 @@ namespace ft
 		}
 		return res;
 	}
+	template <class Iterator>
+struct iterator_traits {
+    /*iterator category*/
+    typedef typename Iterator::iterator_category iterator_category;
+
+    /*Type of the element where iterator point*/
+    typedef typename Iterator::value_type        value_type;
+
+    /*
+    A signed integral type used to represent the distance from
+    one iterator to another, or the number of elements in a range.
+    */
+    typedef typename Iterator::difference_type   difference_type;
+
+    /*Iterator's pointer type: a pointer to its value type.*/
+    typedef typename Iterator::pointer           pointer;
+
+    /*Iterator's reference type: a reference to its value type.*/
+    typedef typename Iterator::reference         reference;
+};
+
+
+/*pointer implemntation */
+template <class T>
+struct iterator_traits<T*> {
+    typedef T iterator_category;
+    typedef T                          value_type;
+    typedef ptrdiff_t                  difference_type;
+    typedef T*                         pointer;
+    typedef T&                         reference;
+};
+
+
+template <class T>
+struct iterator_traits<const T*> {
+    typedef  T iterator_category;
+    typedef const T                          value_type;
+    typedef  ptrdiff_t                  difference_type;
+    typedef  T*                         pointer;
+    typedef  T&                         reference;
+  };
 
 
 };
