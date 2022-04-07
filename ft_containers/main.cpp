@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 13:34:36 by ptorres           #+#    #+#             */
-/*   Updated: 2022/04/07 01:33:22 by pablo            ###   ########.fr       */
+/*   Updated: 2022/04/07 17:25:46 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 
 void ft_map_time() {
 
+	ft::vector<int>::iterator ads;
 	ft::map<int,std::string> m;
 	ft::map<int, std::string>::iterator it;
 	std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
@@ -216,11 +217,11 @@ int main()
 	//map_iterator();
 	//std_map_time();
 	//ft_map_time();
-	my_map();
+	//my_map();
 	//empty();
 	//ritermap();
 	//ritermap2();
-	//map_erase();
+	map_erase();
 
 	return 0;
 }

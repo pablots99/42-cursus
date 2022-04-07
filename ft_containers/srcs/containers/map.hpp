@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 13:36:35 by ptorres           #+#    #+#             */
-/*   Updated: 2022/04/07 01:19:14 by pablo            ###   ########.fr       */
+/*   Updated: 2022/04/07 17:25:59 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,10 @@
 #include "../utils.hpp"
 #include "../iterators/reverse_iterator.hpp"
 #include "../iterators/avlTree.hpp"
-
+#include "vector.hpp"
 namespace ft
 {
+
 
 	template <class Key,
 			  class T,
@@ -162,14 +163,19 @@ namespace ft
 
 		void erase( iterator first, iterator last )
 		{
-			while (first != last)
-			{
-				iterator aux = first;
+
+			ft::vector<Key> keys;
+			while (first != last) {
+				keys.push_back(first->first);
 				++first;
-				std::cout << "val: " << aux->first << "," << _tree.getSize() << std::endl;
-				_tree.print();
-				erase(aux);
 			}
+			typename ft::vector<Key>::iterator it;
+
+			for(it = keys.begin() ; it != keys.end(); ++it)
+			{
+				erase(*it);
+			}
+			//erase(first);
 		}
 
 
