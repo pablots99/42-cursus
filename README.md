@@ -19,3 +19,7 @@ PUSH_SWAP     -> OK
 FRACT_OL      -> OK
 
 MINISHELL     -> OK
+
+PHILO         -> OK
+
+CPP MODULES   -> OK
