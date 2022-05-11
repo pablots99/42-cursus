@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 16:39:45 by pablo             #+#    #+#             */
-/*   Updated: 2022/05/11 17:58:16 by ptorres          ###   ########.fr       */
+/*   Updated: 2022/05/11 18:05:46 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -266,6 +266,8 @@ namespace ft
 	/*
 		ALV TREE
 	*/
+
+	
 	template <class Key, class val, class T = ft::pair<Key, val>, class Compare = std::less<Key>,class Alloc= std::allocator<ft::pair<Key, val> > >
 	class Avl
 	{
