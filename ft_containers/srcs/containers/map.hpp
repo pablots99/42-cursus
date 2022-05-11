@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 13:36:35 by ptorres           #+#    #+#             */
-/*   Updated: 2022/05/10 22:12:28 by pablo            ###   ########.fr       */
+/*   Updated: 2022/05/11 17:54:52 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -276,7 +276,7 @@ namespace ft
 
 		iterator end() { return _tree.end(); }
 
-		const_iterator begin() const {return _tree.cbegin(); }
+		const_iterator begin() const { return _tree.cbegin(); }
 
 		const_iterator end() const { return _tree.cend(); }
 
@@ -307,9 +307,9 @@ __tree _tree;
 
 		if(size != rhs.size())
 			return false;
-		typename ft::map<Key,T,Compare,Alloc>::iterator it1 = lhs.begin();
-		typename ft::map<Key,T,Compare,Alloc>::iterator it2 = rhs.begin();
-		typename ft::map<Key,T,Compare,Alloc>::iterator it_end = lhs.end();
+		typename ft::map<Key,T,Compare,Alloc>::const_iterator it1 = lhs.begin();
+		typename ft::map<Key,T,Compare,Alloc>::const_iterator it2 = rhs.begin();
+		typename ft::map<Key,T,Compare,Alloc>::const_iterator it_end = lhs.end();
 		while(it1 != it_end)
 		{
 			if(*it1 != *it2)

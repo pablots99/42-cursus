@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 16:39:45 by pablo             #+#    #+#             */
-/*   Updated: 2022/05/11 17:02:11 by ptorres          ###   ########.fr       */
+/*   Updated: 2022/05/11 17:58:16 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ namespace ft
 			else if (r && !l)
 				height = r->height + 1;
 		}
-		int getBalance()
+		int getBalance() const
 		{
 			if (l && r)
 				return (l->height - r->height);
@@ -77,26 +77,52 @@ namespace ft
 			if (r)
 				r->parent = this;
 		}
-		node *getMin(node *n)
+
+
+		node * getMin(node  *n)
 		{
 			if (!n)
-				n = this;
+				return getMin(this);
 			if (!n)
 				return NULL;
 			if (!n->l)
 				return n;
 			return getMin(n->l);
 		}
-		node *getMax(node *n)
+
+		const node * getMin(const node  *n) const
 		{
 			if (!n)
-				n = this;
+				return getMin(this);
+			if (!n)
+				return NULL;
+			if (!n->l)
+				return n;
+			return getMin(n->l);
+		}
+
+		node *getMax(node  *n)
+		{
+			if (!n)
+				return getMax(this);
 			if (!n)
 				return NULL;
 			if (!n->r)
 				return n;
 			return getMax(n->r);
 		}
+
+		const node *getMax(const node  *n) const
+		{
+			if (!n)
+				return getMax(this);
+			if (!n)
+				return NULL;
+			if (!n->r)
+				return n;
+			return getMax(n->r);
+		}
+
 		node *next()
 		{
 			if (r)
@@ -106,7 +132,26 @@ namespace ft
 				aux = aux->parent;
 			return aux;
 		}
+		const node *next() const 
+		{
+			if (r)
+				return getMin(r);
+			node *aux = parent;
+			while (aux  && !comp(val.first , aux->val.first))
+				aux = aux->parent;
+			return aux;
+		}
 		node *prev()
+		{
+			if (l){
+				return getMax(l);
+			}
+			node *aux = parent;
+			while (aux &&  comp(val.first , aux->val.first))
+				aux = aux->parent;
+			return aux;
+		}
+		const node *prev() const 
 		{
 			if (l){
 				return getMax(l);
@@ -138,16 +183,18 @@ namespace ft
 		typedef typename std::bidirectional_iterator_tag 						iterator_category;
 		typedef typename ft::iterator<iterator_category, Iter>::difference_type difference_type;
 		typedef typename ft::iterator<iterator_category, Iter>::pointer 		pointer;
-		typedef node 															*node_pointer;
+		typedef node 															node_pointer;
 		typedef typename ft::iterator<iterator_category, Iter>::reference 		reference;
 		typedef typename ft::iterator<iterator_category, const Iter>::reference const_reference;
-		node_pointer 	node_end;
+		node 	node_end;
 
 
 		TreeIterator(void) : node_end(NULL),_base(NULL) {}
-		TreeIterator(const node_pointer p,const node_pointer _node_end) :node_end(_node_end), _base(p){}
+		TreeIterator(const node_pointer p,const node_pointer _node_end) : node_end(_node_end), _base(p){}
+		
+		
 		template <typename U,typename N>
-		TreeIterator(const TreeIterator<U,N> &obj) :node_end(obj.node_end), _base(obj.base()){}
+		TreeIterator(const TreeIterator<U,N> &obj) : node_end(obj.node_end), _base(obj.base()){}
 		~TreeIterator() {}
 
 		template <typename U,typename N>
@@ -163,9 +210,9 @@ namespace ft
 
 
 
-		// operator TreeIterator<const Iter, node>(void) const {
-		// 	return TreeIterator<const Iter, node>(this->_base);
-		// }
+		operator TreeIterator<const Iter, node>(void) const {
+			return TreeIterator<const Iter, node>(this->_base);
+		}
 
 		TreeIterator &operator++()
 		{
@@ -203,14 +250,14 @@ namespace ft
 		node_pointer _base;
 	};
 	
-	template <typename U,typename U1, typename N>
-	bool operator==(TreeIterator<U,N> const &i1,TreeIterator<U1,N> const &i2) {
+	template <typename U, typename N,typename U1, typename N1>
+	bool operator==(TreeIterator<U,N> const &i1,TreeIterator<U1,N1> const &i2) {
 			 return i1.base() == i2.base();
 	}
 
 
-	template <typename U, typename U1, typename N>
-	bool operator!=(TreeIterator<U,N> const &i1,TreeIterator<U1,N> const &i2) {
+	template <typename U, typename N,typename U1, typename N1>
+	bool operator!=(TreeIterator<U,N> const &i1,TreeIterator<U1,N1> const &i2) {
 			 return !(i1==i2);
 	}
 
@@ -219,25 +266,23 @@ namespace ft
 	/*
 		ALV TREE
 	*/
-	template <class Key, class val, class T = ft::pair<Key, val>, class Compare = std::less<Key>,class Alloc= std::allocator<ft::pair<const Key, val> > >
+	template <class Key, class val, class T = ft::pair<Key, val>, class Compare = std::less<Key>,class Alloc= std::allocator<ft::pair<Key, val> > >
 	class Avl
 	{
 
 	public:
-		typedef T 				value_type;
-		typedef Key 			key_type;
-		typedef Node<T,Compare> 		node;
-		typedef Node<const T,Compare>  	const_node;
-		typedef node 			*node_pointer;
-		typedef const T 				connst_value_type;
-		
-		typedef TreeIterator<T,node> iterator;
-		typedef TreeIterator<const T,node>  const_iterator;
-		
-		
+		typedef T 											 value_type;
+		typedef Key 										 key_type;
+		typedef Node<T,Compare> 							 node;
 		typedef typename Alloc::template rebind<node>::other node_allocator;
-		typedef typename std::allocator<Node<T,Compare> > _allocator;
-
+		typedef typename std::allocator<Node<T,Compare> > 	_allocator;
+		typedef typename node_allocator::const_pointer		const_node_Pointer;
+		typedef node 										*node_pointer;
+		typedef TreeIterator<T,node_pointer> 				iterator;
+		typedef TreeIterator<const T,const_node_Pointer>  	const_iterator;
+		
+		
+		
 		Avl(Compare _comp = Compare(),node_allocator alloc = node_allocator()) : _root(NULL), _size(0),
 		comp(_comp), _n_allocator(alloc) {
 			_node_end = new_node();
@@ -317,8 +362,12 @@ namespace ft
 			return res;
 		}
 
-		iterator find(Key const k) const {
+		iterator find(Key const k)  {
 			return iterator(get(k),_node_end);
+		}
+
+		const_iterator find(Key const k) const {
+			return const_iterator(get(k),_node_end);
 		}
 
 		size_t remove(Key k)
@@ -405,7 +454,16 @@ namespace ft
 			return iterator(ret,_node_end);
 		}
 
+		iterator get_lower_iter(const key_type &key)
+		{
+			node *ret = _root->getMin(NULL);
 
+			while(ret && comp(ret->val.first,key))
+				ret = ret->next();
+			if(!ret)
+				return end();
+			return iterator(ret,_node_end);
+		}
 
 		const_iterator get_lower_iter(const key_type &key) const
 		{

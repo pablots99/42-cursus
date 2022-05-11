@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 13:34:36 by ptorres           #+#    #+#             */
-/*   Updated: 2022/05/11 16:08:07 by ptorres          ###   ########.fr       */
+/*   Updated: 2022/05/11 17:57:59 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,14 +227,9 @@ int main()
 	//map_erase();
 	// std::map<T1, T2> const mp;
 	// std::map<T1, T2>::iterator it = mp.begin(); // <-- error expected
-	std::map<T1, T2> const mpi;
-	std::map<T1, T2>::iterator it = mpi.begin(); // <-- error ex
-
-	std::map<T1, T2>::const_iterator cit = mpi.begin();
-
-	cit = it;
-
 	ft::map<T1, T2> const  mp;
 	ft::map<T1, T2>::iterator itr = mp.begin(); // <-- error ex
+
+	
 	return 0;
 }
