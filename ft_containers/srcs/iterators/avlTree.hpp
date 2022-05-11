@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   avlTree.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 16:39:45 by pablo             #+#    #+#             */
-/*   Updated: 2022/04/07 21:19:27 by ptorres          ###   ########.fr       */
+/*   Updated: 2022/05/10 22:20:35 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ namespace ft
 
 		Node(Compare _comp = Compare()) : val(),  r(NULL), l(NULL), parent(NULL), height(0),comp(_comp) {}
 		Node(T _val,Compare _comp = Compare()) : val(_val),  r(NULL), l(NULL), parent(NULL), height(1),comp(_comp) {}
-
 		void updateHeight()
 		{
 			if (!r && !l)
@@ -117,6 +116,12 @@ namespace ft
 				aux = aux->parent;
 			return aux;
 		}
+		T getVal() {
+			return val;
+		}
+		const T getVal() const {
+			return val;
+		}
 	};
 
 
@@ -140,14 +145,24 @@ namespace ft
 
 
 		TreeIterator(void) : node_end(NULL),_base(NULL) {}
-		TreeIterator(const node_pointer p,node_pointer _node_end) :node_end(_node_end), _base(p){
+		TreeIterator(const node_pointer p,const node_pointer _node_end) :node_end(_node_end), _base(p){}
+		template <typename U,typename N>
+		TreeIterator(const TreeIterator<U,N> &obj) :node_end(obj.node_end), _base(obj.base()){}
+		~TreeIterator() {}
+
+		template <typename U,typename N>
+		TreeIterator  &operator=(TreeIterator<U,N> const &obj ){
+			node_end = obj.node_end;
+			_base = obj.base();
+			return *this;
 		}
 
-		template <typename U>
-		TreeIterator(const TreeIterator<U,node> &obj) :node_end(obj.node_end), _base(obj.base()){}
-		~TreeIterator() {}
-		reference operator*() const { return _base->val; }
-		pointer operator->() const { return std::addressof(operator*()); }
+		//reference operator*()  { return _base->val; }
+		reference operator*() const  { return _base->val; }
+		// pointer operator->()  { return &_base->val; }
+		pointer operator->() const { return &_base->val; }
+
+
 		TreeIterator &operator++()
 		{
 			_base = _base->next();
@@ -168,10 +183,7 @@ namespace ft
 
 				return *this;
 			}
-
 			_base = _base->prev();
-			// if(_base == NULL)
-			//  	_base = node_end;
 			return *this;
 		}
 		TreeIterator operator--(int)
@@ -183,14 +195,106 @@ namespace ft
 		node_pointer base() const {
 			return _base;
 		}
-		bool operator==(TreeIterator const &i1) const {
-			 return i1.base() == _base;
-			 }
-
-		bool operator!=(TreeIterator const &i1) const { return !(i1==*this); }
 	private:
 		node_pointer _base;
 	};
+	template <typename U,typename N>
+	bool operator==(TreeIterator<U,N> const &i1,TreeIterator<U,N> const &i2)  {
+			 return i1.base() == i2.base();
+	}
+	template <typename U,typename N>
+	bool operator!=(TreeIterator<U,N> const &i1,TreeIterator<U,N> const &i2)  {
+			 return !(i1==i2);
+	}
+
+   template <class Iter, class node>
+	class ConstTreeIterator : public ft::iterator<std::bidirectional_iterator_tag, Iter>
+	{
+	public:
+		typedef Iter 															iterator_type;
+		typedef Iter 															value_type;
+		typedef typename std::bidirectional_iterator_tag 						iterator_category;
+		typedef typename ft::iterator<iterator_category, Iter>::difference_type difference_type;
+		typedef typename ft::iterator<iterator_category, Iter>::pointer 		pointer;
+		typedef node 															*node_pointer;
+		typedef typename ft::iterator<iterator_category, Iter>::reference 		reference;
+		typedef typename ft::iterator<iterator_category, const Iter>::reference const_reference;
+		node_pointer 	node_end;
+
+
+		ConstTreeIterator(void) : node_end(NULL),_base(NULL) {}
+		ConstTreeIterator(const node_pointer p,const node_pointer _node_end) :node_end(_node_end), _base(p){}
+		template <typename U,typename N>
+		ConstTreeIterator(const ConstTreeIterator<U,N> &obj) :node_end(obj.node_end), _base(obj.base()){}
+
+		template <typename U,typename N>
+		ConstTreeIterator(const TreeIterator<U,N> &obj) :node_end(obj.node_end), _base(obj.base()){}
+		~ConstTreeIterator() {}
+
+		template <typename U,typename N>
+		ConstTreeIterator  &operator=(ConstTreeIterator<U,N> const &obj ){
+			node_end = obj.node_end;
+			_base = obj.base();
+			return *this;
+		}
+
+
+		template <typename U,typename N>
+		ConstTreeIterator  &operator=(TreeIterator<U,N> const &obj ){
+			node_end = obj.node_end;
+			_base = obj.base();
+			return *this;
+		}
+
+		const_reference operator*() const { return _base->val; }
+
+		pointer operator->() const  { return &_base->val;}
+
+		ConstTreeIterator &operator++()
+		{
+			_base = _base->next();
+			if(!_base)
+				_base = node_end;
+			return *this;
+		}
+		ConstTreeIterator operator++(int)
+		{
+			ConstTreeIterator tmp(*this);
+			++*this;
+			return tmp;
+		}
+		ConstTreeIterator &operator--()
+		{
+			if(_base == node_end) {
+				_base = _base->parent;
+
+				return *this;
+			}
+			_base = _base->prev();
+			return *this;
+		}
+		ConstTreeIterator operator--(int)
+		{
+			ConstTreeIterator tmp(*this);
+			--*this;
+			return tmp;
+		}
+		ConstTreeIterator base() const {
+			return _base;
+		}
+	private:
+		node_pointer _base;
+	};
+	template <typename U,typename N>
+	bool operator==(ConstTreeIterator<U,N> const &i1,ConstTreeIterator<U,N> const &i2)  {
+			 return i1.base() == i2.base();
+	}
+	template <typename U,typename N>
+	bool operator!=(ConstTreeIterator<U,N> const &i1,ConstTreeIterator<U,N> const &i2)  {
+			 return !(i1==i2);
+	}
+
+
 
 
 	/*
@@ -204,9 +308,10 @@ namespace ft
 		typedef T 				value_type;
 		typedef Key 			key_type;
 		typedef Node<T,Compare> 		node;
+		typedef Node<T,Compare> const 	const_node;
 		typedef node 			*node_pointer;
 		typedef TreeIterator<T,node> iterator;
-		typedef TreeIterator<const T,node> const_iterator;
+		typedef TreeIterator<const T,node>  const_iterator;
 		typedef typename Alloc::template rebind<node>::other node_allocator;
 		typedef typename std::allocator<Node<T,Compare> > _allocator;
 
@@ -238,7 +343,7 @@ namespace ft
 			return iterator(_node_end,_node_end);
 		}
 
-		const_iterator cbegin() const {
+		const_iterator cbegin() const{
 			if(_size == 0){
 				return cend();
 			}
@@ -246,10 +351,10 @@ namespace ft
 
 		const_iterator cend() const {
 			if(_size == 0){
-				return iterator(NULL,NULL);
+				return const_iterator(NULL,NULL);
 			}
 			_node_end->parent = _root->getMax(NULL);
-			return const_iterator(_node_end,NULL);
+			return const_iterator(_node_end,_node_end);
 		}
 
 		iterator rbegin() {
@@ -431,12 +536,13 @@ namespace ft
 				else {
 					aux = *n;
 				}
+
 				if(aux == (*n)){
 					(*n) = NULL;//DEALOCATE
 				}
 				else {
 					if(aux == aux->parent->r)
-						aux->parent->r = aux->l;
+						aux->parent->r = aux->r;
 					if(aux == aux->parent->l)
 						aux->parent->l = aux->l;
 					if(aux != (*n)->l)
@@ -445,6 +551,8 @@ namespace ft
 						aux->r = (*n)->r;
 					aux->parent = (*n)->parent;
 					aux->setChildParent();
+					if(aux == _root)
+						_root = aux;
 					(*n) = aux;
 					//_deallocate(*n);
 				}
@@ -452,9 +560,9 @@ namespace ft
 				ret =  1;
 			}
 			else if ((*n) && (*n)->l && comp(key, (*n)->val.first))
-				  ret = _deleteNode(key, &(*n)->l);
+				  _deleteNode(key, &(*n)->l);
 			else if ((*n)  && (*n) ->r)
-				  ret =_deleteNode(key, &(*n)->r);
+				  _deleteNode(key, &(*n)->r);
 
 			if(*n)
 			{
@@ -578,7 +686,7 @@ namespace ft
 			if (!_root)
 			{
 				_root = n;
-				_size++;
+				_size = 1;
 				return ft::make_pair(iterator(_root,_node_end),true);
 			}
 			if (comp(n->val.first, (*curr)->val.first))

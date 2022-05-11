@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 13:36:29 by ptorres           #+#    #+#             */
-/*   Updated: 2022/04/05 15:59:48 by ptorres          ###   ########.fr       */
+/*   Updated: 2022/05/10 22:18:10 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ namespace ft
 
 		/*CONSTRUCTORS*/
 		vector(const allocator_type alloc = allocator_type()) : _begin(NULL), _size(0), _capacity(0),_allocator(alloc){}
-		//defaul
+		//default
 		explicit vector(const size_type n, const value_type &val = value_type(), const allocator_type alloc = allocator_type()) :_begin(NULL), _size(0), _capacity(0), _allocator(alloc)
 		{
 			assign(n, val);
@@ -55,7 +55,7 @@ namespace ft
 			this->reserve(x.capacity());
 			this->_size = x.size();
 			if (_size)
-				std::copy(x.begin(), x.begin() + x.size(), this->_begin);
+				ft::copy(x.begin(), x.begin() + x.size(), this->_begin);
 		} //copy
 		vector &operator=(const vector& obj) {
 			uncreate();
@@ -88,7 +88,7 @@ namespace ft
 			aux = _allocator.allocate(n + 1);
 			if (_size)
 			{
-				std::copy(_begin, _begin + _size, aux);
+				ft::copy(_begin, _begin + _size, aux);
 				_allocator.deallocate(_begin, _capacity);
 			}
 			_capacity = n;
@@ -101,7 +101,7 @@ namespace ft
 			if (n < _size)
 			{
 				aux = _allocator.allocate(n);
-				std::copy(_begin, _begin + n, aux);
+				ft::copy(_begin, _begin + n, aux);
 				this->uncreate();
 				_capacity = n;
 				_begin = aux;
@@ -164,7 +164,7 @@ namespace ft
 		}
 
 		template <typename InputIterator>
-		typename std::enable_if<!std::is_integral<InputIterator>::value, void>::type
+		typename ft::enable_if<!ft::is_integral<InputIterator>::value, void>::type
 		assign(InputIterator first, InputIterator last)
 		{
 			size_t len = ft::distance(first, last);
@@ -206,9 +206,9 @@ namespace ft
 			size_t last_size = _size;
 			pointer res = _allocator.allocate(_size + 2);
 			size_t len = ft::distance(this->begin(), position);
-			std::copy(_begin, _begin + len, res);
+			ft::copy(_begin, _begin + len, res);
 			_allocator.construct(res + len, val);
-			std::copy(_begin + len, _begin + last_size, res + len + 1);
+			ft::copy(_begin + len, _begin + last_size, res + len + 1);
 			this->uncreate();
 			_begin = res;
 			_size = last_size + 1;
@@ -221,10 +221,10 @@ namespace ft
 			size_t last_size = _size;
 			pointer res = _allocator.allocate(_size + n + 1);
 			size_t len = ft::distance(this->begin(), position);
-			std::copy(_begin, _begin + len, res);
+			ft::copy(_begin, _begin + len, res);
 			for (size_t i = 0; i < n; i++)
 				_allocator.construct(res + len + i, val);
-			std::copy(_begin + len, _begin + last_size, res + len + n);
+			ft::copy(_begin + len, _begin + last_size, res + len + n);
 			this->uncreate();
 			_begin = res;
 			_size = last_size + n;
@@ -239,14 +239,15 @@ namespace ft
 			size_t len2 = ft::distance(first, last);
 			pointer res = _allocator.allocate(_size + len2 + 1);
 			size_t len = ft::distance(this->begin(), position);
-			std::copy(_begin, _begin + len, res);
+			ft::copy(_begin, _begin + len, res);
 			for (size_t i = 0; i < len2; i++)
 			{
 				_allocator.construct(res + len + i, *first);
+				_allocator.destroy(_begin + len + i);
 				first++;
 			}
-			this->uncreate();
-			std::copy(_begin + len, _begin + last_size, res + len + len2);
+			// this->uncreate();
+			ft::copy(_begin + len, _begin + last_size, res + len + len2);
 			_begin = res;
 			_size = last_size + len2;
 			_capacity = last_size + len2 + 1;
@@ -258,9 +259,9 @@ namespace ft
 			size_t last_cap = _capacity + 2;
 			pointer res = _allocator.allocate(last_cap);
 			size_t len = ft::distance(this->begin(), position);
-			std::copy(_begin, _begin + len, res);
+			ft::copy(_begin, _begin + len, res);
 			_allocator.destroy(_begin + len);
-			std::copy(_begin + len + 1, _begin + _size, res + len);
+			ft::copy(_begin + len + 1, _begin + _size, res + len);
 			this->uncreate();
 			_begin = res;
 			_size = last_size - 1;
@@ -275,12 +276,12 @@ namespace ft
 			size_t len2 = ft::distance(first, last);
 			pointer res = _allocator.allocate(_capacity);
 			size_t len = ft::distance(this->begin(), first);
-			std::copy(_begin, _begin + len, res);
+			ft::copy(_begin, _begin + len, res);
 			size_t i;
 			for (i = 0; i < len2; i++)
 				_allocator.destroy(_begin + len + i);
 			this->uncreate();
-			std::copy(_begin + len + i, _begin + last_size, res + len);
+			ft::copy(_begin + len + i, _begin + last_size, res + len);
 			_begin = res;
 			_size = last_size - len2;
 			_capacity = last_cap;

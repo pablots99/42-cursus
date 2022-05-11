@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 13:34:36 by ptorres           #+#    #+#             */
-/*   Updated: 2022/04/07 17:25:46 by ptorres          ###   ########.fr       */
+/*   Updated: 2022/05/10 14:05:33 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ void my_map() {
 	map.insert(ft::make_pair(5,"aa"));
 	map.insert(ft::make_pair(7,"jeje"));
 	map.insert(ft::make_pair(6,"asdasd"));
+	map.insert(ft::make_pair(8,"asdasd"));
 	// map._tree.print();
 	ft::map<int, std::string>::iterator it = map.begin();
 	ft::map<int, std::string>::iterator ite = map.end();
@@ -210,6 +211,8 @@ void map_erase() {
 	//map.begin();
 }
 
+
+
 int main()
 {
 	//search_tree();
@@ -221,7 +224,17 @@ int main()
 	//empty();
 	//ritermap();
 	//ritermap2();
-	map_erase();
+	//map_erase();
+	// std::map<T1, T2> const mp;
+	// std::map<T1, T2>::iterator it = mp.begin(); // <-- error expected
+	std::map<T1, T2> mpi;
+	std::map<T1, T2>::iterator it = mpi.begin(); // <-- error ex
 
+	std::map<T1, T2>::const_iterator cit = mpi.begin();
+
+	cit = it;
+
+	ft::map<T1, T2> const  mp;
+	ft::map<T1, T2>::iterator itr = mp.begin(); // <-- error ex
 	return 0;
 }

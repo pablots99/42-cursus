@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 13:36:35 by ptorres           #+#    #+#             */
-/*   Updated: 2022/04/07 17:25:59 by ptorres          ###   ########.fr       */
+/*   Updated: 2022/05/10 22:12:28 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,8 @@ namespace ft
 		typedef value_type *pointer;
 		typedef Avl<Key, T, ft::pair<Key, T>, Compare, Alloc> __tree;
 		typedef typename __tree::node node;
-		typedef ft::TreeIterator<ft::pair<Key, T>, node> iterator;
-		// add const iterator to alvtree
-		typedef ft::TreeIterator<const ft::pair<Key, T>, node> const_iterator;
+		typedef typename __tree::iterator iterator;
+		typedef typename __tree::const_iterator  const_iterator;
 		typedef ft::reverse_iterator<iterator> reverse_iterator;
 		typedef ft::reverse_iterator<const_iterator> const_reverse_iterator;
 
@@ -91,7 +90,6 @@ namespace ft
 			_tree.insert(other.begin(), other.end());
 		}
 
-		// make deep copy??
 		map &operator=(const map &other)
 		{
 			_tree.clear();
@@ -150,7 +148,9 @@ namespace ft
 
 
 		size_type erase( const Key& key ) {
-			return _tree.remove(key);
+			size_t aux = size();
+			_tree.remove(key);
+			return aux != size();
 		}
 
 
@@ -175,7 +175,20 @@ namespace ft
 			{
 				erase(*it);
 			}
-			//erase(first);
+		}
+		void swap (map& x)
+		{
+			allocator_type auxalloc = x._allocator;
+			Compare  auxcomp = x._comp;
+			__tree auxtree = x._tree;
+
+			x._allocator = _allocator;
+			x._comp = _comp;
+			x._tree = _tree;
+
+			_allocator = auxalloc;
+			_comp = auxcomp;
+			_tree = auxtree;
 		}
 
 
@@ -259,11 +272,11 @@ namespace ft
 		/*
 			iterator
 		*/
-		iterator begin() { return _tree.begin(); }
+		iterator begin()  { return _tree.begin(); }
 
 		iterator end() { return _tree.end(); }
 
-		const_iterator begin() const { return _tree.cbegin(); }
+		const_iterator begin() const {return _tree.cbegin(); }
 
 		const_iterator end() const { return _tree.cend(); }
 
@@ -277,9 +290,9 @@ namespace ft
 
 
 
+__tree _tree;
+	protected:
 
-	public:
-		__tree _tree;
 		Compare _comp;
 		allocator_type _allocator;
 	};
@@ -332,7 +345,11 @@ namespace ft
 	{
 		return !(lhs < rhs);
 	}
-
+	template <class Key, class T, class Compare, class Alloc>
+ 	void swap (map<Key,T,Compare,Alloc>& x, map<Key,T,Compare,Alloc>& y)
+	{
+		x.swap(y);
+	}
 
 }
 #endif
