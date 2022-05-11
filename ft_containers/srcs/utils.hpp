@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 20:48:05 by ptorres           #+#    #+#             */
-/*   Updated: 2022/05/03 01:57:21 by pablo            ###   ########.fr       */
+/*   Updated: 2022/05/11 15:56:14 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,18 @@ namespace ft
 	{
 		typedef T type;
 	};
+
+
+	/*
+		chck if is is const
+	*/
+
+	template<bool b, typename T>
+	struct is_const_st { 
+		typedef T type;
+		static const bool value = b;
+	};
+	struct is_const : is_const_st<true, bool> { };
 
 	/*
 	 *is_integral:

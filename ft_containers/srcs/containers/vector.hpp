@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 13:36:29 by ptorres           #+#    #+#             */
-/*   Updated: 2022/05/10 22:18:10 by pablo            ###   ########.fr       */
+/*   Updated: 2022/05/11 14:33:57 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -277,11 +277,12 @@ namespace ft
 			pointer res = _allocator.allocate(_capacity);
 			size_t len = ft::distance(this->begin(), first);
 			ft::copy(_begin, _begin + len, res);
-			size_t i;
-			for (i = 0; i < len2; i++)
-				_allocator.destroy(_begin + len + i);
-			this->uncreate();
-			ft::copy(_begin + len + i, _begin + last_size, res + len);
+			// size_t i;
+			// for (i = 0; i < len2; i++)
+			// 	_allocator.destroy(_begin + len + i);
+			//this->uncreate();
+ 
+			ft::copy(_begin + len + len2, _begin + last_size, res + len);
 			_begin = res;
 			_size = last_size - len2;
 			_capacity = last_cap;

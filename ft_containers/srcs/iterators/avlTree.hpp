@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   avlTree.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 16:39:45 by pablo             #+#    #+#             */
-/*   Updated: 2022/05/10 22:20:35 by pablo            ###   ########.fr       */
+/*   Updated: 2022/05/11 17:02:11 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,11 +157,15 @@ namespace ft
 			return *this;
 		}
 
-		//reference operator*()  { return _base->val; }
-		reference operator*() const  { return _base->val; }
-		// pointer operator->()  { return &_base->val; }
-		pointer operator->() const { return &_base->val; }
 
+		reference operator*()  const { return _base->val; }
+		pointer operator->()  const { return &_base->val; }
+
+
+
+		// operator TreeIterator<const Iter, node>(void) const {
+		// 	return TreeIterator<const Iter, node>(this->_base);
+		// }
 
 		TreeIterator &operator++()
 		{
@@ -198,102 +202,17 @@ namespace ft
 	private:
 		node_pointer _base;
 	};
-	template <typename U,typename N>
-	bool operator==(TreeIterator<U,N> const &i1,TreeIterator<U,N> const &i2)  {
+	
+	template <typename U,typename U1, typename N>
+	bool operator==(TreeIterator<U,N> const &i1,TreeIterator<U1,N> const &i2) {
 			 return i1.base() == i2.base();
 	}
-	template <typename U,typename N>
-	bool operator!=(TreeIterator<U,N> const &i1,TreeIterator<U,N> const &i2)  {
+
+
+	template <typename U, typename U1, typename N>
+	bool operator!=(TreeIterator<U,N> const &i1,TreeIterator<U1,N> const &i2) {
 			 return !(i1==i2);
 	}
-
-   template <class Iter, class node>
-	class ConstTreeIterator : public ft::iterator<std::bidirectional_iterator_tag, Iter>
-	{
-	public:
-		typedef Iter 															iterator_type;
-		typedef Iter 															value_type;
-		typedef typename std::bidirectional_iterator_tag 						iterator_category;
-		typedef typename ft::iterator<iterator_category, Iter>::difference_type difference_type;
-		typedef typename ft::iterator<iterator_category, Iter>::pointer 		pointer;
-		typedef node 															*node_pointer;
-		typedef typename ft::iterator<iterator_category, Iter>::reference 		reference;
-		typedef typename ft::iterator<iterator_category, const Iter>::reference const_reference;
-		node_pointer 	node_end;
-
-
-		ConstTreeIterator(void) : node_end(NULL),_base(NULL) {}
-		ConstTreeIterator(const node_pointer p,const node_pointer _node_end) :node_end(_node_end), _base(p){}
-		template <typename U,typename N>
-		ConstTreeIterator(const ConstTreeIterator<U,N> &obj) :node_end(obj.node_end), _base(obj.base()){}
-
-		template <typename U,typename N>
-		ConstTreeIterator(const TreeIterator<U,N> &obj) :node_end(obj.node_end), _base(obj.base()){}
-		~ConstTreeIterator() {}
-
-		template <typename U,typename N>
-		ConstTreeIterator  &operator=(ConstTreeIterator<U,N> const &obj ){
-			node_end = obj.node_end;
-			_base = obj.base();
-			return *this;
-		}
-
-
-		template <typename U,typename N>
-		ConstTreeIterator  &operator=(TreeIterator<U,N> const &obj ){
-			node_end = obj.node_end;
-			_base = obj.base();
-			return *this;
-		}
-
-		const_reference operator*() const { return _base->val; }
-
-		pointer operator->() const  { return &_base->val;}
-
-		ConstTreeIterator &operator++()
-		{
-			_base = _base->next();
-			if(!_base)
-				_base = node_end;
-			return *this;
-		}
-		ConstTreeIterator operator++(int)
-		{
-			ConstTreeIterator tmp(*this);
-			++*this;
-			return tmp;
-		}
-		ConstTreeIterator &operator--()
-		{
-			if(_base == node_end) {
-				_base = _base->parent;
-
-				return *this;
-			}
-			_base = _base->prev();
-			return *this;
-		}
-		ConstTreeIterator operator--(int)
-		{
-			ConstTreeIterator tmp(*this);
-			--*this;
-			return tmp;
-		}
-		ConstTreeIterator base() const {
-			return _base;
-		}
-	private:
-		node_pointer _base;
-	};
-	template <typename U,typename N>
-	bool operator==(ConstTreeIterator<U,N> const &i1,ConstTreeIterator<U,N> const &i2)  {
-			 return i1.base() == i2.base();
-	}
-	template <typename U,typename N>
-	bool operator!=(ConstTreeIterator<U,N> const &i1,ConstTreeIterator<U,N> const &i2)  {
-			 return !(i1==i2);
-	}
-
 
 
 
@@ -308,10 +227,14 @@ namespace ft
 		typedef T 				value_type;
 		typedef Key 			key_type;
 		typedef Node<T,Compare> 		node;
-		typedef Node<T,Compare> const 	const_node;
+		typedef Node<const T,Compare>  	const_node;
 		typedef node 			*node_pointer;
+		typedef const T 				connst_value_type;
+		
 		typedef TreeIterator<T,node> iterator;
 		typedef TreeIterator<const T,node>  const_iterator;
+		
+		
 		typedef typename Alloc::template rebind<node>::other node_allocator;
 		typedef typename std::allocator<Node<T,Compare> > _allocator;
 
@@ -811,5 +734,95 @@ namespace ft
 	};
 
 };
+
+
+//    template <class Iter, class node>
+// 	class ConstTreeIterator : public ft::iterator<std::bidirectional_iterator_tag, Iter>
+// 	{
+// 	public:
+// 		typedef Iter 															iterator_type;
+// 		typedef Iter 															value_type;
+// 		typedef typename std::bidirectional_iterator_tag 						iterator_category;
+// 		typedef typename ft::iterator<iterator_category, Iter>::difference_type difference_type;
+// 		typedef typename ft::iterator<iterator_category, Iter>::pointer 		pointer;
+// 		typedef node 															*node_pointer;
+// 		typedef typename ft::iterator<iterator_category, Iter>::reference 		reference;
+// 		typedef typename ft::iterator<iterator_category, const Iter>::reference const_reference;
+// 		node_pointer 	node_end;
+
+
+// 		ConstTreeIterator(void) : node_end(NULL),_base(NULL) {}
+// 		ConstTreeIterator(const node_pointer p,const node_pointer _node_end) :node_end(_node_end), _base(p){}
+// 		template <typename U,typename N>
+// 		ConstTreeIterator(const ConstTreeIterator<U,N> &obj) :node_end(obj.node_end), _base(obj.base()){}
+
+// 		template <typename U,typename N>
+// 		ConstTreeIterator(const TreeIterator<U,N> &obj) :node_end(obj.node_end), _base(obj.base()){}
+// 		~ConstTreeIterator() {}
+
+// 		template <typename U,typename N>
+// 		ConstTreeIterator  &operator=(ConstTreeIterator<U,N> const &obj ){
+// 			node_end = obj.node_end;
+// 			_base = obj.base();
+// 			return *this;
+// 		}
+
+
+// 		template <typename U,typename N>
+// 		ConstTreeIterator  &operator=(TreeIterator<U,N> const &obj ){
+// 			node_end = obj.node_end;
+// 			_base = obj.base();
+// 			return *this;
+// 		}
+
+// 		const_reference operator*() const { return _base->val; }
+
+// 		pointer operator->() const  { return &_base->val;}
+
+// 		ConstTreeIterator &operator++()
+// 		{
+// 			_base = _base->next();
+// 			if(!_base)
+// 				_base = node_end;
+// 			return *this;
+// 		}
+// 		ConstTreeIterator operator++(int)
+// 		{
+// 			ConstTreeIterator tmp(*this);
+// 			++*this;
+// 			return tmp;
+// 		}
+// 		ConstTreeIterator &operator--()
+// 		{
+// 			if(_base == node_end) {
+// 				_base = _base->parent;
+
+// 				return *this;
+// 			}
+// 			_base = _base->prev();
+// 			return *this;
+// 		}
+// 		ConstTreeIterator operator--(int)
+// 		{
+// 			ConstTreeIterator tmp(*this);
+// 			--*this;
+// 			return tmp;
+// 		}
+// 		ConstTreeIterator base() const {
+// 			return _base;
+// 		}
+// 	private:
+// 		node_pointer _base;
+// 	};
+// 	template <typename U,typename N>
+// 	bool operator==(ConstTreeIterator<U,N> const &i1,ConstTreeIterator<U,N> const &i2)  {
+// 			 return i1.base() == i2.base();
+// 	}
+// 	template <typename U,typename N>
+// 	bool operator!=(ConstTreeIterator<U,N> const &i1,ConstTreeIterator<U,N> const &i2)  {
+// 			 return !(i1==i2);
+// 	}
+
+
 
 #endif

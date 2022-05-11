@@ -27,7 +27,7 @@ int		main(void)
 	mp['c'] = 0.3;
 	mp['d'] = 4.2;
 	printSize(mp);
-
+	
 	for (const_it it1 = mp.begin(); it1 != mp.end(); ++it1)
 		for (const_it it2 = mp.begin(); it2 != mp.end(); ++it2)
 			ft_comp(mp, it1, it2);
