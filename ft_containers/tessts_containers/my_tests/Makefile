@@ -4,7 +4,7 @@ SRCS = main.cpp
 
 OBJ = $(SRCS:.cpp=.o)
 CPP = clang++
-CPP_FLAGS = -g3 --std=c++98 
+CPP_FLAGS =  -g3 --std=c++98
 
 all: $(NAME)
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 13:34:36 by ptorres           #+#    #+#             */
-/*   Updated: 2022/05/11 19:34:17 by ptorres          ###   ########.fr       */
+/*   Updated: 2022/05/13 01:43:31 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,14 +124,35 @@ int std_map_time() {
 }
 
 
-void check_map() { 
+void leaks_map() {
+	ft::map<int,std::string> m;
+	ft::map<int, std::string>::iterator it;
+	for (size_t i = 0; i < 10; i++)
+	{
+		m.insert( ft::pair<int, std::string>(i,"hola" + std::to_string(i)));
+	}
+	for (it = m.begin(); it != m.end(); ++it)
+	{
+		*it;
+	}
+	m.find(7);
+	//m.erase(m.begin(),m.end());
+	m.erase(7);
+	m.erase(6);
+	m.erase(5);
+	m.erase(4);
+	system("leaks containers");
+}
+
+
+void check_map() {
 	std::cout << "map...";
 	int ft = ft_map_time();
-	int std =  std_map_time();
-	std::cout << "ft total: " << ft << std::endl;
-	std::cout << "std total: " << std << std::endl;
-	std::cout << "diferrence: "<<  ft / std << std::endl;
-	std::cout << "leaks outut: "<< std::endl;	
+	// int std =  std_map_time();
+	// std::cout << "ft total: " << ft << std::endl;
+	// std::cout << "std total: " << std << std::endl;
+	// std::cout << "diferrence: "<<  ft / std << std::endl;
+	// std::cout << "cheking leaks... "<< std::endl;
 	system("leaks containers");
 }
 
@@ -140,5 +161,6 @@ void check_map() {
 int main()
 {
 	check_map();
+	//leaks_map();
 	return 0;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   avlTree.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 16:39:45 by pablo             #+#    #+#             */
-/*   Updated: 2022/05/11 18:05:46 by ptorres          ###   ########.fr       */
+/*   Updated: 2022/05/13 01:47:36 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ namespace ft
 				aux = aux->parent;
 			return aux;
 		}
-		const node *next() const 
+		const node *next() const
 		{
 			if (r)
 				return getMin(r);
@@ -151,7 +151,7 @@ namespace ft
 				aux = aux->parent;
 			return aux;
 		}
-		const node *prev() const 
+		const node *prev() const
 		{
 			if (l){
 				return getMax(l);
@@ -191,8 +191,8 @@ namespace ft
 
 		TreeIterator(void) : node_end(NULL),_base(NULL) {}
 		TreeIterator(const node_pointer p,const node_pointer _node_end) : node_end(_node_end), _base(p){}
-		
-		
+
+
 		template <typename U,typename N>
 		TreeIterator(const TreeIterator<U,N> &obj) : node_end(obj.node_end), _base(obj.base()){}
 		~TreeIterator() {}
@@ -249,7 +249,7 @@ namespace ft
 	private:
 		node_pointer _base;
 	};
-	
+
 	template <typename U, typename N,typename U1, typename N1>
 	bool operator==(TreeIterator<U,N> const &i1,TreeIterator<U1,N1> const &i2) {
 			 return i1.base() == i2.base();
@@ -267,7 +267,7 @@ namespace ft
 		ALV TREE
 	*/
 
-	
+
 	template <class Key, class val, class T = ft::pair<Key, val>, class Compare = std::less<Key>,class Alloc= std::allocator<ft::pair<Key, val> > >
 	class Avl
 	{
@@ -282,14 +282,17 @@ namespace ft
 		typedef node 										*node_pointer;
 		typedef TreeIterator<T,node_pointer> 				iterator;
 		typedef TreeIterator<const T,const_node_Pointer>  	const_iterator;
-		
-		
-		
+
+
+
 		Avl(Compare _comp = Compare(),node_allocator alloc = node_allocator()) : _root(NULL), _size(0),
 		comp(_comp), _n_allocator(alloc) {
 			_node_end = new_node();
 		}
-		~Avl() {}
+		~Avl() {
+			_clear(_root);
+			_clear(_node_end);
+		}
 
 
 
@@ -380,7 +383,6 @@ namespace ft
 
 		void remove(iterator it) {
 			_deleteNode(it->first, &_root);
-			//_deleteNode(it->first, &it.base());
 		}
 
 		ft::pair<iterator, bool> insert(value_type pair)
@@ -413,7 +415,6 @@ namespace ft
 		void clear() {
 			_size = 0;
 			_clear(_root);
-			_deallocate(_root);
 			_root = NULL;
 		}
 
@@ -492,18 +493,19 @@ namespace ft
 			node * ret = _n_allocator.allocate(1);
 			_n_allocator.construct(ret ,node());
 			return ret;
-			// return new node();
 		}
 		node *new_node(value_type v) {
 			node * ret = _n_allocator.allocate(1);
 			_n_allocator.construct(ret ,node(v));
 			return ret;
-			//return new node(v);
 		}
 
-		void _deallocate(node *n) {
-			_n_allocator.destroy(n);
-			_n_allocator.deallocate(n,1);
+		void _deallocate(node **n) {
+			if(*n) {
+				_n_allocator.destroy(*n);
+				//_n_allocator.deallocate(*n,1);
+			}
+			*n = NULL;
 		}
 
 		size_t _deleteNode(Key key, node **n)
@@ -521,7 +523,8 @@ namespace ft
 				}
 
 				if(aux == (*n)){
-					(*n) = NULL;//DEALOCATE
+					_deallocate(n);
+					(*n) = NULL;
 				}
 				else {
 					if(aux == aux->parent->r)
@@ -535,9 +538,12 @@ namespace ft
 					aux->parent = (*n)->parent;
 					aux->setChildParent();
 					if(aux == _root)
+					{
+						_deallocate(&_root);
 						_root = aux;
+					}
+					_deallocate(n);
 					(*n) = aux;
-					//_deallocate(*n);
 				}
 				_size--;
 				ret =  1;
@@ -577,10 +583,7 @@ namespace ft
 				_clear(n->r);
 			if(n && n->l)
 				_clear(n->l);
-			_deallocate(n->l);
-			n->l = NULL;
-			n->r = NULL;
-			_deallocate(n->r);
+			_deallocate(&n);
 		}
 		node *_get(Key key, node *n) const
 		{
@@ -627,7 +630,6 @@ namespace ft
 		{
 			if (!n->r)
 				return NULL;
-			// std::cout << "rotrl" << std::endl;
 			node *aux = n->r;
 			node *aux2 = n->r->l;
 			aux2->parent = n->parent;

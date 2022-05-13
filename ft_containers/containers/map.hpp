@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 13:36:35 by ptorres           #+#    #+#             */
-/*   Updated: 2022/05/11 17:54:52 by ptorres          ###   ########.fr       */
+/*   Updated: 2022/05/13 00:55:06 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ namespace ft
 			_allocator = other.get_allocator();
 			_tree.insert(other.begin(), other.end());
 		}
+		virtual ~map() {};
 
 		map &operator=(const map &other)
 		{
