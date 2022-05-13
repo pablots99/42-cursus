@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 13:36:29 by ptorres           #+#    #+#             */
-/*   Updated: 2022/05/11 14:33:57 by ptorres          ###   ########.fr       */
+/*   Updated: 2022/05/13 15:36:45 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ namespace ft
 		typedef const value_type &const_reference;
 		typedef value_type *pointer;
 		typedef const value_type const_pointer;
-		typedef const ptrdiff_t difference_type;
+		typedef const std::ptrdiff_t difference_type;
 		typedef size_t size_type;
 		typedef ft::my_random_acces_iterator<value_type> iterator;
 		typedef ft::my_random_acces_iterator<value_type const> const_iterator;
@@ -281,7 +281,7 @@ namespace ft
 			// for (i = 0; i < len2; i++)
 			// 	_allocator.destroy(_begin + len + i);
 			//this->uncreate();
- 
+
 			ft::copy(_begin + len + len2, _begin + last_size, res + len);
 			_begin = res;
 			_size = last_size - len2;
