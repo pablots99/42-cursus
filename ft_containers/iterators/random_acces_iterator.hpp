@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 14:17:31 by ptorres           #+#    #+#             */
-/*   Updated: 2022/05/10 22:18:23 by pablo            ###   ########.fr       */
+/*   Updated: 2022/05/13 15:42:20 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ namespace ft
 			return *this;
 		}
 		reference operator*() const { return *current; }
-		pointer operator->() const { return std::addressof(operator*()); }
+		pointer operator->() const { return current }
 		reference operator[](int n) { return (*(current + n)); }
 		const_reference operator[](int n) const { return (*(current + n)); }
 		my_random_acces_iterator &operator++()
