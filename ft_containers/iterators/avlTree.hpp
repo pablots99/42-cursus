@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 16:39:45 by pablo             #+#    #+#             */
-/*   Updated: 2022/05/13 01:47:36 by pablo            ###   ########.fr       */
+/*   Updated: 2022/05/13 15:44:51 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -716,83 +716,83 @@ namespace ft
 			return ft::make_pair(iterator(n,_node_end),true);
 		}
 		public:
-		void print()
-		{
-			node *n = _root;
-			ft::vector<node *> stk;
-			size_t i = 1;
-			size_t j = 0;
-			size_t size = 1;
-			size_t n_count = 0;
-			size_t levels = 0;
-			while (1)
-			{
-				if (stk.size() == 0)
-					stk.push_back(n);
-				n_count = 0;
-				for (; j < size; j++)
-				{
-					if (stk[j])
-					{
-						stk.push_back(stk[j]->l);
-						stk.push_back(stk[j]->r);
-					}
-					else
-					{
-						stk.push_back(NULL);
-						stk.push_back(NULL);
-						n_count++;
-					}
-				}
-				if (n_count == i)
-				{
-					for (i = 0; i < n_count + (n_count * 2); i++)
-						stk.pop_back();
-					break;
-				}
-				levels++;
-				i *= 2;
-				size += i;
-			}
-			n_count /= 2;
-			size = ((3 + 5) * n_count) / 2;
-			int sp = 11 << (levels - 2); // 11 = 3 * 2 + 5
-			size_t level = 1;
-			j = 1;
-			for (i = 0; i < stk.size(); i++)
-			{
+		// void print()
+		// {
+		// 	node *n = _root;
+		// 	ft::vector<node *> stk;
+		// 	size_t i = 1;
+		// 	size_t j = 0;
+		// 	size_t size = 1;
+		// 	size_t n_count = 0;
+		// 	size_t levels = 0;
+		// 	while (1)
+		// 	{
+		// 		if (stk.size() == 0)
+		// 			stk.push_back(n);
+		// 		n_count = 0;
+		// 		for (; j < size; j++)
+		// 		{
+		// 			if (stk[j])
+		// 			{
+		// 				stk.push_back(stk[j]->l);
+		// 				stk.push_back(stk[j]->r);
+		// 			}
+		// 			else
+		// 			{
+		// 				stk.push_back(NULL);
+		// 				stk.push_back(NULL);
+		// 				n_count++;
+		// 			}
+		// 		}
+		// 		if (n_count == i)
+		// 		{
+		// 			for (i = 0; i < n_count + (n_count * 2); i++)
+		// 				stk.pop_back();
+		// 			break;
+		// 		}
+		// 		levels++;
+		// 		i *= 2;
+		// 		size += i;
+		// 	}
+		// 	n_count /= 2;
+		// 	size = ((3 + 5) * n_count) / 2;
+		// 	int sp = 11 << (levels - 2); // 11 = 3 * 2 + 5
+		// 	size_t level = 1;
+		// 	j = 1;
+		// 	for (i = 0; i < stk.size(); i++)
+		// 	{
 
-				if (i == 0)
-					std::cout << std::string(size, ' ');
-				if (i == j || i == 1)
-				{
-					size /= 2;
-					std::cout << "\n\n"
-							  << std::string(size, ' ');
-					sp /= 2;
-					level++;
-					j = (j * 2) + 1;
-				}
-				std::string number = "N    ";
-				if (stk[i])
-				{
-					if (stk[i]->parent != NULL)
-						number = std::to_string(stk[i]->val.first ) + "," + std::to_string(stk[i]->getBalance());
-					else
-						number = std::to_string(stk[i]->val.first) + ", ()";
-				}
-				std::cout << number;
-				if (number.length() < 5)
-					std::cout << std::string(5 - number.length(), ' ');
+		// 		if (i == 0)
+		// 			std::cout << std::string(size, ' ');
+		// 		if (i == j || i == 1)
+		// 		{
+		// 			size /= 2;
+		// 			std::cout << "\n\n"
+		// 					  << std::string(size, ' ');
+		// 			sp /= 2;
+		// 			level++;
+		// 			j = (j * 2) + 1;
+		// 		}
+		// 		std::string number = "N    ";
+		// 		if (stk[i])
+		// 		{
+		// 			if (stk[i]->parent != NULL)
+		// 				number = std::to_string(stk[i]->val.first ) + "," + std::to_string(stk[i]->getBalance());
+		// 			else
+		// 				number = std::to_string(stk[i]->val.first) + ", ()";
+		// 		}
+		// 		std::cout << number;
+		// 		if (number.length() < 5)
+		// 			std::cout << std::string(5 - number.length(), ' ');
 
-				if (level == levels - 1)
-					sp = 6;
-				if (level == levels)
-					sp = -2;
-				std::cout << std::string(sp + 5, ' ');
-			}
-			std::cout << "\n\n---------------------------------------------\n";
-		}
+		// 		if (level == levels - 1)
+		// 			sp = 6;
+		// 		if (level == levels)
+		// 			sp = -2;
+		// 		std::cout << std::string(sp + 5, ' ');
+		// 	}
+		// 	std::cout << "\n\n---------------------------------------------\n";
+		// }
 	};
 
 };

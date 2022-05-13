@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:06:32 by ptorres           #+#    #+#             */
-/*   Updated: 2022/04/06 17:45:02 by pablo            ###   ########.fr       */
+/*   Updated: 2022/05/13 15:43:32 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ public:
         Iter tmp = current;
         return *--tmp;
     }
-    pointer operator->() const { return std::addressof(operator*()); }
+    pointer operator->() const { Iter tmp = current; return --tmp; }
     reference operator[](int n) { return (*(current - n - 1)); }
     reference operator[](int n) const { return (*(current - n - 1)); }
     reverse_iterator &operator++()

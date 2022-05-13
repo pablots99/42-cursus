@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 13:36:29 by ptorres           #+#    #+#             */
-/*   Updated: 2022/05/13 15:36:45 by pablo            ###   ########.fr       */
+/*   Updated: 2022/05/13 15:44:14 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -232,7 +232,7 @@ namespace ft
 		}
 
 		template <class InputIterator>
-		typename std::enable_if<!std::is_integral<InputIterator>::value, void>::type
+		typename ft::enable_if<!ft::is_integral<InputIterator>::value, void>::type
 		insert(iterator position, InputIterator first, InputIterator last)
 		{
 			size_t last_size = _size;
