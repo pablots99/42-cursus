@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 20:48:05 by ptorres           #+#    #+#             */
-/*   Updated: 2022/05/11 15:56:14 by ptorres          ###   ########.fr       */
+/*   Updated: 2022/05/13 15:46:19 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ namespace ft
 	*/
 
 	template<bool b, typename T>
-	struct is_const_st { 
+	struct is_const_st {
 		typedef T type;
 		static const bool value = b;
 	};
@@ -72,14 +72,14 @@ namespace ft
 	struct is_integral<char> : public is_integral_st<true, char>
 	{
 	};
-	template <>
-	struct is_integral<char16_t> : public is_integral_st<true, char16_t>
-	{
-	};
-	template <>
-	struct is_integral<char32_t> : public is_integral_st<true, char32_t>
-	{
-	};
+	// template <>
+	// struct is_integral<char16_t> : public is_integral_st<true, char16_t>
+	// {
+	// };
+	// template <>
+	// struct is_integral<char32_t> : public is_integral_st<true, char32_t>
+	// {
+	// };
 	template <>
 	struct is_integral<wchar_t> : public is_integral_st<true, wchar_t>
 	{
