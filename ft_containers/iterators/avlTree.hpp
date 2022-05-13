@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 16:39:45 by pablo             #+#    #+#             */
-/*   Updated: 2022/05/13 15:44:51 by pablo            ###   ########.fr       */
+/*   Updated: 2022/05/13 16:01:34 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -503,7 +503,7 @@ namespace ft
 		void _deallocate(node **n) {
 			if(*n) {
 				_n_allocator.destroy(*n);
-				//_n_allocator.deallocate(*n,1);
+				_n_allocator.deallocate(*n,1);
 			}
 			*n = NULL;
 		}

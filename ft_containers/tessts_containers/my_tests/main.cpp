@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 13:34:36 by ptorres           #+#    #+#             */
-/*   Updated: 2022/05/13 15:51:39 by pablo            ###   ########.fr       */
+/*   Updated: 2022/05/13 15:52:28 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #include <functional>
 #include <utility>
 #include <list>
-#include <chrono>
+//#include <chrono>
 
 // int ft_map_time() {
 // 	int total = 0;
