@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 13:34:36 by ptorres           #+#    #+#             */
-/*   Updated: 2022/05/13 15:49:24 by pablo            ###   ########.fr       */
+/*   Updated: 2022/05/13 15:51:39 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ void leaks_map() {
 	ft::map<int, std::string>::iterator it;
 	for (size_t i = 0; i < 10; i++)
 	{
-		m.insert( ft::pair<int, std::string>(i,"hola" + std::to_string(i)));
+		m.insert( ft::pair<int, std::string>(i,"hola"));
 	}
 	for (it = m.begin(); it != m.end(); ++it)
 	{
