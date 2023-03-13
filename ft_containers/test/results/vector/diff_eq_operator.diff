@@ -1,9 +1,0 @@
---- results/vector/std_eq_operator	2023-03-13 20:01:22.000000000 +0100
-+++ results/vector/ft_eq_operator	2023-03-13 20:01:22.000000000 +0100
-@@ -208,5 +208,5 @@
- hello
- ---------------
- size: 100
--capaticy 100
-+capaticy 102
- max_size 768614336404564650
