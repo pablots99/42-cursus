@@ -1,4 +1,0 @@
-cd build
-cmake .. -Dtest=on
-make
-ctest -VV ->"VV" vervose to shhow more info
