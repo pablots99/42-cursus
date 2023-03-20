@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   iterator.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 16:43:34 by ptorres           #+#    #+#             */
-/*   Updated: 2022/05/13 15:36:57 by pablo            ###   ########.fr       */
+/*   Updated: 2023/03/09 19:45:30 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ namespace ft
     */
 
 
-  template <class Category, class T, class Distance = std::ptrdiff_t,
+  template <class Category, class T, class Distance = ptrdiff_t,
           class Pointer = T*, class Reference = T&>
   struct iterator {
     typedef T         value_type;
@@ -72,7 +72,7 @@ template <class T>
 struct iterator_traits<T*> {
     typedef T iterator_category;
     typedef T                          value_type;
-    typedef std::ptrdiff_t                  difference_type;
+    typedef ptrdiff_t                  difference_type;
     typedef T*                         pointer;
     typedef T&                         reference;
 };
@@ -82,12 +82,12 @@ template <class T>
 struct iterator_traits<const T*> {
     typedef  T iterator_category;
     typedef const T                          value_type;
-    typedef  std::ptrdiff_t                  difference_type;
+    typedef  ptrdiff_t                  difference_type;
     typedef  T*                         pointer;
     typedef  T&                         reference;
   };
 
 
-};
+}
 
 #endif

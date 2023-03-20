@@ -1,11 +1,46 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    test.sh                                            :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/03/13 20:09:53 by ptorres           #+#    #+#              #
+#    Updated: 2023/03/20 19:49:43 by ptorres          ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 #!/bin/sh
-CONTAINER_HPP="/Users/ptorres/Desktop/intra-uuid-9fa0fecb-1f4a-4343-a8db-5dccc741e58d-3957650-ptorres/containers"
+CONTAINER_HPP="../containers"
 
 #brew install gdate
 
 FAGS="-Wall -Wextra -Werror -g3 -std=c++98 -pedantic -pedantic-errors"
-test=$1 
+if [[ $1 == "--leaks" ]] || [[ $1 == "-leaks" ]]; then
+    test=$2
+    leaks="true"
+else
+    leaks="false"
+    test=$1
+fi 
 mkdir results/ > /dev/null 2>&1
+
+
+check_leaks() { 
+    mkdir results/leaks > /dev/null 2>&1
+    filename="results/leaks/$2_$1_leaks"
+    status=✅
+    valgrind --leak-check=full --track-origins=yes --error-exitcode=1 ./$1 > $filename 2>&1
+    if [[ $? == 1 ]]; then
+        status=🚨
+    else
+        rm $filename
+    fi
+    echo "***************************************"
+    echo "Leaks $filename, satatus: $status"
+    echo "***************************************"
+}
+
 execute_test() { 
     files=$(ls $1 | sed s/*util*.*//g)
     mkdir results/$1 > /dev/null 2>&1
@@ -31,6 +66,9 @@ execute_test() {
             ./$name 2>&1 >> results/$1/std_$name   #compile
             end=$(python -c 'from time import time; print int(round(time() * 1000))')
             std_time=$( echo "($end - $start) / 1000" | bc -l )
+            if [[ $leaks == "true" ]]; then
+                check_leaks $name "std"
+            fi
             rm $name
         else
              std_copile_error="true"
@@ -44,12 +82,14 @@ execute_test() {
             ./$name 2>&1 >> results/$1/ft_$name
             end=$(python -c 'from time import time; print int(round(time() * 1000))')
             ft_time=$( echo "($end - $start) / 1000" | bc -l )
-            
+            if [[ $leaks == "true" ]]; then
+                check_leaks $name "ft"
+            fi
         else
              ft_copile_error="true"
         fi
         #diff
-        diff -u results/$1/std_$name results/$1/ft_$name > results/$1/diff_$name.diff
+        diff -U 1000000 results/$1/std_$name results/$1/ft_$name > results/$1/diff_$name.diff
         diff_result=$(cat results/$1/diff_$name.diff)
         if [[ ! -z $diff_result ]]; then
             diff_result=🚨

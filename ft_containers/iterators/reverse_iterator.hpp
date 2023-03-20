@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reverse_iterator.hpp                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 17:06:32 by ptorres           #+#    #+#             */
-/*   Updated: 2022/05/13 15:43:32 by pablo            ###   ########.fr       */
+/*   Updated: 2023/03/09 19:44:19 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ public:
         Iter tmp = current;
         return *--tmp;
     }
-    pointer operator->() const { Iter tmp = current; return --tmp; }
+    pointer operator->() const { return std::addressof(operator*()); }
     reference operator[](int n) { return (*(current - n - 1)); }
     reference operator[](int n) const { return (*(current - n - 1)); }
     reverse_iterator &operator++()
@@ -142,5 +142,5 @@ operator-(const ft::reverse_iterator<Iter> &n,
 {
     return it.base() - n.base();
 }
-}; // namespace ft
+} // namespace ft
 #endif

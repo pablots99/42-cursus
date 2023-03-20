@@ -6,7 +6,7 @@
 /*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 19:55:06 by ptorres           #+#    #+#             */
-/*   Updated: 2023/03/09 20:06:03 by ptorres          ###   ########.fr       */
+/*   Updated: 2023/03/20 16:05:23 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,29 @@ int main()
     LIBRARY::vector<unsigned short int> v11;
     LIBRARY::vector<unsigned int> v12;
     LIBRARY::vector<unsigned long int> v13;
+    std::cout << "char:" << std::endl;
     print_vec(v02);
+    std::cout << "char16_t:" << std::endl;
     print_vec(v03);
+    std::cout << "char32_t:" << std::endl;
     print_vec(v04);
+    std::cout << "wchar_t:" << std::endl;
     print_vec(v05);
+    std::cout << "signed char:" << std::endl;
     print_vec(v06);
+    std::cout << "short int:" << std::endl;
     print_vec(v07);
+    std::cout << "int:" << std::endl;
     print_vec(v08);
+    std::cout << "ling int:" << std::endl;
     print_vec(v09);
+    std::cout << "unsigned char:" << std::endl;
+    print_vec(v10);
+    std::cout << "unsigned short int:" << std::endl;
     print_vec(v11);
+    std::cout << "unsigned int:" << std::endl;
     print_vec(v12);
+    std::cout << "unsigned long int:" << std::endl;
     print_vec(v13);
 
     return (0);
