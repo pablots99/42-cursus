@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 13:51:50 by pablo             #+#    #+#             */
-/*   Updated: 2023/06/18 23:56:01 by pablo            ###   ########.fr       */
+/*   Updated: 2023/06/18 23:56:40 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,6 +152,11 @@ void BitcoinExchange::_initDB() {
     this->Db[key] = value;
   }
   file.close();
+}
+
+BitcoinExchange::BitcoinExchange(void)
+{
+	return ;
 }
 
 BitcoinExchange::BitcoinExchange(BitcoinExchange const &obj)
