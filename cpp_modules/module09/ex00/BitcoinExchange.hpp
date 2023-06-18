@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 13:51:53 by pablo             #+#    #+#             */
-/*   Updated: 2023/06/18 17:30:13 by pablo            ###   ########.fr       */
+/*   Updated: 2023/06/18 23:55:35 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,10 @@ private:
   double _toDecimal(std::string n);
 public:
   BitcoinExchange(char *file);
-  ~BitcoinExchange();
+  BitcoinExchange();
+  BitcoinExchange(BitcoinExchange const &src);
+  BitcoinExchange &operator=(const BitcoinExchange &obj);
+  ~BitcoinExchange(void);
 };
 
 #endif
