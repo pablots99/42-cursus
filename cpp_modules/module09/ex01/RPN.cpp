@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 00:02:40 by pablo             #+#    #+#             */
-/*   Updated: 2023/06/19 21:43:44 by pablo            ###   ########.fr       */
+/*   Updated: 2023/06/19 21:45:01 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,11 +93,6 @@ void RPN::_readExpression() {
 
 RPN::RPN() { 
   return ;
-}
-
-RPN::RPN(void)
-{
-	return ;
 }
 
 RPN::RPN(RPN const &obj)
