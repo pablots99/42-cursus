@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 00:00:49 by pablo             #+#    #+#             */
-/*   Updated: 2023/06/19 21:38:14 by pablo            ###   ########.fr       */
+/*   Updated: 2023/06/19 21:44:07 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,9 @@ private:
 public:
   RPN();
   RPN(char* input);
+  RPN(RPN const &src);
+  RPN &operator=(const RPN &obj);
+  ~RPN(void);
   ~RPN();
 };
 #endif
