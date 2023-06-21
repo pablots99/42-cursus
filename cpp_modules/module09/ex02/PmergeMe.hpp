@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PmergeMe.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 19:34:11 by pablo             #+#    #+#             */
-/*   Updated: 2023/06/20 19:51:46 by pablo            ###   ########.fr       */
+/*   Updated: 2023/06/21 20:56:23 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,18 @@
 class PmergeMe
 {
 private:
+  typedef  std::vector<int>::iterator  Vecit;
+  typedef  std::vector<int>::iterator  Listit;
   std::vector<int>  _vec;
   std::list<int>    _list;
   char**            _args;
   void _readArgs();
-  void _sortList();
-  void _sortVec();
   void _printVec();
-  void _printList();
+  void _sortVec();
+  void _sortVecpairs();
+  //void _printList();
+  //void _sortList();
+  //void _printList();
 public:
   PmergeMe(char** args);
   ~PmergeMe();
