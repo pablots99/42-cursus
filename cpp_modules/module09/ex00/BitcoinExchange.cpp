@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 13:51:50 by pablo             #+#    #+#             */
-/*   Updated: 2023/06/22 15:54:24 by pablo            ###   ########.fr       */
+/*   Updated: 2023/06/22 15:58:03 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 BitcoinExchange::BitcoinExchange(char* file): file(std::string(file))
 {
   this->_initDB();
-  std::cout << "Exange db initialized" << std::endl;
   this->_printResult();
 }
 
