@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 19:39:25 by pablo             #+#    #+#             */
-/*   Updated: 2023/06/22 12:56:35 by pablo            ###   ########.fr       */
+/*   Updated: 2023/06/22 17:03:55 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,10 @@ void PmergeMe::_ListInsertion(Iterator begin, Iterator end)
 {
   for (Iterator i = begin; i != end; ++i)
   {
-    Iterator j = i;
-    while (j != begin && *j < *(--j))
-      std::iter_swap(j, (++j)--);
+    for (Iterator j = i; j != begin && *j < *(std::prev(j)); --j)
+    {
+        std::iter_swap(j, std::prev(j));
+    }
   }
 }
 
