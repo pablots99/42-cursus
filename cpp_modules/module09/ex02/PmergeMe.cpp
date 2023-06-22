@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 19:39:25 by pablo             #+#    #+#             */
-/*   Updated: 2023/06/22 17:03:55 by pablo            ###   ########.fr       */
+/*   Updated: 2023/06/22 17:06:06 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,4 +207,6 @@ PmergeMe &PmergeMe::operator=(const PmergeMe &obj)
 
 PmergeMe::~PmergeMe()
 {
+  _vec.clear();
+  _list.clear();
 }
