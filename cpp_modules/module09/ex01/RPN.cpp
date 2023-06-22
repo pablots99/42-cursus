@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 00:02:40 by pablo             #+#    #+#             */
-/*   Updated: 2023/06/19 21:45:01 by pablo            ###   ########.fr       */
+/*   Updated: 2023/06/22 16:39:59 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void error() {
   exit(1);
 }
 
-RPN::RPN(char* input):input(std::string(input)),op("") { 
+RPN::RPN(char* input):input(std::string(input)),op(""),initial_size(true) { 
   _readExpression();
   _reverse();
   std::stack<std::string> copy = expression;
@@ -53,29 +53,30 @@ void RPN::_calculate()
     else {
       op = expression.top();
       expression.pop();
-      if (numbers.size() < 2)
-        error();
       _operations();
     }
   }
 }
 
 void RPN::_operations() {
-  double res = 0;
-  double num1, num2;
-  num2 = numbers.top();
-  numbers.pop();
-  num1 = numbers.top();
-  numbers.pop();
-  if (op == "+") 
-    res = num1 + num2;
-  else if (op == "-") 
-    res = num1 - num2;
-  else if (op == "*")
-    res = num1 * num2;
-  else if (op == "/") 
-    res = num1 / num2;
-  expression.push(std::to_string(res));
+  if (numbers.size() > 1)
+  {
+    double res = 0;
+    double num1, num2;
+    num2 = numbers.top();
+    numbers.pop();
+    num1 = numbers.top();
+    numbers.pop();
+    if (op == "+") 
+      res = num1 + num2;
+    else if (op == "-") 
+      res = num1 - num2;
+    else if (op == "*")
+      res = num1 * num2;
+    else if (op == "/") 
+      res = num1 / num2;
+    expression.push(std::to_string(res));
+  }
   while (!numbers.empty())
   {
     expression.push(std::to_string(numbers.top()));
@@ -84,10 +85,15 @@ void RPN::_operations() {
 }
 
 void RPN::_readExpression() {
-  std::stringstream stream(input);
-  std::string word;
-   while (stream >> word) {
-      expression.push(word);
+    int i = 0;
+   while (input[i]) {
+      if((input[i] <= '9' && input[i] >= '0') || input[i] == '+' || input[i] == '-' || input[i] == '*' || input[i] == '/' )
+        expression.push(std::string(1,input[i]));
+      else if (input[i] != ' ')
+      {
+        error();
+      }
+      i++;
    }
 }
 

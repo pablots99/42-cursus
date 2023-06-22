@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 00:00:49 by pablo             #+#    #+#             */
-/*   Updated: 2023/06/19 21:44:33 by pablo            ###   ########.fr       */
+/*   Updated: 2023/06/22 16:13:31 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ private:
   std::stack<double> numbers;
   std::string input;
   std::string op;
+  bool initial_size;
   void _readExpression();
   void _calculate();
   void _operations();
