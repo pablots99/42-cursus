@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 13:51:50 by pablo             #+#    #+#             */
-/*   Updated: 2023/06/22 15:58:03 by pablo            ###   ########.fr       */
+/*   Updated: 2023/06/22 16:02:32 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ void BitcoinExchange::_printResult() {
     {
       _validateDate(date);
       value = _toDecimal(line.substr(del + 1, line.length()));
-      std::cout << "value: " << line.substr(del + 1, line.length()) << std::endl;
     }
     catch(...)
     {
@@ -112,7 +111,7 @@ bool is_valid_number(std::string number) {
 double BitcoinExchange::_toDecimal(std::string n) { 
     double result;
     if (!is_valid_number(n)) {
-      std::cout << "Error: bad input => " << n << std::endl;
+      std::cout << "Error: bad input => '" << n << "'" << std::endl;
       throw 1;
     }
     try {
