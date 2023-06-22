@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 13:51:50 by pablo             #+#    #+#             */
-/*   Updated: 2023/06/18 23:56:40 by pablo            ###   ########.fr       */
+/*   Updated: 2023/06/22 15:54:24 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void BitcoinExchange::_printResult() {
     {
       _validateDate(date);
       value = _toDecimal(line.substr(del + 1, line.length()));
+      std::cout << "value: " << line.substr(del + 1, line.length()) << std::endl;
     }
     catch(...)
     {
@@ -89,7 +90,7 @@ void BitcoinExchange::_validateDate(std::string date) {
   catch(...) {
     err = true;
   }
-  if(day < 1 || day > 31 || month < 1 || month > 12 || year < 2009 || year > 2022)
+  if(day < 1 || day > 31 || month < 1 || month > 12 || year < 0 || year > 9999)
     err = true;
   if ((month == 2 && day > 28))
     err = true;
@@ -105,8 +106,16 @@ void BitcoinExchange::_validateDate(std::string date) {
 
 }
 
+bool is_valid_number(std::string number) {
+  return !number.empty() && number.find_first_not_of("-0123456789") == std::string::npos;
+}
+
 double BitcoinExchange::_toDecimal(std::string n) { 
     double result;
+    if (!is_valid_number(n)) {
+      std::cout << "Error: bad input => " << n << std::endl;
+      throw 1;
+    }
     try {
       result = std::stof(n);
     } catch (std::invalid_argument const &e) {
