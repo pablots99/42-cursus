@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 13:36:29 by ptorres           #+#    #+#             */
-/*   Updated: 2022/05/13 15:44:14 by pablo            ###   ########.fr       */
+/*   Updated: 2023/03/20 19:36:02 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ namespace ft
 		typedef const value_type &const_reference;
 		typedef value_type *pointer;
 		typedef const value_type const_pointer;
-		typedef const std::ptrdiff_t difference_type;
+		typedef const ptrdiff_t difference_type;
 		typedef size_t size_type;
 		typedef ft::my_random_acces_iterator<value_type> iterator;
 		typedef ft::my_random_acces_iterator<value_type const> const_iterator;
@@ -37,28 +37,40 @@ namespace ft
 		typedef ft::reverse_iterator< const_iterator>  const_reverse_iterator;
 
 		/*CONSTRUCTORS*/
-		vector(const allocator_type alloc = allocator_type()) : _begin(NULL), _size(0), _capacity(0),_allocator(alloc){}
 		//default
+		vector(const allocator_type alloc =  allocator_type()) : _begin(NULL), _size(0), _capacity(0),_allocator(alloc){}
+
+		//fill
 		explicit vector(const size_type n, const value_type &val = value_type(), const allocator_type alloc = allocator_type()) :_begin(NULL), _size(0), _capacity(0), _allocator(alloc)
 		{
 			assign(n, val);
-		} //fill
+		}
 
+		//range
 		template <class InputIterator>
 		vector(InputIterator first, InputIterator last,const allocator_type alloc = allocator_type()) : _size(0), _capacity(0) ,_allocator(alloc)
 		{
 			assign(first, last);
-		} //range
+		}
 
-		vector(const vector &x) : _size(0), _capacity(0)
+		//copy
+		vector(const vector &x) : _begin(NULL), _size(0), _capacity(0)
 		{
-			this->reserve(x.capacity());
-			this->_size = x.size();
-			if (_size)
-				ft::copy(x.begin(), x.begin() + x.size(), this->_begin);
-		} //copy
-		vector &operator=(const vector& obj) {
+			_allocator = x.get_allocator();
+			assign(x.begin(),x.end());
+			// _allocator = x.get_allocator();
+			// this->reserve(x.size());
+			// if (_size)
+			// 	ft::copy(x.begin(), x.begin() + x.size(), this->_begin);
+		}
+		
+		~vector()
+		{
 			uncreate();
+		}
+
+		vector &operator=(const vector& obj) {
+			this->uncreate();
 			this->assign(obj.begin(),obj.end());
 			return *this;
 		}
@@ -77,18 +89,27 @@ namespace ft
 
 		/*CAPACITY*/
 		size_type size() const { return _size; }
-		size_type max_size() const { return _allocator.max_size(); } // it is not done
+		size_type max_size() const 
+		{ 
+			return ft::min<size_type>(allocator_type().max_size(), std::numeric_limits<difference_type>::max());
+		}
+		allocator_type get_allocator() const { return allocator_type(); }
 		void reserve(size_type n)
 		{
+			pointer aux;
+
+			aux = NULL;
 			if (n < _capacity)
 				return;
 			if (n > max_size())
-				return;
-			pointer aux;
-			aux = _allocator.allocate(n + 1);
+				throw std::length_error("vector::reserve");
+			aux = _allocator.allocate(n);
+			for (size_type i = 0; i < n; i++)
+				_allocator.construct(aux + i);
+			
 			if (_size)
 			{
-				ft::copy(_begin, _begin + _size, aux);
+				ft::copy(this->begin(), this->end(), aux);
 				_allocator.deallocate(_begin, _capacity);
 			}
 			_capacity = n;
@@ -97,19 +118,40 @@ namespace ft
 
 		void resize(size_type n, value_type val = value_type())
 		{
+			// if (n > _size)
+			// {
+			// 	std::cout << "insert" << std::endl;
+    		// 	this->insert(end(), n - _size, val);
+			// }
+			// else if (n < size())
+			// {
+			// 	std::cout << "erase" << std::endl;
+    		// 	this->erase(begin() + n , end());
+			// }
 			pointer aux;
+			int s;
 			if (n < _size)
 			{
-				aux = _allocator.allocate(n);
+				s = _capacity;
+				aux = _allocator.allocate(s);
+				for (int i = 0; i < s; i++)
+					_allocator.construct(aux + i);
 				ft::copy(_begin, _begin + n, aux);
 				this->uncreate();
-				_capacity = n;
+				_capacity = s;
 				_begin = aux;
 				_size = n;
 			}
 			else
 			{
-				reserve(n);
+				if (n > _capacity)
+				{
+					if (n > _capacity * 2)
+						reserve(n);
+					else
+						reserve(_capacity * 2);
+				}
+				
 				for (size_type i = _size; i < n; i++)
 					*(_begin + i) = val;
 				_size = n;
@@ -154,10 +196,13 @@ namespace ft
 		/*MODIFIERS*/
 		void assign(size_type n, const value_type &val)
 		{
-			uncreate();
-			_size = 0;
-			_capacity = 0;
-			reserve(n);
+			if (n > _capacity)
+			{
+				uncreate();
+				_size = 0;
+				_capacity = 0;
+				this->reserve(n);
+			}
 			for (size_type i = 0; i < n; i++)
 				_allocator.construct(_begin + i, val);
 			_size = n;
@@ -168,8 +213,11 @@ namespace ft
 		assign(InputIterator first, InputIterator last)
 		{
 			size_t len = ft::distance(first, last);
-			uncreate();
-			this->reserve(len + 2);
+			if (len > _capacity)
+			{
+				uncreate();
+				this->reserve(len);
+			}
 			for (size_t i = 0; i < len; i++)
 			{
 				this->_allocator.construct(_begin + i, *first);
@@ -204,7 +252,12 @@ namespace ft
 		iterator insert(iterator position, const value_type &val)
 		{
 			size_t last_size = _size;
-			pointer res = _allocator.allocate(_size + 2);
+			size_t n_capacity = _capacity;
+			if (_size >= _capacity)
+				n_capacity = _capacity * 2;
+			pointer res = _allocator.allocate(n_capacity);
+			for (size_t i = 0; i < n_capacity; i++)
+				_allocator.construct(res + i);
 			size_t len = ft::distance(this->begin(), position);
 			ft::copy(_begin, _begin + len, res);
 			_allocator.construct(res + len, val);
@@ -212,14 +265,15 @@ namespace ft
 			this->uncreate();
 			_begin = res;
 			_size = last_size + 1;
-			_capacity = last_size + 2;
+			_capacity = n_capacity;
 			return iterator(&_begin[len]);
 		}
 
 		void insert(iterator position, size_type n, const value_type &val)
 		{
 			size_t last_size = _size;
-			pointer res = _allocator.allocate(_size + n + 1);
+			// size_t c = _capacity;
+			pointer res = _allocator.allocate(_size + n);
 			size_t len = ft::distance(this->begin(), position);
 			ft::copy(_begin, _begin + len, res);
 			for (size_t i = 0; i < n; i++)
@@ -228,7 +282,7 @@ namespace ft
 			this->uncreate();
 			_begin = res;
 			_size = last_size + n;
-			_capacity = last_size + n + 1;
+			_capacity = last_size + n;
 		}
 
 		template <class InputIterator>
@@ -236,21 +290,21 @@ namespace ft
 		insert(iterator position, InputIterator first, InputIterator last)
 		{
 			size_t last_size = _size;
+			size_t i;
 			size_t len2 = ft::distance(first, last);
-			pointer res = _allocator.allocate(_size + len2 + 1);
+			pointer res = _allocator.allocate(_size + len2);
 			size_t len = ft::distance(this->begin(), position);
 			ft::copy(_begin, _begin + len, res);
-			for (size_t i = 0; i < len2; i++)
+			for (i = 0; i < len2; i++)
 			{
 				_allocator.construct(res + len + i, *first);
-				_allocator.destroy(_begin + len + i);
 				first++;
 			}
-			// this->uncreate();
-			ft::copy(_begin + len, _begin + last_size, res + len + len2);
+			ft::copy(_begin + len, _begin + last_size, res + len + i);
+			this->uncreate();
 			_begin = res;
 			_size = last_size + len2;
-			_capacity = last_size + len2 + 1;
+			_capacity = last_size + len2;
 		}
 
 		iterator erase(iterator position)
@@ -281,7 +335,7 @@ namespace ft
 			// for (i = 0; i < len2; i++)
 			// 	_allocator.destroy(_begin + len + i);
 			//this->uncreate();
-
+ 
 			ft::copy(_begin + len + len2, _begin + last_size, res + len);
 			_begin = res;
 			_size = last_size - len2;
@@ -311,14 +365,14 @@ namespace ft
 
 		void destroy_begin()
 		{
-			for (size_t i = 0; i < _size; i++)
+			for (size_t i = 0; i < _capacity; i++)
 				_allocator.destroy(_begin + _size);
 		}
 		void uncreate()
 		{
 			if (!_capacity)
 				return;
-			destroy_begin();
+			//destroy_begin();
 			_allocator.deallocate(_begin, _size);
 			_size = 0;
 			_capacity = 0;
@@ -378,5 +432,5 @@ namespace ft
 		x.swap(y);
 	}
 
-};// namespace ft
+}// namespace ft
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 20:48:05 by ptorres           #+#    #+#             */
-/*   Updated: 2022/05/13 15:46:19 by pablo            ###   ########.fr       */
+/*   Updated: 2023/03/20 19:28:58 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ namespace ft
 	*/
 
 	template<bool b, typename T>
-	struct is_const_st {
+	struct is_const_st { 
 		typedef T type;
 		static const bool value = b;
 	};
@@ -72,14 +72,14 @@ namespace ft
 	struct is_integral<char> : public is_integral_st<true, char>
 	{
 	};
-	// template <>
-	// struct is_integral<char16_t> : public is_integral_st<true, char16_t>
-	// {
-	// };
-	// template <>
-	// struct is_integral<char32_t> : public is_integral_st<true, char32_t>
-	// {
-	// };
+	template <>
+	struct is_integral<char16_t> : public is_integral_st<true, char16_t>
+	{
+	};
+	template <>
+	struct is_integral<char32_t> : public is_integral_st<true, char32_t>
+	{
+	};
 	template <>
 	struct is_integral<wchar_t> : public is_integral_st<true, wchar_t>
 	{
@@ -98,10 +98,6 @@ namespace ft
 	};
 	template <>
 	struct is_integral<long int> : public is_integral_st<true, long int>
-	{
-	};
-	template <>
-	struct is_integral<long long int> : public is_integral_st<true, long long int>
 	{
 	};
 	template <>
@@ -200,9 +196,6 @@ namespace ft
 			return *this;
 		}
 	};
-	/*pair non member functions*/
-	template <class T1, class T2>
-	pair<T1, T2> make_pair(T1 &t, T2 &u) { return new pair<T1, T2>(t, u); };
 
 	/*operators*/
 	template <class T1, class T2>
@@ -243,6 +236,12 @@ namespace ft
 	ft::pair<T1, T2> make_pair(T1 x, T2 y)
 	{
 		return (ft::pair<T1, T2>(x, y));
+	}
+
+	template<class T>
+	const T& min(const T& a, const T& b)
+	{
+    	return (b < a) ? b : a;
 	}
 
 }

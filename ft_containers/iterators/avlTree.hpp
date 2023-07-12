@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   avlTree.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ptorres <ptorres@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 16:39:45 by pablo             #+#    #+#             */
-/*   Updated: 2022/05/13 16:01:34 by pablo            ###   ########.fr       */
+/*   Updated: 2023/03/20 20:12:58 by ptorres          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ namespace ft
 				aux = aux->parent;
 			return aux;
 		}
-		const node *next() const
+		const node *next() const 
 		{
 			if (r)
 				return getMin(r);
@@ -151,7 +151,7 @@ namespace ft
 				aux = aux->parent;
 			return aux;
 		}
-		const node *prev() const
+		const node *prev() const 
 		{
 			if (l){
 				return getMax(l);
@@ -191,8 +191,8 @@ namespace ft
 
 		TreeIterator(void) : node_end(NULL),_base(NULL) {}
 		TreeIterator(const node_pointer p,const node_pointer _node_end) : node_end(_node_end), _base(p){}
-
-
+		
+		
 		template <typename U,typename N>
 		TreeIterator(const TreeIterator<U,N> &obj) : node_end(obj.node_end), _base(obj.base()){}
 		~TreeIterator() {}
@@ -249,7 +249,7 @@ namespace ft
 	private:
 		node_pointer _base;
 	};
-
+	
 	template <typename U, typename N,typename U1, typename N1>
 	bool operator==(TreeIterator<U,N> const &i1,TreeIterator<U1,N1> const &i2) {
 			 return i1.base() == i2.base();
@@ -267,7 +267,7 @@ namespace ft
 		ALV TREE
 	*/
 
-
+	
 	template <class Key, class val, class T = ft::pair<Key, val>, class Compare = std::less<Key>,class Alloc= std::allocator<ft::pair<Key, val> > >
 	class Avl
 	{
@@ -282,17 +282,14 @@ namespace ft
 		typedef node 										*node_pointer;
 		typedef TreeIterator<T,node_pointer> 				iterator;
 		typedef TreeIterator<const T,const_node_Pointer>  	const_iterator;
-
-
-
+		
+		
+		
 		Avl(Compare _comp = Compare(),node_allocator alloc = node_allocator()) : _root(NULL), _size(0),
 		comp(_comp), _n_allocator(alloc) {
 			_node_end = new_node();
 		}
-		~Avl() {
-			_clear(_root);
-			_clear(_node_end);
-		}
+		~Avl() {}
 
 
 
@@ -383,6 +380,7 @@ namespace ft
 
 		void remove(iterator it) {
 			_deleteNode(it->first, &_root);
+			//_deleteNode(it->first, &it.base());
 		}
 
 		ft::pair<iterator, bool> insert(value_type pair)
@@ -415,10 +413,13 @@ namespace ft
 		void clear() {
 			_size = 0;
 			_clear(_root);
+			_deallocate(_root);
 			_root = NULL;
 		}
 
 		size_t max_size() const {
+			//return ft::min<size_t>(_n_allocator.max_size(), std::numeric_limits<node>::max());
+
 			return _n_allocator.max_size();
 		}
 
@@ -493,19 +494,18 @@ namespace ft
 			node * ret = _n_allocator.allocate(1);
 			_n_allocator.construct(ret ,node());
 			return ret;
+			// return new node();
 		}
 		node *new_node(value_type v) {
 			node * ret = _n_allocator.allocate(1);
 			_n_allocator.construct(ret ,node(v));
 			return ret;
+			//return new node(v);
 		}
 
-		void _deallocate(node **n) {
-			if(*n) {
-				_n_allocator.destroy(*n);
-				_n_allocator.deallocate(*n,1);
-			}
-			*n = NULL;
+		void _deallocate(node *n) {
+			_n_allocator.destroy(n);
+			_n_allocator.deallocate(n,1);
 		}
 
 		size_t _deleteNode(Key key, node **n)
@@ -523,8 +523,7 @@ namespace ft
 				}
 
 				if(aux == (*n)){
-					_deallocate(n);
-					(*n) = NULL;
+					(*n) = NULL;//DEALOCATE
 				}
 				else {
 					if(aux == aux->parent->r)
@@ -538,12 +537,9 @@ namespace ft
 					aux->parent = (*n)->parent;
 					aux->setChildParent();
 					if(aux == _root)
-					{
-						_deallocate(&_root);
 						_root = aux;
-					}
-					_deallocate(n);
 					(*n) = aux;
+					//_deallocate(*n);
 				}
 				_size--;
 				ret =  1;
@@ -583,7 +579,10 @@ namespace ft
 				_clear(n->r);
 			if(n && n->l)
 				_clear(n->l);
-			_deallocate(&n);
+			_deallocate(n->l);
+			n->l = NULL;
+			n->r = NULL;
+			_deallocate(n->r);
 		}
 		node *_get(Key key, node *n) const
 		{
@@ -630,6 +629,7 @@ namespace ft
 		{
 			if (!n->r)
 				return NULL;
+			// std::cout << "rotrl" << std::endl;
 			node *aux = n->r;
 			node *aux2 = n->r->l;
 			aux2->parent = n->parent;
@@ -716,175 +716,84 @@ namespace ft
 			return ft::make_pair(iterator(n,_node_end),true);
 		}
 		public:
-		// void print()
-		// {
-		// 	node *n = _root;
-		// 	ft::vector<node *> stk;
-		// 	size_t i = 1;
-		// 	size_t j = 0;
-		// 	size_t size = 1;
-		// 	size_t n_count = 0;
-		// 	size_t levels = 0;
-		// 	while (1)
-		// 	{
-		// 		if (stk.size() == 0)
-		// 			stk.push_back(n);
-		// 		n_count = 0;
-		// 		for (; j < size; j++)
-		// 		{
-		// 			if (stk[j])
-		// 			{
-		// 				stk.push_back(stk[j]->l);
-		// 				stk.push_back(stk[j]->r);
-		// 			}
-		// 			else
-		// 			{
-		// 				stk.push_back(NULL);
-		// 				stk.push_back(NULL);
-		// 				n_count++;
-		// 			}
-		// 		}
-		// 		if (n_count == i)
-		// 		{
-		// 			for (i = 0; i < n_count + (n_count * 2); i++)
-		// 				stk.pop_back();
-		// 			break;
-		// 		}
-		// 		levels++;
-		// 		i *= 2;
-		// 		size += i;
-		// 	}
-		// 	n_count /= 2;
-		// 	size = ((3 + 5) * n_count) / 2;
-		// 	int sp = 11 << (levels - 2); // 11 = 3 * 2 + 5
-		// 	size_t level = 1;
-		// 	j = 1;
-		// 	for (i = 0; i < stk.size(); i++)
-		// 	{
+		void print()
+		{
+			node *n = _root;
+			ft::vector<node *> stk;
+			size_t i = 1;
+			size_t j = 0;
+			size_t size = 1;
+			size_t n_count = 0;
+			size_t levels = 0;
+			while (1)
+			{
+				if (stk.size() == 0)
+					stk.push_back(n);
+				n_count = 0;
+				for (; j < size; j++)
+				{
+					if (stk[j])
+					{
+						stk.push_back(stk[j]->l);
+						stk.push_back(stk[j]->r);
+					}
+					else
+					{
+						stk.push_back(NULL);
+						stk.push_back(NULL);
+						n_count++;
+					}
+				}
+				if (n_count == i)
+				{
+					for (i = 0; i < n_count + (n_count * 2); i++)
+						stk.pop_back();
+					break;
+				}
+				levels++;
+				i *= 2;
+				size += i;
+			}
+			n_count /= 2;
+			size = ((3 + 5) * n_count) / 2;
+			int sp = 11 << (levels - 2); // 11 = 3 * 2 + 5
+			size_t level = 1;
+			j = 1;
+			for (i = 0; i < stk.size(); i++)
+			{
 
-		// 		if (i == 0)
-		// 			std::cout << std::string(size, ' ');
-		// 		if (i == j || i == 1)
-		// 		{
-		// 			size /= 2;
-		// 			std::cout << "\n\n"
-		// 					  << std::string(size, ' ');
-		// 			sp /= 2;
-		// 			level++;
-		// 			j = (j * 2) + 1;
-		// 		}
-		// 		std::string number = "N    ";
-		// 		if (stk[i])
-		// 		{
-		// 			if (stk[i]->parent != NULL)
-		// 				number = std::to_string(stk[i]->val.first ) + "," + std::to_string(stk[i]->getBalance());
-		// 			else
-		// 				number = std::to_string(stk[i]->val.first) + ", ()";
-		// 		}
-		// 		std::cout << number;
-		// 		if (number.length() < 5)
-		// 			std::cout << std::string(5 - number.length(), ' ');
+				if (i == 0)
+					std::cout << std::string(size, ' ');
+				if (i == j || i == 1)
+				{
+					size /= 2;
+					std::cout << "\n\n"
+							  << std::string(size, ' ');
+					sp /= 2;
+					level++;
+					j = (j * 2) + 1;
+				}
+				std::string number = "N    ";
+				if (stk[i])
+				{
+					if (stk[i]->parent != NULL)
+						number = std::to_string(stk[i]->val.first ) + "," + std::to_string(stk[i]->getBalance());
+					else
+						number = std::to_string(stk[i]->val.first) + ", ()";
+				}
+				std::cout << number;
+				if (number.length() < 5)
+					std::cout << std::string(5 - number.length(), ' ');
 
-		// 		if (level == levels - 1)
-		// 			sp = 6;
-		// 		if (level == levels)
-		// 			sp = -2;
-		// 		std::cout << std::string(sp + 5, ' ');
-		// 	}
-		// 	std::cout << "\n\n---------------------------------------------\n";
-		// }
+				if (level == levels - 1)
+					sp = 6;
+				if (level == levels)
+					sp = -2;
+				std::cout << std::string(sp + 5, ' ');
+			}
+			std::cout << "\n\n---------------------------------------------\n";
+		}
 	};
 
-};
-
-
-//    template <class Iter, class node>
-// 	class ConstTreeIterator : public ft::iterator<std::bidirectional_iterator_tag, Iter>
-// 	{
-// 	public:
-// 		typedef Iter 															iterator_type;
-// 		typedef Iter 															value_type;
-// 		typedef typename std::bidirectional_iterator_tag 						iterator_category;
-// 		typedef typename ft::iterator<iterator_category, Iter>::difference_type difference_type;
-// 		typedef typename ft::iterator<iterator_category, Iter>::pointer 		pointer;
-// 		typedef node 															*node_pointer;
-// 		typedef typename ft::iterator<iterator_category, Iter>::reference 		reference;
-// 		typedef typename ft::iterator<iterator_category, const Iter>::reference const_reference;
-// 		node_pointer 	node_end;
-
-
-// 		ConstTreeIterator(void) : node_end(NULL),_base(NULL) {}
-// 		ConstTreeIterator(const node_pointer p,const node_pointer _node_end) :node_end(_node_end), _base(p){}
-// 		template <typename U,typename N>
-// 		ConstTreeIterator(const ConstTreeIterator<U,N> &obj) :node_end(obj.node_end), _base(obj.base()){}
-
-// 		template <typename U,typename N>
-// 		ConstTreeIterator(const TreeIterator<U,N> &obj) :node_end(obj.node_end), _base(obj.base()){}
-// 		~ConstTreeIterator() {}
-
-// 		template <typename U,typename N>
-// 		ConstTreeIterator  &operator=(ConstTreeIterator<U,N> const &obj ){
-// 			node_end = obj.node_end;
-// 			_base = obj.base();
-// 			return *this;
-// 		}
-
-
-// 		template <typename U,typename N>
-// 		ConstTreeIterator  &operator=(TreeIterator<U,N> const &obj ){
-// 			node_end = obj.node_end;
-// 			_base = obj.base();
-// 			return *this;
-// 		}
-
-// 		const_reference operator*() const { return _base->val; }
-
-// 		pointer operator->() const  { return &_base->val;}
-
-// 		ConstTreeIterator &operator++()
-// 		{
-// 			_base = _base->next();
-// 			if(!_base)
-// 				_base = node_end;
-// 			return *this;
-// 		}
-// 		ConstTreeIterator operator++(int)
-// 		{
-// 			ConstTreeIterator tmp(*this);
-// 			++*this;
-// 			return tmp;
-// 		}
-// 		ConstTreeIterator &operator--()
-// 		{
-// 			if(_base == node_end) {
-// 				_base = _base->parent;
-
-// 				return *this;
-// 			}
-// 			_base = _base->prev();
-// 			return *this;
-// 		}
-// 		ConstTreeIterator operator--(int)
-// 		{
-// 			ConstTreeIterator tmp(*this);
-// 			--*this;
-// 			return tmp;
-// 		}
-// 		ConstTreeIterator base() const {
-// 			return _base;
-// 		}
-// 	private:
-// 		node_pointer _base;
-// 	};
-// 	template <typename U,typename N>
-// 	bool operator==(ConstTreeIterator<U,N> const &i1,ConstTreeIterator<U,N> const &i2)  {
-// 			 return i1.base() == i2.base();
-// 	}
-// 	template <typename U,typename N>
-// 	bool operator!=(ConstTreeIterator<U,N> const &i1,ConstTreeIterator<U,N> const &i2)  {
-// 			 return !(i1==i2);
-// 	}
-
-
-
+}
 #endif
